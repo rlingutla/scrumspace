@@ -2,4 +2,7 @@
 node_modules
 # Ignores your built application.
 build/js/app.js
-
+# Ignores sass cache directory
+.sass-cache
+# Ignores log files
+*.log

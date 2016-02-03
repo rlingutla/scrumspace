@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "./node_modules/.bin/webpack",
+    "gulp": "./node_modules/gulp/bin/gulp.js",
     "serve": "./node_modules/.bin/webpack-dev-server --content-base build"
   },
   "devDependencies": {
@@ -16,6 +17,8 @@
     "babel-preset-react": "^6.3.13",
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.14.0",
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.1.1",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "webpack": "^1.12.12",
