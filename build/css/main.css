@@ -34,6 +34,8 @@ html, body {
           margin-top: 13px; }
         #sidebar #project-selector ul li a:hover {
           background: #818181; }
+        #sidebar #project-selector ul li a:active {
+          background: #1b1b1b; }
 
 #content {
   background: #fff;
@@ -46,3 +48,15 @@ html, body {
       float: right; }
   #content .content {
     padding-top: 70px; }
+
+.module {
+  border-radius: 3px;
+  background-color: #F9F9F9;
+  padding: 10px;
+  border: 1px solid #e7e7e7; }
+
+.project-status .progress {
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  -webkit-box-shadow: none;
+  box-shadow: none; }

@@ -4,12 +4,12 @@ html, body {
 }
 
 #sidebar {
-	background: #F9F9F9;
+	background: $gray;
     position: fixed;
     height: 100%;
     width: 80px;
     color: #fff;
-    border-right: 1px solid #e7e7e7;
+    border-right: 1px solid $border-color;
     padding-top: $nav-offset;
 
     #project-selector {
@@ -40,6 +40,10 @@ html, body {
 				    &:hover {
 				    	background: lighten(#4E4E4E, 20%); //SASS function 
 				    }
+
+				    &:active {
+				    	background: darken(#4E4E4E, 20%); //SASS function 	
+				    }
     			}
     		}
     	}
@@ -64,4 +68,12 @@ html, body {
 	.content {
 		padding-top: $nav-offset;
 	}
+}
+
+//modules 
+.module {
+	border-radius: 3px;
+	background-color: $gray;
+	padding: 10px;
+	border: 1px solid $border-color;
 }
