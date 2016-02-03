@@ -52,6 +52,13 @@ html, body {
 
 	& > .navbar {
 		background-color: #fff;
+
+		.nav-left {
+			float:left;
+		}
+		.nav-right {
+			float:right;
+		}
 	}
 
 	.content {

@@ -40,5 +40,9 @@ html, body {
   padding-left: 80px; }
   #content > .navbar {
     background-color: #fff; }
+    #content > .navbar .nav-left {
+      float: left; }
+    #content > .navbar .nav-right {
+      float: right; }
   #content .content {
     padding-top: 70px; }
