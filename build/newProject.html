@@ -20,75 +20,80 @@
     <!-- Custom HTML goes here -->
 
     <div id="app">
-        <div id="sidebar">
-            <div id="project-selector">
-                <ul>
-                    <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-                    <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-                    <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-                    <!-- Possible place for new project creation? -->
-                    <li><a class="#"><span class="glyphicon glyphicon-plus"></span></a></li>
-                </ul>
-            </div>
-            <ul></ul>
+      <div id="sidebar">
+        <div id="project-selector">
+          <ul>
+            <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+            <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+            <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+            <!-- Possible place for new project creation? -->
+            <li><a class="#"><span class="glyphicon glyphicon-plus"></span></a></li>
+          </ul>
         </div>
-        <div id="content">
-            <nav class="navbar navbar-fixed-top navbar-default">
-              <div class="container-fluid">
-                    <div class="nav-left">
-                        <a class="navbar-brand" href="#">ScrumSpace</a>
-                    </div>
-                    <div class="nav-right">
-                      <button type="button" class="btn btn-default navbar-btn">
-                        <span class="glyphicon glyphicon-option-vertical"></span>
-                      </button>
-                    </div>
-              </div>
-            </nav>
+        <ul></ul>
+      </div>
+      <div id="content">
+        <nav class="navbar navbar-fixed-top navbar-default">
+          <div class="container-fluid">
+            <div class="nav-left">
+              <a class="navbar-brand" href="#">ScrumSpace</a>
+            </div>
+            <div class="nav-right">
+              <button type="button" class="btn btn-default navbar-btn">
+                <span class="glyphicon glyphicon-option-vertical"></span>
+              </button>
+            </div>
+          </div>
+        </nav>
 
-            <div class="content container-fluid ">
-                <!-- CONTENT HERE -->
-                <!-- Placing the project creation form into a pop-up modal -->
-                <div id="myModal" class="modal fade" role="dialog">
-                  <div class="modal-dialog">
-                    <!-- Project Creation Modal -->
-                    <div class="modal-content form-styling">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Create a new project</h4>
-                      </div>
-                      <div class="modal-body">
-                        <form>
-                          <!--Input new name for a project-->
-                          <div class="form-group">
-                            <label>Project Name</label>
-                            <input type="text" class="form-control" placeholder="Insert name">
-                          </div>
-                          <!--Add members to the project. There's aksi a button to add more names if necessary-->
-                          <div class="form-group">
-                            <label>Add members</label>
-                            <input type="text" class="form-control" placeholder="Name">
-                            <input type="text" class="form-control" placeholder="Name">
-                            <input type="text" class="form-control" placeholder="Name">
-                            <input type="text" class="form-control" placeholder="Name">
-                            <input type="text" class="form-control" placeholder="Name">
-                            <input type="text" class="form-control" placeholder="Name">
-                            <button class="btn btn-default glyphicon glyphicon-plus">Add members</button>
-                          </div>
-                          <!--Create new project in realm upon click-->
-                          <button type="submit" class="btn btn-default">Create</button>
-                        </form>
-                      </div>
-                    <!--  <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div> -->
+        <div class="content container-fluid ">
+          <!-- CONTENT HERE -->
+          <!-- Placing the project creation form into a pop-up modal -->
+          <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <!-- Project Creation Modal -->
+              <div class="modal-content form-styling">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title borderHead"><strong>Create a new project</strong></h4>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <!--Input new name for a project-->
+                    <div class="form-group">
+                      <label>Project Name</label>
+                      <input type="text" class="form-control" placeholder="Insert name">
                     </div>
-
-                  </div>
+                    <!--Add members to the project. There's aksi a button to add more names if necessary-->
+                    <div class="form-group createPad">
+                      <label>Add members</label>
+                      <input type="text" class="form-control" placeholder="Name">
+                      <input type="text" class="form-control" placeholder="Name">
+                      <input type="text" class="form-control" placeholder="Name">
+                      <input type="text" class="form-control" placeholder="Name">
+                      <input type="text" class="form-control" placeholder="Name">
+                      <input type="text" class="form-control" placeholder="Name">
+                      <div class="createPadTop">
+                        <button class="btn btn-default glyphicon glyphicon-plus"> Add members</button>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Add First Sprint</label>
+                      <input type="text" class="form-control" placeholder="">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <!--Create new project in realm upon click-->
+                  <button type="submit" class="btn btn-default pull-left"><strong>Create</strong></button>
                 </div>
             </div>
+
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
 
 
