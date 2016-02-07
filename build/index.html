@@ -20,9 +20,9 @@
         <div id="sidebar">
             <div id="project-selector">
                 <ul>
-                    <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-                    <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-                    <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+                    <li><a href="project.html"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+                    <li><a href="project.html"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+                    <li><a href="project.html"><span class="glyphicon glyphicon-blackboard"></span></a></li>
                     <!-- Possible place for new project creation? -->
                     <li><a class="#" data-toggle="modal" data-target="#myModal">
                       <span class="glyphicon glyphicon-plus"></span>
@@ -38,12 +38,17 @@
             <nav class="navbar navbar-fixed-top navbar-default">
               <div class="container-fluid">
                     <div class="nav-left">
-                        <a class="navbar-brand" href="#">ScrumSpace</a>
+                        <a class="navbar-brand" href="/">ScrumSpace</a>
                     </div>
                     <div class="nav-right">
-                        <button type="button" class="btn btn-default navbar-btn">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </button>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="glyphicon glyphicon-option-vertical"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                <li><a href="settings.html">Settings</a></li>
+                            </ul>
+                        </div>
                     </div>
               </div>
             </nav>

@@ -2,7 +2,8 @@ button:focus {
   outline: none !important; }
 
 html, body {
-  font-family: "Source Sans Pro", sans-serif; }
+  font-family: "Source Sans Pro", sans-serif;
+  background: #EEF3F8; }
 
 #sidebar {
   background: #F9F9F9;
@@ -11,7 +12,8 @@ html, body {
   width: 80px;
   color: #fff;
   border-right: 1px solid #e7e7e7;
-  padding-top: 70px; }
+  padding-top: 50px;
+  z-index: 9999; }
   #sidebar #project-selector ul {
     margin: 0;
     padding: 0; }
@@ -22,7 +24,8 @@ html, body {
         display: inline-block;
         width: 50px;
         height: 50px;
-        background: #4E4E4E;
+        background: #031637;
+        opacity: 0.4;
         margin-bottom: 20px;
         border-radius: 5px;
         color: #fff;
@@ -33,21 +36,29 @@ html, body {
           font-size: 20px;
           margin-top: 13px; }
         #sidebar #project-selector ul li a:hover {
-          background: #818181; }
+          opacity: 0.6; }
         #sidebar #project-selector ul li a:active {
-          background: #1b1b1b; }
+          opacity: 0.8; }
+      #sidebar #project-selector ul li.selected a {
+        background: #fff;
+        opacity: 1;
+        color: #031637;
+        border: 1px solid #e7e7e7; }
 
 #content {
-  background: #fff;
   padding-left: 80px; }
   #content > .navbar {
-    background-color: #fff; }
+    background-color: #fff;
+    padding-left: 80px; }
+    #content > .navbar .navbar-brand {
+      color: #031637; }
     #content > .navbar .nav-left {
       float: left; }
     #content > .navbar .nav-right {
-      float: right; }
+      float: right;
+      padding: 8px; }
   #content .content {
-    padding-top: 70px; }
+    padding-top: 50px; }
 
 .module {
   border-radius: 3px;
@@ -55,8 +66,61 @@ html, body {
   padding: 10px;
   border: 1px solid #e7e7e7; }
 
-.project-status .progress {
+.project-info {
   background: #fff;
-  border: 1px solid #e7e7e7;
-  -webkit-box-shadow: none;
-  box-shadow: none; }
+  padding: 15px;
+  margin-bottom: 20px; }
+  .project-info .progress {
+    background: #fff;
+    margin: 15px 0;
+    border: none;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none; }
+    .project-info .progress .progress-bar {
+      -webkit-box-shadow: none;
+      box-shadow: none; }
+  .project-info .date-range {
+    color: #6D6D6D; }
+
+.scrum-board {
+  background-color: #F9F9F9; }
+  .scrum-board table {
+    width: 100%;
+    table-layout: fixed; }
+    .scrum-board table thead tr {
+      height: 40px; }
+      .scrum-board table thead tr th {
+        text-align: left;
+        border-bottom: 5px solid #f5f5f5; }
+    .scrum-board table tbody td {
+      vertical-align: top; }
+      .scrum-board table tbody td.state-doing .task {
+        border-top: 5px solid orange; }
+      .scrum-board table tbody td.state-blocked .task {
+        border-top: 5px solid red; }
+      .scrum-board table tbody td.state-done .task {
+        border-top: 5px solid green; }
+  .scrum-board .task {
+    background: #fff;
+    width: 80%;
+    padding: 6px;
+    margin: 10px 0;
+    border: 1px solid #e7e7e7;
+    opacity: 1;
+    -webkit-transition: all cubic-bezier(0.43, 0.84, 0.79, 0.99) 0.15s;
+    transition: all cubic-bezier(0.43, 0.84, 0.79, 0.99) 0.15s;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+    .scrum-board .task:hover {
+      cursor: pointer;
+      opacity: 0.6; }
+    .scrum-board .task:active {
+      transform: rotateZ(2deg); }
+    .scrum-board .task .heading {
+      color: #0C63F6; }
+    .scrum-board .task .body {
+      padding: 5px 0; }

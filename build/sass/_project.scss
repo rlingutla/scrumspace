@@ -1,9 +1,95 @@
-.project-status {
+.project-info {
+	background: #fff;
+	padding: 15px;
+	margin-bottom:20px;
 
     .progress {
     	background: #fff;
-    	border: 1px solid $border-color;
+    	margin: $margin;
+    	border: none;
+    	border-radius: 0;
     	-webkit-box-shadow: none;
     	box-shadow: none;
+
+    	.progress-bar {
+    		-webkit-box-shadow: none;
+    		box-shadow: none;
+    	}
     }
+
+    .date-range {
+    	color: $body-gray;
+    }
+}
+
+.scrum-board {
+	background-color: #F9F9F9;
+
+	table {
+		width: 100%;
+		table-layout: fixed;
+
+		thead {
+			tr {
+				height: 40px;
+
+				th {
+					text-align: left;
+	    			border-bottom: 5px solid #f5f5f5;
+				}
+			}
+		}
+		tbody {
+			td {
+				vertical-align: top;
+
+				// state styles
+				&.state-todo {
+				}
+				&.state-doing {
+					.task {
+						border-top: 5px solid orange;
+					}
+					
+				}
+				&.state-blocked {
+					.task {
+						border-top: 5px solid red;
+					}
+				}
+				&.state-done {
+					.task {
+						border-top: 5px solid green;
+					}
+				}
+			}
+		}
+	}
+
+	.task {
+		background: #fff;
+	    width: 80%;
+	    padding: 6px;
+	    margin: 10px 0;
+	    border: 1px solid $border-color;
+	    opacity: 1;
+	    @include transition();
+	    @include disableSelect();
+
+	    &:hover {
+	    	cursor: pointer;
+	    	opacity:0.6;
+	    }
+	    &:active {
+	    	transform: rotateZ(2deg);
+	    }
+
+		.heading {
+			color: $blue;
+		}
+		.body {
+			padding: 5px 0;
+		}
+
+	}
 }

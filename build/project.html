@@ -20,9 +20,9 @@
         <div id="sidebar">
             <div id="project-selector">
                 <ul>
-                    <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-                    <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-                    <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+                    <li class="selected"><a href="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
                 </ul>
             </div>
             <ul></ul>
@@ -31,30 +31,103 @@
             <nav class="navbar navbar-fixed-top navbar-default">
               <div class="container-fluid">
                     <div class="nav-left">
-                        <a class="navbar-brand" href="#">ScrumSpace</a>
+                        <a class="navbar-brand" href="/">ScrumSpace</a>
                     </div>
                     <div class="nav-right">
-                        <button type="button" class="btn btn-default navbar-btn">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </button>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="glyphicon glyphicon-option-vertical"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                <li><a href="settings.html">Settings</a></li>
+                            </ul>
+                        </div>
                     </div>
               </div>
             </nav>
+           
 
-            <div class="content container-fluid">
+            <div class="content">
                 <!-- CONTENT HERE -->
-                <div class="project-status module">
-                    <h4>Project Status</h4>
+                <div class="project-info container-fluid">
+                    <div class="state-details">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>V1 Release Sprint</h4>
+                                <span name="start_date">February 8th</span> - <span name="end_date">February 21st</span>
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                    </div>
+                    
                     <div class="progress">
-                        <div class="progress-bar progress-bar-warning" style="width: 20%">20% To Do</div>
-                        <div class="progress-bar progress-bar-danger" style="width: 10%">10% Blocked</div>
-                        <div class="progress-bar progress-bar-success" style="width: 35%">35% Done</div>
+                        <div class="progress-bar progress-bar-warning" style="width: 20%"></div>
+                        <div class="progress-bar progress-bar-danger" style="width: 10%"></div>
+                        <div class="progress-bar progress-bar-success" style="width: 35%"></div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <div class="panel panel-default scrum-board">
+                        <div class="panel-body">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tasks <span class="badge">3</span></th>
+                                        <th>Doing <span class="badge">2</span></th>
+                                        <th>Blocked <span class="badge">1</span></th>
+                                        <th>Done <span class="badge">1</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Tasks -->
+                                    <td class="state-todo">
+                                        <div class="task">
+                                            <div class="heading">SS-01</div>
+                                            <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
+                                        </div>
+                                        <div class="task">
+                                            <div class="heading">SS-03</div>
+                                            <div class="body">Morbi eget augue elementum orci tincidunt vulputate et in tellus.</div>
+                                        </div>
+                                        <div class="task">
+                                            <div class="heading">SS-07</div>
+                                            <div class="body">Pellentesque porttitor nibh sit amet dictum elementum. Nulla tempor mollis porta.</div>
+                                        </div>
+                                    </td>
+                                    <!-- Doing -->
+                                    <td class="state-doing">
+                                        <div class="task state-doing">
+                                            <div class="heading">SS-04</div>
+                                            <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
+                                        </div>
+                                        <div class="task state-doing">
+                                            <div class="heading">SS-10</div>
+                                            <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
+                                        </div>
+                                    </td>
+                                    <!-- Blocked -->
+                                    <td class="state-blocked">
+                                        <div class="task state-blocked">
+                                            <div class="heading">SS-02</div>
+                                            <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
+                                        </div>
+                                    </td>
+                                    <!-- Done -->
+                                    <td class="state-done">
+                                        <div class="task state-done">
+                                            <div class="heading">SS-05</div>
+                                            <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
+                                        </div>
+                                    </td>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
 
 
