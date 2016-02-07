@@ -12,3 +12,11 @@
 	-webkit-transition: all $bezier 0.15s;
 	transition: all $bezier 0.15s;
 }
+
+@mixin disableSelect(){
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}

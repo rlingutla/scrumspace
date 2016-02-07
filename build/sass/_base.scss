@@ -1,6 +1,7 @@
 // base
 html, body {
 	font-family: $sans-serif;
+	background: #EEF3F8;
 }
 
 #sidebar {
@@ -11,6 +12,7 @@ html, body {
     color: #fff;
     border-right: 1px solid $border-color;
     padding-top: $nav-offset;
+    z-index: 9999;
 
     #project-selector {
     	ul {
@@ -25,7 +27,8 @@ html, body {
     				display: inline-block;
 				    width: 50px;
 				    height: 50px;
-				    background: #4E4E4E;
+				    background: $dark-blue;
+				    opacity: 0.4;
 				    margin-bottom: 20px;
 				    border-radius: 5px;
 				    color: #fff;
@@ -38,12 +41,21 @@ html, body {
 				    }
 
 				    &:hover {
-				    	background: lighten(#4E4E4E, 20%); //SASS function 
+				    	opacity: 0.6;
 				    }
 
 				    &:active {
-				    	background: darken(#4E4E4E, 20%); //SASS function 	
+				    	opacity: 0.8;
 				    }
+    			}
+
+    			&.selected {
+    				a {
+    					background: #fff;
+    					opacity: 1;
+    					color: $dark-blue;
+    					border: 1px solid $border-color;
+    				}
     			}
     		}
     	}
@@ -51,11 +63,15 @@ html, body {
 } 
 
 #content {
-	background: #fff;
 	padding-left: 80px;
 
 	& > .navbar {
 		background-color: #fff;
+		padding-left: 80px;
+
+		.navbar-brand {
+			color: $dark-blue;
+		}
 
 		.nav-left {
 			float:left;
