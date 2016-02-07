@@ -27,7 +27,7 @@ Currently we're using [Gulp](http://gulpjs.com) to handle live Sass compilation.
 
 Remember, if you're not comfortable writing Sass (you'll love it though I promise), you can always write vanilla CSS in the sass files, it's all compatible. 
 
-**Remember, do not modify the files in `build/css/`, they will be overritten on sass compilation.**. 
+**Remember, do not modify the files in `build/css/`, they will be overwritten on sass compilation.**. 
 
 ## Running the Dev Server
 
