@@ -1,0 +1,22 @@
+.form-styling{
+  background-color: #e3e3e3;
+}
+
+.borderHead{
+  border-bottom: 2px solid black;
+  width:100%;
+  padding-bottom: 15px;
+}
+
+.createPad{
+  padding-bottom: 10px;
+}
+
+.modal .modal-body {
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+.createPadTop{
+  padding-top: 15px;
+}

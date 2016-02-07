@@ -9,13 +9,13 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom CSS goes here -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
   </head>
   <body>
     <!-- Custom HTML goes here -->
-    
+
     <div id="app">
         <div id="sidebar">
             <div id="project-selector">
@@ -23,6 +23,13 @@
                     <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
                     <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
                     <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+                    <!-- Possible place for new project creation? -->
+                    <li><a class="#" data-toggle="modal" data-target="#myModal">
+                      <span class="glyphicon glyphicon-plus"></span>
+                    </a></li>
+                    <li><a class="#">
+                      <span class="glyphicon glyphicon-stats"></span>
+                    </a></li>
                 </ul>
             </div>
             <ul></ul>
@@ -31,7 +38,7 @@
             <nav class="navbar navbar-fixed-top navbar-default">
               <div class="container-fluid">
                     <div class="nav-left">
-                        <a class="navbar-brand" href="#">ScrumSpace</a>    
+                        <a class="navbar-brand" href="#">ScrumSpace</a>
                     </div>
                     <div class="nav-right">
                         <button type="button" class="btn btn-default navbar-btn">
@@ -47,9 +54,6 @@
             </div>
         </div>
     </div>
-
-
-
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
