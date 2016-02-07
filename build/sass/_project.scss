@@ -3,9 +3,16 @@
 	padding: 15px;
 	margin-bottom:20px;
 
+	.progress-bar-details {
+		margin: 15px 0 5px;
+		color: $body-gray;
+		font-style: italic;
+	}
+
     .progress {
     	background: #fff;
     	margin: $margin;
+    	margin-top:0;
     	border: none;
     	border-radius: 0;
     	-webkit-box-shadow: none;

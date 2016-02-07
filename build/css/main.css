@@ -66,13 +66,26 @@ html, body {
   padding: 10px;
   border: 1px solid #e7e7e7; }
 
+.left-right-align > :first-child {
+  text-align: left;
+  padding-left: 0; }
+
+.left-right-align > :last-child {
+  text-align: right;
+  padding-right: 0; }
+
 .project-info {
   background: #fff;
   padding: 15px;
   margin-bottom: 20px; }
+  .project-info .progress-bar-details {
+    margin: 15px 0 5px;
+    color: #6D6D6D;
+    font-style: italic; }
   .project-info .progress {
     background: #fff;
     margin: 15px 0;
+    margin-top: 0;
     border: none;
     border-radius: 0;
     -webkit-box-shadow: none;
