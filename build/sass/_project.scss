@@ -1,10 +1,24 @@
-.project-status {
+.project-info {
+	background: #fff;
+	padding: 15px;
+	margin-bottom:20px;
 
     .progress {
     	background: #fff;
-    	border: 1px solid $border-color;
+    	margin: $margin;
+    	border: none;
+    	border-radius: 0;
     	-webkit-box-shadow: none;
     	box-shadow: none;
+
+    	.progress-bar {
+    		-webkit-box-shadow: none;
+    		box-shadow: none;
+    	}
+    }
+
+    .date-range {
+    	color: $body-gray;
     }
 }
 
