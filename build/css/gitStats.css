@@ -1,3 +1,18 @@
 .bodySize{
       overflow-y: auto;
 }
+
+.gTitles{
+  display:inline;
+  padding-left:5px;
+}
+
+.gTitles2{
+  display:inline;
+  padding-left:455px;
+}
+
+.imgWH{
+  width:600px;
+  height: 300px;
+}
