@@ -4,6 +4,7 @@ html, body {
 	background: #EEF3F8;
 }
 
+
 #sidebar {
 	background: $gray;
     position: fixed;
@@ -112,8 +113,10 @@ html, body {
 	background: #fff;
     padding: 6px;
     margin: 10px 0;
-    border: 1px solid $border-color;
     opacity: 1;
+    border:none;
+    border-top: 5px solid #E8E8E8;
+
     @include transition();
     @include disableSelect();
 
@@ -156,17 +159,28 @@ html, body {
 }
 .state-doing {
 	.task {
-		border-top: 5px solid orange;
+		border-color: orange;
 	}
 
 }
 .state-blocked {
 	.task {
-		border-top: 5px solid red;
+		border-color: red;
 	}
 }
 .state-done {
 	.task {
-		border-top: 5px solid green;
+		border-color: green;
 	}
+}
+
+.user-story {
+	background: #fff;
+    padding: 6px;
+    margin: 10px 0;
+    opacity: 1;
+    border:none;
+
+    @include transition();
+    @include disableSelect();
 }

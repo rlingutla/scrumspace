@@ -78,8 +78,9 @@ html, body {
   background: #fff;
   padding: 6px;
   margin: 10px 0;
-  border: 1px solid #e7e7e7;
   opacity: 1;
+  border: none;
+  border-top: 5px solid #E8E8E8;
   -webkit-transition: all cubic-bezier(0.43, 0.84, 0.79, 0.99) 0.15s;
   transition: all cubic-bezier(0.43, 0.84, 0.79, 0.99) 0.15s;
   -webkit-touch-callout: none;
@@ -111,13 +112,27 @@ html, body {
     padding: 5px 0; }
 
 .state-doing .task {
-  border-top: 5px solid orange; }
+  border-color: orange; }
 
 .state-blocked .task {
-  border-top: 5px solid red; }
+  border-color: red; }
 
 .state-done .task {
-  border-top: 5px solid green; }
+  border-color: green; }
+
+.user-story {
+  background: #fff;
+  padding: 6px;
+  margin: 10px 0;
+  opacity: 1;
+  border: none;
+  -webkit-transition: all cubic-bezier(0.43, 0.84, 0.79, 0.99) 0.15s;
+  transition: all cubic-bezier(0.43, 0.84, 0.79, 0.99) 0.15s;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
 
 .project-info {
   background: #fff;
@@ -151,9 +166,14 @@ html, body {
       .scrum-board table thead tr th {
         text-align: left;
         border-bottom: 5px solid #f5f5f5; }
+        .scrum-board table thead tr th .badge {
+          margin-left: 5px;
+          vertical-align: baseline; }
     .scrum-board table tbody td {
       vertical-align: top; }
       .scrum-board table tbody td .task {
         width: 80%; }
         .scrum-board table tbody td .task:active {
           transform: rotateZ(2deg); }
+      .scrum-board table tbody td .user-story {
+        width: 80%; }
