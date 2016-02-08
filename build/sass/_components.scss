@@ -1,3 +1,10 @@
+a {
+	color: $blue-color;
+}
+button {
+	@include hoverAction();
+}
+
 // utils
 .left-right-align {
 	margin:0; 
@@ -18,7 +25,7 @@
     padding: 6px;
     margin: 10px 0;
     opacity: 1;
-    border:none;
+    border: 1px solid $border-color;
     border-top: 5px solid #E8E8E8;
 
     @include transition();
@@ -63,18 +70,18 @@
 }
 .state-doing {
 	.task {
-		border-color: orange;
+		border-color: $yellow-color;
 	}
 
 }
 .state-blocked {
 	.task {
-		border-color: red;
+		border-color: $red-color;
 	}
 }
 .state-done {
 	.task {
-		border-color: green;
+		border-color: $green-color;
 	}
 }
 
@@ -83,7 +90,7 @@
     padding: 6px;
     margin: 10px 0;
     opacity: 1;
-    border:none;
+    border: 1px solid $border-color;
 
     @include transition();
 
@@ -120,4 +127,29 @@
     		text-decoration: underline;
     	}
     }
+}
+
+.progress {
+	background: #fff;
+	margin: $margin;
+	margin-top:0;
+	border: none;
+	border-radius: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+
+	.progress-bar {
+		-webkit-box-shadow: none;
+		box-shadow: none;
+
+		&.progress-bar-warning {
+			background-color: $yellow-color;
+		}
+		&.progress-bar-danger {
+			background-color: $red-color;
+		}
+		&.progress-bar-success {
+			background-color: $green-color;
+		}
+	}
 }
