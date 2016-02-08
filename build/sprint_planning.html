@@ -68,40 +68,51 @@
               </div>
               <div class="modal-body">
                 <div class="form-group modal-element">
-                  <label>Timeframe</label>
-                  <br>
-                  <div class="left-date pull-left">
-                    <div class="left-date-input">Enter Start Date
-                      <input type="date" class="form-control datesize" placeholder="Enter Start Date">
-                    </div>
+                  <div class="modal-big-text">
+                    Timeframe
                   </div>
-                  <div class="right-date pull-right">
-                    <div class="right-date-input">Enter End Date
-                      <input type="date" class="form-control datesize" placeholder="Enter End Date">
+                  <form>
+                    <div class="left-date pull-left">
+                      <div class="left-date-input">
+                        <label>Enter Start Date</label>
+                        <input type="date" class="form-control datesize" placeholder="Enter Start Date">
+                      </div>
                     </div>
-                  </div>
+                    <div class="right-date pull-right">
+                      <div class="right-date-input">
+                        <label>Enter End Date</label>
+                        <input type="date" class="form-control datesize" placeholder="Enter End Date">
+                      </div>
+                    </div>
+                  </form>
                 </div>
-                <br><br>
-                <div class="form-group modal-element">
-                  <label>Stories and Tasks</label>
+                <div class="form-group modal-element stories">
+                  <div class="modal-big-text">
+                    Stories and Tasks
+                  </div>
                   <div class="user-story">
                     Story 1
-                    <div class="story-input">Enter a Story
-                      <input type="text" class="form-control" placeholder="Something you want to get done!">
-                    </div>
-                    <!-- Thinking ahead here for when we will need to add js to add more tasks to a given story -->
-                    <div class="task-input">
-                      <div class="task-main-input">Enter a Task
-                        <input type="text" class="form-control" placeholder="Task Name">
+                    <form>
+                      <div class="story-input sat-pad">
+                        <label>Enter a Story</label>
+                        <input type="text" class="form-control" placeholder="Something you want to get done!">
                       </div>
-                      <div class="task-detail-input">Enter Task Details
-                        <input type="text" class="form-control" placeholder="Task Detail">
+                      <!-- Thinking ahead here for when we will need to add js to add more tasks to a given story -->
+                      <div class="task-input sat-pad">
+                        <div class="task-main-input">
+                          <label>Enter a Task</label>
+                          <input type="text" class="form-control" placeholder="Task Name">
+                        </div>
+                        <div class="task-detail-input sat-pad">
+                          <label>Enter Task Details</label>
+                          <textarea class="form-control task-detail-input" rows="2" placeholder="Enter Task Details"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-default sat-pad">
+                          <span class="glyphicon glyphicon-list"></span>Add New Task
+                        </button>
                       </div>
-                      <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-list"></span> Add New Task
-                      </button>
-                    </div>
-                    <button type="button" class="btn btn-default">
+                    </form>
+                    <button type="button" class="btn btn-default sat-pad">
                       <span class="glyphicon glyphicon-plus"></span> Add New Story
                     </button>
                   </div>
@@ -109,12 +120,11 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-right">
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">
                   <span class="glyphicon glyphicon-ok"></span> Done
                 </button>
               </div>
             </div>
-
           </div>
         </div>
       </div>
