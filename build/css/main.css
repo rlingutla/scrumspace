@@ -66,13 +66,14 @@ html, body {
   padding: 10px;
   border: 1px solid #e7e7e7; }
 
-.left-right-align > :first-child {
-  text-align: left;
-  padding-left: 0; }
-
-.left-right-align > :last-child {
-  text-align: right;
-  padding-right: 0; }
+.left-right-align {
+  margin: 0; }
+  .left-right-align > :first-child {
+    text-align: left;
+    padding-left: 0; }
+  .left-right-align > :last-child {
+    text-align: right;
+    padding-right: 0; }
 
 .task {
   background: #fff;
@@ -99,7 +100,7 @@ html, body {
       width: 25px;
       height: 25px;
       display: inline-block;
-      background: #F1EDED;
+      background: #F7F7F7;
       font-family: 'Glyphicons Halflings';
       color: gray; }
       .task .heading .avatar:before {
@@ -169,11 +170,36 @@ html, body {
         .scrum-board table thead tr th .badge {
           margin-left: 5px;
           vertical-align: baseline; }
+    .scrum-board table tbody tr {
+      border-bottom: 1px solid #EFEFEF; }
     .scrum-board table tbody td {
       vertical-align: top; }
       .scrum-board table tbody td .task {
-        width: 80%; }
+        width: 90%; }
         .scrum-board table tbody td .task:active {
           transform: rotateZ(2deg); }
       .scrum-board table tbody td .user-story {
-        width: 80%; }
+        width: 90%; }
+        .scrum-board table tbody td .user-story .heading > .row {
+          margin: 0; }
+        .scrum-board table tbody td .user-story.collapse {
+          display: block;
+          height: 100% !important; }
+          .scrum-board table tbody td .user-story.collapse .body {
+            display: none; }
+          .scrum-board table tbody td .user-story.collapse.in {
+            display: block; }
+            .scrum-board table tbody td .user-story.collapse.in .body {
+              display: block; }
+        .scrum-board table tbody td .user-story .control button.collapse-control {
+          background: #F7F7F7;
+          padding: 3px 7px;
+          border: none; }
+          .scrum-board table tbody td .user-story .control button.collapse-control:hover {
+            background: #eaeaea; }
+          .scrum-board table tbody td .user-story .control button.collapse-control:active {
+            background: #dedede; }
+        .scrum-board table tbody td .user-story ul {
+          padding-left: 20px; }
+        .scrum-board table tbody td .user-story .body h5 {
+          text-decoration: underline; }
