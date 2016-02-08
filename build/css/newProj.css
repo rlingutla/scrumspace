@@ -3,9 +3,7 @@
 }
 
 .borderHead{
-  border-bottom: 2px solid black;
-  width:100%;
-  padding-bottom: 15px;
+  padding-bottom: 20px;
 }
 
 .createPad{
@@ -19,6 +17,37 @@
 
 .createPadTop{
   padding-top: 15px;
+}
+
+.createPadTop2{
+  padding-top: 45px;
+}
+
+.borderTop{
+  border-top: 2px solid black !important;
+ /* Padding is the whitespace between the content of fb-trending and its
+    border */
+ padding-top: 15px;
+ padding-bottom: 15px;
+ /* Margin is the whitespace between the border and adjacent elements */
+ margin-top: 25px;
+ margin-bottom: 15px;
+}
+
+.tabsBorder{
+  border-bottom: 2px solid black;
+  padding-bottom: 2px;
+  width:100%;
+}
+
+.fillBorder{
+   margin-bottom:7px !important;
+}
+
+.fillBorderDesc{
+   margin:7px !important;
+   margin-left: 30px !important;
+   width:96%;
 }
 
 .black{
