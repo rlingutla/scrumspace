@@ -9,28 +9,13 @@
 		font-style: italic;
 	}
 
-    .progress {
-    	background: #fff;
-    	margin: $margin;
-    	margin-top:0;
-    	border: none;
-    	border-radius: 0;
-    	-webkit-box-shadow: none;
-    	box-shadow: none;
-
-    	.progress-bar {
-    		-webkit-box-shadow: none;
-    		box-shadow: none;
-    	}
-    }
-
     .date-range {
     	color: $body-gray;
     }
 }
 
 .scrum-board {
-	background-color: #F9F9F9;
+	background-color: #fff;
 
 	table {
 		width: 100%;
@@ -60,6 +45,7 @@
 
 				.task {
 					width: 90%;
+					@include hoverAction();
 
 					&:active {
 						transform: rotateZ(2deg);

@@ -27,3 +27,20 @@
 	-ms-user-select: text;
 	user-select: text;
 }
+
+@mixin hoverAction(){
+	    @include transition();
+
+	    &:hover {
+	    	transform: scale(1.05,1.05);
+			// background: darken($accent-color, 5);
+	    }
+	    &:active {
+	    	transform: scale(0.97,0.97);
+			// background: darken($accent-color, 10);
+			outline: 0;
+	    }
+	    &:focus {
+	    	outline: 0;
+	    }
+}

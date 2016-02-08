@@ -1,12 +1,13 @@
 // base
 html, body {
 	font-family: $sans-serif;
-	background: #EEF3F8;
+	// background: #EEF3F8;
+	background: #F8FDFF;
 }
 
 
 #sidebar {
-	background: $gray;
+	background: $sidebar-color;
     position: fixed;
     height: 100%;
     width: 80px;
@@ -28,13 +29,14 @@ html, body {
     				display: inline-block;
 				    width: 50px;
 				    height: 50px;
-				    background: $dark-blue;
+				    background: $dark-blue-color;
 				    opacity: 0.4;
 				    margin-bottom: 20px;
 				    border-radius: 5px;
 				    color: #fff;
 				    cursor: pointer;
-				    @include transition(); //SASS mixin (basically a function)
+				    // @include transition(); //SASS mixin (basically a function)
+				    @include hoverAction();
 
 				    .glyphicon {
 				    	font-size: 20px;
@@ -54,7 +56,7 @@ html, body {
     				a {
     					background: #fff;
     					opacity: 1;
-    					color: $dark-blue;
+    					color: $dark-blue-color;
     					border: 1px solid $border-color;
     				}
     			}
