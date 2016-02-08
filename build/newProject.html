@@ -63,35 +63,69 @@
                   <h4 class="modal-title borderHead"><strong>Create a new project</strong></h4>
                 </div>
                 <div class="modal-body">
-                  <form>
-                    <!--Input new name for a project-->
-                    <div class="form-group">
-                      <label>Project Name</label>
-                      <input type="text" class="form-control" placeholder="Insert name">
-                    </div>
-                    <!--Add members to the project. There's aksi a button to add more names if necessary-->
-                    <div class="form-group createPad">
-                      <label>Add members</label>
-                      <input type="text" class="form-control" placeholder="Name">
-                      <input type="text" class="form-control" placeholder="Name">
-                      <input type="text" class="form-control" placeholder="Name">
-                      <input type="text" class="form-control" placeholder="Name">
-                      <input type="text" class="form-control" placeholder="Name">
-                      <input type="text" class="form-control" placeholder="Name">
-                      <div class="createPadTop">
-                        <button class="btn btn-default glyphicon glyphicon-plus"> Add members</button>
+                  <form action="">
+                    <div class="tabbable">
+                      <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab1" data-toggle="tab">Name and Members</a></li>
+                        <li class=""><a href="#tab2" data-toggle="tab">First Sprint</a></li>
+                      </ul>
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                          <br />
+                          <div class="form-group">
+                            <label>Project Name</label>
+                            <input type="text" class="form-control" placeholder="Insert name">
+                          </div>
+                          <!--Add members to the project. There's aksi a button to add more names if necessary-->
+                          <div class="form-group createPad">
+                            <label>Add members</label>
+                            <input type="text" class="form-control" placeholder="Name">
+                            <input type="text" class="form-control" placeholder="Name">
+                            <input type="text" class="form-control" placeholder="Name">
+                            <input type="text" class="form-control" placeholder="Name">
+                            <input type="text" class="form-control" placeholder="Name">
+                            <input type="text" class="form-control" placeholder="Name">
+                            <div class="createPadTop">
+                              <button class="btn btn-default glyphicon glyphicon-plus"> Add members</button>
+                            </div>
+                          </div>
+                          <a href="#tab2" data-toggle="tab" class="btn pull-right">Next</a>
+                        </div>
+                        <div class="tab-pane" id="tab2">
+                          <div>
+                            <br />
+                            <label>Add First Sprint</label>
+                            <input type="text" class="form-control" placeholder="Task1">
+                            <input type="text" class="form-control" placeholder="Task2">
+                            <input type="text" class="form-control" placeholder="Task3">
+                            <input type="text" class="form-control" placeholder="Task4">
+                            <input type="text" class="form-control" placeholder="Task5">
+                          </div>
+                          <div class="createPadTop">
+                            <button class="btn btn-default glyphicon glyphicon-plus"> Add Tasks</button>
+                          </div>
+                          <a href="#tab2" data-toggle="tab" class="btn pull-left">Prev</a>
+                        </div>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label>Add First Sprint</label>
-                      <input type="text" class="form-control" placeholder="">
+                  </form>
+                          <!--Input new name for a project-->
+
+
+
+                      </div>
+                      <div class="modal-footer">
+                        <!--Create new project in realm upon click-->
+                        <button type="submit" class="btn btn-default pull-left"><strong>Create</strong></button>
+                      </div>
                     </div>
                   </form>
+                  <form>
+
+
+                  </form>
                 </div>
-                <div class="modal-footer">
-                  <!--Create new project in realm upon click-->
-                  <button type="submit" class="btn btn-default pull-left"><strong>Create</strong></button>
-                </div>
+
             </div>
 
           </div>
