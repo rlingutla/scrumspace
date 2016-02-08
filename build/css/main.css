@@ -229,3 +229,12 @@ button {
           transform: rotateZ(2deg); }
       .scrum-board table tbody td .user-story {
         width: 90%; }
+
+.form-control {
+  width: 50%; }
+
+.btn-default {
+  margin: 5px; }
+
+.panel-group .panel + .panel {
+  margin-top: 35px; }
