@@ -67,39 +67,6 @@
 				}
 				.user-story {
 					width: 90%;
-
-					.heading > .row { margin:0; }
-
-					&.collapse {
-						display:block;
-						height: 100% !important;
-
-						.body { display:none; }
-
-						&.in {
-							display:block;
-
-							.body { display:block; }
-						}
-					}
-					.control {
-						button.collapse-control {
-							background:$light-gray;
-							padding: 3px 7px;
-							border:none;
-
-							&:hover { background: darken($light-gray, 5%); }
-							&:active { background: darken($light-gray, 10%); }
-						}
-					}
-					ul {
-						padding-left: 20px;
-					}
-					.body {
-						h5 {
-							text-decoration: underline;
-						}
-					}
 				}
 			}
 		}
