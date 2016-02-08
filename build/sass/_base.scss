@@ -1,16 +1,20 @@
 // base
 html, body {
 	font-family: $sans-serif;
+	// background: #EEF3F8;
+	background: #F8FDFF;
 }
 
+
 #sidebar {
-	background: $gray;
+	background: $sidebar-color;
     position: fixed;
     height: 100%;
     width: 80px;
     color: #fff;
     border-right: 1px solid $border-color;
     padding-top: $nav-offset;
+    z-index: 9999;
 
     #project-selector {
     	ul {
@@ -25,55 +29,63 @@ html, body {
     				display: inline-block;
 				    width: 50px;
 				    height: 50px;
-				    background: #4E4E4E;
+				    background: $dark-blue-color;
+				    opacity: 0.4;
 				    margin-bottom: 20px;
 				    border-radius: 5px;
 				    color: #fff;
 				    cursor: pointer;
-				    @include transition(); //SASS mixin (basically a function)
+				    // @include transition(); //SASS mixin (basically a function)
+				    @include hoverAction();
 
 				    .glyphicon {
-				    	font-size: 20px; 
+				    	font-size: 20px;
 				    	margin-top: 13px;
 				    }
 
 				    &:hover {
-				    	background: lighten(#4E4E4E, 20%); //SASS function 
+				    	opacity: 0.6;
 				    }
 
 				    &:active {
-				    	background: darken(#4E4E4E, 20%); //SASS function 	
+				    	opacity: 0.8;
 				    }
+    			}
+
+    			&.selected {
+    				a {
+    					background: #fff;
+    					opacity: 1;
+    					color: $dark-blue-color;
+    					border: 1px solid $border-color;
+    				}
     			}
     		}
     	}
     }
-} 
+}
 
 #content {
-	background: #fff;
 	padding-left: 80px;
 
 	& > .navbar {
 		background-color: #fff;
+		padding-left: 80px;
+
+		.navbar-brand {
+			color: $dark-blue;
+		}
 
 		.nav-left {
 			float:left;
 		}
 		.nav-right {
 			float:right;
+			padding: 8px;
 		}
 	}
 
 	.content {
 		padding-top: $nav-offset;
 	}
-}
-
-//modules 
-.module {
-	border-radius: 3px;
-	background-color: $gray;
-	padding: 10px;
-	border: 1px solid $border-color;
 }
