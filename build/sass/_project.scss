@@ -50,53 +50,14 @@
 			td {
 				vertical-align: top;
 
-				// state styles
-				&.state-todo {
-				}
-				&.state-doing {
-					.task {
-						border-top: 5px solid orange;
-					}
-					
-				}
-				&.state-blocked {
-					.task {
-						border-top: 5px solid red;
-					}
-				}
-				&.state-done {
-					.task {
-						border-top: 5px solid green;
+				.task {
+					width: 80%;
+
+					&:active {
+						transform: rotateZ(2deg);
 					}
 				}
 			}
 		}
-	}
-
-	.task {
-		background: #fff;
-	    width: 80%;
-	    padding: 6px;
-	    margin: 10px 0;
-	    border: 1px solid $border-color;
-	    opacity: 1;
-	    @include transition();
-	    @include disableSelect();
-
-	    &:hover {
-	    	cursor: pointer;
-	    	opacity:0.6;
-	    }
-	    &:active {
-	    	transform: rotateZ(2deg);
-	    }
-
-		.heading {
-			color: $blue;
-		}
-		.body {
-			padding: 5px 0;
-		}
-
 	}
 }

@@ -106,3 +106,67 @@ html, body {
 		padding-right:0;
 	}
 }
+
+// TASKS
+.task {
+	background: #fff;
+    padding: 6px;
+    margin: 10px 0;
+    border: 1px solid $border-color;
+    opacity: 1;
+    @include transition();
+    @include disableSelect();
+
+    &:hover {
+    	cursor: pointer;
+    	opacity:0.7;
+    }
+
+	.heading {
+		color: $blue;
+
+		.row {
+			margin:0;
+		}
+
+		.avatar {
+			width: 25px;
+			height: 25px;
+			display: inline-block;
+			background: #F1EDED;
+			font-family: 'Glyphicons Halflings';
+			color: gray;
+
+			&:before {
+				position: relative;
+				top: 2px;
+				left: -6px;
+				content: "\e008";
+				font-size: 12px;
+			}
+		}
+	}
+	.body {
+		padding: 5px 0;
+	}
+}
+
+// Task state coloring
+.state-todo {
+}
+.state-doing {
+	.task {
+		border-top: 5px solid orange;
+	}
+
+}
+.state-blocked {
+	.task {
+		border-top: 5px solid red;
+	}
+}
+.state-done {
+	.task {
+		border-top: 5px solid green;
+	}
+}
