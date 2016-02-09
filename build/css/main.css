@@ -326,3 +326,6 @@ button {
 
 .task-detail-input {
   resize: vertical; }
+
+.dashboard-header {
+  padding-top: 10px; }
