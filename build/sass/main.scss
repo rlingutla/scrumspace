@@ -10,5 +10,17 @@
 // base styles
 @import "base";
 
+//components
+@import "components";
+
 // project view 
 @import "project";
+
+// settings view
+@import "settings";
+
+// git stats feature
+@import "gitstats";
+
+// sprint planning
+@import "sprint";
