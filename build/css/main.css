@@ -65,6 +65,8 @@ html, body {
       padding: 8px; }
   #content .content {
     padding-top: 50px; }
+    #content .content.tab-offset {
+      padding-top: 90px; }
 
 a {
   color: #118AB2; }
@@ -235,6 +237,18 @@ button {
           content: "\e252"; }
         .scrum-board table tbody td .user-story.collapse.in .control i.glyphicon:before {
           content: "\e253"; }
+
+.project-nav.nav-tabs {
+  background: #F7F7F7;
+  border: none; }
+  .project-nav.nav-tabs li a {
+    border: none;
+    border-radius: 0;
+    margin: 0; }
+    .project-nav.nav-tabs li a:hover, .project-nav.nav-tabs li a:focus, .project-nav.nav-tabs li a:active {
+      border: none; }
+  .project-nav.nav-tabs li.active a {
+    border-bottom: 2px solid #118AB2; }
 
 .header-styling {
   background-color: #118AB2; }
