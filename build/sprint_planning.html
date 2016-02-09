@@ -83,6 +83,7 @@
           </div>
           <div class="panel panel-default">
             <div class="panel-heading">
+              <button type="button" class="close">&times;</button>
               <h4>Story 1</h4>
             </div>
             <div class="panel-body">
@@ -119,15 +120,50 @@
                   </div>
                 </div>
               </div>
-
             </div>
             <div class="panel-footer sprint-footer">
               <div class="btn-group">
                 <button type="button" class="btn btn-default pull-left no-side-margin">
-                  <span class="glyphicon glyphicon-plus"></span> Add New Story
+                  <span class="glyphicon glyphicon-list"></span> Add New Task
                 </button>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <button type="button" class="close">&times;</button>
+              <h4>Story 2</h4>
+            </div>
+            <div class="panel-body">
+              <div class="row story-panel">
+                <div class="col-md-6">
+                  <div class="story-input sat-pad">
+                    <label>Enter a Story</label>
+                    <input type="text" class="form-control strech-input" placeholder="Something you want to get done!">
+                  </div>
+                </div>
+              </div>
+              <!-- Thinking ahead here for when we will need to add js to add more tasks to a given story -->
+              <div class="row story-panel">
+                <div class="col-md-6">
+                  <div class="task-main-input sat-pad">
+                    <label>Enter a Task</label>
+                    <input type="text" class="form-control strech-input" placeholder="Task Name">
+                  </div>
+                  <div class="task-detail-input sat-pad">
+                    <label>Enter Task Details</label>
+                    <textarea class="form-control strech-input" rows="2" placeholder="Enter Task Details"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer sprint-footer">
+              <div class="btn-group">
                 <button type="button" class="btn btn-default pull-left no-side-margin">
                   <span class="glyphicon glyphicon-list"></span> Add New Task
+                </button>
+                <button type="button" class="btn btn-default pull-left no-side-margin">
+                  <span class="glyphicon glyphicon-plus"></span> Add New Story
                 </button>
               </div>
               <button type="button" class="btn btn-default pull-right no-side-margin">
