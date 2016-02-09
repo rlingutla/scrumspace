@@ -65,7 +65,14 @@
 }
 
 .borderHead{
-  padding-bottom: 20px;
+  padding-bottom: 10px;
+	border-bottom: 2px solid black !important;
+	width: 100% !important;
+}
+
+.borderBottom{
+  padding-top: 10px;
+	border-top: 2px solid black !important;
 }
 
 .createPad{
@@ -96,10 +103,8 @@
  margin-bottom: 15px;
 }
 
-.tabsBorder{
-  border-bottom: 2px solid black;
-  padding-bottom: 2px;
-  width:100%;
+.form-field-width{
+	width:100% !important;
 }
 
 .fillBorder{
