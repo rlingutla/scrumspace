@@ -287,13 +287,51 @@ button {
   color: black; }
 
 .form-control {
-  width: 50%; }
+  width: 100%; }
 
-.btn-default {
+.save {
   margin: 5px; }
 
 .panel-group .panel + .panel {
   margin-top: 35px; }
+
+.project-search {
+  margin-bottom: 20px; }
+
+#settings {
+  margin-bottom: 25px; }
+
+.row {
+  margin-top: 20px; }
+
+.form-control {
+  width: 100%; }
+
+.save {
+  margin-right: 15px; }
+
+.myg {
+  margin: 10px;
+  opacity: 0.2; }
+
+.myproj {
+  background-color: #f4f4f4; }
+
+.project-name {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin: 6px; }
+
+.external-b {
+  background-color: #f4f4f4; }
+
+.external-p {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 12px;
+  margin: 6px; }
 
 .bodySize {
   overflow-y: auto; }
