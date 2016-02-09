@@ -6,3 +6,5 @@ build/js/app.js
 .sass-cache
 # Ignores log files
 *.log
+# LOL MAC
+.DS_Store

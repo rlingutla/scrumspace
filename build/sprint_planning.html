@@ -43,91 +43,104 @@
     <div id="content">
       <nav class="navbar navbar-fixed-top navbar-default">
         <div class="container-fluid">
-              <div class="nav-left">
-                  <a class="navbar-brand" href="/">ScrumSpace</a>
-              </div>
-              <div class="nav-right">
-                  <div class="dropdown">
-                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                          <span class="glyphicon glyphicon-option-vertical"></span>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                          <li><a href="settings.html">Settings</a></li>
-                      </ul>
-                  </div>
-              </div>
+          <div class="nav-left">
+            <a class="navbar-brand" href="/">ScrumSpace</a>
+          </div>
+          <div class="nav-right">
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span class="glyphicon glyphicon-option-vertical"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                <li><a href="settings.html">Settings</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </nav>
 
-      <div class="content container-fluid">
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-            <!--For Now the Plus button makes it appear-->
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Sprint Planning</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group modal-element">
-                  <div class="modal-big-text">
-                    Timeframe
+      <div class="content container">
+        <h2 id="settings">Sprint Planning</h2>
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4> Timeframe</h4>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="left-date-input">
+                      <label>Enter Sprint Name</label>
+                      <input type="text" class="form-control strech-input" placeholder="Name of Sprint">
+                    </div>
                   </div>
-                  <form>
-                    <div class="left-date pull-left">
-                      <div class="left-date-input">
-                        <label>Enter Start Date</label>
-                        <input type="date" class="form-control datesize" placeholder="Enter Start Date">
-                      </div>
+                  <div class="col-md-3">
+                    <div class="left-date-input">
+                      <label>Enter Start Date</label>
+                      <input type="date" class="form-control strech-input" placeholder="Enter Start Date">
                     </div>
-                    <div class="right-date pull-right">
-                      <div class="right-date-input">
-                        <label>Enter End Date</label>
-                        <input type="date" class="form-control datesize" placeholder="Enter End Date">
-                      </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="right-date-input">
+                      <label>Enter End Date</label>
+                      <input type="date" class="form-control strech-input" placeholder="Enter End Date">
                     </div>
-                  </form>
+                  </div>
                 </div>
-                <div class="form-group modal-element stories">
-                  <div class="modal-big-text">
-                    Stories and Tasks
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4>Story 1</h4>
+            </div>
+            <div class="panel-body">
+              <div class="row story-panel">
+                <div class="col-md-6">
+                  <div class="story-input sat-pad">
+                    <label>Enter a Story</label>
+                    <input type="text" class="form-control strech-input" placeholder="Something you want to get done!">
                   </div>
-                  <div class="sprint-story">
-                    Story 1
-                    <form>
-                      <div class="story-input sat-pad">
-                        <label>Enter a Story</label>
-                        <input type="text" class="form-control" placeholder="Something you want to get done!">
-                      </div>
-                      <!-- Thinking ahead here for when we will need to add js to add more tasks to a given story -->
-                      <div class="task-input sat-pad">
-                        <div class="task-main-input">
-                          <label>Enter a Task</label>
-                          <input type="text" class="form-control" placeholder="Task Name">
-                        </div>
-                        <div class="task-detail-input sat-pad">
-                          <label>Enter Task Details</label>
-                          <textarea class="form-control task-detail-input" rows="2" placeholder="Enter Task Details"></textarea>
-                        </div>
-                        <button type="button" class="btn btn-default sat-pad">
-                          <span class="glyphicon glyphicon-list"></span>Add New Task
-                        </button>
-                      </div>
-                    </form>
-                    <button type="button" class="btn btn-default sat-pad">
-                      <span class="glyphicon glyphicon-plus"></span> Add New Story
-                    </button>
+                </div>
+              </div>
+              <!-- Thinking ahead here for when we will need to add js to add more tasks to a given story -->
+              <div class="row story-panel">
+                <div class="col-md-6">
+                  <div class="task-main-input sat-pad">
+                    <label>Enter a Task</label>
+                    <input type="text" class="form-control strech-input" placeholder="Task Name">
                   </div>
+                  <div class="task-detail-input sat-pad">
+                    <label>Enter Task Details</label>
+                    <textarea class="form-control strech-input" rows="2" placeholder="Enter Task Details"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="task-main-input sat-pad">
+                    <label>Enter a Task</label>
+                    <input type="text" class="form-control strech-input" placeholder="Task Name">
+                  </div>
+                  <div class="task-detail-input sat-pad">
+                    <label>Enter Task Details</label>
+                    <textarea class="form-control strech-input" rows="2" placeholder="Enter Task Details"></textarea>
+                  </div>
+                </div>
+              </div>
 
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">
-                  <span class="glyphicon glyphicon-ok"></span> Done
+            </div>
+            <div class="panel-footer sprint-footer">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default pull-left no-side-margin">
+                  <span class="glyphicon glyphicon-plus"></span> Add New Story
+                </button>
+                <button type="button" class="btn btn-default pull-left no-side-margin">
+                  <span class="glyphicon glyphicon-list"></span> Add New Task
                 </button>
               </div>
+              <button type="button" class="btn btn-default pull-right no-side-margin">
+                <span class="glyphicon glyphicon-ok"></span> Done
+              </button>
             </div>
           </div>
         </div>

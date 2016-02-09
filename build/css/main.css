@@ -11,7 +11,6 @@ html, body {
   height: 100%;
   width: 80px;
   color: #fff;
-  border-right: 1px solid #e7e7e7;
   padding-top: 50px;
   z-index: 9999; }
   #sidebar #project-selector ul {
@@ -186,6 +185,11 @@ button {
     .progress .progress-bar.progress-bar-success {
       background-color: #06D6A0; }
 
+.badge {
+  background-color: #118AB2;
+  margin-left: 5px;
+  vertical-align: baseline; }
+
 .project-info {
   background: #fff;
   padding: 15px;
@@ -198,7 +202,7 @@ button {
     color: #6D6D6D; }
 
 .scrum-board {
-  background-color: #fff; }
+  background-color: rgba(255, 255, 255, 0.9); }
   .scrum-board table {
     width: 100%;
     table-layout: fixed; }
@@ -206,10 +210,8 @@ button {
       height: 40px; }
       .scrum-board table thead tr th {
         text-align: left;
-        border-bottom: 5px solid #f5f5f5; }
-        .scrum-board table thead tr th .badge {
-          margin-left: 5px;
-          vertical-align: baseline; }
+        border-bottom: 2px solid #EAEAEA;
+        font-weight: 600; }
     .scrum-board table tbody tr {
       border-bottom: 1px solid #EFEFEF; }
     .scrum-board table tbody td {
@@ -229,6 +231,10 @@ button {
           transform: rotateZ(2deg); }
       .scrum-board table tbody td .user-story {
         width: 90%; }
+        .scrum-board table tbody td .user-story.collapse .control i.glyphicon:before {
+          content: "\e252"; }
+        .scrum-board table tbody td .user-story.collapse.in .control i.glyphicon:before {
+          content: "\e253"; }
 
 .header-styling {
   background-color: #118AB2; }
@@ -280,13 +286,51 @@ button {
   color: black; }
 
 .form-control {
-  width: 50%; }
+  width: 100%; }
 
-.btn-default {
+.save {
   margin: 5px; }
 
 .panel-group .panel + .panel {
   margin-top: 35px; }
+
+.project-search {
+  margin-bottom: 20px; }
+
+#settings {
+  margin-bottom: 25px; }
+
+.row {
+  margin-top: 20px; }
+
+.form-control {
+  width: 100%; }
+
+.save {
+  margin-right: 15px; }
+
+.myg {
+  margin: 10px;
+  opacity: 0.2; }
+
+.myproj {
+  background-color: #f4f4f4; }
+
+.project-name {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin: 6px; }
+
+.external-b {
+  background-color: #f4f4f4; }
+
+.external-p {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 12px;
+  margin: 6px; }
 
 .bodySize {
   overflow-y: auto; }
@@ -303,33 +347,28 @@ button {
   width: 600px;
   height: 300px; }
 
-.datesize {
-  width: 200px; }
-
-.modal-body {
-  overflow: auto; }
-
-.story-input {
-  width: auto; }
-
-.stories {
-  padding-top: 8px;
-  margin-top: 70px;
-  margin-bottom: 0px;
-  border-top: 2px solid lightgray; }
-
-.modal-big-text {
-  font-size: 16px;
-  font-weight: bold;
-  padding-bottom: 5px; }
+.strech-input {
+  width: 100% !important; }
 
 .sat-pad {
   /*Story and Text padding... */
-  padding-top: 5px;
   padding-bottom: 5px; }
 
 .task-detail-input {
   resize: vertical; }
+
+.sat-no-margin {
+  margin-bottom: 0px; }
+
+.no-side-margin {
+  margin-left: 0px;
+  margin-right: 0px; }
+
+.color-edges-green {
+  border-color: #06D6A0; }
+
+.pad-but-right {
+  padding-right: 15px; }
 
 .dashboard-header {
   padding-top: 10px; }

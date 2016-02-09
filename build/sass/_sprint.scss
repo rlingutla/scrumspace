@@ -1,35 +1,30 @@
-.datesize{
-  width: 200px;
-
-}
-
-.modal-body{
-  overflow: auto;
-}
-
-.story-input{
-  width: auto;
-}
-
-.stories{
-  padding-top: 8px;
-  margin-top: 70px;
-  margin-bottom: 0px;
-  border-top: 2px solid lightgray;
-}
-
-.modal-big-text{
-  font-size: 16px;
-  font-weight: bold;
-  padding-bottom: 5px;
+.strech-input{
+  width: 100% !important;
 }
 
 .sat-pad{
   /*Story and Text padding... */
-  padding-top: 5px;
   padding-bottom: 5px;
 }
 
 .task-detail-input{
   resize: vertical;
+}
+
+
+.sat-no-margin{
+  margin-bottom: 0px;
+}
+
+.no-side-margin{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.color-edges-green{
+  border-color: $green-color;
+}
+
+.pad-but-right{
+  padding-right: 15px;
 }

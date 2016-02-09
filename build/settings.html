@@ -38,7 +38,7 @@
             <nav class="navbar navbar-fixed-top navbar-default">
               <div class="container-fluid">
                     <div class="nav-left">
-                        <a class="navbar-brand" href="/">ScrumSpace</a>
+                        <a class="navbar-brand" href="/">Settings</a>
                     </div>
                     <div class="nav-right">
                         <div class="dropdown">
@@ -56,12 +56,49 @@
             <div class="content container-fluid">
                 <!-- CONTENT HERE -->
 				<div class="container">
-  <h2 id="settings">Settings</h2>
+  <h3 id="settings">Settings</h3>
   <div class="panel-group">
-  
+
     <div class="panel panel-default">
-      <div class="panel-heading"><h4>Account Information</h4></div>
+      <div class="panel-heading"><h4> <span class="glyphicon glyphicon-user myg"></span> User Settings:</h4></div>
       <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+     		   		<div class="form-group">
+     		   			<label for="first-name">First Name:</label>
+     		   				<input type="first-name" class="form-control" id="first-name" placeholder="John">
+     		   		</div>
+
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+  		   			<label for="last-name">Last Name:</label>
+  		   				<input type="last-name" class="form-control" id="last-name"placeholder="Smith">
+  		   		</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="email">Email address:</label>
+                <input type="email" class="form-control" id="email" placeholder="john.smith@company.com">
+            </div>
+     		   		</div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="email">User Name:</label>
+                <input type="user-name" class="form-control" id="user-name" placeholder="jhsmith">
+            </div>
+          </div>
+        </div>
+
+        <div class="row"><span class="pull-right"> <button type="save" class="btn btn-default save">Save</button> </span> </div>
+
+
+
+
+        <!--
 		   <form role="form">
 		   		<div class="form-group">
 		   			<label for="first-name">First Name:</label>
@@ -72,33 +109,43 @@
 		   				<input type="last-name" class="form-control" id="last-name"placeholder="Smith">
 		   		</div>
 
-<!-- 
-				<div class="form-group">
-					<label for="first-name">First Name:</label>
-						<input type="first-name" class="form-control" id="first-name" placeholder="John">
-				</div>
-				<div class="form-group">
-					<label for="last-name">Last Name:</label>
-						<input type="last-name" class="form-control" id="last-name"placeholder="Smith">
-				</div> -->
+
 				<div class="form-group">
 					<label for="email">Email address:</label>
 						<input type="email" class="form-control" id="email" placeholder="john.smith@company.com">
 				</div>
+
 				<div class="form-group">
 					<label for="email">User Name:</label>
 						<input type="user-name" class="form-control" id="user-name" placeholder="jhsmith">
 				</div>
-		 <span class="pull-right"> <button type="save" class="btn btn-default">Save</button> </span>
-		  <span class="pull-right"><button type="cancel" class="btn btn-default">Cancel</button> </span>
-			</form>
+      </form> -->
+		<!-- <span class="pull-right"> <button type="save" class="btn btn-default">Save</button> </span> -->
+
 	    </div>
     </div>
-	
+
     <div class="panel panel-default">
-      <div class="panel-heading"><h4>Privacy</h4></div>
+      <div class="panel-heading"><h4><span class="glyphicon glyphicon-lock myg"></span>Privacy:</h4></div>
 		<div class="panel-body">
-			<form role="form">
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+              <label for="current-password">Current Password:</label>
+                <input type="current-password" class="form-control" id="current-password" placeholder="Enter current password">
+            </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="new-password">New Password:</label>
+              <input type="new-password" class="form-control" id="last-name"placeholder="Enter new password">
+          </div>
+        </div>
+      </div>
+
+        <div class="row"><span class="pull-right"> <button type="save" class="btn btn-default save">Save</button> </span> </div>
+			<!-- <form role="form">
 				<div class="form-group">
 					<label for="old-password">Old Password</label>
 					<input type="old-password" class="form-control" id="old-password" placeholder="Enter current password">
@@ -108,61 +155,61 @@
 				<input type="new-password" class="form-control" id="new-password" placeholder="Enter new password">
 				</div>
 				<span class="pull-right"><button type="submit" class="btn btn-default">Save</button></span>
-			</form>
-		</div> 
+			</form> -->
+		</div>
     </div>
-	
+
     <div class="panel panel-default">
-      <div class="panel-heading"><h4>Projects</h4></div>
+          <div class="panel-heading"><h4><span class="glyphicon glyphicon-folder-open myg"></span>Projects:</h4></div>
 		<div class="panel-body">
-			<div class="row">
+			<div class="row project-search">
 				<div class="col-md-9"> </div>
 					<div class="col-md-3">
 						<div class="form-group " style="display:inline;">
 							<div class="input-group ">
-								<input type="Search Projects" class="form-control"placeholder="Search Projects"> 
+								<input type="Search Projects" class="form-control"placeholder="Search Projects">
 									<span class="input-group-addon"> <span class="glyphicon glyphicon-search"></span></span>
 							</div>
 						</div>
 					</div>
 				</div>
-			<div class="row">
-				<div class="col-md-9"> 
-					<div class="col-md-9"><p>Project 1</p>
+			<div class="row myproj">
+				<div class="col-md-9">
+					<div class="col-md-9"><p class="project-name">Project 1</p>
 					</div>
 				</div>
-				<div class="col-md-3">  
+				<div class="col-md-3">
 					<span class="pull-right">
-						<button type="submit" class="btn btn-default">view</button> 
-						<button type="submit" class="btn btn-default">edit</button> 
+						<button type="submit" class="btn btn-default">view</button>
+						<button type="submit" class="btn btn-default">edit</button>
 						<button type="submit" class="btn btn-default">delete</button>
 					</span>
 				</div>
 			</div>
-	  
-			<div class="row">
-				<div class="col-md-9"> 
-					<div class="col-md-9"><p>Project 2</p>
+
+			<div class="row myproj">
+				<div class="col-md-9">
+					<div class="col-md-9"><p class="project-name">Project 2</p>
 					</div>
 				</div>
-				<div class="col-md-3">  
+				<div class="col-md-3">
 					<span class="pull-right">
-						<button type="submit" class="btn btn-default">view</button> 
-						<button type="submit" class="btn btn-default">edit</button> 
+						<button type="submit" class="btn btn-default">view</button>
+						<button type="submit" class="btn btn-default">edit</button>
 						<button type="submit" class="btn btn-default">delete</button>
 					</span>
 				</div>
 			</div>
-	  
-			<div class="row">
-				<div class="col-md-9"> 
-					<div class="col-md-9"><p>Project 3</p>
+
+			<div class="row myproj">
+				<div class="col-md-9">
+					<div class="col-md-9"><p class="project-name">Project 3</p>
 					</div>
 				</div>
-				<div class="col-md-3">  
+				<div class="col-md-3">
 					<span class="pull-right">
-						<button type="submit" class="btn btn-default">view</button> 
-						<button type="submit" class="btn btn-default">edit</button> 
+						<button type="submit" class="btn btn-default">view</button>
+						<button type="submit" class="btn btn-default">edit</button>
 						<button type="submit" class="btn btn-default">delete</button>
 					</span>
 				</div>
@@ -170,11 +217,11 @@
 	  </div>
 </div>
 	<div class="panel panel-default">
-      <div class="panel-heading"><h4>External Settings</h4></div>
+      <div class="panel-heading"><h4><span class="glyphicon glyphicon-list myg"></span>External Settings:</h4></div>
 		<div class="panel-body">
-		<div class="row"> 
+		<div class="row external-b">
 			<div class="col-md-3">
-				<p>Enable/Disable Google Hangouts  </p>
+				<p class="external-p">Enable/Disable Google Hangouts</p>
 			</div>
 			<div class="col-md-9">
 				<span class="pull-right">
@@ -183,9 +230,9 @@
 				</span>
 		</div>
 
-		<div class="row"> 
+		<div class="row external-b">
 			<div class="col-md-3">
-				<p>Enable/Disable Github Notifications  </p>
+				<p class="external-p">Enable/Disable Github Notifications </p>
 			</div>
 			<div class="col-md-9">
 				<span class="pull-right">
@@ -193,10 +240,10 @@
 					<button type="submit" class="btn btn-default">Disable</button> </div>
 				</span>
 		</div>
-		
-		<div class="row"> 
+
+		<div class="row external-b">
 			<div class="col-md-3">
-				<p>Enable/Disable Email Notifications  </p>
+				<p class="external-p">Enable/Disable Email Notifications  </p>
 			</div>
 			<div class="col-md-9">
 				<span class="pull-right">
@@ -204,32 +251,32 @@
 					<button type="submit" class="btn btn-default">Disable</button> </div>
 				</span>
 		</div>
-		
+
 	  </div>
     </div>
   </div>
 </div>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
         </div>
     </div>
