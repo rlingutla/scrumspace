@@ -120,7 +120,7 @@
                                         <!-- Tasks -->
                                         <td class="state-todo">
                                             <div class="collapse1 collapse in">
-                                                <div class="task">
+                                                <div class="task" data-toggle="modal" data-target="#myModal">
                                                     <div class="heading">
                                                         <div class="row left-right-align">
                                                             <div class="col-md-6"><a>SS-S1-T1</a></div>
@@ -133,11 +133,11 @@
 
 
                                                 
-                                                <div class="task">
+                                                <div class="task" data-toggle="modal" data-target="#myModal">
                                                     <div class="heading"><a>SS-S1-T3</a></div>
                                                     <div class="body">Morbi eget augue elementum orci tincidunt vulputate et in tellus.</div>
                                                 </div>
-                                                <div class="task">
+                                                <div class="task" data-toggle="modal" data-target="#myModal">
                                                     <div class="heading"><a>SS-S1-T7</a></div>
                                                     <div class="body">Pellentesque porttitor nibh sit amet dictum elementum. Nulla tempor mollis porta.</div>
                                                 </div>
@@ -193,100 +193,6 @@
                                             </div>
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="user-story collapse2 collapse">
-                                                <!-- <div class="row"> -->
-                                                    <div class="">
-                                                        <div class="heading">
-                                                            <div class="row left-right-align">
-                                                                <div class="col-md-9"><a>SS-S2</a></div>
-                                                                <div class="col-md-3">
-                                                                    <div class="control">
-                                                                        <button class="collapse-control" data-toggle="collapse" data-target=".collapse2">
-                                                                            <i class="glyphicon glyphicon-triangle-top"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="body">
-                                                            <h5>Sprint Planning Functionality</h5>
-                                                            <ul>
-                                                                <li>Create Sprints</li>
-                                                                <li>Add storyboards and tasks to sprint</li>
-                                                                <li>Projects can be in a "sprint" state</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                <!-- </div> -->
-                                            </div>
-                                        </td>
-                                        <!-- Tasks -->
-                                        <td class="state-todo">
-                                            <div class="collapse2 collapse">
-                                                <div class="task">
-                                                    <div class="heading">
-                                                        <div class="row left-right-align">
-                                                            <div class="col-md-6"><a>SS-S2-T1</a></div>
-                                                            <div class="col-md-6"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <!-- Doing -->
-                                        <td class="state-doing">
-                                            <div class="collapse2 collapse">
-                                                <div class="task state-doing">
-                                                    <div class="heading">
-                                                        <div class="row left-right-align">
-                                                            <div class="col-md-6"><a>SS-S2-T4</a></div>
-                                                            <div class="col-md-6"><span class="avatar"></span></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
-                                                </div>
-                                                <div class="task state-doing">
-                                                    <div class="heading">
-                                                        <div class="row left-right-align">
-                                                            <div class="col-md-6"><a>SS-S2-T10</a></div>
-                                                            <div class="col-md-6"><span class="avatar"></span></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
-                                                </div>
-                                                <div class="task state-doing">
-                                                    <div class="heading">
-                                                        <div class="row left-right-align">
-                                                            <div class="col-md-6"><a>SS-S2-T6</a></div>
-                                                            <div class="col-md-6"><span class="avatar"></span></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <!-- Blocked -->
-                                        <td class="state-blocked">
-                                            <div class="collapse2 collapse">
-                                            </div>
-                                        </td>
-                                        <!-- Done -->
-                                        <td class="state-done">
-                                            <div class="collapse2 collapse">
-                                                <div class="task state-done">
-                                                    <div class="heading"><a>SS-S2-T5</a></div>
-                                                    <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-
                                 </tbody>
                             </table>
                         </div>
@@ -294,6 +200,25 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Task DetailModal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Task SS-S1-1</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
     </div>
 
 
