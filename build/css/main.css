@@ -313,9 +313,6 @@ button {
 .task-detail-input {
   resize: vertical; }
 
-.sprint-footer {
-  padding-bottom: 53px; }
-
 .sat-no-margin {
   margin-bottom: 0px; }
 
@@ -325,6 +322,9 @@ button {
 
 .color-edges-green {
   border-color: #06D6A0; }
+
+.pad-but-right {
+  padding-right: 15px; }
 
 .dashboard-header {
   padding-top: 10px; }
