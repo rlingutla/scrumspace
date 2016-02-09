@@ -27,6 +27,14 @@
     margin-top:20px;
   }
 
+  .form-control {
+   width:100%;
+  }
+
+  .save{
+    margin-right:15px;
+  }
+
 
     </style>
   </head>
@@ -79,6 +87,43 @@
     <div class="panel panel-default">
       <div class="panel-heading"><h4>User Settings <span class="glyphicon glyphicon-user pull-right"></span></h4></div>
       <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+     		   		<div class="form-group">
+     		   			<label for="first-name">First Name:</label>
+     		   				<input type="first-name" class="form-control" id="first-name" placeholder="John">
+     		   		</div>
+
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+  		   			<label for="last-name">Last Name:</label>
+  		   				<input type="last-name" class="form-control" id="last-name"placeholder="Smith">
+  		   		</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="email">Email address:</label>
+                <input type="email" class="form-control" id="email" placeholder="john.smith@company.com">
+            </div>
+     		   		</div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="email">User Name:</label>
+                <input type="user-name" class="form-control" id="user-name" placeholder="jhsmith">
+            </div>
+          </div>
+        </div>
+
+        <div class="row"><span class="pull-right"> <button type="save" class="btn btn-default save">Save</button> </span> </div>
+
+
+
+
+        <!--
 		   <form role="form">
 		   		<div class="form-group">
 		   			<label for="first-name">First Name:</label>
@@ -89,32 +134,43 @@
 		   				<input type="last-name" class="form-control" id="last-name"placeholder="Smith">
 		   		</div>
 
-<!--
-				<div class="form-group">
-					<label for="first-name">First Name:</label>
-						<input type="first-name" class="form-control" id="first-name" placeholder="John">
-				</div>
-				<div class="form-group">
-					<label for="last-name">Last Name:</label>
-						<input type="last-name" class="form-control" id="last-name"placeholder="Smith">
-				</div> -->
+
 				<div class="form-group">
 					<label for="email">Email address:</label>
 						<input type="email" class="form-control" id="email" placeholder="john.smith@company.com">
 				</div>
+
 				<div class="form-group">
 					<label for="email">User Name:</label>
 						<input type="user-name" class="form-control" id="user-name" placeholder="jhsmith">
 				</div>
-		 <span class="pull-right"> <button type="save" class="btn btn-default">Save</button> </span>
-			</form>
+      </form> -->
+		<!-- <span class="pull-right"> <button type="save" class="btn btn-default">Save</button> </span> -->
+
 	    </div>
     </div>
 
     <div class="panel panel-default">
       <div class="panel-heading"><h4>Privacy<span class="glyphicon glyphicon-lock pull-right"></span></h4></div>
 		<div class="panel-body">
-			<form role="form">
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+              <label for="current-password">Current Password:</label>
+                <input type="current-password" class="form-control" id="current-password" placeholder="Enter current password">
+            </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="new-password">New Password:</label>
+              <input type="new-password" class="form-control" id="last-name"placeholder="Enter new password">
+          </div>
+        </div>
+      </div>
+
+        <div class="row"><span class="pull-right"> <button type="save" class="btn btn-default save">Save</button> </span> </div>
+			<!-- <form role="form">
 				<div class="form-group">
 					<label for="old-password">Old Password</label>
 					<input type="old-password" class="form-control" id="old-password" placeholder="Enter current password">
@@ -124,7 +180,7 @@
 				<input type="new-password" class="form-control" id="new-password" placeholder="Enter new password">
 				</div>
 				<span class="pull-right"><button type="submit" class="btn btn-default">Save</button></span>
-			</form>
+			</form> -->
 		</div>
     </div>
 
