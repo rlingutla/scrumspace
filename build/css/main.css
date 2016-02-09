@@ -230,6 +230,51 @@ button {
       .scrum-board table tbody td .user-story {
         width: 90%; }
 
+.form-styling {
+  background-color: #e3e3e3; }
+
+.borderHead {
+  padding-bottom: 20px; }
+
+.createPad {
+  padding-bottom: 10px; }
+
+.modal .modal-body {
+  max-height: 420px;
+  overflow-y: auto; }
+
+.createPadTop {
+  padding-top: 15px; }
+
+.createPadTop2 {
+  padding-top: 45px; }
+
+.borderTop {
+  border-top: 2px solid black !important;
+  /* Padding is the whitespace between the content of fb-trending and its
+    border */
+  padding-top: 15px;
+  padding-bottom: 15px;
+  /* Margin is the whitespace between the border and adjacent elements */
+  margin-top: 25px;
+  margin-bottom: 15px; }
+
+.tabsBorder {
+  border-bottom: 2px solid black;
+  padding-bottom: 2px;
+  width: 100%; }
+
+.fillBorder {
+  margin-bottom: 7px !important; }
+
+.fillBorderDesc {
+  margin: 7px !important;
+  margin-left: 30px !important;
+  width: 96%; }
+
+.black {
+  color: black; }
+
 .form-control {
   width: 50%; }
 
@@ -238,3 +283,46 @@ button {
 
 .panel-group .panel + .panel {
   margin-top: 35px; }
+
+.bodySize {
+  overflow-y: auto; }
+
+.gTitles {
+  display: inline;
+  padding-left: 5px; }
+
+.gTitles2 {
+  display: inline;
+  padding-left: 455px; }
+
+.imgWH {
+  width: 600px;
+  height: 300px; }
+
+.datesize {
+  width: 200px; }
+
+.modal-body {
+  overflow: auto; }
+
+.story-input {
+  width: auto; }
+
+.stories {
+  padding-top: 8px;
+  margin-top: 70px;
+  margin-bottom: 0px;
+  border-top: 2px solid lightgray; }
+
+.modal-big-text {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 5px; }
+
+.sat-pad {
+  /*Story and Text padding... */
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.task-detail-input {
+  resize: vertical; }

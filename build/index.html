@@ -9,27 +9,20 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    
     <!-- Custom CSS goes here -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
   </head>
   <body>
     <!-- Custom HTML goes here -->
-
+    
     <div id="app">
         <div id="sidebar">
             <div id="project-selector">
                 <ul>
-                    <li><a href="project.html"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-                    <li><a href="project.html"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-                    <li><a href="project.html"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-                    <!-- Possible place for new project creation? -->
-                    <li><a class="#" data-toggle="modal" data-target="#myModal">
-                      <span class="glyphicon glyphicon-plus"></span>
-                    </a></li>
-                    <li><a class="#">
-                      <span class="glyphicon glyphicon-stats"></span>
-                    </a></li>
+                    <li class="selected"><a href="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
                 </ul>
             </div>
             <ul></ul>
@@ -52,13 +45,84 @@
                     </div>
               </div>
             </nav>
-
-            <div class="content container-fluid">
+            <div class="content">
                 <!-- CONTENT HERE -->
-                <blockquote>Hello, World.</blockquote>
+                <div class="project-info container-fluid">
+                    <div class="state-details">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Summary</h4>
+
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                    </div>
+                    <div class="row left-right-align progress-bar-details">
+                        <div class="col-md-6">Some details</div>
+                        <div class="col-md-6">can go here</div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-warning" style="width: 20%"></div>
+                        <div class="progress-bar progress-bar-danger" style="width: 10%"></div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">  
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="panel panel-default scrum-board">
+                                <div class="panel-body">
+                                    <div class="row vertical-align">
+                                        <div class="col-md-3 dashboard-header">
+                                            <span >
+                                                Actionable Items <span class="badge">3</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-2 col-md-offset-2">
+                                            <h4 class="text-center">My Project Title</h4>
+                                        </div>                                       
+                                    </div>
+                                    <div class="row">
+                                        <div class="container-fluid">
+                                            <div class="state-blocked">
+                                                <div class="task state-doing">
+                                                    <div class="heading">SS-04</div>
+                                                    <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="container-fluid">
+                                            <div class="state-doing">
+                                                <div class="task">
+                                                    <div class="heading">SS-04</div>
+                                                    <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="container-fluid">
+                                            <div class="state-doing">
+                                                <div class="task">
+                                                    <div class="heading">SS-04</div>
+                                                    <div class="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                </div>
             </div>
         </div>
     </div>
+
+
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
