@@ -15,7 +15,8 @@
 }
 
 .scrum-board {
-	background-color: #fff;
+	// background-color: #F5F5F5;
+	background-color: rgba(255, 255, 255, .9);
 
 	table {
 		width: 100%;
@@ -27,12 +28,8 @@
 
 				th {
 					text-align: left;
-	    			border-bottom: 5px solid #f5f5f5;
-
-	    			.badge {
-	    				margin-left: 5px;
-	    				vertical-align: baseline;
-	    			}
+	    			border-bottom: 2px solid #EAEAEA;
+	    			font-weight: 600;
 				}
 			}
 		}
@@ -53,6 +50,17 @@
 				}
 				.user-story {
 					width: 90%;
+
+					&.collapse {
+						.control i.glyphicon:before {
+							content: "\e252";
+						}
+					}
+					&.collapse.in {
+						.control i.glyphicon:before {
+							content: "\e253";
+						}
+					}
 				}
 			}
 		}
