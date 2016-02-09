@@ -298,3 +298,31 @@ button {
 .imgWH {
   width: 600px;
   height: 300px; }
+
+.datesize {
+  width: 200px; }
+
+.modal-body {
+  overflow: auto; }
+
+.story-input {
+  width: auto; }
+
+.stories {
+  padding-top: 8px;
+  margin-top: 70px;
+  margin-bottom: 0px;
+  border-top: 2px solid lightgray; }
+
+.modal-big-text {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 5px; }
+
+.sat-pad {
+  /*Story and Text padding... */
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.task-detail-input {
+  resize: vertical; }
