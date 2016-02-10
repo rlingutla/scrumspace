@@ -387,11 +387,18 @@ button {
   margin-left: 0px;
   margin-right: 0px; }
 
-.color-edges-green {
-  border-color: #06D6A0; }
-
 .pad-but-right {
   padding-right: 15px; }
+
+.panel-primary {
+  border-color: #118AB2; }
+
+.panel-primary > .panel-heading {
+  background-color: #118AB2;
+  border-color: #118AB2; }
+
+.project-nav.nav-tabs li.active a {
+  border-bottom: 2px solid #118AB2; }
 
 .dashboard-header {
   padding-top: 10px; }

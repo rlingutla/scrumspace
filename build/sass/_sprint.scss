@@ -21,10 +21,19 @@
   margin-right: 0px;
 }
 
-.color-edges-green{
-  border-color: $green-color;
-}
-
 .pad-but-right{
   padding-right: 15px;
+}
+
+.panel-primary{
+  border-color: $blue-color;
+}
+
+.panel-primary>.panel-heading {
+    background-color: $blue-color;
+    border-color: $blue-color;
+}
+
+.project-nav.nav-tabs li.active a {
+    border-bottom: 2px solid $blue-color;
 }
