@@ -308,6 +308,12 @@ button {
 .black {
   color: black; }
 
+.mt-color {
+  color: white; }
+
+.mf-color {
+  background-color: #F5F5F5; }
+
 .form-control {
   width: 100%; }
 
