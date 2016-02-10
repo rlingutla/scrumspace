@@ -81,6 +81,8 @@
 			&:hover, &:focus, &:active {
 				border:none;
 			}
+
+			@include hoverAction();
 		}
 
 		&.active {

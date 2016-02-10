@@ -244,9 +244,18 @@ button {
   .project-nav.nav-tabs li a {
     border: none;
     border-radius: 0;
-    margin: 0; }
+    margin: 0;
+    -webkit-transition: all cubic-bezier(0.43, 0.84, 0.79, 0.99) 0.15s;
+    transition: all cubic-bezier(0.43, 0.84, 0.79, 0.99) 0.15s; }
     .project-nav.nav-tabs li a:hover, .project-nav.nav-tabs li a:focus, .project-nav.nav-tabs li a:active {
       border: none; }
+    .project-nav.nav-tabs li a:hover {
+      transform: scale(1.05, 1.05); }
+    .project-nav.nav-tabs li a:active {
+      transform: scale(0.97, 0.97);
+      outline: 0; }
+    .project-nav.nav-tabs li a:focus {
+      outline: 0; }
   .project-nav.nav-tabs li.active a {
     border-bottom: 2px solid #118AB2; }
 
