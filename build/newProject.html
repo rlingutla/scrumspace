@@ -23,14 +23,12 @@
     <div id="sidebar">
       <div id="project-selector">
         <ul>
-          <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-          <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
-          <li><a class="#"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+          <li><a href="project.html"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+          <li><a href="project.html"><span class="glyphicon glyphicon-blackboard"></span></a></li>
+          <li><a href="project.html"><span class="glyphicon glyphicon-blackboard"></span></a></li>
           <!-- Possible place for new project creation? -->
-          <li><a class="#" data-toggle="modal" data-target="#myModal">
-            <span class="glyphicon glyphicon-plus"></span>
-          </a></li>
-          <li><a class="#">
+          <li><a href="newproject.html"><span class="glyphicon glyphicon-plus"></span></a></li>
+          <li><a href="gitstats.html">
             <span class="glyphicon glyphicon-stats"></span>
           </a></li>
         </ul>
@@ -103,7 +101,10 @@
 </div>
 </div>
 
-
+<script>
+  //initiate modal automatically for mockup
+  $('#myModal').modal();
+</script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery.min.js"></script>
