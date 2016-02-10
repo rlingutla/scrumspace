@@ -16,7 +16,7 @@ margin:5px;
 }
 
 #settings{
-margin-bottom:25px;
+//margin-bottom:25px;
 
 }
 
@@ -26,15 +26,6 @@ margin-top:20px;
 
 .form-control {
 width:100%;
-}
-
-.save{
-margin-right:15px;
-}
-
-.myg{
-margin:10px;
-opacity: 0.2;
 }
 
 
@@ -58,5 +49,8 @@ padding-top:6px;
 padding-bottom:6px;
 padding-right:12px;
 margin:6px;
+}
 
+.settings-foot{
+  height: 65px !important;
 }
