@@ -354,6 +354,11 @@ button {
 .settings-foot {
   height: 65px !important; }
 
+.b-options {
+  margin-right: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px; }
+
 .bodySize {
   overflow-y: auto; }
 
