@@ -1,18 +1,29 @@
 var gulp = require('gulp'),
-	runSequence = require('run-sequence'),
-	del = require('del'),
-	sass = require('gulp-sass'),
-	clean = require('gulp-clean'),
-	webpack = require('gulp-webpack');
+  runSequence = require('run-sequence'),
+  del = require('del'),
+  sass = require('gulp-sass'),
+  clean = require('gulp-clean'),
+  webpack = require('gulp-webpack');
 
 
 gulp.task('runBuild', function(callback) {
   runSequence(
     'clean',
-    [ 'js', 'copy_static', 'scss' ],
+    [ 'js', 'copy_static', 'scss', 'vendorToDist'],
     callback
   );
 });
+
+/* Copy bootstrap files to dist*/
+gulp.task('vendorToDist', function () {
+  gulp.src(['vendor/bootstrap-3.3.6-dist 2/css/*'])
+      .pipe(gulp.dest('dist/css/'));
+  gulp.src(['vendor/bootstrap-3.3.6-dist 2/js/*'])
+      .pipe(gulp.dest('dist/js/'));
+  gulp.src(['vendor/bootstrap-3.3.6-dist 2/fonts/*'])
+      .pipe(gulp.dest('dist/fonts/'));
+});
+
 
 gulp.task('clean', function () {
   return del(['dist/**/*']);
@@ -39,7 +50,7 @@ gulp.task('copy_static', function(){
 });
 
 gulp.task('watch', function() {
-  	gulp.watch('src/**/*', ['runBuild']);
+    gulp.watch('src/**/*', ['runBuild']);
 });
 
 gulp.task('default', ['runBuild'], function() {});
