@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 	webpack = require('gulp-webpack');
 
 
-gulp.task('build', function(callback) {
+gulp.task('runBuild', function(callback) {
   runSequence(
     'clean',
     [ 'js', 'copy_static', 'scss' ],
@@ -39,7 +39,9 @@ gulp.task('copy_static', function(){
 });
 
 gulp.task('watch', function() {
-  	gulp.watch('src/**/*', ['build']);
+  	gulp.watch('src/**/*', ['runBuild']);
 });
 
-gulp.task('default', ['build', 'watch'], function() {});
+gulp.task('default', ['runBuild'], function() {});
+gulp.task('build', ['default'], function() {});
+gulp.task('dev', ['runBuild', 'watch'], function() {});
