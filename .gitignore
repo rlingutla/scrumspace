@@ -8,3 +8,5 @@ build/js/app.js
 *.log
 # LOL MAC
 .DS_Store
+# Ignore dist contents
+dist/

@@ -1,14 +1,45 @@
 var gulp = require('gulp'),
-	sass = require('gulp-sass');
+	runSequence = require('run-sequence'),
+	del = require('del'),
+	sass = require('gulp-sass'),
+	clean = require('gulp-clean'),
+	webpack = require('gulp-webpack');
+
+
+gulp.task('build', function(callback) {
+  runSequence(
+    'clean',
+    [ 'js', 'copy_static', 'scss' ],
+    callback
+  );
+});
+
+gulp.task('clean', function () {
+  return del(['dist/**/*']);
+});
 
 gulp.task('scss', function() {
-  return gulp.src('build/sass/main.scss')
+  return gulp.src('src/sass/main.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('build/css/'));
+    .pipe(gulp.dest('dist/css/'));
+});
+
+gulp.task('js', function(){
+  return gulp.src('app/index.jsx')
+    .pipe(webpack( require('./webpack.config.js') ))
+    .pipe(gulp.dest('dist/js/'));
+});
+
+//copy static files
+gulp.task('copy_static', function(){
+  return gulp.src(['src/index.html', 'src/static/**/*'], {
+      base: 'src'
+    })
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch', function() {
-  	gulp.watch('build/sass/**/*', ['scss']);
+  	gulp.watch('src/**/*', ['build']);
 });
 
-gulp.task('default', ['scss', 'watch'], function() {});
+gulp.task('default', ['build', 'watch'], function() {});
