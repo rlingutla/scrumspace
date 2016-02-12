@@ -60,7 +60,6 @@ class App extends React.Component {
 							</div>
 						</div>
 					</div>
-
 					<div className="container-fluid">
 						<div className="row">
 							<div className="col-md-10 col-md-offset-1">
