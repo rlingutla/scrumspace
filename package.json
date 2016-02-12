@@ -28,5 +28,9 @@
     "run-sequence": "^1.1.5",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "react-router": "^2.0.0"
   }
 }
