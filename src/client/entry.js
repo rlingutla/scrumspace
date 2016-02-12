@@ -1,8 +1,11 @@
-/* Entry point of client-side application */
-import React from 'react';
-import { render } from 'react-dom';
-// modal body style="background-color:white !important;"
+import React from 'react'
+import { render } from 'react-dom'
 
-import App from '../components/AppX'
+// First we import some modules...
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
+import routes from '../routes'
 
-render(<App />, document.getElementById('app'));
+// Finally, we render a <Router> with some <Route>s.
+// It does all the fancy routing stuff for us.
+render((<Router history={browserHistory} routes={routes}/>)
+  , document.getElementById('app'))
