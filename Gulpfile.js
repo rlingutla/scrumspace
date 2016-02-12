@@ -16,11 +16,11 @@ gulp.task('runBuild', function(callback) {
 
 /* Copy bootstrap files to dist*/
 gulp.task('vendorToDist', function () {
-  gulp.src(['vendor/bootstrap-3.3.6-dist 2/css/*'])
+  gulp.src(['node_modules/bootstrap/dist/bootstrap-3.3.6-dist 2/css/*'])
       .pipe(gulp.dest('dist/css/'));
-  gulp.src(['vendor/bootstrap-3.3.6-dist 2/js/*'])
+  gulp.src(['node_modules/bootstrap/dist/bootstrap-3.3.6-dist 2/js/*'])
       .pipe(gulp.dest('dist/js/'));
-  gulp.src(['vendor/bootstrap-3.3.6-dist 2/fonts/*'])
+  gulp.src(['node_modules/bootstrap/dist/bootstrap-3.3.6-dist 2/fonts/*'])
       .pipe(gulp.dest('dist/fonts/'));
 });
 
