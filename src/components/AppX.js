@@ -1,6 +1,6 @@
 var React = require('react');
 
-export class ourApp extends React.Component {  
+class AppX extends React.Component {  
   constructor(props) {
     super(props);
   }
@@ -13,3 +13,5 @@ export class ourApp extends React.Component {
     );
   }
 }
+
+module.exports = AppX;
