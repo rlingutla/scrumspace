@@ -1,14 +1,14 @@
 /* Main Components/Views */
-import App from './components/app';
-import Dashboard from './components/dashboard';
-import Settings from './components/settings';
-import Statistics from './components/statistics';
+import App from '../components/app';
+import Dashboard from '../components/dashboard';
+import Settings from '../components/settings';
+import Statistics from '../components/statistics';
 
 /* Project Components */
-import ProjectMaster from './components/project/master'
-import ProjectMain from './components/project/main'
-import ProjectDetails from './components/project/detail'
-import NewProject from './components/project/new'
+import ProjectMaster from '../components/project/master'
+import ProjectMain from '../components/project/main'
+import ProjectDetails from '../components/project/detail'
+import NewProject from '../components/project/new'
 
 const routes = {
   path: '/',
@@ -20,7 +20,7 @@ const routes = {
 			component: ProjectMain ,
 			indexRoute: { component: ProjectMaster},
 			childRoutes : [
-				{path: "number/:id", component: ProjectDetails},
+				{path: "detail/:id", component: ProjectDetails},
 				{path: "new", component: NewProject }
 			]
     },

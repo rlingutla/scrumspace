@@ -9,7 +9,7 @@ class App extends React.Component {
 					<div id="project-selector">
 						<ul>
 							<li>
-								<Link to="/project/number/1"><span className="glyphicon glyphicon-blackboard"></span></Link>
+								<Link to="/project/detail/1"><span className="glyphicon glyphicon-blackboard"></span></Link>
 							</li>
 							<li>
 								<Link to="/project/new"><span className="glyphicon glyphicon-plus"></span></Link>

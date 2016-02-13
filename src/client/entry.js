@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 
 // First we import some modules...
 import { Router, browserHistory } from 'react-router'
-import routes from '../routes'
+import routes from './routes/routes'
 
 // Finally, we render a <Router> with some <Route>s.
 // It does all the fancy routing stuff for us.
