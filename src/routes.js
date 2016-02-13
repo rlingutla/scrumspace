@@ -1,10 +1,12 @@
-/* Our Components */
+/* Main Components/Views */
 import App from './components/app';
 import Dashboard from './components/dashboard';
 import Settings from './components/settings';
 import Statistics from './components/statistics';
-// Project Components
-import Project from './components/project/main';
+
+/* Project Components */
+import ProjectMaster from './components/project/master'
+import ProjectMain from './components/project/main'
 import ProjectDetails from './components/project/detail'
 import NewProject from './components/project/new'
 
@@ -14,12 +16,13 @@ const routes = {
   indexRoute: { component: Dashboard },
   childRoutes: [
     { 
-		path: 'project', 
-		component: Project ,
-		indexRoute: {component: ProjectDetails},
-		childRoutes : [
-			{path: "new", component: NewProject }
-		]
+			path: 'project', 
+			component: ProjectMain ,
+			indexRoute: { component: ProjectMaster},
+			childRoutes : [
+				{path: "number/:id", component: ProjectDetails},
+				{path: "new", component: NewProject }
+			]
     },
     { path: 'settings', component: Settings },
     { path: 'statistics', component: Statistics }

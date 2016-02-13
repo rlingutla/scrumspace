@@ -1,11 +1,12 @@
 import React from 'react';
 
+/* TODO: this may not be needed, still learning react-router*/
 class Project extends React.Component {
-  render() {
-	alert('project');
+  render () {
     return (
-      <div className="content">
-      </div>
+		<div>
+			{this.props.children}
+		</div>
     )
   }
 }

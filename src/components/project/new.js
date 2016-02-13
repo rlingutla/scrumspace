@@ -1,8 +1,8 @@
 import React from 'react';
 
-class Project extends React.Component {
+class ProjectNew extends React.Component {
   render() {
-	alert('project');
+	alert('build a new project here');
     return (
       <div className="content">
       </div>
@@ -10,4 +10,4 @@ class Project extends React.Component {
   }
 }
 
-module.exports = Project;
+module.exports = ProjectNew;

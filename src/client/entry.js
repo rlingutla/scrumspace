@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 
 // First we import some modules...
-import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
+import { Router, browserHistory } from 'react-router'
 import routes from '../routes'
 
 // Finally, we render a <Router> with some <Route>s.
