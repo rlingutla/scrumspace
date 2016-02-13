@@ -1,11 +1,10 @@
 import React from 'react';
-
+/* Project details on a particular project*/
 class Project extends React.Component {
   render() {
+	alert('project');
     return (
-      <div>
-        <h2>Project</h2>
-        {this.props.children}
+      <div className="content">
       </div>
     )
   }

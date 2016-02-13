@@ -1,8 +1,8 @@
 import React from 'react';
 
-class Settings extends React.Component {
+class Project extends React.Component {
   render() {
-	alert('settings!');
+	alert('project');
     return (
       <div className="content">
       </div>
@@ -10,4 +10,4 @@ class Settings extends React.Component {
   }
 }
 
-module.exports = Settings;
+module.exports = Project;
