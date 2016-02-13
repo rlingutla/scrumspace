@@ -10,4 +10,4 @@ class ProjectNew extends React.Component {
   }
 }
 
-module.exports = ProjectNew;
+export default ProjectNew;

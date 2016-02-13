@@ -11,4 +11,4 @@ class Project extends React.Component {
   }
 }
 
-module.exports = Project;
+export default Project;

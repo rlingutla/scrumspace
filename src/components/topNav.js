@@ -25,4 +25,4 @@ class TopNav extends React.Component {
 	}
 }
 
-module.exports = TopNav;
+export default TopNav;

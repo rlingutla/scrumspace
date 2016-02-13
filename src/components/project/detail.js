@@ -19,4 +19,4 @@ class ProjectDetails extends React.Component {
   }
 }
 
-module.exports = ProjectDetails;
+export default ProjectDetails;

@@ -19,4 +19,4 @@ class ProjectMaster extends React.Component {
   }
 }
 
-module.exports = ProjectMaster;
+export default ProjectMaster;
