@@ -5,12 +5,12 @@
 
 	.progress-bar-details {
 		margin: 15px 0 5px;
-		color: $body-gray;
+		color: $body-gray-color;
 		font-style: italic;
 	}
 
     .date-range {
-    	color: $body-gray;
+    	color: $body-gray-color;
     }
 }
 
@@ -69,7 +69,7 @@
 
 // navigation
 .project-nav.nav-tabs {
-	background: $light-gray;
+	background: $light-gray-color;
 	border:none;
 
 	li {

@@ -37,7 +37,7 @@ button {
     }
 
 	.heading {
-		color: $blue;
+		color: $blue-color;
 
 		.row {
 			margin:0;
@@ -47,7 +47,7 @@ button {
 			width: 25px;
 			height: 25px;
 			display: inline-block;
-			background: $light-gray;
+			background: $light-gray-color;
 			font-family: 'Glyphicons Halflings';
 			color: gray;
 
@@ -110,12 +110,12 @@ button {
     }
     .control {
     	button.collapse-control {
-    		background:$light-gray;
+    		background:$light-gray-color;
     		padding: 3px 7px;
     		border:none;
 
-    		&:hover { background: darken($light-gray, 5%); }
-    		&:active { background: darken($light-gray, 10%); }
+    		&:hover { background: darken($light-gray-color, 5%); }
+    		&:active { background: darken($light-gray-color, 10%); }
     	}
     }
     ul {
