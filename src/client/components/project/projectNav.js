@@ -1,6 +1,6 @@
 import React from 'react';
 import ProjectAvatar from './projectAvatar';
-import NavTabs from './navTabs';
+import NavTabBar from './navTabBar';
 
 class ProjectNav extends React.Component {
 	constructor(props) {
@@ -23,7 +23,7 @@ class ProjectNav extends React.Component {
 						
 					</div>
 				</div>
-				<NavTabs />
+				<NavTabBar active-tab={this.props['active-tab']} tab-change={this.props['tab-change']} />
 			</div>
 		)
 	}
