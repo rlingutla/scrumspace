@@ -145,6 +145,14 @@
 	}
 }
 
+#tab-container {
+	.tab {
+		display:none;
+
+		&.active { display: block; }
+	}
+}
+
 
 // NEW PROJECT STYLES
 .header-styling{

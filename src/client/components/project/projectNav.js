@@ -1,6 +1,6 @@
 import React from 'react';
 import ProjectAvatar from './projectAvatar';
-import NavTabBar from './navTabBar';
+import NavTabBar from './tabs/navTabBar';
 
 class ProjectNav extends React.Component {
 	constructor(props) {
