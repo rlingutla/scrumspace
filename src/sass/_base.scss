@@ -2,6 +2,7 @@
 html, body {
 	font-family: $sans-serif;
 	background: $gray-color;
+	-webkit-font-smoothing: antialiased;
 }
 
 
@@ -63,25 +64,32 @@ html, body {
     }
 }
 
-#content {
+#top-nav {
+	background-color: $blue-color;
 	padding-left: 80px;
 
-	& > .navbar {
-		background-color: #fff;
-		padding-left: 80px;
-
-		.navbar-brand {
-			color: $sidebar-color;
-		}
-
-		.nav-left {
-			float:left;
-		}
-		.nav-right {
-			float:right;
-			padding: 8px;
-		}
+	.navbar-brand {
+		color: #fff;
 	}
+
+	.nav-left {
+		float:left;
+	}
+	.nav-right {
+		float:right;
+		padding: 8px;
+	}
+
+	button.btn-default {
+		background:transparent;
+		color: #fff;
+		border:none;
+		font-size: 17px;
+	}
+}
+
+#content {
+	padding-left: 80px;
 
 	.content {
 		padding-top: $nav-offset;

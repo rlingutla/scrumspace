@@ -1,3 +1,50 @@
+#project-nav {
+	background: $blue-color;
+	padding: 0 15px;
+	color: #fff;
+
+	& > .row {
+		padding: 30px 0;
+	}
+
+	.project-details {
+		& > * {
+			vertical-align: middle;
+		}
+	}
+
+	.project-avatar {
+		display: inline-block;
+		width:50px;
+		height:50px;
+		background-color: #fff;
+		border-radius: 5px;
+		border: 1px solid #fff;
+	}
+
+	.detail-text {
+		display: inline-block;
+		margin-left: 20px;
+
+		h1 {
+			@include resetSpacing();
+			font-size: 20px;
+
+			span[name='project-state'] {
+				color: $light-blue-color;
+				font-weight: 100;
+				font-style: italic;
+			}
+		}
+		h4 {
+			@include resetSpacing();
+			color: $light-blue-color;
+			margin-top: 5px;
+			font-size: 15px;
+		}
+	}
+}
+
 .project-info {
 	background: #fff;
 	padding: 15px;
@@ -69,7 +116,7 @@
 
 // navigation
 .project-nav.nav-tabs {
-	background: $light-gray-color;
+	background: transparent;
 	border:none;
 
 	li {
@@ -77,9 +124,12 @@
 			border: none;
 			border-radius: 0;
 			margin:0;
+			color: $light-blue-color;
+			font-size: 15px;
 
 			&:hover, &:focus, &:active {
 				border:none;
+				background: transparent;
 			}
 
 			@include hoverAction();
@@ -87,7 +137,9 @@
 
 		&.active {
 			a {
-				border-bottom: 2px solid $blue-color;
+				border-bottom: 4px solid #fff;
+				color: #fff;
+				background: transparent;
 			}
 		}
 	}
