@@ -1,17 +1,12 @@
 import React from 'react';
 
-class Tab extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-        	<div className="tab" className={"tab " + ((this.props['active-tab'] == this.props['tab-id']) ? 'active':'')}>
-                { this.props.children }
-            </div>
-        );
-    }
-}
+//stateless component
+const Tab = (props) => {
+    return (
+        <div className="tab" className={"tab " + ((props['active-tab'] == props['tab-id']) ? 'active':'')}>
+            { props.children }
+        </div>
+    );
+};
 
 export default Tab;

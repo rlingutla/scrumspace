@@ -18,6 +18,9 @@ module.exports = {
   // We use the "inline-source-map" setting (as opposed to external source maps)
   // so this works in a foolproof way.
   devtool: 'inline-source-map',
+  resolve: {
+    extensions: ["", ".jsx", ".js"]
+  },
   module: {
     // Transforms your application's code using Babel.
     // Babel lets you use new JavaScript features in browsers that do not
@@ -28,7 +31,7 @@ module.exports = {
     loaders: [
       {
         // Only transform *.js files.
-        test: /\.js$/,
+        test: /\.jsx?$/,
         // Don't transform any of the modules you depend on -- just transform
         // *your* code.
         exclude: /(node_modules|bower_components)/,

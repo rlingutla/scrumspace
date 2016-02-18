@@ -4,9 +4,8 @@ class ProjectNew extends React.Component {
   render() {
 	alert('build a new project here');
     return (
-      <div className="content">
-      </div>
-    )
+      <div className="content"></div>
+    );
   }
 }
 

@@ -1,24 +1,27 @@
 import React from 'react';
 import NavTab from './navTab';
 
-class NavTabBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        	activeTab: this.props['active-tab']
-        };
-    }
+const tabs = [
+	{ id: 0, name: "Board" },
+	{ id: 1, name: "Planning" }
+];
 
-    render() {
-        return (
-        	<div>
-	        	<ul className="nav nav-tabs project-nav" role="tablist">
-	        			<NavTab name="Board" tab-id={0} active-tab={this.props['active-tab']} tab-change={this.props['tab-change']} />
-	        			<NavTab name="Planning" tab-id={1} active-tab={this.props['active-tab']} tab-change={this.props['tab-change']} />
-	        	</ul>
-	        </div>
-        );
-    }
-}
+const NavTabBar = (props) => {
+
+	//construct tab components with data
+	var tabComponents = tabs.map(function(tab){
+		return (
+			<NavTab name={tab.name} key={tab.id} tab-id={tab.id} active-tab={props['active-tab']} tab-change={props['tab-change']} />
+		);
+	});
+
+    return (
+        <div>
+            <ul className="nav nav-tabs project-nav" role="tablist">
+            	{tabComponents}
+            </ul>
+        </div>
+    );
+};
 
 export default NavTabBar;

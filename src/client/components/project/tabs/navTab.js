@@ -3,6 +3,7 @@ import React from 'react';
 class NavTab extends React.Component {
     constructor(props) {
         super(props);
+        
         this.state = {
             active: this.props['active-tab'] == this.props['tab-id']
         }
@@ -11,7 +12,6 @@ class NavTab extends React.Component {
     }
 
     clickHandler(){
-        console.log("click handler called", this.props['tab-id']);
         this.props['tab-change'](this.props['tab-id']);
         this.setState({ active: true })
     }
