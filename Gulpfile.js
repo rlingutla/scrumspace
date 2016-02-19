@@ -6,7 +6,7 @@ var gulp = require('gulp'),
   webpack = require('gulp-webpack');
 
 
-gulp.task('runBuild', function(callback) {
+gulp.task('run-build', function(callback) {
   runSequence(
     'clean',
     [ 'js', 'copy_static', 'scss', 'vendorToDist'],
@@ -16,7 +16,7 @@ gulp.task('runBuild', function(callback) {
 
 /* Copy bootstrap files to dist*/
 gulp.task('vendorToDist', function () {
-  gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css'])
+  gulp.src(['node_modules/bootstrap/dist/css/*'])
       .pipe(gulp.dest('dist/css/'));
   gulp.src(['node_modules/bootstrap/dist/js/*'])
       .pipe(gulp.dest('dist/js/'));
@@ -30,29 +30,27 @@ gulp.task('clean', function () {
 });
 
 gulp.task('scss', function() {
-  return gulp.src('src/sass/main.scss')
+  return gulp.src('app/sass/main.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('dist/css/'));
 });
 
 gulp.task('js', function(){
-  return gulp.src('app/index.jsx')
+  return gulp.src('app/client.js')
     .pipe(webpack( require('./webpack.config.js') ))
     .pipe(gulp.dest('dist/js/'));
 });
 
-//copy static files
+// copy static files
 gulp.task('copy_static', function(){
-  return gulp.src(['src/index.html', 'src/static/**/*'], {
-      base: 'src'
-    })
+  return gulp.src(['app/index.html'])
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch', function() {
-    gulp.watch('src/**/*', ['runBuild']);
+    gulp.watch('app/**/*', ['run-build']);
 });
 
-gulp.task('default', ['runBuild'], function() {});
+gulp.task('default', ['run-build'], function() {});
 gulp.task('build', ['default'], function() {});
-gulp.task('dev', ['runBuild', 'watch'], function() {});
+gulp.task('dev', ['run-build', 'watch'], function() {});
