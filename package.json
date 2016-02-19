@@ -13,6 +13,7 @@
   "devDependencies": {
     "babel": "^6.3.26",
     "babel-core": "^6.4.0",
+    "babel-eslint": "^5.0.0",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
@@ -37,5 +38,15 @@
     "react-bootstrap": "^0.28.3",
     "react-breadcrumbs": "^1.3.8",
     "react-router": "^2.0.0"
-  }
+  },
+  "main": "Gulpfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umass-cs-326/startup-product-frontend-scrumspace.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/umass-cs-326/startup-product-frontend-scrumspace/issues"
+  },
+  "homepage": "https://github.com/umass-cs-326/startup-product-frontend-scrumspace#readme"
 }
