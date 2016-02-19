@@ -7,7 +7,9 @@ side of your product runs in the browser.
 ## Building
 
 ##### Install Dependencies
-`npm install`
+Install node from [https://nodejs.org](https://nodejs.org).
+
+After the installation, run `npm install` to install the application's dependencies.
 
 ##### Package Client
 `npm run build`
@@ -21,14 +23,15 @@ Webpack is handling the bundling of our JS, although in this stage of the projec
 
 **CSS**
 
-We are using [Sass](http://sass-lang.com) as a preprocessor for CSS. The sass directory is located in `build/sass/`. For now, all CSS should be written in `build/sass/_base.scss` (we will work out a better organizational system later). Variables and mixins can also go in their respective files in that directory. All will be packaged into `build/css/main.css` during the build task.
+We are using [Sass](http://sass-lang.com) as a preprocessor for CSS. The sass directory is located in `app/sass/`. For now, all CSS should be written in `app/sass/_base.scss` (we will work out a better organizational system later). Variables and mixins can also go in their respective files in that directory. All will be packaged into `dist/css/main.css` during the build task.
 
 Currently we're using [Gulp](http://gulpjs.com) to handle live Sass compilation. Run `npm run gulp` to start up a script that will listen to all changes in the sass directory and automatically compile your Sass to CSS (make sure you've run' `npm install` first). The command on Windows is just `gulp` (you'll need to install Gulp globally first though (`npm install -g gulp`).
 
 Remember, if you're not comfortable writing Sass (you'll love it though I promise), you can always write vanilla CSS in the sass files, it's all compatible.
 
-**Remember, do not modify the files in `build/css/`, they will be overwritten on sass compilation.**.
+**Remember, do not modify the files in `dist/css/`, they will be overwritten on sass compilation.**.
 
 ## Running the Dev Server
 
-Currently, we have no backend server. We'll be using Webpack to serve us up a development server over at [http://localhost:8080](http://localhost:8080).
+The dev server can be started by running `npm start`.
+[http://localhost:3000](http://localhost:3000).
