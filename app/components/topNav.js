@@ -2,7 +2,7 @@ import React from 'react';
 
 class TopNav extends React.Component {
 	render () {
-		const view = this.props.view || "SCRUMSPACE-DEFAULT";
+		const view = this.props.view || 'SCRUMSPACE-DEFAULT';
 		return (
 			<nav id="top-nav" className="navbar navbar-fixed-top navbar-default">
 				<div className="container-fluid">
@@ -21,7 +21,7 @@ class TopNav extends React.Component {
 					</div>
 				</div>
 			</nav>
-		)
+		);
 	}
 }
 

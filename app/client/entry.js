@@ -1,11 +1,13 @@
-import React from 'react'
-import { render } from 'react-dom'
+import React from 'react';
+import { render } from 'react-dom';
 
-// First we import some modules...
-import { Router, browserHistory } from 'react-router'
-import routes from '../routes'
+/* Import modules used for client-side routing and route defintion */
+import { Router, browserHistory } from 'react-router';
+import routes from '../routes';
 
-// Finally, we render a <Router> with some <Route>s.
-// It does all the fancy routing stuff for us.
+/* 	Here we render our application to the document. 
+	We render a react-router that knows our application routes
+*/
+
 render((<Router history={browserHistory} routes={routes}/>)
-  , document.getElementById('app'))
+	, document.getElementById('app'));

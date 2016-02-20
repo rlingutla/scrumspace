@@ -15,7 +15,7 @@ class ProjectMaster extends React.Component {
 					</div>
 				</div>
 			</div>
-    )
+    );
   }
 }
 

@@ -6,7 +6,7 @@ class Settings extends React.Component {
     return (
       <div className="content">
       </div>
-    )
+    );
   }
 }
 

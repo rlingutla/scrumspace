@@ -9,11 +9,10 @@ class ProjectDetails extends React.Component {
 		super(props);
 		this.state = {
 			activeTab: 0
-		}
-
+		};
 		this.onTabChange = this.onTabChange.bind(this);
 	}
-
+	
 	onTabChange(tabID) {
 		this.setState({ activeTab: tabID });
 	}
@@ -30,10 +29,8 @@ class ProjectDetails extends React.Component {
 						Tab2
 					</Tab>
 				</div>
-
-				
 			</div>
-    	)
+    	);
   	}
 }
 

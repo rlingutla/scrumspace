@@ -1,3 +1,6 @@
+/*eslint node: true */
+'use strict';
+
 var express = require('express');
 
 module.exports = function(app){
@@ -11,4 +14,4 @@ module.exports = function(app){
 	app.get('*', (req, res) => {
 		res.sendFile(__dirname + "/../dist/index.html",  {'root': '/'});
 	});
-}
+};
