@@ -19,7 +19,7 @@ _Note that this is an evolving workflow, it's just the beginning..._
 
 **Javascript**
 
-Webpack is handling the bundling of our JS, although in this stage of the project we have none.
+Webpack is handling the bundling of our JS.
 
 **CSS**
 
