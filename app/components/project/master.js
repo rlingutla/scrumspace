@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNav from '../topNav';
+import TopNav from '../TopNav';
 
 /* ProjectMaster for all user projects*/
 class ProjectMaster extends React.Component {

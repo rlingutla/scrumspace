@@ -15,8 +15,7 @@
 	"regexUFlag": false,                        // enable the regular expression u flag
 	"regexYFlag": false,                        // enable the regular expression y flag
 	"templateStrings": false,                   // enable template strings
-	"unicodeCodePointEscapes": false,           // enable code point escapes
-	"jsx": true                                 // enable JSX
+	"unicodeCodePointEscapes": false           // enable code point escapes
   },
   "parser": "babel-eslint",
   "env": {

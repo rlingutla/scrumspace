@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNav from './topNav';
+import TopNav from './TopNav';
 
 class Statistics extends React.Component {
   render() {

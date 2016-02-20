@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNav from './topNav';
+import TopNav from './TopNav';
 
 class Dashboard extends React.Component {
   render() {
