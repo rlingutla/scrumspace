@@ -1,5 +1,5 @@
 # Startup Product: Client Side
-#### Project State: Bootstrap Wireframes
+#### Project State: React!
 
 This repository will hold the *client side* of your product. The client
 side of your product runs in the browser.
