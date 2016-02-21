@@ -1,7 +1,7 @@
 # Startup Product: Client Side
 #### Project State: React!
 
-> testing some stuff
+[ ![Codeship Status for dylanfischler/startup-product-frontend-scrumspace](https://codeship.com/projects/35d29270-ba86-0133-f6d0-665d9895e075/status?branch=master)](https://codeship.com/projects/135690)
 
 This repository will hold the *client side* of your product. The client
 side of your product runs in the browser.
