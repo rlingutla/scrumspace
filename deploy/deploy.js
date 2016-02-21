@@ -3,6 +3,8 @@ var http = require('http');
 var app = express();
 var shelljs = require('shelljs/global');
 
+app.use(require('body-parser').json());
+
 PORT = 8888;
 
 http.createServer(app).listen(PORT, function(){
