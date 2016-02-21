@@ -12,10 +12,6 @@ http.createServer(app).listen(PORT, function(){
 });
 
 app.post('/deploy', function(req,res){
-  console.log("headers", req.headers);
-  console.log("query", req.query);
-  console.log("body", req.body);
-
   var payload = req.body.build;
 
   if(payload.branch == "master"){

@@ -1,7 +1,7 @@
 cd /var/www/scrumspace/ScrumSpace
 
 #stop application
-forever stop scrumspace
+/node_modules/forever/bin/forever stop scrumspace
 
 #pull in updates to master branch
 git pull origin master
@@ -13,4 +13,4 @@ npm i
 gulp
 
 #start application back up
-forever start server/server.js --uid scrumspace
+/node_modules/forever/bin/forever start server/server.js --uid scrumspace
