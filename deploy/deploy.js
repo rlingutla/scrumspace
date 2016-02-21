@@ -14,8 +14,9 @@ http.createServer(app).listen(PORT, function(){
 app.post('/deploy', function(req,res){
   var payload = req.body.build;
 
-  if(payload.branch == "master"){
+  if(payload.branch == "org_refactor"){
     if(payload.status == "success"){
+      console.log("Successful build received. Triggering deploy script.");
       exec("(cd /var/www/scrumspace/deploy && ./deploy.sh)");
     }
     else if (payload.static == "error"){
