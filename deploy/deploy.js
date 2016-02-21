@@ -13,5 +13,16 @@ app.post('/deploy', function(req,res){
   console.log("headers", req.headers);
   console.log("query", req.query);
   console.log("body", req.body);
-  //exec("(cd /home/dylanfischler/applications/deploy && ./deploy.sh)");
+
+  var payload = {};
+
+  if(payload.build.branch == "master"){
+    if(payload.build.status == "success"){
+      exec("(cd /var/www/scrumspace/deploy && ./deploy.sh)");
+    }
+    else if (payload.build.static == "error"){
+      console.error("Error: Build Failed");
+    }
+  }
+
 });
