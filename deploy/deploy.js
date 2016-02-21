@@ -16,13 +16,13 @@ app.post('/deploy', function(req,res){
   console.log("query", req.query);
   console.log("body", req.body);
 
-  var payload = {};
+  var payload = req.body.build;
 
-  if(payload.build.branch == "master"){
-    if(payload.build.status == "success"){
+  if(payload.branch == "master"){
+    if(payload.status == "success"){
       exec("(cd /var/www/scrumspace/deploy && ./deploy.sh)");
     }
-    else if (payload.build.static == "error"){
+    else if (payload.static == "error"){
       console.error("Error: Build Failed");
     }
   }
