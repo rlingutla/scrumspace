@@ -3,8 +3,6 @@
 
 [![Build Status](https://travis-ci.com/dylanfischler/startup-product-frontend-scrumspace.svg?token=XpAFVxZPs7jbAuEHuYce&branch=master)](https://travis-ci.com/dylanfischler/startup-product-frontend-scrumspace)
 
-> testing 4
-
 This repository will hold the *client side* of your product. The client
 side of your product runs in the browser.
 

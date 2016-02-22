@@ -5,7 +5,7 @@ class Dashboard extends React.Component {
   render() {
 	return (
 		<div id="content">
-			<TopNav view="DashboardDDDDD"/>
+			<TopNav view="Dashboard"/>
 			<div className="content">
 				<div className="project-info container-fluid">
 					<div className="state-details">
