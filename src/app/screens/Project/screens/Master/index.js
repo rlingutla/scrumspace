@@ -1,8 +1,8 @@
-import React from 'react';
-import TopNav from '../TopNav';
+import { Component } from 'react';
+import TopNav from '../../../../shared/components/TopNav';
 
-/* ProjectMaster for all user projects*/
-class ProjectMaster extends React.Component {
+/* Master for all user projects*/
+class Master extends Component {
 	render() {
 		return (
 			<div id="content">
@@ -19,4 +19,4 @@ class ProjectMaster extends React.Component {
   }
 }
 
-export default ProjectMaster;
+export default Master;

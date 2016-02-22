@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 
 /* TODO: this may not be needed, still learning react-router*/
-class Project extends React.Component {
+class Project extends Component {
   render () {
     return (
 		<div>

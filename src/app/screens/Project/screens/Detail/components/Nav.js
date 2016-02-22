@@ -1,6 +1,6 @@
 import React from 'react';
-import ProjectAvatar from './projectAvatar';
-import NavTabBar from './tabs/navTabBar';
+import ProjectAvatar from './Avatar';
+import NavTabBar from './Tabs/NavTabBar';
 
 
 const ProjectNav = (props) => {
