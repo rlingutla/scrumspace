@@ -12,7 +12,9 @@ http.createServer(app).listen(PORT, function(){
 });
 
 app.post('/deploy', function(req,res){
-  var payload = req.body.build;
+  console.log("post received", req.body);
+
+  /*var payload = req.body.build;
 
   if(payload.branch == "org_refactor"){
     if(payload.status == "success"){
@@ -22,6 +24,6 @@ app.post('/deploy', function(req,res){
     else if (payload.static == "error"){
       console.error("Error: Build Failed");
     }
-  }
+  }*/
 
 });
