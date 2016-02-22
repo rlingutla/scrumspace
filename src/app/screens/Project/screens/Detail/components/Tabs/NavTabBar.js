@@ -1,5 +1,5 @@
 import React from 'react';
-import NavTab from './navTab';
+import NavTab from './NavTab';
 
 const tabs = [
 	{ id: 0, name: "Board" },
