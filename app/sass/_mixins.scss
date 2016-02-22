@@ -28,6 +28,11 @@
 	user-select: text;
 }
 
+@mixin resetSpacing(){
+	margin:0;
+	padding:0;
+}
+
 @mixin hoverAction(){
 	    @include transition();
 

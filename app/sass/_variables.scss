@@ -1,24 +1,33 @@
 //colors
-$gray: #F9F9F9;
+// $gray: #F9F9F9;
 $border-color: #e7e7e7;
-$blue: #0C63F6;
-$dark-blue: #031637;
-$body-gray: #6D6D6D;
-$light-gray: #F7F7F7;
+// $blue: #0C63F6;
+// $dark-blue: #031637;
+$body-gray-color: #6D6D6D;
+// $light-gray: #F7F7F7;
 
 //theme colors
-
+/*
 $yellow-color: #FFD166;
 $red-color: #EF476F;
 $green-color: #06D6A0;
 $blue-color: #118AB2;
 $dark-blue-color: #073B4C;
 $sidebar-color: $blue-color;
-
+*/
+$yellow-color: #FFE74C;
+$red-color: #FF5964;
+$green-color: #6BF178;
+$blue-color: #35A7FF;
+$light-blue-color: #A7D9FF;
+$sidebar-color: #444444;
+$gray-color: #EDEDED;
+$light-gray-color: #F7F7F7;
 
 //layout values
 $nav-offset: 50px;
 $margin: 15px 0;
+$padding: 15px;
 
 //fonts
 $sans-serif: 'Source Sans Pro', sans-serif;
