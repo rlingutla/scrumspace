@@ -3,7 +3,7 @@ var http = require('http');
 var app = express();
 var shelljs = require('shelljs/global');
 
-app.use(require('body-parser').json());
+app.use(require('body-parser').urlencoded({extended: false}));
 
 PORT = 8888;
 
@@ -12,18 +12,12 @@ http.createServer(app).listen(PORT, function(){
 });
 
 app.post('/deploy', function(req,res){
-  console.log("post received", req.body);
+  //console.log("post received", JSON.parse(req.body.payload));
+  var payload = JSON.parse(req.body.payload);
 
-  /*var payload = req.body.build;
-
-  if(payload.branch == "org_refactor"){
-    if(payload.status == "success"){
-      console.log("Successful build received. Triggering deploy script.");
-      exec("(cd /var/www/scrumspace/deploy && ./deploy.sh)");
-    }
-    else if (payload.static == "error"){
-      console.error("Error: Build Failed");
-    }
-  }*/
+  if(payload.status == 0 && payload.branch == 'master'){
+    console.log("Successful build received. Triggering deploy script.");
+    exec("(cd /var/www/scrumspace/deploy && ./deploy.sh)");
+  }
 
 });
