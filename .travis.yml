@@ -8,10 +8,11 @@ script: gulp
 notifications:
   webhooks:
     urls:
-      - http://www.abhayvatsa.com:8888/deploy
+      - http://ssdeploy.abhayvatsa.com/deploy
     on_success: always
     on_failure: always
     on_start: never
+  slack: scrumspace:e4ub8CIlVGoGM24aos08sUiT
 
 cache: 
   directories:
