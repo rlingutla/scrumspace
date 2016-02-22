@@ -5,7 +5,7 @@ var express = require('express');
 
 module.exports = function(app){
 	/* set node port */
-	app.set('port', process.env.PORT || 8000);
+	app.set('port', process.env.PORT || 8080);
 
 	/* serve static assets off of /static virtual path prefix */
 	app.use('/static', express.static(__dirname + '/../dist'));
