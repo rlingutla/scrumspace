@@ -13,4 +13,4 @@ npm i
 gulp
 
 #start application back up
-./node_modules/forever/bin/forever start server/server.js --uid scrumspace -l ../deploy/logs/LOGFILE -o ../deploy/logs/OUTFILE
+./node_modules/forever/bin/forever start src/server/server.js --uid scrumspace -l ../deploy/logs/LOGFILE -o ../deploy/logs/OUTFILE
