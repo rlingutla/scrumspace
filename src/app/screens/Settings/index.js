@@ -1,13 +1,11 @@
 import React from 'react';
 
-class Settings extends React.Component {
-  render() {
+const Settings = () => {
 	return (
 		<div className="content">
-			<p> settings</p>
+			<p>Settings page</p>
 		</div>
 	);
-  }
-}
+};
 
 export default Settings;
