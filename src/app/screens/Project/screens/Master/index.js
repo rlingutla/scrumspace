@@ -9,8 +9,8 @@ class Master extends React.Component {
 				<TopNav view="Your Projects"/>
 				{this.props.children}
 			</div>
-    );
-  }
+    	);
+  	}
 }
 
 export default Master;

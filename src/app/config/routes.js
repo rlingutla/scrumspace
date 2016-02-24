@@ -11,7 +11,7 @@ import { ProjectDetail, ProjectMaster, ProjectNew } from '../screens/Project/scr
 var routes = <Route path='/' component={App}>
 	<IndexRoute component={Dashboard} />
 	<Route path='project' component={Project}>
-		<Route path='detail/:id' component={ProjectMaster} />
+		<IndexRoute component={ProjectMaster} />
 		<Route path='detail/:id' component={ProjectDetail} />
 		<Route path='new' component={ProjectNew} />
 	</Route>

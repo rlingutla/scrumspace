@@ -4,7 +4,7 @@ import Tab from './components/Tabs/Tab';
 import Board from './components/Board';
 
 /* Project details on a particular project*/
-class ProjectDetails extends React.Component {
+class Detail extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -34,4 +34,4 @@ class ProjectDetails extends React.Component {
   	}
 }
 
-export default ProjectDetails;
+export default Detail;

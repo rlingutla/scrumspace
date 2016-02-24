@@ -1,10 +1,10 @@
 import React from 'react';
 
 /* This is a wrapper component; seems necessary in react-router.*/
-const Project = () => {
+const Project = (props) => {
 	return (
 		<div>
-			{this.props.children}
+			{props.children}
 		</div>
 	);
 };
