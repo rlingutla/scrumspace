@@ -1,6 +1,8 @@
 var express = require('express'),
 	app = express();
 
+require('babel-core/register');
+
 //configure express app
 require('./config')(app);
 

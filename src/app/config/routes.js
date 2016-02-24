@@ -2,9 +2,12 @@
 import App from '../index';
 import { Dashboard, Project, Settings, Statistics } from '../screens';
 
+import React from 'react';
+import { Router, Route, IndexRoute } from 'react-router';
 /* Project Components */
 import { ProjectDetail, ProjectMaster, ProjectNew } from '../screens/Project/screens'; 
 
+/*
 const routes = {
 	path: '/',
 	component: App,
@@ -23,5 +26,17 @@ const routes = {
 		{ path: 'statistics', component: Statistics }
 	]
 };
+
+*/
+
+var routes = <Route path='/' component={App}>
+	<IndexRoute component={Dashboard} />
+	<Route path='project' component={ProjectMaster}>
+		<Route path='detail/:id' component={ProjectDetail} />
+		<Route path='new' component={ProjectNew} />
+	</Route>
+	<Route path="settings" component={Settings} />
+	<Route path="statistics" component={Statistics} />
+</Route>;
 
 export default routes;
