@@ -3,7 +3,7 @@ var express = require('express'),
 
 require('babel-core/register');
 
-//configure express app
+// configure express app
 require('./config')(app);
 
 /* listen on designated port */
