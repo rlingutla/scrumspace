@@ -7,7 +7,7 @@ html, body {
 
 
 #sidebar {
-	background: $sidebar-color;
+		background: $sidebar-color;
     position: fixed;
     height: 100%;
     width: 80px;
@@ -34,7 +34,6 @@ html, body {
 				    border-radius: 5px;
 				    color: $sidebar-color;
 				    cursor: pointer;
-				    // @include transition(); //SASS mixin (basically a function)
 				    @include hoverAction();
 
 				    .glyphicon {
@@ -92,7 +91,6 @@ html, body {
 	padding-left: 80px;
 
 	.content {
-		// padding-top: $nav-offset;
 
 		&.tab-offset {
 			padding-top: ($nav-offset + 40px)
