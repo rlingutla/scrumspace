@@ -1,6 +1,7 @@
 // This is the server entry point for the application.
 import { renderToStaticMarkup } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
+import Layout from './Layout';
 import React from 'react';
 import routes from '../app/config/routes';
 
@@ -20,7 +21,7 @@ export default (req, res) => {
 		// your "not found" component or route respectively, and send a 404 as
 		// below, if you're using a catch-all route.
 		// We use react-router to render the correct html as a string based on request URL. 
-			res.status(200).send(renderToStaticMarkup(<RouterContext  {...renderProps} />));
+			res.status(200).send(Layout(renderToStaticMarkup(<RouterContext  {...renderProps} />)));
 		} else {
 			res.status(404).send('Not found');
 		}
