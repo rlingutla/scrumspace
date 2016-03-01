@@ -34,9 +34,9 @@
   "globals": {
 	// e.g. "angular": true
 	"console": true,
-	"document", true,
+	"document": true,
 	"module": true,
-	"require", true,
+	"require": true,
 	"window": true
   },
 
