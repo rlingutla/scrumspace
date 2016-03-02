@@ -41,6 +41,6 @@ The dev server can be started by running `npm start`.
 
 As stated above, to build the application and start the server, run `npm run serve`.
 
-The server will by default listen on port `3000`, however you can configure this by setting your `PORT` environment variable to something else. 
+The server will by default listen on port `8080`, however you can configure this by setting your `PORT` environment variable to something else. 
 
-[http://localhost:3000](http://localhost:3000).
+[http://localhost:8080](http://localhost:8080).
