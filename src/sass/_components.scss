@@ -1,0 +1,161 @@
+a {
+	color: $blue-color;
+}
+button {
+	@include hoverAction();
+}
+
+// utils
+.left-right-align {
+	margin:0; 
+	
+	& > :first-child {
+		text-align:left;
+		padding-left:0;
+	}
+	& > :last-child {
+		text-align: right;
+		padding-right:0;
+	}
+}
+
+// TASKS
+.task {
+	background: #fff;
+    padding: 6px;
+    margin: 10px 0;
+    opacity: 1;
+    border: 1px solid $border-color;
+    border-top: 5px solid #E8E8E8;
+
+    @include transition();
+    @include disableSelect();
+
+    &:hover {
+    	cursor: pointer;
+    	opacity:0.7;
+    }
+
+	.heading {
+		color: $blue-color;
+
+		.row {
+			margin:0;
+		}
+
+		.avatar {
+			width: 25px;
+			height: 25px;
+			display: inline-block;
+			background: $light-gray-color;
+			font-family: 'Glyphicons Halflings';
+			color: gray;
+
+			&:before {
+				position: relative;
+				top: 2px;
+				left: -6px;
+				content: "\e008";
+				font-size: 12px;
+			}
+		}
+	}
+	.body {
+		padding: 5px 0;
+	}
+}
+
+// Task state coloring
+.state-todo {
+}
+.state-doing {
+	.task {
+		border-color: $yellow-color;
+	}
+
+}
+.state-blocked {
+	.task {
+		border-color: $red-color;
+	}
+}
+.state-done {
+	.task {
+		border-color: $green-color;
+	}
+}
+
+.user-story {
+	background: #fff;
+    padding: 6px;
+    margin: 10px 0;
+    opacity: 1;
+    border: 1px solid $border-color;
+
+    @include transition();
+
+    .heading > .row { margin:0; }
+
+    &.collapse {
+    	display:block;
+    	height: 100% !important;
+
+    	.body { display:none; }
+
+    	&.in {
+    		display:block;
+
+    		.body { display:block; }
+    	}
+    }
+    .control {
+    	button.collapse-control {
+    		background:$light-gray-color;
+    		padding: 3px 7px;
+    		border:none;
+
+    		&:hover { background: darken($light-gray-color, 5%); }
+    		&:active { background: darken($light-gray-color, 10%); }
+    	}
+    }
+    ul {
+    	padding-left: 20px;
+    }
+    .body {
+
+    	h5 {
+    		text-decoration: underline;
+    	}
+    }
+}
+
+.progress {
+	background: #fff;
+	margin: $margin;
+	margin-top:0;
+	border: none;
+	border-radius: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+
+	.progress-bar {
+		-webkit-box-shadow: none;
+		box-shadow: none;
+
+		&.progress-bar-warning {
+			background-color: $yellow-color;
+		}
+		&.progress-bar-danger {
+			background-color: $red-color;
+		}
+		&.progress-bar-success {
+			background-color: $green-color;
+		}
+	}
+}
+
+.badge {
+	background-color: #118AB2;
+	margin-left: 5px;
+	vertical-align: baseline;
+}

@@ -1,0 +1,51 @@
+//mixins
+
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+@mixin transition(){
+	-webkit-transition: all $bezier 0.15s;
+	transition: all $bezier 0.15s;
+}
+
+@mixin disableSelect(){
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+@mixin enableSelect(){
+	-webkit-touch-callout: text;
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+}
+
+@mixin resetSpacing(){
+	margin:0;
+	padding:0;
+}
+
+@mixin hoverAction(){
+	    @include transition();
+
+	    &:hover {
+	    	transform: scale(1.05,1.05);
+			// background: darken($accent-color, 5);
+	    }
+	    &:active {
+	    	transform: scale(0.97,0.97);
+			// background: darken($accent-color, 10);
+			outline: 0;
+	    }
+	    &:focus {
+	    	outline: 0;
+	    }
+}

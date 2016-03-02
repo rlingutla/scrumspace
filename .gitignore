@@ -1,10 +1,14 @@
 # Ignores node dependencies (e.g. webpack).
 node_modules
-# Ignores your built application.
-build/js/app.js
+
 # Ignores sass cache directory
 .sass-cache
+
 # Ignores log files
 *.log
+
 # LOL MAC
 .DS_Store
+
+# Ignore dist contents
+dist/

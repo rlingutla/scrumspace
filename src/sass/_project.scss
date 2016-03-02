@@ -1,0 +1,228 @@
+#project-nav {
+	background: $blue-color;
+	padding: 0 15px 0 95px;
+	color: #fff;
+	max-height: 155px;
+
+	& > .row {
+		padding: 30px 0;
+	}
+
+	.project-details {
+		& > * {
+			vertical-align: middle;
+		}
+	}
+
+	.project-avatar {
+		display: inline-block;
+		width:50px;
+		height:50px;
+		background-color: #fff;
+		border-radius: 5px;
+		border: 1px solid #fff;
+	}
+
+	.detail-text {
+		display: inline-block;
+		margin-left: 20px;
+
+		h1 {
+			@include resetSpacing();
+			font-size: 20px;
+
+			span[name='project-state'] {
+				color: $light-blue-color;
+				font-weight: 100;
+				font-style: italic;
+			}
+		}
+		h4 {
+			@include resetSpacing();
+			color: $light-blue-color;
+			margin-top: 5px;
+			font-size: 15px;
+		}
+	}
+}
+
+.project-info {
+	background: #fff;
+	padding: 15px;
+	margin-bottom:20px;
+
+	.progress-bar-details {
+		margin: 15px 0 5px;
+		color: $body-gray-color;
+		font-style: italic;
+	}
+
+    .date-range {
+    	color: $body-gray-color;
+    }
+}
+
+.scrum-board {
+	// background-color: #F5F5F5;
+	background-color: rgba(255, 255, 255, .9);
+
+	table {
+		width: 100%;
+		table-layout: fixed;
+
+		thead {
+			tr {
+				height: 40px;
+
+				th {
+					text-align: left;
+	    			border-bottom: 2px solid #EAEAEA;
+	    			font-weight: 600;
+				}
+			}
+		}
+		tbody {
+			tr {
+				border-bottom: 1px solid #EFEFEF;
+			}
+			td {
+				vertical-align: top;
+
+				.task {
+					width: 90%;
+					@include hoverAction();
+
+					&:active {
+						transform: rotateZ(2deg);
+					}
+				}
+				.user-story {
+					width: 90%;
+
+					&.collapse {
+						.control i.glyphicon:before {
+							content: "\e252";
+						}
+					}
+					&.collapse.in {
+						.control i.glyphicon:before {
+							content: "\e253";
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// navigation
+.project-nav.nav-tabs {
+	background: transparent;
+	border:none;
+
+	li {
+		a {
+			border: none;
+			border-radius: 0;
+			margin:0;
+			color: $light-blue-color;
+			font-size: 15px;
+			cursor: pointer;
+
+			&:hover, &:focus, &:active {
+				border:none;
+				background: transparent;
+			}
+
+			@include hoverAction();
+		}
+
+		&.active {
+			a {
+				border-bottom: 4px solid #fff;
+				color: #fff;
+				background: transparent;
+			}
+		}
+	}
+}
+
+#tab-container {
+	padding-top: 155px;
+	.tab {
+		display:none;
+
+		&.active { display: block; }
+	}
+}
+
+
+// NEW PROJECT STYLES
+.header-styling{
+  background-color: $blue-color;
+}
+
+.borderHead{
+  padding-bottom: 10px;
+	border-bottom: 2px solid black !important;
+	width: 100% !important;
+}
+
+.borderBottom{
+  padding-top: 10px;
+	border-top: 2px solid black !important;
+}
+
+.createPad{
+  padding-bottom: 10px;
+}
+
+.modal .modal-body {
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+.createPadTop{
+  padding-top: 15px;
+}
+
+.createPadTop2{
+  padding-top: 45px;
+}
+
+.borderTop{
+  border-top: 2px solid black !important;
+ /* Padding is the whitespace between the content of fb-trending and its
+    border */
+ padding-top: 15px;
+ padding-bottom: 15px;
+ /* Margin is the whitespace between the border and adjacent elements */
+ margin-top: 25px;
+ margin-bottom: 15px;
+}
+
+.form-field-width{
+	width:100% !important;
+}
+
+.fillBorder{
+   margin-bottom:7px !important;
+}
+
+.fillBorderDesc{
+   margin:7px !important;
+   margin-left: 30px !important;
+   width:96%;
+}
+
+.black{
+  color:black;
+}
+
+.mt-color{
+	color:white;
+}
+
+.mf-color{
+	background-color:#F5F5F5;
+}
