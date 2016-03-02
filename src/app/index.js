@@ -5,6 +5,13 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import scrumApp from './reducers';
 
+/* FOR SERVER RENDERING
+//get state injected by server
+const initialState = window.__INITIAL_STATE__;
+//create store with initial state
+let store = createStore(scrumApp, initialState);
+*/
+
 let store = createStore(scrumApp);
 
 const AppContainer = (props) => {
