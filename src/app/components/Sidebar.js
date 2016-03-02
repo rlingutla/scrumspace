@@ -6,8 +6,11 @@ const Sidebar = () => {
 		<div id="sidebar">
 			<div id="project-selector">
 				<ul>
+					<li className="selected">
+						<Link to="/"><span className="glyphicon glyphicon-tasks"></span></Link>
+					</li>
 					<li>
-						<Link to="/project/detail/1"><span className="glyphicon glyphicon-blackboard"></span></Link>
+						<Link to="/project/"><span className="glyphicon glyphicon-blackboard"></span></Link>
 					</li>
 					<li>
 						<Link to="/project/new"><span className="glyphicon glyphicon-plus"></span></Link>

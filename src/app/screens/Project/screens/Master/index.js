@@ -6,7 +6,7 @@ class Master extends React.Component {
 	render() {
 		return (
 			<div id="content">
-				<TopNav view="Your Projects"/>
+				<TopNav view="Projects"/>
 				{this.props.children}
 			</div>
     	);
