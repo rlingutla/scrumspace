@@ -5,8 +5,8 @@
   "author": "John Vilk <jvilk@cs.umass.edu>",
   "license": "MIT",
   "scripts": {
-    "dev": "./node_modules/gulp/bin/gulp.js dev",
-    "build": "./node_modules/gulp/bin/gulp.js build",
+    "dev": "gulp dev",
+    "build": "gulp build",
     "start": "node src/server/server.js",
     "serve": "npm run build && npm start"
   },
