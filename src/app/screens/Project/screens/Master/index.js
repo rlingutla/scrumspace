@@ -1,5 +1,6 @@
 import React from 'react';
 import TopNav from '../../../../shared/components/TopNav';
+import ProjectContainerList from './components/ProjectContainerList';
 
 /* Master for all user projects*/
 class Master extends React.Component {
@@ -7,7 +8,7 @@ class Master extends React.Component {
 		return (
 			<div id="content">
 				<TopNav view="Projects"/>
-				{this.props.children}
+				<ProjectContainerList />
 			</div>
     	);
   	}

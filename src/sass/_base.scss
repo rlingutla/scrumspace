@@ -90,11 +90,12 @@ html, body {
 
 #content {
 	padding-left: 80px;
+	padding-top: $nav-offset;
 
 	.content {
 
 		&.tab-offset {
-			padding-top: ($nav-offset + 40px)
+			// padding-top: 40px;
 		}
 	}
 }

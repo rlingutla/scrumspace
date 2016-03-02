@@ -41,7 +41,8 @@
     "react-redux": "^4.4.0",
     "react-router": "^2.0.0",
     "redux": "^3.3.1",
-    "shelljs": "^0.6.0"
+    "shelljs": "^0.6.0",
+    "underscore": "^1.8.3"
   },
   "main": "Gulpfile.js",
   "repository": {
