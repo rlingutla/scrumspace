@@ -30,25 +30,25 @@ gulp.task('clean', function () {
 });
 
 gulp.task('scss', function() {
-  return gulp.src('app/sass/main.scss')
+  return gulp.src('src/sass/main.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('dist/css/'));
 });
 
 gulp.task('js', function(){
-  return gulp.src('app/client.js')
+  return gulp.src('src/client/entry.js')
     .pipe(webpack( require('./webpack.config.js') ))
     .pipe(gulp.dest('dist/js/'));
 });
 
 // copy static files
 gulp.task('copy_static', function(){
-  return gulp.src(['app/index.html'])
+  return gulp.src(['src/index.html'])
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch', function() {
-    gulp.watch('app/**/*', ['run-build']);
+    gulp.watch('src/**/*', ['run-build']);
 });
 
 gulp.task('default', ['run-build'], function() {});

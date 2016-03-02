@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "4.2"
+before_script:
+  - npm install -g gulp
+script: gulp
+
+notifications:
+  webhooks:
+    urls:
+      - http://www.abhayvatsa.com:8888/deploy
+    on_success: always
+    on_failure: always
+    on_start: never
+  slack: scrumspace:e4ub8CIlVGoGM24aos08sUiT
+
+cache: 
+  directories:
+    - node_modules
+
+sudo: false

@@ -1,0 +1,99 @@
+// base
+html, body {
+	font-family: $sans-serif;
+	background: $gray-color;
+	-webkit-font-smoothing: antialiased;
+}
+
+
+#sidebar {
+		background: $sidebar-color;
+    position: fixed;
+    height: 100%;
+    width: 80px;
+    color: #fff;
+    padding-top: $nav-offset;
+    z-index: 9999;
+
+    #project-selector {
+    	ul {
+    		margin: 0;
+    		padding: 0;
+
+    		li {
+    			list-style-type: none;
+    			text-align: center;
+
+    			a {
+    				display: inline-block;
+				    width: 50px;
+				    height: 50px;
+				    background: #fff;
+				    opacity: 0.2;
+				    margin-bottom: 20px;
+				    border-radius: 5px;
+				    color: $sidebar-color;
+				    cursor: pointer;
+				    @include hoverAction();
+
+				    .glyphicon {
+				    	font-size: 20px;
+				    	margin-top: 13px;
+				    }
+
+				    &:hover {
+				    	opacity: 0.6;
+				    }
+
+				    &:active {
+				    	opacity: 0.8;
+				    }
+    			}
+
+    			&.selected {
+    				a {
+    					background: #fff;
+    					opacity: 1;
+    					color: $blue-color;
+    					border: 1px solid $border-color;
+    				}
+    			}
+    		}
+    	}
+    }
+}
+
+#top-nav {
+	background-color: $blue-color;
+	padding-left: 80px;
+
+	.navbar-brand {
+		color: #fff;
+	}
+
+	.nav-left {
+		float:left;
+	}
+	.nav-right {
+		float:right;
+		padding: 8px;
+	}
+
+	button.btn-default {
+		background:transparent;
+		color: #fff;
+		border:none;
+		font-size: 17px;
+	}
+}
+
+#content {
+	padding-left: 80px;
+
+	.content {
+
+		&.tab-offset {
+			padding-top: ($nav-offset + 40px)
+		}
+	}
+}

@@ -6,7 +6,7 @@ var path = require('path');
 module.exports = {
 	// The main "entry point" of your web app. WebPack will pack every module that
 	// this file depends on (and its dependencies depend on).
-	entry: './app/client/entry.js',
+	entry: './src/client/entry.js',
 	// Package up the application as 'app.js' in the 'build/js' directory.
 	// __dirname is a magic variable that contains the directory that webpack.config.js
 	// is located in.
