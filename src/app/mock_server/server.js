@@ -9,3 +9,9 @@ function emulateServerReturn(data, cb) {
     cb(data);
   }, 4);
 }
+
+export function getInitialStateTree(userId, cb){
+	var userObj = readDocument("users", userId);
+	var projects = readDocument("projects");
+	debugger;
+};

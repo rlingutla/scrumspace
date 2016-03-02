@@ -28,7 +28,8 @@ function JSONClone(obj) {
 export function readDocument(collection, id) {
   // Clone the data. We do this to model a database, where you receive a
   // *copy* of an object and not the object itself.
-  return JSONClone(data[collection][id]);
+  if(id) return JSONClone(data[collection][id]);
+  else return JSONClone(data[collection]);
 }
 
 /**
