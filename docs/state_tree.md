@@ -1,3 +1,5 @@
+# The Root State Tree
+
 ```
 {
 	user: {
