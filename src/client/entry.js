@@ -5,6 +5,7 @@ import { render } from 'react-dom';
 import { Router, match, browserHistory } from 'react-router';
 import routes from '../app/config/routes';
 
+
 /* 	
 	This is the 'entry point' into the client side code.
 	We render our application using react-router by passing it in routes
