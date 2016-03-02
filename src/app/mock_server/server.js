@@ -10,8 +10,15 @@ function emulateServerReturn(data, cb) {
   }, 4);
 }
 
-export function getInitialStateTree(userId, cb){
+/*
+	skipping use of emulateServerReturn
+	in the future, the initial state tree will be populated on server render (not via API call)
+*/
+export function initialStateTree(userId){
 	var userObj = readDocument("users", userId);
 	var projects = readDocument("projects");
-	debugger;
+	return {
+		user: userObj[userId],
+		projects
+	};
 };

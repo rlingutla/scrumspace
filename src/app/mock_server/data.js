@@ -1,14 +1,14 @@
-export default initialData = {
+var initialData = {
 	users: {
 		0: {
 			"_id": 0,
 			"first_name": "Donald",
 			"last_name": "Trump",
-			"email": "america@donaldjtrump.com"
+			"email": "america@donaldjtrump.com",
 			"display_name": "DJ Trump",
 			"password": "d4866854120e8bb207d6f8e11fce8b99"
 		}
-	}
+	},
 	projects: {
 		0: {
 			"_id": 0,
@@ -21,7 +21,7 @@ export default initialData = {
 					"_id": 0,
 					"start_date": 1456900811760,
 					"end_date": 1456900811760,
-					"scrum_time": 09:00:00
+					"scrum_time": "09:00:00"
 				}
 			],
 			"stories": [
@@ -44,3 +44,5 @@ export default initialData = {
 		}
 	}
 };
+
+export default initialData;
