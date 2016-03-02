@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route, IndexRedirect, IndexRoute } from 'react-router';
 
 /* Main Components also known as Screens, Views, Widgets */
 import App from '../index';
@@ -8,8 +8,9 @@ import { Dashboard, Project, Settings, Statistics } from '../screens';
 /* Project Components */
 import { ProjectDetail, ProjectMaster, ProjectNew } from '../screens/Project/screens'; 
 
-var routes = <Route path='/' component={App}>
-	<IndexRoute component={Dashboard} />
+var routes = 
+<Route path='/' component={App}>
+	<Route path='dashboard' component={Dashboard} />
 	<Route path='project' component={Project}>
 		<IndexRoute component={ProjectMaster} />
 		<Route path='detail/:id' component={ProjectDetail} />

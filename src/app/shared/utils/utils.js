@@ -1,3 +1,4 @@
+
 function verboseServerTime(serverTime) {
 	return serverTime;
 }

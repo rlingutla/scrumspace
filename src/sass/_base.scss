@@ -51,14 +51,13 @@ html, body {
 				    }
     			}
 
-    			&.selected {
-    				a {
-    					background: #fff;
-    					opacity: 1;
-    					color: #000;
-    					border: 1px solid $border-color;
-    				}
-    			}
+    			
+				a.selected {
+					background: #fff;
+					opacity: 1;
+					color: #000;
+					border: 1px solid $border-color;
+				}
     		}
     	}
     }
