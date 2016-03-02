@@ -12,20 +12,21 @@ var initialData = {
 	projects: {
 		0: {
 			"_id": 0,
-			"title": "TRUMP",
+			"title": "Drumpf",
 			"description": "Make America Great Again",
 			"users": [0],
-			"current_sprint": null,
-			"sprints": [
-				{
+			"status": "planning",
+			"current_sprint": 0,
+			"sprints": {
+				0: {
 					"_id": 0,
 					"start_date": 1456900811760,
 					"end_date": 1456900811760,
 					"scrum_time": "09:00:00"
 				}
-			],
-			"stories": [
-				{
+			},
+			"stories": {
+				0: {
 					"_id": 0,
 					"title": "Buy Hats",
 					"description": "Design Hats \nOrder Hats\nSell Hats",
@@ -40,7 +41,17 @@ var initialData = {
 						}
 					]
 				}
-			]
+			}
+		},
+		1: {
+			"_id": 1,
+			"title": "Feel the Bern",
+			"description": "Fight the Power",
+			"users": [0],
+			"status": "sprint",
+			"current_sprint": null,
+			"sprints": {},
+			"stories": {}
 		}
 	}
 };

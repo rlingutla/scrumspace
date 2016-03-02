@@ -3,13 +3,15 @@ var gulp = require('gulp'),
   del = require('del'),
   sass = require('gulp-sass'),
   clean = require('gulp-clean'),
-  webpack = require('gulp-webpack');
+  webpack = require('gulp-webpack'),
+  livereload = require('gulp-livereload');
 
 
 gulp.task('run-build', function(callback) {
   runSequence(
     'clean',
-    [ 'js', 'copy_static', 'scss', 'vendorToDist'],
+    ['copy_static', 'scss', 'vendorToDist'],
+    'js',
     callback
   );
 });
@@ -38,7 +40,8 @@ gulp.task('scss', function() {
 gulp.task('js', function(){
   return gulp.src('src/client/entry.js')
     .pipe(webpack( require('./webpack.config.js') ))
-    .pipe(gulp.dest('dist/js/'));
+    .pipe(gulp.dest('dist/js/'))
+    .pipe(livereload());
 });
 
 // copy static files
@@ -48,7 +51,8 @@ gulp.task('copy_static', function(){
 });
 
 gulp.task('watch', function() {
-    gulp.watch('src/**/*', ['run-build']);
+  livereload.listen();
+  gulp.watch('src/**/*', ['run-build']);
 });
 
 gulp.task('default', ['run-build'], function() {});

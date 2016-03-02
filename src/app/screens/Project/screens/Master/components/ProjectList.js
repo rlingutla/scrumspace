@@ -1,17 +1,27 @@
 import React from 'react';
 import ProjectItem from './ProjectItem';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 const ProjectList = (props) => {
 	return (
 		<div className="content">
 			<div className="project-container">
-				{
-					props.projects.map((project, i) => {
-						return (
-							<ProjectItem key={i} {...project}/>
-						);
-					})
-				}
+				
+					<Row className="show-grid"> 
+						{
+							props.projects.map((project, i) => {
+								return (
+									<Col xs={12} sm={6} md={4} key={i}>
+										<ProjectItem {...project}/>
+									</Col>
+								);
+							})
+						}
+				    </Row>
+				
+
+
+				
 			</div>
 		</div>
 	)
