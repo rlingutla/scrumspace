@@ -16,10 +16,10 @@ class Sidebar extends React.Component {
 						</li>
 						<li>
 							<Link activeClassName="selected" to="/project/"><span className="glyphicon glyphicon-blackboard"></span></Link>
-						</li>
+						</li>					
 						<li>
-							<Link activeClassName="selected" to="/project/new"><span className="glyphicon glyphicon-plus"></span></Link>
-						</li>						
+							<Link activeClassName="selected" to="/settings"><span className="glyphicon glyphicon-cog"></span></Link>
+						</li>
 						<li>
 							<Link activeClassName="selected" to="/statistics"><span className="glyphicon glyphicon-stats"></span></Link>
 						</li>

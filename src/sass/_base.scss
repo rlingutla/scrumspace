@@ -80,10 +80,19 @@ html, body {
 	}
 
 	button.btn-default {
-		background:transparent;
-		color: #fff;
-		border:none;
-		font-size: 17px;
+		color: $dark-gray-color;
+		border: 1px solid $border-color;
+		font-size: 15px;
+
+		&:active {
+		    box-shadow: none;
+		    -webkit-box-shadow: none;
+		}
+
+		.glyphicon {
+			font-size: 12px;
+			margin-left: 5px;
+		}
 	}
 }
 

@@ -15,14 +15,14 @@ var initialData = {
 			"title": "Drumpf",
 			"description": "Make America Great Again",
 			"users": [0],
-			"status": "planning",
+			"status": "sprint",
 			"current_sprint": 0,
 			"sprints": {
 				0: {
 					"_id": 0,
 					"start_date": 1456900811760,
 					"end_date": 1456900811760,
-					"scrum_time": "09:00:00"
+					"scrum_time": "9:00 AM"
 				}
 			},
 			"stories": {
@@ -48,7 +48,7 @@ var initialData = {
 			"title": "Feel the Bern",
 			"description": "Fight the Power",
 			"users": [0],
-			"status": "sprint",
+			"status": "planning",
 			"current_sprint": null,
 			"sprints": {},
 			"stories": {}

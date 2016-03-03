@@ -2,6 +2,7 @@ import React from 'react';
 import utils from '../../../../../shared/utils/utils';
 import { Grid, Row, Col } from 'react-bootstrap';
 import ProjectStatus from '../../../shared/ProjectStatus';
+import { Link }  from 'react-router'; 
 
 function getScrumTime(props){
 	if(props.current_sprint != null){
@@ -12,13 +13,18 @@ function getScrumTime(props){
 
 const ProjectItem = (props) => {
 	return (
-		<div className="project-item">
-			<Row className="left-right-align">
-				<Col xs={8} className="project-title">{props.title}</Col>
-				<Col xs={4} className="project-scrum-time">{getScrumTime(props)}</Col>
-			</Row>
-			<ProjectStatus status={props.status}/>
-		</div>
+		<Link to={`/project/detail/${props._id}`} >
+			<div className="project-item">
+				<Row className="left-right-align">
+					<Col xs={8} className="project-title">{props.title}</Col>
+					<Col xs={4} className="project-scrum-time">{getScrumTime(props)}</Col>
+				</Row>
+				<ProjectStatus status={props.status}/>
+				<div className="chart-container">
+					testing
+				</div>
+			</div>
+		</Link>
 	)
 }
 

@@ -2,7 +2,16 @@ a {
 	color: $blue-color;
 }
 button {
-	@include hoverAction();
+	&.btn.btn-default {
+		border-radius: $border-radius;
+
+		&:hover {
+			background-color: lighten($light-gray-color, 10%);
+		}
+		&:active {
+			background-color: $light-gray-color;
+		}
+	}
 }
 
 // utils
