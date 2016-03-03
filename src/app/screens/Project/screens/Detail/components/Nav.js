@@ -4,7 +4,6 @@ import NavTabBar from './Tabs/NavTabBar';
 
 
 const ProjectNav = (props) => {
-	debugger;
 	return (
 		<div id="project-nav" className="navbar navbar-fixed-top">
 			<div className="row left-right-align">

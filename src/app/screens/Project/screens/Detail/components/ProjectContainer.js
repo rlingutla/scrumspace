@@ -7,12 +7,12 @@ import _ from 'underscore';
 	passes full projects object to mergeProps
 */
 const mapStateToProps = (state) => {
-  return state.projects;
+	return state;
 }
 
 // pulls out current project from projects object, pushes to props
 function mergeProps(stateProps, dispatchProps, ownProps) {
-  return stateProps[ownProps.id];
+	return stateProps.projects[ownProps.id] || {};
 }
 
 //maps any actions this component dispatches to component props

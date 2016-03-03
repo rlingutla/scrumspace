@@ -9,7 +9,7 @@ import { Dashboard, Project, Settings, Statistics } from '../screens';
 import { ProjectDetail, ProjectMaster, ProjectNew } from '../screens/Project/screens'; 
 
 var routes = 
-<Route path='/' component={App}>
+<Route path='/' component={App} store={this}>
 	<Route path='dashboard' component={Dashboard} />
 	<Route path='project' component={Project}>
 		<IndexRoute component={ProjectMaster} />

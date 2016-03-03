@@ -5,6 +5,12 @@ import Layout from './Layout';
 import React from 'react';
 import routes from '../app/config/routes';
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import scrumApp from '../app/reducers';
+
+const initialStore = createStore(scrumApp, {});
+
 // We use react-router to render the correct html as a string based on request URL. 
 // Note that req.url here should be the full URL path from
 // the original request, including the query string.
@@ -21,7 +27,11 @@ export default (req, res) => {
 		// your "not found" component or route respectively, and send a 404 as
 		// below, if you're using a catch-all route.
 		// We use react-router to render the correct html as a string based on request URL. 
-			res.status(200).send(Layout(renderToStaticMarkup(<RouterContext  {...renderProps} />)));
+			res.status(200).send(Layout(renderToStaticMarkup(
+				<Provider store={initialStore}>
+				  <RouterContext  {...renderProps} />
+				</Provider>
+			)));
 		} else {
 			res.status(404).send('Not found');
 		}
