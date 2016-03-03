@@ -36,6 +36,7 @@
     "bootstrap": "^3.3.6",
     "express": "^4.13.4",
     "forever": "^0.15.1",
+    "gulp-util": "^3.0.7",
     "jquery": "^2.2.0",
     "moment": "^2.11.2",
     "react-bootstrap": "^0.28.3",

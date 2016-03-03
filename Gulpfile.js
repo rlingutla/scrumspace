@@ -1,10 +1,12 @@
 var gulp = require('gulp'),
   runSequence = require('run-sequence'),
+  gutil = require("gulp-util"),
   del = require('del'),
   sass = require('gulp-sass'),
   clean = require('gulp-clean'),
   webpack = require('gulp-webpack'),
-  livereload = require('gulp-livereload');
+  livereload = require('gulp-livereload')
+  webpackConfig = require("./webpack.config.js");
 
 
 gulp.task('run-build', function(callback) {
@@ -38,8 +40,15 @@ gulp.task('scss', function() {
 });
 
 gulp.task('js', function(){
+  var wpConfig = Object.create(webpackConfig);
+
   return gulp.src('src/client/entry.js')
-    .pipe(webpack( require('./webpack.config.js') ))
+    .pipe(webpack(require('./webpack.config.js'), null, function(err, stats){
+      if(err) throw new gutil.PluginError("webpack", err);
+      gutil.log("[webpack]", stats.toString({ 
+        colors: true, hash: false, timings: false, chunks: false, chunkModules: false, modules: false, children: true, version: true, cached: false, cachedAssets: false, reasons: false, source: false, errorDetails: false
+      }));
+    }))
     .pipe(gulp.dest('dist/js/'))
     .pipe(livereload());
 });
