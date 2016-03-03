@@ -4,6 +4,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import ProjectStatus from '../../../shared/ProjectStatus';
 import { Link }  from 'react-router'; 
 
+//get scrum time from a project object
 function getScrumTime(props){
 	if(props.current_sprint != null){
 		return utils.verboseServerTime(props.sprints[props.current_sprint].scrum_time);
@@ -20,9 +21,7 @@ const ProjectItem = (props) => {
 					<Col xs={4} className="project-scrum-time">{getScrumTime(props)}</Col>
 				</Row>
 				<ProjectStatus status={props.status}/>
-				<div className="chart-container">
-					testing
-				</div>
+				<div className="chart-container"></div>
 			</div>
 		</Link>
 	)

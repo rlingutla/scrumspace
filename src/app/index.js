@@ -23,7 +23,7 @@ const AppContainer = (props) => {
 			<Sidebar />
 			{props.children}
 		</div>
-	)
+	);
 }
 
 const App = (props) => {
@@ -33,6 +33,5 @@ const App = (props) => {
 		</Provider>
 	);
 };
-
 
 export default App;

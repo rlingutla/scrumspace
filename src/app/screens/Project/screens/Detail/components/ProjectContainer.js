@@ -2,11 +2,15 @@ import { connect } from 'react-redux';
 import Project from './Project';
 import _ from 'underscore';
 
-//maps redux state to component props
+/*
+	maps redux state to component props
+	passes full projects object to mergeProps
+*/
 const mapStateToProps = (state) => {
   return state.projects;
 }
 
+// pulls out current project from projects object, pushes to props
 function mergeProps(stateProps, dispatchProps, ownProps) {
   return stateProps[ownProps.id];
 }

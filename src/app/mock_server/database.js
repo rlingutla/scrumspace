@@ -6,11 +6,12 @@ import initialData from './data';
 // Modify with your startup's name!
 var startupName = "scrumSpace";
 
-
-var data = JSON.parse(localStorage.getItem(startupName));
-if (data === null) {
-  data = JSONClone(initialData);
-}
+// DISABLED UNTIL ABHAY FIXES SERVER SIDE RENDERING :(
+// var data = JSON.parse(localStorage.getItem(startupName));
+// if (data === null) {
+//   data = JSONClone(initialData);
+// }
+var data = JSONClone(initialData);
 
 /**
  * A dumb cloning routing. Serializes a JSON object as a string, then

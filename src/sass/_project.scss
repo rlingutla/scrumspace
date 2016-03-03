@@ -240,7 +240,7 @@
 			overflow:hidden;
 			border-radius: $border-radius;
 			padding: $padding;
-			height:350px;
+			// height:350px; //DISABLED until we have shit to put in
 			margin-bottom: $padding;
 			@include transition();
 

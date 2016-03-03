@@ -5,19 +5,17 @@ import _ from 'underscore';
 //maps redux state to component props
 const mapStateToProps = (state) => {
   return {
-  	projects: _.values(state.projects)
+    //convert projects dict to array and map to component's state
+  	projects: _.values(state.projects) 
   };
 }
 
 //maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
-  return {
-    onProjectClick: (id) => {
-      // dispatch(openProject(id))
-    }
-  }
+  return {};
 }
 
+//do the thing
 const ProjectContainerList = connect(
   mapStateToProps,
   mapDispatchToProps

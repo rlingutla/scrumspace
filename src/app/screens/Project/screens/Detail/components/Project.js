@@ -8,6 +8,7 @@ class Project extends React.Component {
 	constructor(props) {
 		super(props);
 		
+		//initialize tabs to Board view
 		this.state = {
 			activeTab: 0
 		};
@@ -21,6 +22,7 @@ class Project extends React.Component {
 	render() {
 		return (
 			<div>
+				{/* Renders project detail view, passes project details down as props */}
 				<Nav active-tab={this.state.activeTab} tab-change={this.onTabChange} {...this.props}/>
 				<div id="tab-container">
 					<Tab tab-id={0} active-tab={this.state.activeTab}>

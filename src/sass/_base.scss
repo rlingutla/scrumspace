@@ -3,6 +3,7 @@ html, body {
 	font-family: $sans-serif;
 	background: $gray-color;
 	-webkit-font-smoothing: antialiased;
+
 }
 
 
@@ -24,6 +25,10 @@ html, body {
     		li {
     			list-style-type: none;
     			text-align: center;
+
+    			&:after { //figure out how to do indicator icon
+
+    			}
 
     			a {
     				display: inline-block;
