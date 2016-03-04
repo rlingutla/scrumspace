@@ -6,7 +6,8 @@ var gulp = require('gulp'),
   clean = require('gulp-clean'),
   webpack = require('gulp-webpack'),
   livereload = require('gulp-livereload')
-  webpackConfig = require("./webpack.config.js");
+  webpackConfig = require("./webpack.config.js")
+  nodemon = require('nodemon');
 
 
 gulp.task('run-build', function(callback) {
@@ -52,8 +53,8 @@ gulp.task('js', function(){
         process.exit(1);
       }
     }))
-    .pipe(gulp.dest('dist/js/'))
-    .pipe(livereload());
+    .pipe(gulp.dest('dist/js/'));
+    // .pipe(livereload());
 });
 
 // copy static files
@@ -65,6 +66,21 @@ gulp.task('copy_static', function(){
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch('src/**/*', ['run-build']);
+
+  livereload.listen()
+
+    nodemon({
+      script: 'src/server/server.js',
+      watch: 'src',
+      stdout: false
+    }).on('readable', function() {
+      this.stdout.on('data', function(chunk) {
+        if (/^Listening/.test(chunk)) {
+          livereload.reload()
+        }
+        process.stdout.write(chunk)
+      })
+    })
 });
 
 gulp.task('default', ['run-build'], function() {});
