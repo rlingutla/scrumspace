@@ -10,6 +10,7 @@ import { ProjectDetail, ProjectMaster, ProjectNew } from '../screens/Project/scr
 
 var routes = 
 <Route path='/' component={App} store={this}>
+	<IndexRedirect to="dashboard" />
 	<Route path='dashboard' component={Dashboard} />
 	<Route path='project' component={Project}>
 		<IndexRoute component={ProjectMaster} />
