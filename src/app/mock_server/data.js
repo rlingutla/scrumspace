@@ -1,4 +1,5 @@
 var initialData = {
+	loading: false,
 	users: {
 		0: {
 	'_id': 0,
