@@ -9,7 +9,9 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import scrumApp from '../app/reducers';
 
-const initialStore = createStore(scrumApp, {});
+import initialStateTree from './initialStateTree';
+
+const initialStore = createStore(scrumApp, initialStateTree);
 
 // We use react-router to render the correct html as a string based on request URL. 
 // Note that req.url here should be the full URL path from

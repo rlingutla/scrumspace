@@ -8,7 +8,7 @@ const BoardView = (props) => {
 			<div className="project-info container-fluid">
 				<ProgressBar />
 			</div>
-			<ScrumBoard />
+			<ScrumBoard {...props} />
 		</div>
 	);
 };

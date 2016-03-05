@@ -26,7 +26,7 @@ class Project extends React.Component {
 				<Nav active-tab={this.state.activeTab} tab-change={this.onTabChange} {...this.props}/>
 				<div id="tab-container">
 					<Tab tab-id={0} active-tab={this.state.activeTab}>
-						<BoardView />
+						<BoardView {...this.props} />
 					</Tab>
 					<Tab tab-id={1} active-tab={this.state.activeTab}>
 						Tab2

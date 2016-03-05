@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import Project from './Project';
 import _ from 'underscore';
 
+//initial project
+
 /*
 	maps redux state to component props
 	passes full projects object to mergeProps

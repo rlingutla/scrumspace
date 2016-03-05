@@ -5,6 +5,7 @@ import ProjectContainer from './components/ProjectContainer';
 class Detail extends React.Component {
 	constructor(props){
 		super(props);
+		debugger;
 	}
 
 	render(){

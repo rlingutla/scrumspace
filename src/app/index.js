@@ -23,9 +23,10 @@ const AppContainer = (props) => {
 }
 
 const App = (props) => {
-	return (
-		<AppContainer {...props} />
-	);
+	return (<div></div>); //TODO: Abhay fix plz
+	// return (
+	// 	<AppContainer {...props} />
+	// );
 };
 
 export default App;
