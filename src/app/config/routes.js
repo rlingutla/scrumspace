@@ -11,8 +11,8 @@ import { ProjectDetail, ProjectMaster, ProjectNew } from '../screens/Project/scr
 var routes = 
 <Route path='/' component={App} store={this}>
 	<IndexRedirect to="dashboard" />
-	<Route path='dashboard' component={Dashboard} />
-	<Route path='project' component={Project}>
+	<Route path='dashboard' name="Dashboard" component={Dashboard} />
+	<Route path='project' name="Projects" component={Project}>
 		<IndexRoute component={ProjectMaster} />
 		<Route path='detail/:id' component={ProjectDetail} />
 		<Route path='new' component={ProjectNew} />

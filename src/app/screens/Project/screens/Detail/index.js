@@ -10,7 +10,7 @@ class Detail extends React.Component {
 	render(){
 		return (
 			<div id="content">
-				<TopNav view="Projects"/>
+				<TopNav view="Projects" {...this.props}/>
 				<ProjectContainer id={this.props.params.id} />
 			</div>
 		);
