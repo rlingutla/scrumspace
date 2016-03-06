@@ -108,7 +108,6 @@ export class StoryRow extends React.Component {
 export class ScrumBoard extends React.Component {
 	constructor(props) {
 		super(props);
-		debugger;
 	}
 
 	render() {
