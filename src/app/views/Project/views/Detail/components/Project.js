@@ -61,6 +61,6 @@ const ProjectContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(Project)
+)(Project);
 
 export default ProjectContainer;
