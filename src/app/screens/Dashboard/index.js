@@ -6,7 +6,7 @@ import {
 	StatisticsContainer
 } from './components';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
 	return (
 		<div id="content">
 			<TopNav view="Dashboard"/>
@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
+	console.log(stateProps);
 	return Object.assign({});
 }
 
