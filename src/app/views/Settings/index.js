@@ -1,7 +1,7 @@
 import React from 'react';
 import TopNav from '../../shared/components/TopNav';
 
-const Settings = () => {
+export default () => {
 	return (
 		<div className="content">
 			<TopNav view='Settings' />
@@ -9,5 +9,3 @@ const Settings = () => {
 		</div>
 	);
 };
-
-export default Settings;

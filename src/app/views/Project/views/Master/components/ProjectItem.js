@@ -6,10 +6,10 @@ import { Link }  from 'react-router';
 
 //get scrum time from a project object
 function getScrumTime(props){
-	if(props.current_sprint != null){
+	if(props.current_sprint !== null){
 		return utils.verboseServerTime(props.sprints[props.current_sprint].scrum_time);
 	}
-	else return "";
+	else return '';
 }
 
 const ProjectItem = (props) => {
@@ -24,7 +24,7 @@ const ProjectItem = (props) => {
 				<div className="chart-container"></div>
 			</div>
 		</Link>
-	)
-}
+	);
+};
 
 export default ProjectItem;

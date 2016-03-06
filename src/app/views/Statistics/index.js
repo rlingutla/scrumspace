@@ -1,8 +1,7 @@
 import React from 'react';
 import TopNav from '../../shared/components/TopNav';
 
-class Statistics extends React.Component {
-  render() {
+export default () => {
     return (
 		<div id="content">
 			<TopNav view="Git Statistics" />
@@ -73,7 +72,4 @@ class Statistics extends React.Component {
 			</div>
 		</div>
     );
-  }
-}
-
-export default Statistics;
+};
