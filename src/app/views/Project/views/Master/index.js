@@ -6,7 +6,9 @@ import ProjectListContainer from './components/ProjectList';
 export default (props) => {
 	return (
 		<div id="content">
-			<TopNav view="Projects" />
+			<TopNav view="Projects">
+				<Button>Create Project <Glyphicon glyph="plus" /></Button>
+			</TopNav>
 			<ProjectListContainer />
 		</div>
 	);
