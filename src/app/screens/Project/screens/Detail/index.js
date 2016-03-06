@@ -1,6 +1,6 @@
 import React from 'react';
 import TopNav from '../../../../shared/components/TopNav';
-import ProjectContainer from './components/ProjectContainer';
+import ProjectContainer from './components/Project';
 import { Glyphicon, Button } from 'react-bootstrap';
 
 class Detail extends React.Component {

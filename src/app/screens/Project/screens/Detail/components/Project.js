@@ -3,6 +3,9 @@ import Nav from './Nav';
 import Tab from './Tabs/Tab';
 import BoardView from './BoardView';
 
+import { connect } from 'react-redux';
+import _ from 'underscore';
+
 /* Project details on a particular project*/
 class Project extends React.Component {
 	constructor(props) {
@@ -37,4 +40,25 @@ class Project extends React.Component {
   	}
 }
 
-export default Project;
+//redux
+const mapStateToProps = (state) => {
+	return state;
+}
+
+// pulls out current project from projects object, pushes to props
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	return stateProps.projects[ownProps.id] || {};
+}
+
+//maps any actions this component dispatches to component props
+const mapDispatchToProps = (dispatch) => {
+  return {};
+}
+
+const ProjectContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(Project)
+
+export default ProjectContainer;
