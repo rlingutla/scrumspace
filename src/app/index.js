@@ -1,32 +1,45 @@
 import React from 'react';
 import Sidebar from './components/Sidebar';
 
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import scrumApp from './reducers';
-
-/* FOR SERVER RENDERING
-//get state injected by server
-const initialState = window.__INITIAL_STATE__;
-//create store with initial state
-let store = createStore(scrumApp, initialState);
-*/
-
-
-const AppContainer = (props) => {
-	return (
-		<div>
-			<Sidebar />
-			{props.children}
-		</div>
-	);
-}
+import TopNav from './shared/components/TopNav';
+import { connect } from 'react-redux';
 
 const App = (props) => {
-	return (<div></div>); //TODO: Abhay fix plz
-	// return (
-	// 	<AppContainer {...props} />
-	// );
+	let children = null;
+	if (!props.loading) {
+		children = props.props.children;
+	} 
+	return (
+		 <div>
+			<Sidebar />
+			<TopNav view={props.view}/>
+			{children}
+		</div>
+	);
 };
 
-export default App;
+
+const mapStateToProps = (state) => {
+	return state;
+};
+
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	return {
+		loading: stateProps.loading,
+		view: stateProps.view,
+		props: ownProps
+	};
+}
+
+// maps any actions this component dispatches to component props
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+const AppContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(App);
+
+export default AppContainer;

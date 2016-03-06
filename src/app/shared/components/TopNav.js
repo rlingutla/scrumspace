@@ -1,8 +1,7 @@
 import React from 'react';
-import { Glyphicon, Button } from 'react-bootstrap';
 
 const TopNav = (props) => {
-	const view = props.view || 'SCRUMSPACE-DEFAULT';
+	const view = props.view || '';
 	return (
 		<nav id="top-nav" className="navbar navbar-fixed-top navbar-default">
 			<div className="container-fluid">
@@ -10,7 +9,7 @@ const TopNav = (props) => {
 					<a className="navbar-brand" href="/">{view}</a>
 				</div>
 				<div className="nav-right">
-					<Button>Create Project <Glyphicon glyph="plus" /></Button>
+					{props.children}
 				</div>
 			</div>
 		</nav>

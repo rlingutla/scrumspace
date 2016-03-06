@@ -1,17 +1,19 @@
 import React from 'react';
 import TopNav from '../../../../shared/components/TopNav';
 import ProjectContainer from './components/ProjectContainer';
+import { Glyphicon, Button } from 'react-bootstrap';
 
 class Detail extends React.Component {
 	constructor(props){
 		super(props);
-		debugger;
 	}
 
-	render(){
+	render() {
 		return (
 			<div id="content">
-				<TopNav view="Projects" {...this.props}/>
+				<TopNav view="Projects" {...this.props}> 
+					<Button>Create Project <Glyphicon glyph="plus" /></Button>
+				</TopNav>
 				<ProjectContainer id={this.props.params.id} />
 			</div>
 		);
@@ -19,3 +21,4 @@ class Detail extends React.Component {
 }
 
 export default Detail;
+
