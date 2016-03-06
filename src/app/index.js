@@ -5,15 +5,10 @@ import TopNav from './shared/components/TopNav';
 import { connect } from 'react-redux';
 
 const App = (props) => {
-	let children = null;
-	if (!props.loading) {
-		children = props.children;
-	} 
 	return (
 		 <div>
 			<Sidebar />
-			<TopNav/>
-			{children}
+			{(props.loading) ? <TopNav/>:  props.children}
 		</div>
 	);
 };
@@ -24,7 +19,6 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	
 	return Object.assign({}, ownProps, {
 		loading: stateProps.loading
 	});
