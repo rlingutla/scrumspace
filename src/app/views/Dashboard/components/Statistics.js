@@ -134,7 +134,7 @@ const chartOptions = {
 
 };
 
-const ChartContainer = (props) => {
+const Chart = (props) => {
 	return (
 		<div className="col-lg-4 col-md-4 col-sm-12 dashboard-summary">
 			<h4>{props.title}</h4>
@@ -150,20 +150,20 @@ export default (props) => {
 				<div className="state-details">
 					<div className="row">
 						<div className="col-md-6">
-							<h4>2 Projects in Sprint</h4>
+							<h4>{props.projects.length} Projects in Sprint</h4>
 						</div>
 					</div>
 				</div>
 				<div className="row left-right-align progress-bar-details">                 
-					<ChartContainer title='Tasks Completed over Time'>
+					<Chart title='Tasks Completed over Time'>
 						<Line data={lineData} options={lineOptions} />
-					</ChartContainer>
-					<ChartContainer title='Actionable Task Totals'>
+					</Chart>
+					<Chart title='Actionable Task Totals'>
 						<Doughnut data={chartData} options={chartOptions}/>
-					</ChartContainer>
-					<ChartContainer title='All Tasks for Sprints'>
+					</Chart>
+					<Chart title='All Tasks for Sprints'>
 						<Doughnut data={chartData} options={chartOptions}/>
-					</ChartContainer>
+					</Chart>
 				</div>
 			</div>
 		</div>

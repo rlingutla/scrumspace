@@ -1,39 +1,21 @@
 import React from 'react';
-import TopNav from '../../shared/components/TopNav';
 import { connect } from 'react-redux';
+import Container from './containers';
+
+import TopNav from '../../shared/components/TopNav';
 import {
 	Project,
-	StatisticsContainer
+	Statistics
 } from './components';
 
 const Dashboard = (props) => {
 	return (
 		<div id="content">
 			<TopNav view="Dashboard"/>
-			<StatisticsContainer />
-			<Project/>
+			<Statistics projects={props.projects}/>
+			{ props.projects.map((project, i) => <Project key={i} project={project} />)}
 		</div>
 	);
 };
 
-const mapStateToProps = (state) => {
-	return state;
-};
-
-function mergeProps(stateProps, dispatchProps, ownProps) {
-	console.log(stateProps);
-	return Object.assign({});
-}
-
-// maps any actions this component dispatches to component props
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-const DashboardContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
-)(Dashboard);
-
-export default DashboardContainer;
+export default Container(Dashboard);
