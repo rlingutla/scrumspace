@@ -1,5 +1,6 @@
 import React from 'react';
 import Task from '../../../shared/Task';
+import { DragSource } from 'react-dnd';
 
 export class ScrumBoardHeader extends React.Component {
 	constructor(props) {
