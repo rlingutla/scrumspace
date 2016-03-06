@@ -1,2 +1,2 @@
 export Project from './Project';
-export StatisticsContainer from './StatisticsContainer';
+export Statistics from './Statistics';
