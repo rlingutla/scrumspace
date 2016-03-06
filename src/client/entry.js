@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import scrumApp from '../app/reducers';
 
-import { initialStateTree } from '../app/mock_server/server';
+import { stateTree } from '../app/mock_server/server';
 
 /* 	
 	This is the 'entry point' into the client side code.
@@ -18,7 +18,7 @@ import { initialStateTree } from '../app/mock_server/server';
 var mountNode = document.getElementById('app');
 
 
-initialStateTree(0, function(stateTree){
+stateTree(0, function(stateTree){
 	match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
 		let store = createStore(scrumApp, stateTree);
 

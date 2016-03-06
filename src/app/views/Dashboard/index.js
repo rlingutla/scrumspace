@@ -1,27 +1,28 @@
 import React from 'react';
-import Sidebar from './components/Sidebar';
-
-import TopNav from './shared/components/TopNav';
+import TopNav from '../../shared/components/TopNav';
 import { connect } from 'react-redux';
+import {
+	Project,
+	StatisticsContainer
+} from './components';
 
-const App = (props) => {
+const Dashboard = (props) => {
 	return (
-		 <div>
-			<Sidebar />
-			{(props.loading) ? <TopNav/>:  props.children}
+		<div id="content">
+			<TopNav view="Dashboard"/>
+			<StatisticsContainer />
+			<Project/>
 		</div>
 	);
 };
-
 
 const mapStateToProps = (state) => {
 	return state;
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	return Object.assign({}, ownProps, {
-		loading: stateProps.loading
-	});
+	console.log(stateProps);
+	return Object.assign({});
 }
 
 // maps any actions this component dispatches to component props
@@ -29,10 +30,10 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-const AppContainer = connect(
+const DashboardContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(App);
+)(Dashboard);
 
-export default AppContainer;
+export default DashboardContainer;

@@ -1,14 +1,16 @@
 import React from 'react';
 import ProgressBar from './ProgressBar';
+import { ScrumBoard } from './ScrumBoard';
 
-const Board = (props) => {
+const BoardView = (props) => {
 	return (
 		<div className="content">
 			<div className="project-info container-fluid">
 				<ProgressBar />
 			</div>
+			<ScrumBoard {...props} />
 		</div>
 	);
 };
 
-export default Board;
+export default BoardView;

@@ -1,4 +1,5 @@
 var initialData = {
+	loading: false,
 	users: {
 		0: {
 	'_id': 0,
@@ -25,7 +26,7 @@ var initialData = {
 			'scrum_time': '9:00 AM'
 				}
 			},
-	'stories': {
+	'stories': [{
 				0: {
 			'_id': 0,
 			'title': 'Buy Hats',
@@ -41,7 +42,7 @@ var initialData = {
 						}
 					]
 				}
-			}
+			}]
 		},
 		1: {
 	'_id': 1,
@@ -51,7 +52,7 @@ var initialData = {
 	'status': 'planning',
 	'current_sprint': null,
 	'sprints': {},
-	'stories': {}
+	'stories': []
 		}
 	}
 };

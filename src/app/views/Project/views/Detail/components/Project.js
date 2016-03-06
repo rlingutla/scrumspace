@@ -1,7 +1,10 @@
 import React from 'react';
 import Nav from './Nav';
 import Tab from './Tabs/Tab';
-import Board from './Board';
+import BoardView from './BoardView';
+
+import { connect } from 'react-redux';
+import _ from 'underscore';
 
 /* Project details on a particular project*/
 class Project extends React.Component {
@@ -26,7 +29,7 @@ class Project extends React.Component {
 				<Nav active-tab={this.state.activeTab} tab-change={this.onTabChange} {...this.props}/>
 				<div id="tab-container">
 					<Tab tab-id={0} active-tab={this.state.activeTab}>
-						<Board />
+						<BoardView {...this.props} />
 					</Tab>
 					<Tab tab-id={1} active-tab={this.state.activeTab}>
 						Tab2
@@ -37,4 +40,25 @@ class Project extends React.Component {
   	}
 }
 
-export default Project;
+//redux
+const mapStateToProps = (state) => {
+	return state;
+}
+
+// pulls out current project from projects object, pushes to props
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	return stateProps.projects[ownProps.id] || {};
+}
+
+//maps any actions this component dispatches to component props
+const mapDispatchToProps = (dispatch) => {
+  return {};
+}
+
+const ProjectContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(Project)
+
+export default ProjectContainer;

@@ -2,6 +2,9 @@ import React from 'react';
 import ProjectItem from './ProjectItem';
 import { Grid, Row, Col } from 'react-bootstrap';
 
+import { connect } from 'react-redux';
+import _ from 'underscore';
+
 const ProjectList = (props) => {
 	return (
 		<div className="content">
@@ -21,4 +24,21 @@ const ProjectList = (props) => {
 	)
 };
 
-export default ProjectList;
+//redux
+const mapStateToProps = (state) => {
+	return {
+		//convert projects dict to array and map to component's state
+		projects: _.values(state.projects) 
+	}
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {};
+};
+
+const ProjectListContainer = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ProjectList);
+
+export default ProjectListContainer;
