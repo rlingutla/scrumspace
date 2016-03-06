@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 const App = (props) => {
 	let children = null;
 	if (!props.loading) {
-		children = props.props.children;
+		children = props.children;
 	} 
 	return (
 		 <div>
@@ -24,10 +24,10 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	return {
-		loading: stateProps.loading,
-		props: ownProps
-	};
+	
+	return Object.assign({}, ownProps, {
+		loading: stateProps.loading
+	});
 }
 
 // maps any actions this component dispatches to component props
