@@ -12,7 +12,7 @@ const App = (props) => {
 	return (
 		 <div>
 			<Sidebar />
-			<TopNav view={props.view}/>
+			<TopNav/>
 			{children}
 		</div>
 	);
@@ -26,7 +26,6 @@ const mapStateToProps = (state) => {
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	return {
 		loading: stateProps.loading,
-		view: stateProps.view,
 		props: ownProps
 	};
 }
