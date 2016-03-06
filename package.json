@@ -34,6 +34,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "babel-preset-stage-0": "^6.5.0",
     "bootstrap": "^3.3.6",
     "chart.js": "^1.0.2",
     "express": "^4.13.4",
