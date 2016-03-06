@@ -1,4 +1,5 @@
 import React from 'react';
+import Task from '../../../shared/Task';
 
 export class ScrumBoardHeader extends React.Component {
 	constructor(props) {
@@ -20,27 +21,6 @@ export class ScrumBoardHeader extends React.Component {
 	}
 }
 
-export class Task extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
-
-		return (
-			<div className="task">
-			    <div className="heading">
-			        <div className="row left-right-align">
-			            <div className="col-md-6"><a>SS-S1-T1</a></div>
-			            <div className="col-md-6"></div>
-			        </div>
-			    </div>
-			    <div className="body">Proin pellentesque facilisis ante, in tincidunt nunc luctus sed.</div>
-			</div>
-		);
-	}
-}
-
 export class Story extends React.Component {
 	constructor(props){
 		super(props);
@@ -51,7 +31,7 @@ export class Story extends React.Component {
 		        <div className="">
 		            <div className="heading">
 		                <div className="row left-right-align">
-		                    <div className="col-md-9"><a>SS-S1</a></div>
+		                    <div className="col-md-9"><a>{this.props.id}</a></div>
 		                    <div className="col-md-3">
 		                        <div className="control">
 		                            <button className="collapse-control" data-toggle="collapse" data-target=".collapse1">
@@ -62,10 +42,11 @@ export class Story extends React.Component {
 		                </div>
 		            </div>
 		            <div className="body">
-		                <h5>Creating and Assigning Tasks</h5>
+		                <h5>{this.props.title}</h5>
 		                <ul>
-		                    <li>User can add new task to Story</li>
-		                    <li>User can assign task to themselves</li>
+		                	{this.props.description.split("\n").map((desc, i) => {
+		                		return (<li key={i}>{desc}</li>);
+		                	})}
 		                </ul>
 		            </div>
 		        </div>
@@ -77,26 +58,59 @@ export class Story extends React.Component {
 export class StoryRow extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			open: true,
+			tasks: this.organizeTasks(props.details.tasks)
+		};
 	}
+
+	organizeTasks(tasks){
+		let taskObj = {
+			'UNASSIGNED': [],
+			'DOING': [],
+			'BLOCKED': [],
+			'DONE': []
+		};
+
+		tasks.forEach((task) => {
+			//SORRY GUYS
+			if(!(task.status !== 'UNASSIGNED' && task.status !== 'DOING' && task.status !== 'BLOCKED' && task.status !== 'DONE')){
+				taskObj[task.status].push(task);
+			}
+		});
+
+		return taskObj;
+	}
+
+	// filter tasks to categories
+		// UNASSIGNED, DOING, BLOCKED, DONE
 
 	render() {
 		return (
 			<tr>
 				<td id="story-container">
-					<Story />
+					<Story id={this.props.details.sprint_id} title={this.props.details.title} description={this.props.details.description} />
 				</td>
 				<td id="task-container">
-					<Task />
-					<Task />
+					{this.state.tasks['UNASSIGNED'].map((task, i) => {
+						return <Task key={i} {...task} />
+					})}
 				</td>
 				<td id="doing-container">
-
+					{this.state.tasks['DOING'].map((task, i) => {
+						return <Task key={i} {...task}/>
+					})}
 				</td>
 				<td id="blocked-container">
-
+					{this.state.tasks['BLOCKED'].map((task, i) => {
+						return <Task key={i} {...task}/>
+					})}
 				</td>
 				<td id="done-container">
-
+					{this.state.tasks['DONE'].map((task, i) => {
+						return <Task key={i} {...task}/>
+					})}
 				</td>
 			</tr>	
 		);
@@ -118,8 +132,8 @@ export class ScrumBoard extends React.Component {
 			            <table>
 			            	<ScrumBoardHeader />
 			                <tbody>
-			                	{this.props.stories.map((story) => {
-			                		<StoryRow details={story}/>
+			                	{this.props.stories.map((story, i) => {
+			                		return (<StoryRow key={i} details={story}/>);
 			                	})}
 			                </tbody>
 			            </table>

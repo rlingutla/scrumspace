@@ -1,8 +1,11 @@
 #project-nav {
+	position:relative;
 	background: $blue-color;
-	padding: 0 15px 0 95px;
+	padding: 0 15px;
 	color: #fff;
 	max-height: 155px;
+	z-index: initial;
+	margin:0;
 
 	& > .row {
 		padding: 30px 0;
@@ -148,7 +151,7 @@
 }
 
 #tab-container {
-	padding-top: 155px;
+	padding-top: 0px;
 	.tab {
 		display:none;
 

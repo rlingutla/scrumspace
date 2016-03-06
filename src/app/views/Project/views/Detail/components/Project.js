@@ -47,7 +47,9 @@ const mapStateToProps = (state) => {
 
 // pulls out current project from projects object, pushes to props
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	return stateProps.projects[ownProps.id] || {};
+	return stateProps.projects.find((proj) => {
+		if(proj._id == ownProps.id) return true
+	});
 }
 
 //maps any actions this component dispatches to component props
@@ -59,6 +61,6 @@ const ProjectContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(Project)
+)(Project);
 
 export default ProjectContainer;
