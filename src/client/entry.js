@@ -10,7 +10,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import scrumApp from '../app/reducers';
 
-import { stateTree } from '../app/mock_server/server';
+import { initDatabase, stateTree } from '../app/mock_server/server';
 
 /* 	
 	This is the 'entry point' into the client side code.
@@ -18,6 +18,8 @@ import { stateTree } from '../app/mock_server/server';
 */
 var mountNode = document.getElementById('app');
 
+//initialize mock datastore
+initDatabase();
 
 stateTree(0).then((stateTree) => {
 	match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
