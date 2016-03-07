@@ -28,7 +28,9 @@ const mapStateToProps = (state) => {
 const mergeProps = (state, dispatchProps, ownProps) => {
 	let projects = state.projects.filter(isInSprint);
 	projects.forEach(setActionableTasks);
-	return projects;
+	return Object.assign({}, {
+		projects
+	});
 };
 
 // maps any actions this component dispatches to component props
@@ -36,12 +38,12 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-const Container = (Dashboard) => {
+const Container = (component) => {
 	return connect(
 	  mapStateToProps,
 	  mapDispatchToProps,
 	  mergeProps
-	)(Dashboard);
+	)(component);
 };
 
 const Dashboard = (props) => {
