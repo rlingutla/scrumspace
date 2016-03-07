@@ -1,7 +1,6 @@
 import React from 'react';
 import Task from './Task';
 
-
 export default (props) => {
 	let tasks = props.project.actionableTasks;
 	return (
