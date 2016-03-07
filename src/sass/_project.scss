@@ -100,10 +100,10 @@
 					@include hoverAction();
 					opacity:1 !important;
 					cursor: 'move';
+					@include transition();
 
 					&:active {
 						transform: rotateZ(2deg);
-
 					}
 				}
 				.user-story {
@@ -118,6 +118,25 @@
 						.control i.glyphicon:before {
 							content: "\e253";
 						}
+					}
+				}
+				// Task state coloring
+				&#task-container {
+				}
+				&#doing-container {
+					.task {
+						border-color: $yellow-color;
+					}
+
+				}
+				&#blocked-container {
+					.task {
+						border-color: $red-color;
+					}
+				}
+				&#done-container {
+					.task {
+						border-color: $green-color;
 					}
 				}
 			}

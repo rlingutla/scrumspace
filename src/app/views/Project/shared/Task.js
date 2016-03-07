@@ -12,8 +12,7 @@ import { changeTaskState } from '../../../actions/';
 
 const taskSource = {
 	beginDrag(props){
-		console.log("start draggin!", props);
-
+		// console.log("start draggin!", props);
 		return props;
 	}
 }

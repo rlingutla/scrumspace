@@ -27,15 +27,6 @@ const projects = (state = [], action) => {
 					})});
 				} else return project;
 			});
-
-
-			// let task = state.find((proj) => proj._id == action.project_id)
-			// .stories.find((story) => story._id == action.story_id)
-			// .tasks.find((task) => task._id == action.task_id);
-
-			// return Object.assign({}, task, {status: action.toType});
-
-
 		default: //just returning state for now
 			return state;
 	}

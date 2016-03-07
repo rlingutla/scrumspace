@@ -9,13 +9,6 @@ import { connect } from 'react-redux';
 class StoryRow extends React.Component {
 	constructor(props) {
 		super(props);
-
-		// this.props.tasks = this.organizeTasks(props.details.tasks);
-
-		// this.state = {
-		// 	open: true,
-		// 	tasks: this.organizeTasks(props.details.tasks)
-		// };
 	}
 
 	getTaskArray(type){
@@ -26,32 +19,11 @@ class StoryRow extends React.Component {
 		return taskArr;
 	}
 
-	// organizeTasks(tasks){
-	// 	let taskObj = {
-	// 		'UNASSIGNED': [],
-	// 		'DOING': [],
-	// 		'BLOCKED': [],
-	// 		'DONE': []
-	// 	};
-
-	// 	tasks.forEach((task) => {
-	// 		//SORRY GUYS
-	// 		if(!(task.status !== 'UNASSIGNED' && task.status !== 'DOING' && task.status !== 'BLOCKED' && task.status !== 'DONE')){
-	// 			taskObj[task.status].push(task);
-	// 		}
-	// 	});
-
-	// 	return taskObj;
-	// }
-
-	// // filter tasks to categories
-	// 	// UNASSIGNED, DOING, BLOCKED, DONE
-
 	render() {
 		return (
 			<tr>
 				<td id="story-container">
-					{/*<Story id={this.props.details.sprint_id} title={this.props.details.title} description={this.props.details.description} />*/}
+					<Story id={this.props.story_id} title={this.props.title} description={this.props.description} />
 				</td>
 				<TaskBin id="task-container" type={TaskTypes.UNASSIGNED}>
 					{this.getTaskArray(TaskTypes.UNASSIGNED).map((task, i) => {
@@ -86,8 +58,6 @@ const mapStateToProps = (state) => {
 }
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-
-
 	//do our nasty search
 	let theStory = stateProps
 	.projects.find((proj) => proj._id == ownProps.project_id)
@@ -98,11 +68,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 
 //maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
-  return {
-  	// moveTask: (project_id, story_id, task_id, toType) => {
-  	// 	dispatch(changeTaskState(project_id, story_id, task_id, toType));
-  	// }
-  };
+  return {};
 }
 
 const StoryRowContainer = connect(
