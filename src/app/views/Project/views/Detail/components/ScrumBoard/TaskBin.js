@@ -36,8 +36,8 @@ const taskTarget = {
 
     // Obtain the dragged item
     const item = monitor.getItem();
-
-    item.moveTask(item.project_id, item.story_id, item._id, null); //get type
+    
+    item.moveTask(item.project_id, item.story_id, item._id, props.type); //get type
 
     // You can do something with it
     // ChessActions.movePiece(item.fromPosition, props.position);
