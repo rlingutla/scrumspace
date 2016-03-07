@@ -16,7 +16,7 @@ export function initDatabase(){
 }
 
 function serverLog(...msg){
-	console.log(...msg);
+	console.log("SERVER MESSAGE:", ...msg);
 }
 
 export function stateTree(userId){
@@ -53,7 +53,7 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 	//write updated project object to server
 	writeDocument('projects', updatedProject);
 
-	serverLog("DATABASE UPDATED", updatedTask);
+	serverLog("DB Updated", updatedTask);
 
 	return emulateServerReturn(updatedTask, updatedTask == undefined);
 }

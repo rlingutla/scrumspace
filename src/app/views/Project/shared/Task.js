@@ -80,9 +80,9 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	let theTask = stateProps
 	.projects.find((proj) => proj._id == ownProps.project_id)
 	.stories.find((story) => story._id == ownProps.story_id)
-	.tasks.find((task) => task._id == ownProps._id);
+	.tasks.find((task) => task._id == ownProps.task_id);
 
-	return Object.assign(theTask, { project_id: ownProps.project_id, story_id: ownProps.story_id, _id: ownProps._id }, dispatchProps);
+	return Object.assign(theTask, { project_id: ownProps.project_id, story_id: ownProps.story_id, _id: ownProps.task_id }, dispatchProps);
 }
 
 //maps any actions this component dispatches to component props

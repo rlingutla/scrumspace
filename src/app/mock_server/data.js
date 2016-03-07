@@ -34,11 +34,18 @@ var initialData = {
 				'sprint_id': 0,
 				'tasks': [
 					{
-				'_id': 0,
-				'status': 'DOING',
-				'description': 'Contact Graphic Designer',
-				'history': null,
-				'attachments': null
+					'_id': 0,
+					'status': 'DOING',
+					'description': 'Contact Graphic Designer',
+					'history': null,
+					'attachments': null
+					},
+					{
+					'_id': 1,
+					'status': 'UNASSIGNED',
+					'description': 'Buy Photoshop',
+					'history': null,
+					'attachments': null
 					}
 				]
 			}
