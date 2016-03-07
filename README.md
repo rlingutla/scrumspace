@@ -14,7 +14,8 @@ After the installation, run `npm install` to install the application's dependenc
 
 ##### Package Client
 To start up a one time build script, run `npm run build`. 
-For live rebuilding, run `npm run dev`.
+
+For a live rebuilding dev server, run `npm run dev`. 
 
 To build the client **and** start up the server, run `npm run serve`
 

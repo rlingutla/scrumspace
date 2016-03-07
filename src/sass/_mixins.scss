@@ -33,15 +33,15 @@
 	padding:0;
 }
 
-@mixin hoverAction(){
+@mixin hoverAction($scaleIn: 1.05, $scaleOut: 0.97){
 	    @include transition();
 
 	    &:hover {
-	    	transform: scale(1.05,1.05);
+	    	transform: scale($scaleIn,$scaleIn);
 			// background: darken($accent-color, 5);
 	    }
 	    &:active {
-	    	transform: scale(0.97,0.97);
+	    	transform: scale($scaleOut,$scaleOut);
 			// background: darken($accent-color, 10);
 			outline: 0;
 	    }

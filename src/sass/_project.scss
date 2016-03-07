@@ -1,8 +1,11 @@
 #project-nav {
+	position:relative;
 	background: $blue-color;
-	padding: 0 15px 0 95px;
+	padding: 0 15px;
 	color: #fff;
 	max-height: 155px;
+	z-index: initial;
+	margin:0;
 
 	& > .row {
 		padding: 30px 0;
@@ -88,9 +91,16 @@
 			td {
 				vertical-align: top;
 
+				&.hovering {
+					background: #F9F9F9;
+				}
+
 				.task {
 					width: 90%;
 					@include hoverAction();
+					opacity:1 !important;
+					cursor: 'move';
+					@include transition();
 
 					&:active {
 						transform: rotateZ(2deg);
@@ -108,6 +118,25 @@
 						.control i.glyphicon:before {
 							content: "\e253";
 						}
+					}
+				}
+				// Task state coloring
+				&#task-container {
+				}
+				&#doing-container {
+					.task {
+						border-color: $yellow-color;
+					}
+
+				}
+				&#blocked-container {
+					.task {
+						border-color: $red-color;
+					}
+				}
+				&#done-container {
+					.task {
+						border-color: $green-color;
 					}
 				}
 			}
@@ -148,7 +177,7 @@
 }
 
 #tab-container {
-	padding-top: 155px;
+	padding-top: 0px;
 	.tab {
 		display:none;
 
@@ -225,4 +254,70 @@
 
 .mf-color{
 	background-color:#F5F5F5;
+}
+
+.project-container {
+	padding: $padding;
+
+	.container {
+
+	}
+	a {
+		.project-item {
+			background: #fff;
+			border: 1px solid $border-color;
+			overflow:hidden;
+			border-radius: $border-radius;
+			padding: $padding;
+			// height:350px; //DISABLED until we have shit to put in
+			margin-bottom: $padding;
+			@include transition();
+
+			.project-title {
+				font-size: 25px;
+				color: #000;
+			}
+
+			.project-scrum-time {
+				color: $body-gray-color;
+				font-size: 18px;
+				padding-top: 5px;
+			}
+
+			.project-status {
+				padding:2px 10px;
+				background: lighten($border-color, 12%);
+				border: 1px solid $border-color;
+				display:inline-block;
+				color: darken($border-color, 30%);
+				margin-top:8px;
+				border-radius: $border-radius;
+
+				&.planning {
+					
+				}
+				&.sprint {
+					background: $green-color;
+					border: 1px solid darken($green-color, 20%);
+					color: darken($green-color, 40%);
+				}
+				&.review {
+					background: $yellow-color;
+					border: 1px solid darken($yellow-color, 20%);
+					color: darken($yellow-color, 50%);
+				}
+			}
+
+			.chart-container {
+				margin-top:50px;
+			}
+		}
+		&:hover {
+			.project-item {
+				border-color: darken($border-color, 15%);
+
+			}
+		}
+	}
+	
 }

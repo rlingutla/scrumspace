@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TopNav = (props) => {
-	const view = props.view || 'SCRUMSPACE-DEFAULT';
+	const view = props.view || '';
 	return (
 		<nav id="top-nav" className="navbar navbar-fixed-top navbar-default">
 			<div className="container-fluid">
@@ -9,14 +9,7 @@ const TopNav = (props) => {
 					<a className="navbar-brand" href="/">{view}</a>
 				</div>
 				<div className="nav-right">
-					<div className="dropdown">
-						<button aria-expanded="true" aria-haspopup="true" className="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button"><span className="glyphicon glyphicon-cog"></span></button>
-						<ul aria-labelledby="dropdownMenu1" className="dropdown-menu dropdown-menu-right">
-							<li>
-								<a href="settings.html">Settings</a>
-							</li>
-						</ul>
-					</div>
+					{props.children}
 				</div>
 			</div>
 		</nav>
