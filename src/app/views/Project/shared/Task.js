@@ -7,7 +7,7 @@ import _ from 'underscore';
 
 import { DragSource } from 'react-dnd';
 
-import { changeTaskState } from '../../../actions/';
+import { changeTaskState, putAndChangeTaskState } from '../../../actions/';
 
 
 const taskSource = {
@@ -89,7 +89,8 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 const mapDispatchToProps = (dispatch) => {
   return {
   	moveTask: (project_id, story_id, task_id, toType) => {
-  		dispatch(changeTaskState(project_id, story_id, task_id, toType));
+  		// dispatch(changeTaskState(project_id, story_id, task_id, toType));
+  		dispatch(putAndChangeTaskState(project_id, story_id, task_id, toType));
   	}
   };
 }

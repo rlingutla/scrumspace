@@ -6,12 +6,19 @@ import React from 'react';
 import routes from '../app/config/routes';
 
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import scrumApp from '../app/reducers';
 
 import initialStateTree from './initialStateTree';
 
-const initialStore = createStore(scrumApp, initialStateTree);
+const initialStore = createStore(
+	scrumApp, 
+	initialStateTree, 
+	applyMiddleware(
+		thunkMiddleware
+	)
+);
 
 // We use react-router to render the correct html as a string based on request URL. 
 // Note that req.url here should be the full URL path from
