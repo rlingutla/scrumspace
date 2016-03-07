@@ -45,6 +45,12 @@ button {
     	opacity:0.7;
     }
 
+    &.draggingSource {
+    	border:2px dotted $border-color;
+    	background:transparent;
+    	min-height:50px;
+    }
+
 	.heading {
 		color: $blue-color;
 

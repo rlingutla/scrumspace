@@ -14,7 +14,8 @@
 		"spread": true,
 		"templateStrings": true,
 		"unicodeCodePointEscape": true,
-		"jsx": true
+		"jsx": true,
+		"esversion": 6
 	},
 	"env": {
 		"browser": true,

@@ -1,6 +1,10 @@
 import React from 'react';
 import Task from '../../../shared/Task';
-import { DragSource } from 'react-dnd';
+import TaskTypes from '../../../../../constants/taskTypes';
+
+//DnD Stuff
+import { DragSource, DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 export class ScrumBoardHeader extends React.Component {
 	constructor(props) {
@@ -94,22 +98,22 @@ export class StoryRow extends React.Component {
 					<Story id={this.props.details.sprint_id} title={this.props.details.title} description={this.props.details.description} />
 				</td>
 				<td id="task-container">
-					{this.state.tasks['UNASSIGNED'].map((task, i) => {
+					{this.state.tasks[TaskTypes.UNASSIGNED].map((task, i) => {
 						return <Task key={i} {...task} />
 					})}
 				</td>
 				<td id="doing-container">
-					{this.state.tasks['DOING'].map((task, i) => {
+					{this.state.tasks[TaskTypes.DOING].map((task, i) => {
 						return <Task key={i} {...task}/>
 					})}
 				</td>
 				<td id="blocked-container">
-					{this.state.tasks['BLOCKED'].map((task, i) => {
+					{this.state.tasks[TaskTypes.BLOCKED].map((task, i) => {
 						return <Task key={i} {...task}/>
 					})}
 				</td>
 				<td id="done-container">
-					{this.state.tasks['DONE'].map((task, i) => {
+					{this.state.tasks[TaskTypes.DONE].map((task, i) => {
 						return <Task key={i} {...task}/>
 					})}
 				</td>
@@ -120,7 +124,7 @@ export class StoryRow extends React.Component {
 
 }
 
-export class ScrumBoard extends React.Component {
+class ScrumBoard extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -144,3 +148,5 @@ export class ScrumBoard extends React.Component {
 		);
 	}
 } 
+
+DragDropContext(HTML5Backend)(ScrumBoard);

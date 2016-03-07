@@ -1,6 +1,6 @@
 import React from 'react';
 import ProgressBar from './ProgressBar';
-import { ScrumBoard } from './ScrumBoard';
+import ScrumBoard from './ScrumBoard/ScrumBoard';
 
 const BoardView = (props) => {
 	return (

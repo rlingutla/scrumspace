@@ -1,0 +1,6 @@
+export default {
+	UNASSIGNED: 'UNASSIGNED',
+	DOING: 'DOING',
+	BLOCKED: 'BLOCKED',
+	DONE: 'DONE'
+};

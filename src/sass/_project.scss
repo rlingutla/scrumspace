@@ -94,9 +94,12 @@
 				.task {
 					width: 90%;
 					@include hoverAction();
+					opacity:1 !important;
+					cursor: 'move';
 
 					&:active {
 						transform: rotateZ(2deg);
+
 					}
 				}
 				.user-story {
