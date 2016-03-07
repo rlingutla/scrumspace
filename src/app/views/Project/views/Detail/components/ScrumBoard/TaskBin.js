@@ -36,7 +36,7 @@ const taskTarget = {
 
     // Obtain the dragged item
     const item = monitor.getItem();
-    
+
     item.moveTask(item.project_id, item.story_id, item._id, props.type); //get type
 
     // You can do something with it
@@ -75,7 +75,7 @@ class TaskBin extends React.Component {
 		const { isOver, canDrop, connectDropTarget } = this.props;
 
 		return connectDropTarget(
-			<td id={this.props.id}>
+			<td id={this.props.id} className={isOver ? 'hovering':'' }>
 				{this.props.children}
 			</td>
 		)

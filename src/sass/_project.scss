@@ -91,6 +91,10 @@
 			td {
 				vertical-align: top;
 
+				&.hovering {
+					background: #F9F9F9;
+				}
+
 				.task {
 					width: 90%;
 					@include hoverAction();
