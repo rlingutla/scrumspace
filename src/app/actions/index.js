@@ -1,11 +1,9 @@
-/*
-	STYLE
-	
-	export const changeTaskState = (id, task_state) => {
-		return {
-			type: 'CHANGE_TASK_STATE',
-			id,
-			task_state
-		}
-	};
-*/
+export const changeTaskState = (project_id, story_id, task_id, toType) => {
+	return {
+		type: 'CHANGE_TASK_STATE',
+		project_id,
+		story_id,
+		task_id,
+		toType
+	}
+};
