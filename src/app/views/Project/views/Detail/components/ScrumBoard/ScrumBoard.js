@@ -1,6 +1,6 @@
 import React from 'react';
 import ScrumBoardHeader from './ScrumBoardHeader';
-import StoryRowContainer from './StoryRow';
+import StoryRow from './StoryRow';
 
 //DnD Stuff
 import { DragDropContext } from 'react-dnd';
@@ -20,7 +20,7 @@ class ScrumBoard extends React.Component {
 			            	<ScrumBoardHeader />
 			                <tbody>
 			                	{this.props.stories.map((story, i) => {
-			                		return (<StoryRowContainer key={i} project_id={this.props._id} story_id={story._id}/>);
+			                		return (<StoryRow key={i} project_id={this.props._id} story_id={story._id}/>);
 			                	})}
 			                </tbody>
 			            </table>
