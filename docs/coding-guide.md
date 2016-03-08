@@ -9,7 +9,7 @@
 
 ##Components
 **Contains the actual UI rendering code**
-- Only state variables are using in UI
+- The only state variables in presentational components are related to UI state, not the underlying state tree or data model for the application.
 
 
 ##Containers
