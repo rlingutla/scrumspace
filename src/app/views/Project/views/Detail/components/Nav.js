@@ -1,6 +1,7 @@
 import React from 'react';
 import ProjectAvatar from './Avatar';
 import NavTabBar from './Tabs/NavTabBar';
+import { daysDifference } from '../../../../../shared/utils/utils';
 
 
 const ProjectNav = (props) => {
@@ -8,7 +9,7 @@ const ProjectNav = (props) => {
 		<div id="project-nav" className="navbar navbar-fixed-top">
 			<div className="row left-right-align">
 				<div className="col-md-8 project-details">
-					<ProjectAvatar />
+					<ProjectAvatar imgsrc={props.avatar}/>
 					<div className="detail-text">
 						<h1>{props.title}<span name="project-state">, {props.status}</span></h1>
 						<h4>
@@ -17,7 +18,7 @@ const ProjectNav = (props) => {
 					</div>
 				</div>
 				<div className="col-md-4">
-					
+
 				</div>
 			</div>
 			<NavTabBar active-tab={props['active-tab']} tab-change={props['tab-change']} />
