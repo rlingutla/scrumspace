@@ -50,7 +50,6 @@ const Dashboard = (props) => {
 	return (
 		<div id="content">
 			<TopNav view="Dashboard"/>
-			<Statistics projects={props.projects}/>
 			{ props.projects.map((project, i) => <Project key={i} project={project} />) }
 		</div>
 	);

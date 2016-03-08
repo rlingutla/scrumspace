@@ -150,7 +150,7 @@ export default (props) => {
 				<div className="state-details">
 					<div className="row">
 						<div className="col-md-6">
-							<h4>{props.projects.length} Projects in Sprint</h4>
+							<h4>{props.title}</h4>
 						</div>
 					</div>
 				</div>
