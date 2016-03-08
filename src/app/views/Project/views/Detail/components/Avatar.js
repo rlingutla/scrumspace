@@ -1,7 +1,13 @@
 import React from 'react';
 
 const ProjectAvatar = (props) => {
-	return <div className="project-avatar"></div>;
+	let avStyle = {
+		backgroundImage: 'url(' + props.imgsrc + ')',
+		backgroundSize: 'cover',
+		backgroundPosition: 'top center'
+	}
+
+	return <div className="project-avatar" style={avStyle}></div>;
 };
 
 export default ProjectAvatar;

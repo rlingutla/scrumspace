@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link }  from 'react-router';  
+import { ResetDatabase } from '../mock_server/database';
 
 export default () => {
 	return (
@@ -17,6 +18,9 @@ export default () => {
 					</li>
 					<li>
 						<Link activeClassName="selected" to="/statistics"><span className="glyphicon glyphicon-stats"></span></Link>
+					</li>
+					<li>
+						<ResetDatabase />
 					</li>
 				</ul>
 			</div>

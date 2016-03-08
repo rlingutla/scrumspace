@@ -11,7 +11,20 @@ var startupName = "scrumSpace";
 // if (data === null) {
 //   data = JSONClone(initialData);
 // }
-var data = JSONClone(initialData);
+// var data = JSONClone(initialData);
+
+var data;
+
+
+/**
+* need to initialize data manually because of server side rendering
+*/
+export function initLocalStorage(){
+  data = JSON.parse(localStorage.getItem(startupName));
+  if (data === null) {
+    data = JSONClone(initialData);
+  }
+}
 
 /**
  * A dumb cloning routing. Serializes a JSON object as a string, then
@@ -69,14 +82,14 @@ export function resetDatabase() {
 /**
  * Reset database button.
  */
-class ResetDatabase extends React.Component {
+export class ResetDatabase extends React.Component {
   render() {
     return (
-      <button className="btn btn-default" type="button" onClick={() => {
+      <button style={{width: 50+'px', height: 50+'px', overflow: 'hidden', fontSize: 12+'px', padding: 0}} className="btn btn-default" type="button" onClick={() => {
         resetDatabase();
         window.alert("Database reset! Refreshing the page now...");
         document.location.reload(false);
-      }}>Reset Mock DB</button>
+      }}>ResetDB</button>
     );
   }
 }

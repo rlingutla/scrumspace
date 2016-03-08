@@ -68,6 +68,7 @@
 .scrum-board {
 	// background-color: #F5F5F5;
 	background-color: rgba(255, 255, 255, .9);
+	border-radius: 0;
 
 	table {
 		width: 100%;
@@ -97,6 +98,7 @@
 
 				.task {
 					width: 90%;
+					margin-left: 5%;
 					@include hoverAction();
 					opacity:1 !important;
 					cursor: 'move';
@@ -294,7 +296,7 @@
 				border-radius: $border-radius;
 
 				&.planning {
-					
+
 				}
 				&.sprint {
 					background: $green-color;
@@ -319,5 +321,5 @@
 			}
 		}
 	}
-	
+
 }

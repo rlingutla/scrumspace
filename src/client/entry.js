@@ -6,10 +6,11 @@ import { Router, match, browserHistory } from 'react-router';
 import routes from '../app/config/routes';
 
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import scrumApp from '../app/reducers';
 
-import { stateTree } from '../app/mock_server/server';
+import { initDatabase, stateTree } from '../app/mock_server/server';
 
 /* 	
 	This is the 'entry point' into the client side code.
@@ -17,10 +18,18 @@ import { stateTree } from '../app/mock_server/server';
 */
 var mountNode = document.getElementById('app');
 
+//initialize mock datastore
+initDatabase();
 
-stateTree(0, function(stateTree){
+stateTree(0).then((stateTree) => {
 	match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
-		let store = createStore(scrumApp, stateTree);
+		let store = createStore(
+			scrumApp, 
+			stateTree, 
+			applyMiddleware(
+				thunkMiddleware
+			)
+		);
 
 		render(
 		  <Provider store={store}>
@@ -30,4 +39,23 @@ stateTree(0, function(stateTree){
 		);
 	});
 });
+
+// stateTree(0, function(stateTree){
+// 	match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
+// 		let store = createStore(
+// 			scrumApp, 
+// 			stateTree, 
+// 			applyMiddleware(
+// 				thunkMiddleware
+// 			)
+// 		);
+
+// 		render(
+// 		  <Provider store={store}>
+// 		    <Router {...renderProps} store={{}}/>
+// 		  </Provider>,
+// 		  mountNode
+// 		);
+// 	});
+// });
 

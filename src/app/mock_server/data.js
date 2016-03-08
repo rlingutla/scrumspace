@@ -18,6 +18,7 @@ var initialData = {
 		'users': [0],
 		'status': 'sprint',
 		'current_sprint': 0,
+		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
 		'sprints': [
 			{
 				'_id': 0,
@@ -34,11 +35,25 @@ var initialData = {
 				'sprint_id': 0,
 				'tasks': [
 					{
-				'_id': 0,
-				'status': 'DOING',
-				'description': 'Contact Graphic Designer',
-				'history': null,
-				'attachments': null
+						'_id': 0,
+						'status': 'DOING',
+						'description': 'Contact Graphic Designer',
+						'history': null,
+						'attachments': null
+					},
+					{
+						'_id': 1,
+						'status': 'UNASSIGNED',
+						'description': 'Buy Photoshop',
+						'history': null,
+						'attachments': null
+					},
+					{
+						'_id': 2,
+						'status': 'UNASSIGNED',
+						'description': 'Make Donald Drumpf again',
+						'history': null,
+						'attachments': null
 					}
 				]
 			}
@@ -51,6 +66,7 @@ var initialData = {
 		'users': [0],
 		'status': 'planning',
 		'current_sprint': null,
+		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
 		'sprints': {},
 		'stories': []
 	}
