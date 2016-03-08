@@ -15,7 +15,7 @@ const tileStyle = (color) =>  {
 };
 
 const red = '#FF9F9F';
-const green = '#78E092';
+const yellow = '#FFEC9F';
 const gray = '#656565';
 
 const lineData = {
@@ -185,7 +185,7 @@ export default (props) => {
 												<h4>Your Tasks</h4>
 												<div className="row">
 													<div className="col-md-12">
-														<div style={tileStyle(green)}>
+														<div style={tileStyle(yellow)}>
 															<div style={{paddingTop: "15px", paddingBottom: '15px'}}>
 																<div>5</div>
 																<div>Doing</div>
@@ -206,7 +206,7 @@ export default (props) => {
 													</div>
 												</div>
 												{ tasks.map((e, i) => {
-													return <Task key={i} id={e._id} description={e.description} />;
+													return <Task key={i} id={e._id} status={e.status} description={e.description} />;
 												}) }
 											</div>
 										</div>
