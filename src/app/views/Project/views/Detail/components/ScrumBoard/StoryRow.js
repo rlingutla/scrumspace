@@ -1,5 +1,5 @@
 import React from 'react';
-import TaskContainer from '../../../../shared/Task';
+import Task from '../../../../shared/Task';
 import TaskTypes from '../../../../../../constants/taskTypes';
 import Story from './Story';
 import TaskBin from './TaskBin';
@@ -27,27 +27,27 @@ class StoryRow extends React.Component {
 				</td>
 				<TaskBin id="task-container" type={TaskTypes.UNASSIGNED}>
 					{this.getTaskArray(TaskTypes.UNASSIGNED).map((task, i) => {
-						return <TaskContainer task_id={task._id} {...this.props} key={i} />
+						return <Task task_id={task._id} {...this.props} key={i} />
 					})}
 				</TaskBin>
 				<TaskBin id="doing-container" type={TaskTypes.DOING}>
 					{this.getTaskArray(TaskTypes.DOING).map((task, i) => {
-						return <TaskContainer task_id={task._id} {...this.props} key={i} {...task}/>
+						return <Task task_id={task._id} {...this.props} key={i} {...task}/>
 					})}
 				</TaskBin>
 				<TaskBin id="blocked-container" type={TaskTypes.BLOCKED}>
 					{this.getTaskArray(TaskTypes.BLOCKED).map((task, i) => {
-						return <TaskContainer task_id={task._id} {...this.props} key={i} {...task} />
+						return <Task task_id={task._id} {...this.props} key={i} {...task} />
 					})}
 				</TaskBin>
 				<TaskBin id="done-container" type={TaskTypes.DONE}>
 					{this.getTaskArray(TaskTypes.DONE).map((task, i) => {
-						return <TaskContainer task_id={task._id} {...this.props} key={i} {...task} />
+						return <Task task_id={task._id} {...this.props} key={i} {...task} />
 					})}
 				</TaskBin>
-			</tr>	
+			</tr>
 		);
-		
+
 	}
 
 }
@@ -71,10 +71,8 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 }
 
-const StoryRowContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
 )(StoryRow);
-
-export default StoryRowContainer;

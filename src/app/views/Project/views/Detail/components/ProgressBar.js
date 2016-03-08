@@ -6,6 +6,13 @@ import TaskTypes from '../../../../../constants/taskTypes';
 class ProjectProgressBar extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.taskCount = {
+			UNASSIGNED: this.countType(TaskTypes.UNASSIGNED),
+			DOING: this.countType(TaskTypes.DOING),
+			BLOCKED: this.countType(TaskTypes.BLOCKED),
+			DONE: this.countType(TaskTypes.DONE)
+		}
 	}
 
 	countType(taskType){
@@ -18,22 +25,27 @@ class ProjectProgressBar extends React.Component {
 			});
 		});
 		let calc = Math.floor((typeCount/total)*100);
-		return calc;
+		return {
+			count: typeCount,
+			calc: calc,
+			total: total
+		}
 	}
 
 
+	//probably find a way not to call these functions multiple times
 	render(){
 		return (
 			<div>
 				<div className="row left-right-align progress-bar-details">
-				    <div className="col-md-6"><strong>1/7</strong> Tasks Complete</div>
+				    <div className="col-md-6"><strong>{this.countType(TaskTypes.DONE).count + '/' + this.countType(TaskTypes.DONE).total}</strong> Tasks Complete</div>
 				    <div className="col-md-6"><strong>5</strong> Days Left of Sprint</div>
 				</div>
 				<ProgressBar>
-					<ProgressBar bsStyle="info" now={this.countType(TaskTypes.UNASSIGNED)} key={1} />
-					<ProgressBar bsStyle="warning"now={this.countType(TaskTypes.DOING)} key={2} />
-					<ProgressBar bsStyle="danger" now={this.countType(TaskTypes.BLOCKED)}key={3} />
-					<ProgressBar bsStyle="success" now={this.countType(TaskTypes.DONE)}key={4} />
+					<ProgressBar bsStyle="info" now={this.countType(TaskTypes.UNASSIGNED).calc} key={1} />
+					<ProgressBar bsStyle="warning"now={this.countType(TaskTypes.DOING).calc} key={2} />
+					<ProgressBar bsStyle="danger" now={this.countType(TaskTypes.BLOCKED).calc}key={3} />
+					<ProgressBar bsStyle="success" now={this.countType(TaskTypes.DONE).calc}key={4} />
 				</ProgressBar>
 			</div>
 		);
@@ -55,10 +67,4 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 }
 
-const ProjectProgressBarContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
-)(ProjectProgressBar);
-
-export default ProjectProgressBarContainer;
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(ProjectProgressBar);
