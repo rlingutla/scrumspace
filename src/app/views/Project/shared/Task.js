@@ -95,10 +95,8 @@ const mapDispatchToProps = (dispatch) => {
   };
 }
 
-const TaskContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
 )(DragSource(ItemTypes.TASK, taskSource, collect)(Task));
-
-export default TaskContainer;

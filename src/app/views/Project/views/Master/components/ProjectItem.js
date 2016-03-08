@@ -2,7 +2,7 @@ import React from 'react';
 import utils from '../../../../../shared/utils/utils';
 import { Grid, Row, Col } from 'react-bootstrap';
 import ProjectStatus from '../../../shared/ProjectStatus';
-import { Link }  from 'react-router'; 
+import { Link }  from 'react-router';
 
 //get scrum time from a project object
 function getScrumTime(props){

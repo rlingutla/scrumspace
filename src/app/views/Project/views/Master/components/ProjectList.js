@@ -9,7 +9,7 @@ const ProjectList = (props) => {
 	return (
 		<div className="content">
 			<div className="project-container">
-				<Row className="show-grid"> 
+				<Row className="show-grid">
 					{props.projects.map((project, i) => {
 						return (
 							<Col xs={12} sm={6} md={4} key={i}>
@@ -28,7 +28,7 @@ const ProjectList = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		//convert projects dict to array and map to component's state
-		projects: _.values(state.projects) 
+		projects: _.values(state.projects)
 	}
 };
 
@@ -36,9 +36,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {};
 };
 
-const ProjectListContainer = connect(
+export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(ProjectList);
-
-export default ProjectListContainer;

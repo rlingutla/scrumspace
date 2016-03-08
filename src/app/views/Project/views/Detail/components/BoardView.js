@@ -6,7 +6,7 @@ const BoardView = (props) => {
 	return (
 		<div className="content">
 			<div className="project-info container-fluid">
-				<ProgressBar />
+				<ProgressBar project_id={props._id} />
 			</div>
 			<ScrumBoard {...props} />
 		</div>
