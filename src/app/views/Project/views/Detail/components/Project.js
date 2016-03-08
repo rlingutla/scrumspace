@@ -10,14 +10,14 @@ import _ from 'underscore';
 class Project extends React.Component {
 	constructor(props) {
 		super(props);
-		
+
 		//initialize tabs to Board view
 		this.state = {
 			activeTab: 0
 		};
 		this.onTabChange = this.onTabChange.bind(this);
 	}
-	
+
 	onTabChange(tabID) {
 		this.setState({ activeTab: tabID });
 	}
@@ -57,10 +57,8 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 }
 
-const ProjectContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
 )(Project);
-
-export default ProjectContainer;
