@@ -36,22 +36,29 @@ var initialData = {
 				'tasks': [
 					{
 						'_id': 0,
-						'status': 'DOING',
-						'description': 'Contact Graphic Designer',
+						'status': 'UNASSIGNED',
+						'description': 'Find a Designer',
 						'history': null,
 						'attachments': null
 					},
 					{
 						'_id': 1,
 						'status': 'UNASSIGNED',
-						'description': 'Buy Photoshop',
+						'description': 'Make Mexico pay for it',
 						'history': null,
 						'attachments': null
 					},
 					{
 						'_id': 2,
-						'status': 'UNASSIGNED',
+						'status': 'BLOCKED',
 						'description': 'Make Donald Drumpf again',
+						'history': null,
+						'attachments': null
+					},
+					{
+						'_id': 3,
+						'status': 'DONE',
+						'description': 'Replace Donald\'s Toupee',
 						'history': null,
 						'attachments': null
 					}

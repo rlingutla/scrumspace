@@ -14,8 +14,12 @@ notifications:
     on_start: never
   slack: scrumspace:e4ub8CIlVGoGM24aos08sUiT
 
-cache: 
+cache:
   directories:
     - node_modules
 
 sudo: false
+
+branches:
+  only:
+    - master
