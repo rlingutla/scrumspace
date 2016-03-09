@@ -1,3 +1,6 @@
+import { projectDefault } from '../constants/models'; 
+import _ from 'underscore';
+
 const task = (state, action) => {
   switch (action.type) {
     case 'CHANGE_TASK_STATE':
@@ -27,6 +30,16 @@ const projects = (state = [], action) => {
 					})});
 				} else return project;
 			});
+		case 'CREATE_NEW_PROJECT':
+			let project = _.defaults({
+				title: action.title, 
+				description: action.description
+			}, projectDefault());
+
+			return [
+				...state,
+				project
+			]
 		default: //just returning state for now
 			return state;
 	}
