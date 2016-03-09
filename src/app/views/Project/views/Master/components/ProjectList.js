@@ -21,7 +21,7 @@ const ProjectList = (props) => {
 			    </Row>
 			</div>
 		</div>
-	)
+	);
 };
 
 //redux
@@ -29,13 +29,13 @@ const mapStateToProps = (state) => {
 	return {
 		//convert projects dict to array and map to component's state
 		projects: _.values(state.projects)
-	}
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {};
 };
-
+// TODO, does not update on new props passed from state tree from new proj modal
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps

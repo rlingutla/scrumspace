@@ -49,7 +49,7 @@ export function postAndCreateNewProject(title, description){
 	return function(dispatch){
 		return postNewProject(title, description).then(
        project => {
-				 dispatch(createNewProject(title,description))
+				 dispatch(createNewProject(title,description));
 			 },
 			 error => console.error('got an error', error)
 		);

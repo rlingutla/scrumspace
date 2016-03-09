@@ -16,9 +16,10 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 class NewProjModal extends React.Component{
+ 
   constructor(props){
     super(props);
-
+    // TODO: members can't be mapped like this.
     this.state = {
       title: '',
       description: '',
@@ -30,8 +31,12 @@ class NewProjModal extends React.Component{
     };
   }
 
-  createNewProj(){
+  createNewProj() {
+    // TODO: VALIDATION CODE
     this.props.createNewProject(this.state.title, this.state.description);
+    // TODO: set this asynchronously, needs work!
+    this.props.changeModal();
+    // TODO RESET STATE OF MODAL HERE
   }
 
   handleChange(e){
@@ -56,8 +61,8 @@ class NewProjModal extends React.Component{
     });
   }
 
-
   render () {
+    // TODO members.map() has no event handler! shouldn't be saving.
     const members = this.state.members;
     return (
       <div>
@@ -68,8 +73,8 @@ class NewProjModal extends React.Component{
           <Modal.Body>
             <h4><b>Enter Project Details</b></h4>
             <form>
-              <Input type="text" name="title" label="Enter project title" placeholder="Title" value={this.state.title} onChange={this.handleChange} />
-              <Input type="text" name="description" label="Enter project description" placeholder="Description" value={this.state.description} onChange={this.handleChange}/>
+              <Input type="text" name="title" label="Enter project title" placeholder="Title" value={this.state.title} onChange={(e) => this.handleChange(e)} />
+              <Input type="text" name="description" label="Enter project description" placeholder="Description" value={this.state.description} onChange={(e) => this.handleChange(e)}/>
             </form>
             <h4><b>Enter Members</b></h4>
             <form>
@@ -89,7 +94,7 @@ class NewProjModal extends React.Component{
 }
 
 // TODO FIGURE OUT WHAT TO DO HERE.
-var mapStateToProps = (state, props) => {
+const mapStateToProps = (state, props) => {
   return state;
 };
 

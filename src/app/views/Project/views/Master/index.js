@@ -8,17 +8,16 @@ import NewProjModal from './components/NewProjModal';
 export default class Project extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {modalIsOpen:false};
-
+		this.state = { modalIsOpen: false};
 	}
 
 	handleClick(e){
 		e.preventDefault();
-    this.changeModal();
+    	this.changeModal();
 	}
 
 	changeModal(){
-    this.setState({modalIsOpen : !this.state.modalIsOpen});
+    	this.setState({modalIsOpen : !this.state.modalIsOpen});
 	}
 
 	render(){
