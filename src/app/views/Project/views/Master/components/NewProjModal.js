@@ -8,13 +8,9 @@ import {ToggleDisplay} from 'react-toggle-display';
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
-  console.log('hi');
-  console.log('hi');
-  console.log('hi');
-  console.log('hi');
+
   return {
     createNewProject: (title, description) => {
-      console.log(dispatch);
       dispatch(postAndCreateNewProject(title,description));
     }
   }
@@ -29,8 +25,11 @@ class NewProjModal extends React.Component{
     this.state = {
       title: '',
       description: '',
-      members: [{id: '1'}],
-      isAuthorized: false
+      members: [
+        {
+          id: '1'
+        }
+      ]
     };
   }
 
@@ -60,10 +59,20 @@ class NewProjModal extends React.Component{
 
   handleClick(e){
     e.preventDefault();
-    this.setState({isAuthorized: !this.state.isAuthorized});
+    this.setState({
+      members: this.state.members.concat([{
+        id: this.state.members.length + 1
+      }])
+    });
   }
+  //   this.setState({members: this.state.members.push( [{
+  //     id: '2'
+  //   }]
+  // )});
+
 
   render () {
+    const members = this.state.members;
     return (
       <div>
         <Modal show={this.props.show} onHide={this.props.changeModal}>
@@ -78,7 +87,10 @@ class NewProjModal extends React.Component{
             </form>
             <h4><b>Enter Members</b></h4>
             <form>
-              <Input type="text"  placeholder="Name" ></Input>
+
+              {members.map(note =>
+                  <Input type="text"  placeholder="Name" key={note.id}></Input>
+                )}
             </form>
             <Button bsStyle="primary" onClick={this.handleClick.bind(this)}>Add members</Button>
           </Modal.Body>
