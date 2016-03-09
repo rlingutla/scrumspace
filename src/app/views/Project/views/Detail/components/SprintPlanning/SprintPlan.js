@@ -12,7 +12,7 @@ export default class SprintPlan extends React.Component {
         <h2 id="settings">Sprint Planning</h2>
         <div className="panel-group">
           <TimeTable/>
-          <StoryPanel/>
+          <StoryPanel number={1} notOnly={false}/>
         </div>
       </div>
 		);
