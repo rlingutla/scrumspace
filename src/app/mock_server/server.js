@@ -7,7 +7,7 @@ import {readDocument, writeDocument, addDocument, initLocalStorage} from './data
 function emulateServerReturn(data, error) {
 	return new Promise((resolve, reject) => {
 		if(error) reject(error);
-        else setTimeout(resolve(data), 4);
+        else setTimeout((e) => resolve(data), 4);
     });
 }
 
