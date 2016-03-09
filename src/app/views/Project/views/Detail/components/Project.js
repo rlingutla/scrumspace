@@ -2,6 +2,7 @@ import React from 'react';
 import Nav from './Nav';
 import Tab from './Tabs/Tab';
 import BoardView from './BoardView';
+import SprintPlan from './SprintPlanning/SprintPlan';
 
 import { connect } from 'react-redux';
 import _ from 'underscore';
@@ -32,7 +33,7 @@ class Project extends React.Component {
 						<BoardView {...this.props} />
 					</Tab>
 					<Tab tab-id={1} active-tab={this.state.activeTab}>
-						Tab2
+						<SprintPlan />
 					</Tab>
 				</div>
 			</div>
