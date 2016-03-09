@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ProgressBar } from 'react-bootstrap';
 import TaskTypes from '../../../../../constants/taskTypes';
+import { daysDifference } from '../../../../../shared/utils/utils';
 
 class ProjectProgressBar extends React.Component {
 	constructor(props) {
