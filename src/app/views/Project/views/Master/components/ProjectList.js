@@ -35,18 +35,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {};
 };
-
-const mergeProps = (state, dispatchProps, ownProps) => {
-	console.log('hi');
-	console.log('hi');
-	console.log('hi');
-	return {
-		projects: _.values(state.projects)
-	}
-};
-
+// TODO, does not update on new props passed from state tree from new proj modal
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
-	mergeProps
+	mapDispatchToProps
 )(ProjectList);

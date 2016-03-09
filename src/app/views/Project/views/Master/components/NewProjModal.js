@@ -36,6 +36,7 @@ class NewProjModal extends React.Component{
     this.props.createNewProject(this.state.title, this.state.description);
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();
+    // TODO RESET STATE OF MODAL HERE
   }
 
   handleChange(e){
@@ -97,8 +98,4 @@ const mapStateToProps = (state, props) => {
   return state;
 };
 
-const mergeProps = (state, dispatchProps, ownProps) => {
-  return dispatchProps;
-};
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(NewProjModal);
+export default connect(mapStateToProps, mapDispatchToProps)(NewProjModal);
