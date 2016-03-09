@@ -21,7 +21,7 @@ const ProjectList = (props) => {
 			    </Row>
 			</div>
 		</div>
-	)
+	);
 };
 
 //redux
@@ -29,14 +29,24 @@ const mapStateToProps = (state) => {
 	return {
 		//convert projects dict to array and map to component's state
 		projects: _.values(state.projects)
-	}
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {};
 };
 
+const mergeProps = (state, dispatchProps, ownProps) => {
+	console.log('hi');
+	console.log('hi');
+	console.log('hi');
+	return {
+		projects: _.values(state.projects)
+	}
+};
+
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps
+	mapDispatchToProps,
+	mergeProps
 )(ProjectList);
