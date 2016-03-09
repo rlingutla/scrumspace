@@ -2,26 +2,23 @@ import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } from 'react-bootstrap';
 import ProjectItem from './ProjectItem';
 import { postAndCreateNewProject } from '../../../../../actions/';
-import {ToggleDisplay} from 'react-toggle-display';
+import { ToggleDisplay } from 'react-toggle-display';
 
-//redux
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
 
   return {
     createNewProject: (title, description) => {
-      dispatch(postAndCreateNewProject(title,description));
+      dispatch(postAndCreateNewProject(title, description));
     }
-  }
-}
+  };
+};
 
 class NewProjModal extends React.Component{
   constructor(props){
     super(props);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.createNewProj = this.createNewProj.bind(this);
     this.state = {
       title: '',
       description: '',
@@ -33,12 +30,6 @@ class NewProjModal extends React.Component{
     };
   }
 
-  // addInput(){
-  //   var inputs = this.state.Input;
-  //   inputs.push();
-  //   this.setState({inputs : inputs});
-  // }
-
   createNewProj(){
     this.props.createNewProject(this.state.title, this.state.description);
   }
@@ -49,7 +40,6 @@ class NewProjModal extends React.Component{
     let value = e.target.value;
     let field = e.target.attributes.name.nodeValue;
 
-
     let updObj = {};
     updObj[field] = value;
 
@@ -57,7 +47,7 @@ class NewProjModal extends React.Component{
 
   }
 
-  handleClick(e){
+  handleClick(e) {
     e.preventDefault();
     this.setState({
       members: this.state.members.concat([{
@@ -65,10 +55,6 @@ class NewProjModal extends React.Component{
       }])
     });
   }
-  //   this.setState({members: this.state.members.push( [{
-  //     id: '2'
-  //   }]
-  // )});
 
 
   render () {
@@ -87,15 +73,14 @@ class NewProjModal extends React.Component{
             </form>
             <h4><b>Enter Members</b></h4>
             <form>
-
               {members.map(note =>
                   <Input type="text"  placeholder="Name" key={note.id}></Input>
                 )}
             </form>
-            <Button bsStyle="primary" onClick={this.handleClick.bind(this)}>Add members</Button>
+            <Button bsStyle="primary" onClick={(e) => this.handleClick(e)}>Add members</Button>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="success" onClick={this.createNewProj}>Create</Button>
+            <Button bsStyle="success" onClick={(e) => this.createNewProj(e)}>Create</Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -103,4 +88,9 @@ class NewProjModal extends React.Component{
   }
 }
 
-export default connect(mapDispatchToProps)(NewProjModal);
+// TODO FIGURE OUT WHAT TO DO HERE.
+var mapStateToProps = (state, props) => {
+  return state;
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewProjModal);

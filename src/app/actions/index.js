@@ -7,7 +7,7 @@ export const changeTaskState = (project_id, story_id, task_id, toType) => {
 		story_id,
 		task_id,
 		toType
-	}
+	};
 };
 
 function putTaskState(project_id, story_id, task_id, toType) {
@@ -33,13 +33,11 @@ export function putAndChangeTaskState(project_id, story_id, task_id, toType){
 }
 
 function postNewProject(title, description){
-	debugger;
 	return serverPostNewProject(title, description);
 }
 
 // new project
 export const createNewProject = (title, description) => {
-	debugger;
 	return {
 		type: 'CREATE_NEW_PROJECT',
 		title,
@@ -48,13 +46,12 @@ export const createNewProject = (title, description) => {
 };
 
 export function postAndCreateNewProject(title, description){
-	debugger;
 	return function(dispatch){
 		return postNewProject(title, description).then(
        project => {
 				 dispatch(createNewProject(title,description))
 			 },
-			 error => console.error("got an error", error)
+			 error => console.error('got an error', error)
 		);
 	};
 }
