@@ -9,18 +9,6 @@ import {
 
 const isInSprint = (project) => {
 	return project.status === 'sprint';
-}
-
-// TODO: assigned to user
-const isActionable = (task) => {
-	return task.status === 'DOING' || task.status === 'BLOCKED';
-};
-
-const flatten = (a, b) => a.concat(b);
-const toTasks = (e) => e.tasks;
-
-const setActionableTasks = (project) => {
-	project.actionableTasks = project.stories.map(toTasks).reduce(flatten).filter(isActionable);
 };
 
 const mapStateToProps = (state) => {
@@ -29,7 +17,6 @@ const mapStateToProps = (state) => {
 
 const mergeProps = (state, dispatchProps, ownProps) => {
 	let projects = state.projects.filter(isInSprint);
-	projects.forEach(setActionableTasks);
 	return Object.assign({}, {
 		projects
 	});

@@ -1,6 +1,8 @@
 import React from 'react';
 import Task from './Task';
 import { Doughnut, Line } from 'react-chartjs';
+import { doughnutOptions, lineOptions } from '../constants/chartOptions';
+import taskTypes from '../../../constants/taskTypes_refactor';
 
 const tileStyle = (color) =>  {
 	return {
@@ -14,9 +16,16 @@ const tileStyle = (color) =>  {
 	};
 };
 
-const red = '#FF9F9F';
-const yellow = '#FFEC9F';
-const gray = '#656565';
+// used to check if a task is a certain status.
+const taskType = (status) => {
+	return (task) => {
+		return task.status === status;
+	};
+};
+
+const capitalize = (s) => {
+	return s[0] + s.slice(1).toLowerCase();
+};
 
 const lineData = {
 	labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -30,125 +39,47 @@ const lineData = {
 			pointHighlightFill: "#fff",
 			pointHighlightStroke: "rgba(220,220,220,1)",
 			data: [65, 59, 80, 81, 56, 55, 40]
-		},
-		{
-			label: "My Second dataset",
-			fillColor: "rgba(151,187,205,0.2)",
-			strokeColor: "rgba(151,187,205,1)",
-			pointColor: "rgba(151,187,205,1)",
-			pointStrokeColor: "#fff",
-			pointHighlightFill: "#fff",
-			pointHighlightStroke: "rgba(151,187,205,1)",
-			data: [28, 48, 40, 19, 86, 27, 90]
 		}
 	]
 };
 
-const lineOptions = {
-
-	///Boolean - Whether grid lines are shown across the chart
-	scaleShowGridLines : true,
-
-	//String - Colour of the grid lines
-	scaleGridLineColor : "rgba(0,0,0,.05)",
-
-	//Number - Width of the grid lines
-	scaleGridLineWidth : 1,
-
-	//Boolean - Whether to show horizontal lines (except X axis)
-	scaleShowHorizontalLines: true,
-
-	//Boolean - Whether to show vertical lines (except Y axis)
-	scaleShowVerticalLines: true,
-
-	//Boolean - Whether the line is curved between points
-	bezierCurve : true,
-
-	//Number - Tension of the bezier curve between points
-	bezierCurveTension : 0.4,
-
-	//Boolean - Whether to show a dot for each point
-	pointDot : true,
-	
-	// Boolean - whether or not the chart should be responsive and resize when the browser does.
-	responsive: true,
-
-	//Number - Radius of each point dot in pixels
-	pointDotRadius : 4,
-
-	//Number - Pixel width of point dot stroke
-	pointDotStrokeWidth : 1,
-
-	//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-	pointHitDetectionRadius : 20,
-
-	//Boolean - Whether to show a stroke for datasets
-	datasetStroke : true,
-
-	//Number - Pixel width of dataset stroke
-	datasetStrokeWidth : 2,
-
-	//Boolean - Whether to fill the dataset with a colour
-	datasetFill : true,
-
-	//String - A legend template
-	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-
+const getChartObject = (label, number, color, highlight) => {
+	return {
+		label: label,
+		value: number,
+		color: color,
+		highlight: color
+	};
 };
 
-const chartData = [
-	{
-		value: 300,
-		color:"#F7464A",
-		highlight: "#FF5A5E",
-		label: "Red"
-	},
-	{
-		value: 50,
-		color: "#46BFBD",
-		highlight: "#5AD3D1",
-		label: "Green"
-	},
-	{
-		value: 100,
-		color: "#FDB45C",
-		highlight: "#FFC870",
-		label: "Yellow"
-	}
-];
+const isUnique = (e, i, arr) => {
+	return arr.indexOf(e) === i;
+};
 
-
-const chartOptions = {
-	//Boolean - Whether we should show a stroke on each segment
-	segmentShowStroke : true,
-
-	//String - The colour of each segment stroke
-	segmentStrokeColor : "#fff",
-
-	//Number - The width of each segment stroke
-	segmentStrokeWidth : 2,
-
-	//Number - The percentage of the chart that we cut out of the middle
-	percentageInnerCutout : 50, // This is 0 for Pie charts
-
-	//Number - Amount of animation steps
-	animationSteps : 100,
+const getTaskDistribution = (tasks) => {
+	let statuses = tasks.map((task) => task.status).filter(isUnique);
 	
-	// Boolean - whether or not the chart should be responsive and resize when the browser does.
-	responsive: true,
+	let countObj = {};
 
-	//String - Animation easing effect
-	animationEasing : "easeOutBounce",
+	tasks.forEach((task) => {
+		countObj[task.status] = (countObj[task.status]) ? countObj[task.status] + 1 : 1;
+	});
 
-	//Boolean - Whether we animate the rotation of the Doughnut
-	animateRotate : true,
-
-	//Boolean - Whether we animate scaling the Doughnut from the centre
-	animateScale : false,
-
-	//String - A legend template
-	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-
+	// make into an array
+	let statusArr = [];
+	for (var prop in countObj) {
+		statusArr.push({
+			value: countObj[prop],
+			type : prop
+		});
+	}
+	return statusArr.map((status) => {
+		return getChartObject(capitalize(status.type), 
+			status.value, 
+			taskTypes[status.type].color, 
+			taskTypes[status.type].color
+		);
+	});
 };
 
 const Chart = (props) => {
@@ -160,8 +91,39 @@ const Chart = (props) => {
 	);
 };
 
+const isActionable = (task) => {
+	return task.status === 'DOING' || task.status === 'BLOCKED';
+};
+
+/*
+	projects: An array of projects
+	storyPredicate: Boolean function for correct stories
+	taskStatusPredicate: Boolean function for correct task types
+*/
+
+const projectsTaskSelector = (projects, storyPredicate, taskStatusPredicate) => {
+	return projects
+	.map((project) => project.stories)
+	.reduce((a, b) => a.concat(b))
+	.filter(storyPredicate)
+	.map((story) => story.tasks)
+	.reduce((a, b) => a.concat(b))
+	.filter(taskStatusPredicate);
+};
+
 export default (props) => {
-	let tasks = props.project.actionableTasks;
+	let tasks = projectsTaskSelector(new Array(props.project), () => true, () => true);
+	let actionableTasks = tasks.filter(isActionable);
+	let x = getTaskDistribution(tasks);
+	console.log(x);
+	var y = [
+	{
+		value: 300,
+		color:'#F7464A',
+		highlight: '#FF5A5E',
+		label: 'Red'
+	}
+];
 	return (
 		<div>
 			<div className="project-info container-fluid">
@@ -185,27 +147,28 @@ export default (props) => {
 												<h4>Your Tasks</h4>
 												<div className="row">
 													<div className="col-md-12">
-														<div style={tileStyle(yellow)}>
-															<div style={{paddingTop: "15px", paddingBottom: '15px'}}>
-																<div>5</div>
+														{/* TODO, COMPONENTS  */}
+														<div style={tileStyle(taskTypes.DOING.color)}>
+															<div style={{paddingTop: '15px', paddingBottom: '15px'}}>
+																<div>{actionableTasks.filter(taskType('DOING')).length}</div>
 																<div>Doing</div>
 															</div>
 														</div>  
-														<div style={tileStyle(red)}>
-															<div style={{paddingTop: "15px", paddingBottom: '15px'}}>
-																<div>1</div>
+														<div style={tileStyle(taskTypes.BLOCKING.color)}>
+															<div style={{paddingTop: '15px', paddingBottom: '15px'}}>
+																<div>{actionableTasks.filter(taskType('blah')).length}</div>
 																<div>Blocking</div>
 														   </div>                                                    
 														</div>   
-														<div style={tileStyle(gray)}>
-															<div style={{paddingTop: "15px", paddingBottom: '15px'}}>
-																<div>2</div>
+														<div style={tileStyle(taskTypes.BLOCKED.color)}>
+															<div style={{paddingTop: '15px', paddingBottom: '15px'}}>
+																<div>{actionableTasks.filter(taskType('BLOCKED')).length}</div>
 																<div>Blocked</div>                                                            
 															</div>                                                    
 														</div>
 													</div>
 												</div>
-												{ tasks.map((e, i) => {
+												{ actionableTasks.map((e, i) => {
 													return <Task key={i} id={e._id} status={e.status} description={e.description} />;
 												}) }
 											</div>
@@ -238,7 +201,7 @@ export default (props) => {
 									<div className="panel-container">
 										<div className="panel-body">
 											<Chart title='Project Task Distribution'>
-												<Doughnut data={chartData} options={chartOptions}/>
+												<Doughnut data={x} options={doughnutOptions}/>
 											</Chart>
 										</div>
 									</div>
