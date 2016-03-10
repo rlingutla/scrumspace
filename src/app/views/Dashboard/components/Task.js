@@ -3,16 +3,14 @@ import taskTypes from '../../../constants/taskTypes_refactor';
 
 export default (props) => {
 	return (
-		<div>
-			<div key={props.key} style={{ borderColor: taskTypes[props.status].color}} className="task" onClick={props.openDetail}>
-				<div className="heading">
-					<div className="row left-right-align">
-						<div className="col-md-6"><a>{props.id}</a></div>
-						<div className="col-md-6"></div>
-					</div>
+		<div key={props.key} style={{ borderColor: taskTypes[props.status].color}} className="task" onClick={props.openDetail}>
+			<div className="heading">
+				<div className="row left-right-align">
+					<div className="col-md-6"><a>{props.id}</a></div>
+					<div className="col-md-6"></div>
 				</div>
-				<div className="body">{props.description}</div>
 			</div>
+			<div className="body">{props.description}</div>
 		</div>
 	);
 };
