@@ -37,6 +37,7 @@ var initialData = {
 					{
 						'_id': 0,
 						'status': 'UNASSIGNED',
+						'assignedTo': 0,
 						'description': 'Find a Designer',
 						'history': null,
 						'attachments': null
@@ -44,6 +45,7 @@ var initialData = {
 					{
 						'_id': 1,
 						'status': 'UNASSIGNED',
+						'assignedTo': 0,
 						'description': 'Make Mexico pay for it',
 						'history': null,
 						'attachments': null
@@ -51,6 +53,7 @@ var initialData = {
 					{
 						'_id': 2,
 						'status': 'BLOCKED',
+						'assignedTo': 0,
 						'description': 'Make Donald Drumpf again',
 						'history': null,
 						'attachments': null
