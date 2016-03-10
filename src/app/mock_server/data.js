@@ -1,3 +1,7 @@
+const xDaysAgoInUnixTime = (x) => {
+	return Date.now() - 1000* 60 * 60 * 24 * x;
+};
+
 var initialData = {
 	loading: false,
 	users: {
@@ -39,7 +43,12 @@ var initialData = {
 						'status': 'UNASSIGNED',
 						'assignedTo': 0,
 						'description': 'Find a Designer',
-						'history': null,
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					},
 					{
@@ -47,7 +56,12 @@ var initialData = {
 						'status': 'UNASSIGNED',
 						'assignedTo': 0,
 						'description': 'Make Mexico pay for it',
-						'history': null,
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					},
 					{
@@ -55,14 +69,39 @@ var initialData = {
 						'status': 'BLOCKED',
 						'assignedTo': 0,
 						'description': 'Make Donald Drumpf again',
-						'history': null,
+						'history': [{
+							fromStatus: 'UNASSIGNED',
+							toStatus: 'BLOCKED',
+							modifiedTime: xDaysAgoInUnixTime(2),
+							modifiedUser : 0
+						},{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					},
 					{
 						'_id': 3,
 						'status': 'DONE',
 						'description': 'Replace Donald\'s Toupee',
-						'history': null,
+						'history': [{
+							fromStatus: 'DOING',
+							toStatus: 'DONE',
+							modifiedTime: xDaysAgoInUnixTime(1),
+							modifiedUser : 0
+						},{
+							fromStatus: 'UNASSIGNED',
+							toStatus: 'DOING',
+							modifiedTime: xDaysAgoInUnixTime(3),
+							modifiedUser : 0
+						},{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					}
 				]

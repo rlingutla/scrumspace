@@ -11,7 +11,7 @@ const taskType = (status) => {
 export default (props) => {
 	return (
 		<div className="col-md-12">
-			{props.types.map((type) => <UserTaskTotalsItem status={type} total={props.tasks.filter(taskType(type)).length} />)};
+			{props.types.map((type) => <UserTaskTotalsItem status={type} total={props.tasks.filter(taskType(type)).length} />)}
 		</div>
 	);
 };
