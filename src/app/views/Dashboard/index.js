@@ -12,14 +12,14 @@ const isInSprint = (project) => {
 };
 
 const mapStateToProps = (state) => {
-	return state;
-};
-
-const mergeProps = (state, dispatchProps, ownProps) => {
 	let projects = state.projects.filter(isInSprint);
 	return Object.assign({}, {
 		projects
 	});
+};
+
+const mergeProps = (state, dispatchProps, ownProps) => {
+	return state;
 };
 
 // maps any actions this component dispatches to component props

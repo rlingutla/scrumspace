@@ -1,27 +1,11 @@
 import React from 'react';
-import Task from './Task';
+
 import { Doughnut, Line } from 'react-chartjs';
 import { doughnutOptions, lineOptions } from '../constants/chartOptions';
 import taskTypes from '../../../constants/taskTypes_refactor';
+import UserTaskTotals from './UserTaskTotals';
+import Task from './Task';
 
-const tileStyle = (color) =>  {
-	return {
-		backgroundColor: color, 
-		width: '33%',
-		display: 'inline-block',
-		textAlign: 'center',
-		color: 'white',
-		fontWeight: 'bold',
-		fontSize: '15px'
-	};
-};
-
-// used to check if a task is a certain status.
-const taskType = (status) => {
-	return (task) => {
-		return task.status === status;
-	};
-};
 
 const capitalize = (s) => {
 	return s[0] + s.slice(1).toLowerCase();
@@ -96,34 +80,25 @@ const isActionable = (task) => {
 };
 
 /*
+	Parameters of projectTaskSelector
 	projects: An array of projects
-	storyPredicate: Boolean function for correct stories
-	taskStatusPredicate: Boolean function for correct task types
+	storyPredicate: Boolean function for story properties
+	taskPredicate: Boolean function for task properties
 */
 
-const projectsTaskSelector = (projects, storyPredicate, taskStatusPredicate) => {
+const projectsTaskSelector = (projects, storyPredicate, taskPredicate) => {
 	return projects
 	.map((project) => project.stories)
 	.reduce((a, b) => a.concat(b))
 	.filter(storyPredicate)
 	.map((story) => story.tasks)
 	.reduce((a, b) => a.concat(b))
-	.filter(taskStatusPredicate);
+	.filter(taskPredicate);
 };
 
 export default (props) => {
 	let tasks = projectsTaskSelector(new Array(props.project), () => true, () => true);
 	let actionableTasks = tasks.filter(isActionable);
-	let x = getTaskDistribution(tasks);
-	console.log(x);
-	var y = [
-	{
-		value: 300,
-		color:'#F7464A',
-		highlight: '#FF5A5E',
-		label: 'Red'
-	}
-];
 	return (
 		<div>
 			<div className="project-info container-fluid">
@@ -146,27 +121,7 @@ export default (props) => {
 											<div className="dashboard-summary">
 												<h4>Your Tasks</h4>
 												<div className="row">
-													<div className="col-md-12">
-														{/* TODO, COMPONENTS  */}
-														<div style={tileStyle(taskTypes.DOING.color)}>
-															<div style={{paddingTop: '15px', paddingBottom: '15px'}}>
-																<div>{actionableTasks.filter(taskType('DOING')).length}</div>
-																<div>Doing</div>
-															</div>
-														</div>  
-														<div style={tileStyle(taskTypes.BLOCKING.color)}>
-															<div style={{paddingTop: '15px', paddingBottom: '15px'}}>
-																<div>{actionableTasks.filter(taskType('blah')).length}</div>
-																<div>Blocking</div>
-														   </div>                                                    
-														</div>   
-														<div style={tileStyle(taskTypes.BLOCKED.color)}>
-															<div style={{paddingTop: '15px', paddingBottom: '15px'}}>
-																<div>{actionableTasks.filter(taskType('BLOCKED')).length}</div>
-																<div>Blocked</div>                                                            
-															</div>                                                    
-														</div>
-													</div>
+													<UserTaskTotals tasks={actionableTasks} types={['DOING', 'BLOCKED', 'BLOCKING']} />
 												</div>
 												{ actionableTasks.map((e, i) => {
 													return <Task key={i} id={e._id} status={e.status} description={e.description} />;
@@ -201,7 +156,7 @@ export default (props) => {
 									<div className="panel-container">
 										<div className="panel-body">
 											<Chart title='Project Task Distribution'>
-												<Doughnut data={x} options={doughnutOptions}/>
+												<Doughnut data={getTaskDistribution(tasks)} options={doughnutOptions}/>
 											</Chart>
 										</div>
 									</div>

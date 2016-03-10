@@ -4,7 +4,7 @@ export const doughnutOptions = {
     segmentShowStroke : true,
 
     //String - The colour of each segment stroke
-    segmentStrokeColor : "#fff",
+    segmentStrokeColor : '#fff',
 
     //Number - The width of each segment stroke
     segmentStrokeWidth : 2,
@@ -19,7 +19,7 @@ export const doughnutOptions = {
     responsive: true,
 
     //String - Animation easing effect
-    animationEasing : "easeOutBounce",
+    animationEasing : 'easeOutBounce',
 
     //Boolean - Whether we animate the rotation of the Doughnut
     animateRotate : true,
@@ -28,7 +28,7 @@ export const doughnutOptions = {
     animateScale : false,
 
     //String - A legend template
-    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+    legendTemplate : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
 };
 
 export const lineOptions = {
