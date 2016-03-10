@@ -1,4 +1,4 @@
-import { serverPutTaskState } from '../mock_server/server';
+import { serverPutTaskState, serverPostNewProject } from '../mock_server/server';
 
 export const changeTaskState = (project_id, story_id, task_id, toType) => {
 	return {
@@ -7,7 +7,7 @@ export const changeTaskState = (project_id, story_id, task_id, toType) => {
 		story_id,
 		task_id,
 		toType
-	}
+	};
 };
 
 function putTaskState(project_id, story_id, task_id, toType) {
@@ -32,3 +32,27 @@ export function putAndChangeTaskState(project_id, story_id, task_id, toType){
 	};
 }
 
+function postNewProject(title, description){
+	return serverPostNewProject(title, description);
+}
+
+// new project
+export const createNewProject = (title, description) => {
+	return {
+		type: 'CREATE_NEW_PROJECT',
+		title,
+		description
+	};
+};
+
+export function postAndCreateNewProject(title, description){
+	return function(dispatch){
+		return postNewProject(title, description).then(
+       project => {
+				 dispatch(createNewProject(title,description));
+			 },
+			 error => console.error('got an error', error)
+		);
+	};
+}
+// export function

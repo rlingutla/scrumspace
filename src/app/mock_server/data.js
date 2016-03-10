@@ -1,3 +1,7 @@
+const xDaysAgoInUnixTime = (x) => {
+	return Date.now() - 1000* 60 * 60 * 24 * x;
+};
+
 var initialData = {
 	loading: false,
 	users: {
@@ -36,23 +40,68 @@ var initialData = {
 				'tasks': [
 					{
 						'_id': 0,
-						'status': 'DOING',
-						'description': 'Contact Graphic Designer',
-						'history': null,
+						'status': 'UNASSIGNED',
+						'assignedTo': 0,
+						'description': 'Find a Designer',
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					},
 					{
 						'_id': 1,
 						'status': 'UNASSIGNED',
-						'description': 'Buy Photoshop',
-						'history': null,
+						'assignedTo': 0,
+						'description': 'Make Mexico pay for it',
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					},
 					{
 						'_id': 2,
-						'status': 'UNASSIGNED',
+						'status': 'BLOCKED',
+						'assignedTo': 0,
 						'description': 'Make Donald Drumpf again',
-						'history': null,
+						'history': [{
+							fromStatus: 'UNASSIGNED',
+							toStatus: 'BLOCKED',
+							modifiedTime: xDaysAgoInUnixTime(2),
+							modifiedUser : 0
+						},{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
+						'attachments': null
+					},
+					{
+						'_id': 3,
+						'status': 'DONE',
+						'description': 'Replace Donald\'s Toupee',
+						'history': [{
+							fromStatus: 'DOING',
+							toStatus: 'DONE',
+							modifiedTime: xDaysAgoInUnixTime(1),
+							modifiedUser : 0
+						},{
+							fromStatus: 'UNASSIGNED',
+							toStatus: 'DOING',
+							modifiedTime: xDaysAgoInUnixTime(3),
+							modifiedUser : 0
+						},{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					}
 				]

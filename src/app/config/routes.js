@@ -6,7 +6,7 @@ import App from '../index';
 import { Dashboard, Project, Settings, Statistics } from '../views';
 
 /* Project Components */
-import { ProjectDetail, ProjectMaster, ProjectNew } from '../views/Project/views'; 
+import { ProjectDetail, ProjectMaster } from '../views/Project/views'; 
 
 export default
 <Route path='/' component={App} store={this}>
@@ -15,7 +15,6 @@ export default
 	<Route path='project' name="Projects" component={Project}>
 		<IndexRoute component={ProjectMaster} />
 		<Route path='detail/:id' component={ProjectDetail} />
-		<Route path='new' component={ProjectNew} />
 	</Route>
 	<Route path="settings" component={Settings} />
 	<Route path="statistics" component={Statistics} />

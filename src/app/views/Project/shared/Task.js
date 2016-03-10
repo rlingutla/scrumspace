@@ -73,7 +73,7 @@ class Task extends React.Component {
 //redux
 const mapStateToProps = (state) => {
 	return state;
-}
+};
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	//do our nasty search
