@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Doughnut, Line } from 'react-chartjs';
+import { Link }  from 'react-router';  
 import { doughnutOptions, lineOptions } from '../constants/chartOptions';
 import taskTypes from '../../../constants/taskTypes_refactor';
 import UserTaskTotals from './UserTaskTotals';
@@ -105,7 +106,11 @@ export default (props) => {
 				<div className="state-details">
 					<div className="row">
 						<div className="col-md-6">
-							<h4>{props.project.title}</h4>
+							<Link activeClassName="selected" to={'/project/detail/' + props.project._id}>
+								<h4>{props.project.title}</h4>
+							</Link>
+
+							
 						</div>
 					</div>
 				</div>
@@ -124,7 +129,7 @@ export default (props) => {
 													<UserTaskTotals tasks={actionableTasks} types={['DOING', 'BLOCKED', 'BLOCKING']} />
 												</div>
 												{ actionableTasks.map((e, i) => {
-													return <Task key={i} id={e._id} status={e.status} description={e.description} />;
+													return <Task key={i} id={e._id} status={e.status} description={e.description} />
 												}) }
 											</div>
 										</div>
