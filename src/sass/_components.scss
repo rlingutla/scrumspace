@@ -28,6 +28,12 @@ button {
 	}
 }
 
+.center-align {
+	& > :first-child {
+		text-align: center;
+	}
+}
+
 // TASKS
 .task {
 	background: #fff;

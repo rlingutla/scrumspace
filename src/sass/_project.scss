@@ -1,19 +1,26 @@
-#project-nav {
+
+#project-detail {
 	position:relative;
-	background: $blue-color;
+	background: #fff;
 	padding: 0 15px;
 	color: #fff;
 	max-height: 155px;
 	z-index: initial;
 	margin:0;
 
-	& > .row {
-		padding: 30px 0;
+	// & > .row {
+	// 	padding: 30px 0;
+	// }
+
+	.project-nav {
+		color: #000;
 	}
 
-	.project-details {
+	.project-detail-content {
+		padding: 30px 0;
+
 		& > * {
-			vertical-align: middle;
+			vertical-align: middle;	
 		}
 	}
 
@@ -27,22 +34,23 @@
 	}
 
 	.detail-text {
-		display: inline-block;
+		display: block;
 		margin-left: 20px;
 
 		h1 {
-			@include resetSpacing();
+			// @include resetSpacing();
 			font-size: 20px;
+			color: #000;
 
 			span[name='project-state'] {
-				color: $light-blue-color;
+				color: $dark-gray-color;
 				font-weight: 100;
 				font-style: italic;
 			}
 		}
 		h4 {
 			@include resetSpacing();
-			color: $light-blue-color;
+			color: $dark-gray-color;
 			margin-top: 5px;
 			font-size: 15px;
 		}
