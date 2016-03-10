@@ -24,8 +24,8 @@ export default class SprintPlan extends React.Component {
 
 
 	render(){
-		var SprintID = this.state.current_sprint;
-		var SprintInfo = sprintInfo(SprintID);
+		//var SprintID = this.state.current_sprint;
+		//var SprintInfo = sprintInfo(SprintID);
 		return (
       <div className="content tab-offset container">
         <h2 id="settings">Sprint Planning</h2>
