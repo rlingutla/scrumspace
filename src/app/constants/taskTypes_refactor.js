@@ -11,10 +11,6 @@ export default {
 	},
 	BLOCKED: {
 		title: 'BLOCKED',
-		color: colors.darkGray
-	},
-	BLOCKING: {
-		title: 'BLOCKING',
 		color: colors.red
 	},
 	DONE: {

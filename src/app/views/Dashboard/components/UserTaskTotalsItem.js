@@ -4,7 +4,7 @@ import taskTypes from '../../../constants/taskTypes_refactor';
 const tileStyle = (color) =>  {
 	return {
 		backgroundColor: color, 
-		width: '33%',
+		width: '50%',
 		display: 'inline-block',
 		textAlign: 'center',
 		color: 'white',

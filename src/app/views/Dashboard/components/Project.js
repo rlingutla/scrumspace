@@ -140,7 +140,7 @@ export default (props) => {
 											<div className="dashboard-summary">
 												<h4>Your Tasks</h4>
 												<div className="row">
-													<UserTaskTotals tasks={actionableTasks} types={['DOING', 'BLOCKED', 'BLOCKING']} />
+													<UserTaskTotals tasks={actionableTasks} types={['DOING', 'BLOCKED']} />
 												</div>
 												{ actionableTasks.map((e, i) => {
 													return <Task key={i} id={e._id} status={e.status} description={e.description} />;
@@ -161,7 +161,6 @@ export default (props) => {
 														{
 															historyData.map((history) => {
 																var date = new Date(history.modifiedTime);
-																debugger;
 																return <p>{new Array( (new Date(history.modifiedTime)).getMonth() + 1, (new Date(history.modifiedTime)).getDate() + 1, 'user:', history.modifiedUser, history.task.status).join(' ')}</p>
 															})
 														}
