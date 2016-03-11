@@ -8,13 +8,6 @@ import _ from 'underscore';
 class ProjectProgressBar extends React.Component {
 	constructor(props) {
 		super(props);
-
-		// this.taskCount = {
-		// 	UNASSIGNED: this.countType(TaskTypes.UNASSIGNED),
-		// 	DOING: this.countType(TaskTypes.DOING),
-		// 	BLOCKED: this.countType(TaskTypes.BLOCKED),
-		// 	DONE: this.countType(TaskTypes.DONE)
-		// }
 	}
 
 	countType(taskType){
