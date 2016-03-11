@@ -20,14 +20,28 @@ const StoryPanelFactory = () => {
 export default class SprintPlan extends React.Component {
 	constructor(props){
 		super(props);
-		this.state = {
-			name: '',
-			start_date: '',
-			end_date: '',
-			scrum_time: '',
-			stories: [StoryPanelFactory()]
-		};
-
+		var SprintID = this.props.current_sprint;
+		var nextSprintInfo = this.nextSprintInfo(SprintID); //THIS ACTUALLY WORKS
+		//Code to change of the state of THIS if there is stuff in nextSprintInfo HERE
+		//console.log(nextSprintInfo);
+		if(nextSprintInfo[0] != null){
+			this.state = {
+				//name: nextSprintInfo[0].name,
+				start_date: nextSprintInfo[0].start_date,
+				end_date: nextSprintInfo[0].enddate,
+				scrum_time: nextSprintInfo[0].scrum_time,
+				stories: nextSprintInfo[1]
+			};
+		}
+		else{
+			this.state = {
+				name: '',
+				start_date: '',
+				end_date: '',
+				scrum_time: '',
+				stories: [StoryPanelFactory()]
+			};
+		}
 	}
 
 	//all the state is managed at the highest level
@@ -92,7 +106,7 @@ export default class SprintPlan extends React.Component {
 		if(this.props.stories[sprintID] === null){
 			return null;
 		}
-		return this.props.stories.filter(
+		return [this.props.sprints[sprintID], this.props.stories.filter(
 			function(value){
 				if(value.sprint_id === sprintID){
 					return true;
@@ -101,14 +115,10 @@ export default class SprintPlan extends React.Component {
 					return false;
 				}
 			}
-		);
+		)];
 	}
 
-
 	render(){
-		var SprintID = this.props.current_sprint;
-		var nextSprintInfo = this.nextSprintInfo(SprintID); //THIS ACTUALLY WORKS
-		//Code to change of the state of THIS if there is stuff in nextSprintInfo HERE
 		return (
       <div className="content tab-offset container">
         <h2 id="settings">Sprint Planning</h2>
