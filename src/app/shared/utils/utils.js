@@ -1,21 +1,21 @@
 import moment from 'moment';
 
-
-function verboseServerTime(serverTime) {
-	return serverTime;
+//Projects
+export function getCurrentSprint(props){
+	return props.sprints[props.current_sprint];
 }
 
-function daysDifference(startDate, endDate){
-	var start = moment(startDate);
-	var end = moment(endDate);
-	var duration = moment.duration(start.diff(end));
-	var days = duration.asDays();
-	console.log("days", days);
+//Date Time 
+export function verboseServerTime(serverTime) {
+	return moment(serverTime).format("MMMM Do");
 }
 
-let utils = {
-	verboseServerTime: verboseServerTime,
-	daysDifference: daysDifference
-};
-
-export default utils;
+//TODO
+export function daysDifference(startDate, endDate){ 
+	var start = moment(startDate), end = moment(endDate);
+	var days = moment.duration(end.diff(start)).asDays();
+	return {
+		days: Math.round(days),
+		past: start > end
+	}
+}
