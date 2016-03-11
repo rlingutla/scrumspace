@@ -7,6 +7,8 @@ import { Link }  from 'react-router';
 
 
 const ProjectNav = (props) => {
+	let currentSprint = getCurrentSprint(props);
+
 	return (
 		<div id="project-detail" className="navbar navbar-fixed-top">
 			<Row className="project-top-nav left-right-align">
@@ -19,14 +21,17 @@ const ProjectNav = (props) => {
 				<div className="project-detail-content">
 					<ProjectAvatar imgsrc={props.avatar}/>
 					<div className="detail-text">
-						<h1>{props.title}<span name="project-state">, {props.status}</span></h1>
+						<h1>
+							{props.title}
+							{currentSprint ? <span name="project-state">, {currentSprint.name}</span>:null}
+						</h1>
 						{(props.current_sprint) ? 
 							<h4>
 								<span name="sprint-start-date">
-									{verboseServerTime(getCurrentSprint(props).start_date)}
+									{verboseServerTime(currentSprint.start_date)}
 								</span> - 
 								<span name="sprint-end-date">
-									{verboseServerTime(getCurrentSprint(props).end_date)}
+									{verboseServerTime(currentSprint.end_date)}
 								</span>
 							</h4>
 							:null}

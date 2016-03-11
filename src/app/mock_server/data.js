@@ -35,12 +35,14 @@ var initialData = {
 		'sprints': [
 			{
 				'_id': 0,
+				'name': 'V2 Release',
 				'start_date': 1456900811760,
 				'end_date': 1458925200000,
 				'scrum_time': '9:00 AM'
 			},
 			{
 				'_id': 1,
+				'name': 'V1 Release',
 				'start_date': 1456900811760,
 				'end_date': 1456900811800,
 				'scrum_time': '9:00 AM'
@@ -140,7 +142,7 @@ var initialData = {
 		'status': 'planning',
 		'current_sprint': null,
 		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
-		'sprints': {},
+		'sprints': [],
 		'stories': []
 	}
 	]
