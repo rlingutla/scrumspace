@@ -7,7 +7,7 @@ import {readDocument, writeDocument, addDocument, initLocalStorage} from './data
 function emulateServerReturn(data, error) {
 	return new Promise((resolve, reject) => {
 		if(error) reject(error);
-        else setTimeout(resolve(data), 4);
+        else setTimeout((e) => resolve(data), 4);
     });
 }
 
@@ -50,10 +50,33 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 		} else return project;
 	});
 
+
 	//write updated project object to server
 	writeDocument('projects', updatedProject);
 
 	serverLog("DB Updated", updatedTask);
 
 	return emulateServerReturn(updatedTask, updatedTask == undefined);
+}
+
+export function serverPostNewProject(title,description){
+	// read in all projects, access last project in the array, get it's ID and increment that value
+  var projects = readDocument("projects");
+	var prevId = projects[projects.length - 1]._id;
+
+	let project = {
+		'_id': prevId + 1,
+		'title': title,
+		'description': description,
+		'users': [],
+		'status': 'planning',
+		'current_sprint': null,
+		'sprints': {},
+		'stories': []
+	};
+
+	writeDocument('projects', project);
+
+	return emulateServerReturn(project, false);
+
 }

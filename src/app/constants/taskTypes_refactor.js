@@ -14,11 +14,12 @@ export default {
 	BLOCKED: {
 		title: 'BLOCKED',
 		color: colors.darkGray,
-		bsStyle: 'danger'
+		bsStyle: ''
 	},
 	BLOCKING: {
 		title: 'BLOCKING',
-		color: colors.red
+		color: colors.red,
+		bsStyle: 'danger'
 	},
 	DONE: {
 		title: 'DONE',

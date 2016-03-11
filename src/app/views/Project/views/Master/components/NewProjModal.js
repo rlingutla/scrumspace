@@ -1,62 +1,101 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } from 'react-bootstrap';
 import ProjectItem from './ProjectItem';
+import { postAndCreateNewProject } from '../../../../../actions/';
+import { ToggleDisplay } from 'react-toggle-display';
 
-export default class NewProjModal extends React.Component{
+import { connect } from 'react-redux';
+
+const mapDispatchToProps = (dispatch) => {
+
+  return {
+    createNewProject: (title, description) => {
+      dispatch(postAndCreateNewProject(title, description));
+    }
+  };
+};
+
+class NewProjModal extends React.Component{
+ 
   constructor(props){
     super(props);
+    // TODO: members can't be mapped like this.
+    this.state = {
+      title: '',
+      description: '',
+      members: [
+        {
+          id: '1'
+        }
+      ]
+    };
   }
 
-  // addInput(){
-  //   var inputs = this.state.Input;
-  //   inputs.push();
-  //   this.setState({inputs : inputs});
-  // }
+  createNewProj() {
+    // TODO: VALIDATION CODE
+    this.props.createNewProject(this.state.title, this.state.description);
+    // TODO: set this asynchronously, needs work!
+    this.props.changeModal();
+    // TODO RESET STATE OF MODAL HERE
+  }
 
-  // createNewProj(){
-  //
-  //   <ProjectItem />;
-  // }
+  handleChange(e){
+    e.preventDefault();
 
-  // handleChange(e){
-  //   e.preventDefault();
-  // // e.target is the React Virtual DOM target of the input event -- the
-  // // <textarea> element. The textarea's `value` is the entire contents of
-  // // what the user has typed in so far.
-  // this.setState({value: e.target.value});
+    let value = e.target.value;
+    let field = e.target.attributes.name.nodeValue;
 
-//  }
+    let updObj = {};
+    updObj[field] = value;
+
+    this.setState(updObj);
+
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    this.setState({
+      members: this.state.members.concat([{
+        id: this.state.members.length + 1
+      }])
+    });
+  }
 
   render () {
+    // TODO members.map() has no event handler! shouldn't be saving.
+    const members = this.state.members;
     return (
       <div>
         <Modal show={this.props.show} onHide={this.props.changeModal}>
-
           <Modal.Header closeButton>
-              <Modal.Title>Create a new project</Modal.Title>
+            <Modal.Title>Create a new project</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {/*
             <h4><b>Enter Project Details</b></h4>
             <form>
-            <Input type="text" label="Enter project name" placeholder="Name" valueName={this.state.value} onChange={(e) => this.handleChange(e)}/>
-            <Input type="text" label="Enter project description" placeholder="Description" valueDesc={this.state.value} onChange={(e) => this.handleChange(e)}/>
+              <Input type="text" name="title" label="Enter project title" placeholder="Title" value={this.state.title} onChange={(e) => this.handleChange(e)} />
+              <Input type="text" name="description" label="Enter project description" placeholder="Description" value={this.state.description} onChange={(e) => this.handleChange(e)}/>
             </form>
-
             <h4><b>Enter Members</b></h4>
-
             <form>
-            <Input type="text"  placeholder="Name" valueMember={this.state.value} onChange={(e) => this.handleChange(e)}/>
-            <Input type="text"  placeholder="Name" valueMember={this.state.value} onChange={(e) => this.handleChange(e)}/>
+              {members.map(note =>
+                  <Input type="text"  placeholder="Name" key={note.id}></Input>
+                )}
             </form>
-            <Button bsStyle="primary" >Add members</Button>
-            */}
+            <Button bsStyle="primary" onClick={(e) => this.handleClick(e)}>Add members</Button>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="success">Create</Button>
+            <Button bsStyle="success" onClick={(e) => this.createNewProj(e)}>Create</Button>
           </Modal.Footer>
         </Modal>
       </div>
     );
   }
 }
+
+// TODO FIGURE OUT WHAT TO DO HERE.
+const mapStateToProps = (state, props) => {
+  return state;
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewProjModal);

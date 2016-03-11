@@ -1,13 +1,17 @@
+const xDaysAgoInUnixTime = (x) => {
+	return Date.now() - 1000* 60 * 60 * 24 * x;
+};
+
 var initialData = {
 	loading: false,
 	users: {
 		0: {
-	'_id': 0,
-	'first_name': 'Donald',
-	'last_name': 'Trump',
-	'email': 'america@donaldjtrump.com',
-	'display_name': 'DJ Trump',
-	'password': 'd4866854120e8bb207d6f8e11fce8b99'
+			'_id': 0,
+			'first_name': 'Donald',
+			'last_name': 'Trump',
+			'email': 'america@donaldjtrump.com',
+			'display_name': 'DJ Trump',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99'
 		}
 	},
 	projects: [
@@ -15,7 +19,16 @@ var initialData = {
 		'_id': 0,
 		'title': 'Drumpf',
 		'description': 'Make America Great Again',
-		'users': [0],
+		'users': [
+			{
+				'_id': 0,
+				'first_name': 'Donald',
+				'last_name': 'Trump',
+				'email': 'america@donaldjtrump.com',
+				'display_name': 'DJ Trump',
+				'password': 'd4866854120e8bb207d6f8e11fce8b99'
+			}
+		],
 		'status': 'sprint',
 		'current_sprint': 0,
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
@@ -37,29 +50,67 @@ var initialData = {
 					{
 						'_id': 0,
 						'status': 'UNASSIGNED',
+						'assignedTo': 0,
 						'description': 'Find a Designer',
-						'history': null,
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					},
 					{
 						'_id': 1,
 						'status': 'UNASSIGNED',
+						'assignedTo': 0,
 						'description': 'Make Mexico pay for it',
-						'history': null,
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					},
 					{
 						'_id': 2,
 						'status': 'BLOCKED',
+						'assignedTo': 0,
 						'description': 'Make Donald Drumpf again',
-						'history': null,
+						'history': [{
+							fromStatus: 'UNASSIGNED',
+							toStatus: 'BLOCKED',
+							modifiedTime: xDaysAgoInUnixTime(2),
+							modifiedUser : 0
+						},{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					},
 					{
 						'_id': 3,
 						'status': 'DONE',
 						'description': 'Replace Donald\'s Toupee',
-						'history': null,
+						'history': [{
+							fromStatus: 'DOING',
+							toStatus: 'DONE',
+							modifiedTime: xDaysAgoInUnixTime(1),
+							modifiedUser : 0
+						},{
+							fromStatus: 'UNASSIGNED',
+							toStatus: 'DOING',
+							modifiedTime: xDaysAgoInUnixTime(3),
+							modifiedUser : 0
+						},{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					}
 				]
@@ -70,7 +121,16 @@ var initialData = {
 		'_id': 1,
 		'title': 'Feel the Bern',
 		'description': 'Fight the Power',
-		'users': [0],
+		'users': [
+			{
+				'_id': 0,
+				'first_name': 'Donald',
+				'last_name': 'Trump',
+				'email': 'america@donaldjtrump.com',
+				'display_name': 'DJ Trump',
+				'password': 'd4866854120e8bb207d6f8e11fce8b99'
+			}
+		],
 		'status': 'planning',
 		'current_sprint': null,
 		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',

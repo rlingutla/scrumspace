@@ -39,8 +39,8 @@ const ProjectItem = (props) => {
 		<Link to={`/project/detail/${props._id}`} >
 			<div className="project-item">
 				<Row className="left-right-align">
-					<Col xs={8} className="project-title">{props.title}</Col>
-					<Col xs={4} className="project-scrum-time">{getScrumTime(props)}</Col>
+					<Col xs={9} className="project-title">{props.title}</Col>
+					<Col xs={3} className="project-scrum-time">{getScrumTime(props)}</Col>
 				</Row>
 				<ProjectStatus status={props.status}/>
 				<div className="chart-container">
