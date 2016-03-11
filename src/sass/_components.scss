@@ -162,24 +162,29 @@ button {
 	.progress-bar {
 		-webkit-box-shadow: none;
 		box-shadow: none;
-		border: 1px solid;
+		// box-shadow: #ffe22a 0px 0px 0px 1px inset;
+		// border: 1px solid;
 
 		&.progress-bar-info {
 			background-color: #fff;
-			border-color: darken(#fff, 20%);
+			// border-color: darken(#fff, 20%);
+			box-shadow: darken(#fff, 20%) 0px 0px 0px 1px inset;
 		}
 
 		&.progress-bar-warning {
 			background-color: $yellow-color;
-			border-color: darken($yellow-color, 20%);
+			// border-color: darken($yellow-color, 20%);
+			box-shadow: darken($yellow-color, 20%) 0px 0px 0px 1px inset;
 		}
 		&.progress-bar-danger {
 			background-color: $red-color;
-			border-color: darken($red-color, 20%);
+			// border-color: darken($red-color, 20%);
+			box-shadow: darken($red-color, 20%) 0px 0px 0px 1px inset;
 		}
 		&.progress-bar-success {
 			background-color: $green-color;
-			border-color: darken($green-color, 20%);
+			// border-color: darken($green-color, 20%);
+			box-shadow: darken($green-color, 20%) 0px 0px 0px 1px inset;
 		}
 	}
 }
