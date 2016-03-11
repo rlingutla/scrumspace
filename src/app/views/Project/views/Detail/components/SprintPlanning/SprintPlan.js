@@ -6,7 +6,7 @@ const TaskFactory = () => {
 	return {
 		title: '',
 		description: ''
-	}
+	};
 };
 
 const StoryPanelFactory = () => {
@@ -14,7 +14,7 @@ const StoryPanelFactory = () => {
 		title: '',
 		description: '',
 		tasks: [TaskFactory()]
-	}
+	};
 };
 
 export default class SprintPlan extends React.Component {

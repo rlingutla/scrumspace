@@ -9,7 +9,7 @@ export default class Task extends React.Component {
 		return (
       <div className="col-md-6">
         {
-          (this.props.isOnly) ? null : <button type="button" className="close" onClick={(e) => this.props.handleChange('remove-task', e, [this.props.panNumber -1], this.props.taskNumber -1)}>&times;</button>
+          (this.props.isOnly) ? null : <button type="button" className="close" onClick={(e) => this.props.handleChange('remove-task', e, [this.props.panNumber -1, this.props.taskNumber -1])}>&times;</button>
         }
         <div className="task-main-input sat-pad">
           <label>Enter a Task</label>
