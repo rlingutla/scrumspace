@@ -1,57 +1,52 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import taskSelector from '../../constants/taskSelector';
 
 import TopNav from '../../shared/components/TopNav';
+
 import {
-	Project,
-	Statistics
+	ProjectWidget,
+	ActivityFeed,
+	TaskDistribution,
+	TaskActivityTimeSeries,
+	ProjectHeader,
+	UserTasks
 } from './components';
 
-function isInSprint (project) {
-	return project.status === 'sprint';
-}
+import Container from './containers';
 
-function isActionable(task) {
+// TODO: this should likely be a computed property... don't love this. 
+// Also the querying happing in Project... no good.
+const isActionable = (task) => {
 	return task.status === 'DOING' || task.status === 'BLOCKED';
-}
-
-const setActionableTasks = (project)  => {
-	project.actionableTasks = project.stories.map((e) => {
-		return e.tasks;
-	}).reduce((a, b) => a.concat(b).filter(isActionable));
-};
-
-const mapStateToProps = (state) => {
-	return state;
-};
-
-const mergeProps = (state, dispatchProps, ownProps) => {
-	let projects = state.projects.filter(isInSprint);
-	projects.forEach(setActionableTasks);
-	return Object.assign({}, {
-		projects
-	});
-};
-
-// maps any actions this component dispatches to component props
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-const Container = (component) => {
-	return connect(
-	  mapStateToProps,
-	  mapDispatchToProps,
-	  mergeProps
-	)(component);
 };
 
 const Dashboard = (props) => {
 	return (
 		<div id="content">
 			<TopNav view="Dashboard"/>
-			<Statistics projects={props.projects}/>
-			{ props.projects.map((project, i) => <Project key={i} project={project} />) }
+			{ 
+				props.projects.map((project, i) => { 
+					let tasks = taskSelector(new Array(project), () => true, () => true);
+					let actionableTasks = tasks.filter(isActionable);
+					return (
+						<ProjectWidget key={i} project={project}> 
+							<ProjectHeader id={project._id} title={project.title}/>
+							<div className="container">
+								<div className="row">
+									<div className="col-md-6">
+										<UserTasks tasks={tasks} />
+										<ActivityFeed tasks={tasks} />
+									</div>
+									<div className="col-md-6">
+										<TaskDistribution tasks={tasks} />
+										<TaskActivityTimeSeries data={tasks} />
+									</div>
+								</div>
+							</div>
+						</ProjectWidget>
+					);
+				}) 
+			}
 		</div>
 	);
 };

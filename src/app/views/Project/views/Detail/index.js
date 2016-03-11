@@ -4,9 +4,10 @@ import Project from './components/Project';
 import { Glyphicon, Button } from 'react-bootstrap';
 
 export default (props) => {
+	const contentStyle = { paddingTop: 0 }
+
 	return (
-		<div id="content">
-			<TopNav view="Project" {...props} />
+		<div id="content" style={contentStyle}>
 			<Project id={props.params.id} />
 		</div>
 	);

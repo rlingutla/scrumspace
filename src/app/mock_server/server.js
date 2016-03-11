@@ -1,13 +1,14 @@
-import {readDocument, writeDocument, addDocument, initLocalStorage} from './database.js';
+import { readDocument, writeDocument, addDocument, initLocalStorage } from './database.js';
 
 /**
  * Emulates how a REST call is *asynchronous* -- it calls your function back
  * some time in the future with data.
  */
+
 function emulateServerReturn(data, error) {
 	return new Promise((resolve, reject) => {
-		if(error) reject(error);
-        else setTimeout(resolve(data), 4);
+		if (error) reject(error);
+        else setTimeout((e) => resolve(data), 4);
     });
 }
 
