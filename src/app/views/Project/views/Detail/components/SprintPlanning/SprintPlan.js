@@ -2,16 +2,16 @@ import React from 'react';
 import TimeTable from './TimeTable';
 import StoryPanel from './StoryPanel';
 
-const StoryPanelFactory = () => {
-	return {
-			tasks: [TaskFactory()]
-	}
-};
-
 const TaskFactory = () => {
 	return {
 			name: '',
 			details: ''
+	}
+};
+
+const StoryPanelFactory = () => {
+	return {
+			tasks: [TaskFactory()]
 	}
 };
 
@@ -28,9 +28,8 @@ export default class SprintPlan extends React.Component {
 	}
 
 	handleAddNewTask(panelID){
-		//alert('')
-		var stories = this.state.storyPanels
-		this.storyPanels(panelID).tasks.push(TaskFactory());
+		var stories = this.state.storyPanels;
+		stories[panelID].tasks.push(TaskFactory());
 		this.setState({storyPanels: stories});
 	}
 
@@ -56,7 +55,6 @@ export default class SprintPlan extends React.Component {
 	render(){
 		var SprintID = this.props.current_sprint;
 		var SprintInfo = this.sprintInfo(SprintID); //THIS ACTUALLY WORKS
-		console.log(this.state.storyPanels);
 		return (
       <div className="content tab-offset container">
         <h2 id="settings">Sprint Planning</h2>
@@ -65,7 +63,7 @@ export default class SprintPlan extends React.Component {
 					{
 						this.state.storyPanels.map((e,i,array) =>	{
 								return (
-									<StoryPanel panNumber={i + 1} last={i + 1 === array.length} isOnly={array.length === 1} story={e} handleAddNewTask={(e) => this.handleAddNewTask}/>
+									<StoryPanel key={i} panNumber={i + 1} last={i + 1 === array.length} isOnly={array.length === 1} story={e} handleAddNewTask={this.handleAddNewTask.bind(this)}/>
 								);
 							})
 					}

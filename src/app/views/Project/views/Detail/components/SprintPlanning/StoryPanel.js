@@ -5,7 +5,6 @@ import Task from './Task';
 //For some reason my linter says there is a semicolen missing... I can't find it.
 export default class StoryPanel extends React.Component {
 	constructor(props){
-		debugger;
 		super(props);
     this.state = { name: '', details: ''};
 	}
