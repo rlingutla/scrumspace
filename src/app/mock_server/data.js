@@ -38,6 +38,12 @@ var initialData = {
 				'start_date': 1456900811760,
 				'end_date': 1458925200000,
 				'scrum_time': '9:00 AM'
+			},
+			{
+				'_id': 1,
+				'start_date': 1456900811760,
+				'end_date': 1456900811800,
+				'scrum_time': '9:00 AM'
 			}
 		],
 		'stories': [

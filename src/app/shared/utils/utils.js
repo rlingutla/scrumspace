@@ -2,7 +2,11 @@ import moment from 'moment';
 
 //Projects
 export function getCurrentSprint(props){
-	return props.sprints[props.current_sprint];
+	let now = moment();
+
+	return props.sprints.find((sprint) => {
+		return (sprint.start_date <= now < sprint.end_date);
+	});
 }
 
 //Date Time 
