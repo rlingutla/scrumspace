@@ -33,6 +33,31 @@ export default class SprintPlan extends React.Component {
 		this.setState({storyPanels: stories});
 	}
 
+
+	//change = signal, e = event, args[0] = story, args[1] = task
+	handleChange(change, e, args){
+		switch(change){
+			case 'story-name':
+				break;
+			case 'story-desc':
+				break;
+			case 'task-name':
+				break;
+			case 'task-desc':
+				break;
+			case 'new-task':
+				var newTaskPanel = this.state.storyPanels;
+				newTaskPanel[args[0]].tasks.push(TaskFactory());
+				this.setState({storyPanels: newTaskPanel});
+				break;
+			case 'new-panel':
+				this.setState({storyPanels: this.state.storyPanels.concat([StoryPanelFactory()])});
+				break;
+			default:
+				console.log('error');
+		}
+	}
+
 	//This gets infor for a planned future sprint, if there is one.
 	sprintInfo(sprintID){
 		sprintID = sprintID + 1; //increment sprintID +1 to see what's being planned for the next sprint
@@ -55,6 +80,7 @@ export default class SprintPlan extends React.Component {
 	render(){
 		var SprintID = this.props.current_sprint;
 		var SprintInfo = this.sprintInfo(SprintID); //THIS ACTUALLY WORKS
+		debugger;
 		return (
       <div className="content tab-offset container">
         <h2 id="settings">Sprint Planning</h2>
@@ -63,7 +89,7 @@ export default class SprintPlan extends React.Component {
 					{
 						this.state.storyPanels.map((e,i,array) =>	{
 								return (
-									<StoryPanel key={i} panNumber={i + 1} last={i + 1 === array.length} isOnly={array.length === 1} story={e} handleAddNewTask={this.handleAddNewTask.bind(this)}/>
+									<StoryPanel key={i} panNumber={i + 1} last={i + 1 === array.length} isOnly={array.length === 1} story={e} handleChange={this.handleChange.bind(this)}/>
 								);
 							})
 					}

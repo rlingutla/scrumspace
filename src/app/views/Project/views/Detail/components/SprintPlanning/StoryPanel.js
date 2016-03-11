@@ -19,6 +19,7 @@ export default class StoryPanel extends React.Component {
   }
 
 	render() {
+		//debugger;
 		return (
       <div className="panel panel-primary">
         <div className="panel-heading">
@@ -58,12 +59,12 @@ export default class StoryPanel extends React.Component {
         </div>
         <div className="panel-footer sprint-footer">
           <div className="btn-group">
-            <button type="button" className="btn btn-default pull-left no-side-margin" onClick={(e) => this.props.handleAddNewTask(this.props.panNumber -1)}>
+            <button type="button" className="btn btn-default pull-left no-side-margin" onClick={(e) => this.props.handleChange('new-task', e, [this.props.panNumber -1])}>
               <span className="glyphicon glyphicon-list"></span> Add New Task
 						</button>
 
 						{
-							(this.props.last) ? <button type="button" className="btn btn-default pull-left no-side-margin">
+							(this.props.last) ? <button type="button" className="btn btn-default pull-left no-side-margin" onClick={(e) => this.props.handleChange('new-panel', e, [this.props.panNumber -1])}>
 	              <span className="glyphicon glyphicon-plus"></span> Add New Story
 	            </button> : null
 						}
