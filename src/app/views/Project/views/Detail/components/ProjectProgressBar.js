@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ProgressBar } from 'react-bootstrap';
 import TaskTypes from '../../../../../constants/taskTypes';
-import { daysDifference } from '../../../../../shared/utils/utils';
+import { daysDifference, getCurrentSprint } from '../../../../../shared/utils/utils';
 import _ from 'underscore';
 
 class ProjectProgressBar extends React.Component {
@@ -27,6 +27,12 @@ class ProjectProgressBar extends React.Component {
 		}
 	}
 
+	daysLeft(){
+		let sprint = getCurrentSprint(this.props);
+		let diff = daysDifference(Date.now(), sprint.end_date);
+		return (diff.past) ? 0:diff.days;
+	}
+
 
 	//probably find a way not to call these functions multiple times
 	render(){
@@ -41,7 +47,7 @@ class ProjectProgressBar extends React.Component {
 			<div>
 				<div className="row left-right-align progress-bar-details">
 				    <div className="col-md-6"><span className="detailNum">{this.countType(TaskTypes.DONE).count + '/' + this.countType(TaskTypes.DONE).total}</span> Tasks Complete</div>
-				    <div className="col-md-6"><span className="detailNum">5</span> Days Left of Sprint</div>
+				    <div className="col-md-6"><span className="detailNum">{this.daysLeft()}</span> Days Left of Sprint</div>
 				</div>
 				<ProgressBar>
 					<ProgressBar bsStyle="success" now={this.countType(TaskTypes.DONE).calc} key={1} />
