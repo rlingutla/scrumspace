@@ -1,9 +1,15 @@
 import { readDocument, writeDocument, addDocument, initLocalStorage } from './database.js';
+import moment from 'moment';
 
 /**
  * Emulates how a REST call is *asynchronous* -- it calls your function back
  * some time in the future with data.
  */
+
+//server will later read user object from req
+function getCurrentUser(){
+	return 0;
+}
 
 function emulateServerReturn(data, error) {
 	return new Promise((resolve, reject) => {
@@ -41,7 +47,16 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 				if(story._id == story_id){
 					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
 						if(task._id == task_id){
-							updatedTask = Object.assign({}, task, {status: toType});
+							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: new Date(), modifiedUser: getCurrentUser()}
+
+							updatedTask = Object.assign({}, task, {
+								status: toType, 
+								history: [
+									...task.history,
+									historyItem
+								]
+							});
+
 							return updatedTask;
 						} else return task;
 					})});
