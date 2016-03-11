@@ -4,20 +4,21 @@
 	background: #fff;
 	padding: 0 15px;
 	color: #fff;
-	max-height: 155px;
 	z-index: initial;
 	margin:0;
+	border-bottom: 1px solid $border-color;
 
-	// & > .row {
-	// 	padding: 30px 0;
-	// }
-
-	.project-nav {
+	.project-top-nav {
 		color: #000;
+		padding: 15px 0;
+
+		.nav-link {
+			font-size: 18px;
+		}
 	}
 
 	.project-detail-content {
-		padding: 30px 0;
+		padding: 15px 0;
 
 		& > * {
 			vertical-align: middle;	
@@ -58,14 +59,19 @@
 }
 
 .project-info {
-	background: #fff;
-	padding: 15px;
-	margin-bottom:20px;
+	background: transparent;
+	border-bottom: 1px solid $border-color;
+    margin: 0 15px 20px 15px;
+    padding: 15px 0;
 
 	.progress-bar-details {
 		margin: 15px 0 5px;
 		color: $body-gray-color;
-		font-style: italic;
+
+		.detailNum {
+			color: $blue-color;
+			font-weight: bold;
+		}
 	}
 
     .date-range {
@@ -77,6 +83,7 @@
 	// background-color: #F5F5F5;
 	background-color: rgba(255, 255, 255, .9);
 	border-radius: 0;
+	margin-top: 10px;
 
 	table {
 		width: 100%;
@@ -158,15 +165,18 @@
 .project-nav.nav-tabs {
 	background: transparent;
 	border:none;
+	padding:0px;
 
 	li {
+		padding: 0 10px;
 		a {
 			border: none;
 			border-radius: 0;
 			margin:0;
-			color: $light-blue-color;
+			color: $dark-gray-color;
 			font-size: 15px;
 			cursor: pointer;
+			padding: 10px 0;
 
 			&:hover, &:focus, &:active {
 				border:none;
@@ -178,8 +188,8 @@
 
 		&.active {
 			a {
-				border-bottom: 4px solid #fff;
-				color: #fff;
+				border-bottom: 2px solid $blue-color;
+				color: $blue-color;
 				background: transparent;
 			}
 		}

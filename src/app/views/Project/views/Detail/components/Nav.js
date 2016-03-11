@@ -23,9 +23,9 @@ const ProjectNav = (props) => {
 
 				</div>
 			</div> */}
-			<Row className="project-nav left-right-align">
+			<Row className="project-top-nav left-right-align">
 				<Col xs={6}>
-					<Link to="/project"><Glyphicon glyph="glyphicon-chevron-left" /> Projects</Link>
+					<Link to="/project" className="nav-link"><Glyphicon glyph="chevron-left" /> Projects</Link>
 				</Col>
 				<Col xs={6}></Col>
 			</Row>

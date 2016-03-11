@@ -14,7 +14,7 @@ class StoryRow extends React.Component {
 	getTaskArray(type){
 		let taskArr = [];
 		this.props.tasks.forEach((task) => {
-			if(task.status == type) taskArr.push(task);
+			if(task.status == type.title) taskArr.push(task);
 		});
 		return taskArr;
 	}

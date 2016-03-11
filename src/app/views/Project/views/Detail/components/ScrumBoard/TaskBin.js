@@ -17,7 +17,7 @@ const taskTarget = {
   drop(props, monitor, component) {
     // Obtain the dragged item
     const item = monitor.getItem();
-    item.moveTask(item.project_id, item.story_id, item._id, props.type);
+    item.moveTask(item.project_id, item.story_id, item._id, props.type.title);
     return { moved: true };
   }
 };
