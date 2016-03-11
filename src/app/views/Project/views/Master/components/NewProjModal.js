@@ -7,16 +7,16 @@ import { ToggleDisplay } from 'react-toggle-display';
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
-
   return {
-    createNewProject: (title, description) => {
-      dispatch(postAndCreateNewProject(title, description));
+    createNewProject: (title, description,members) => {
+      dispatch(postAndCreateNewProject(title, description,members));
     }
+
   };
 };
 
 class NewProjModal extends React.Component{
- 
+
   constructor(props){
     super(props);
     // TODO: members can't be mapped like this.
@@ -25,7 +25,7 @@ class NewProjModal extends React.Component{
       description: '',
       members: [
         {
-          id: '1'
+          id: 1
         }
       ]
     };
@@ -33,9 +33,11 @@ class NewProjModal extends React.Component{
 
   createNewProj() {
     // TODO: VALIDATION CODE
-    this.props.createNewProject(this.state.title, this.state.description);
+    this.mylist = [{id:1}];
+    this.props.createNewProject(this.state.title, this.state.description, this.state.members);
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();
+    this.setState({members: this.mylist});
     // TODO RESET STATE OF MODAL HERE
   }
 
@@ -63,7 +65,7 @@ class NewProjModal extends React.Component{
 
   render () {
     // TODO members.map() has no event handler! shouldn't be saving.
-    const members = this.state.members;
+    //const members = this.state.members;
     return (
       <div>
         <Modal show={this.props.show} onHide={this.props.changeModal}>
@@ -78,8 +80,8 @@ class NewProjModal extends React.Component{
             </form>
             <h4><b>Enter Members</b></h4>
             <form>
-              {members.map(note =>
-                  <Input type="text"  placeholder="Name" key={note.id}></Input>
+              {this.state.members.map(member =>
+                  <Input type="text"  placeholder="Name" key={member.id}></Input>
                 )}
             </form>
             <Button bsStyle="primary" onClick={(e) => this.handleClick(e)}>Add members</Button>
