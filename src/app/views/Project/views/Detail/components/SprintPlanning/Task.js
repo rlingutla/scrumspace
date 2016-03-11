@@ -19,7 +19,7 @@ export default class Task extends React.Component {
 		return (
       <div className="col-md-6">
         {
-          (this.props.notOnly) ? <button type="button" className="close">&times;</button> : null
+          (this.props.isOnly) ? null : <button type="button" className="close">&times;</button>
         }
         <div className="task-main-input sat-pad">
           <label>Enter a Task</label>

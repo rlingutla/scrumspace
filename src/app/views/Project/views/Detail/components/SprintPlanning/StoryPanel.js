@@ -1,11 +1,13 @@
 import React from 'react';
 import Task from './Task';
 
+
 //For some reason my linter says there is a semicolen missing... I can't find it.
 export default class StoryPanel extends React.Component {
 	constructor(props){
+		debugger;
 		super(props);
-    this.state = { data: props.data, name: '', details: ''};
+    this.state = { name: '', details: ''};
 	}
 
   //since there are two inputs... there needs to be two functions
@@ -17,13 +19,12 @@ export default class StoryPanel extends React.Component {
     this.setState({ details: e.target.value });
   }
 
-
 	render() {
 		return (
       <div className="panel panel-primary">
         <div className="panel-heading">
         {
-          (this.props.notOnly) ? <button type="button" className="close">&times;</button> : null
+          (this.props.isOnly) ? null : <button type="button" className="close">&times;</button>
         }
           <h4><span className="glyphicon glyphicon-book"></span> Story {this.props.panNumber}</h4>
         </div>
@@ -47,12 +48,18 @@ export default class StoryPanel extends React.Component {
                 />
               </div>
             </div>
-            <Task notOnly={false}/>
+						{
+							this.props.story.tasks.map((e,i,array) =>	{
+									return (
+										<Task taskNumber={i + 1} isOnly={array.length === 1} />
+									);
+								})
+						}
           </div>
         </div>
         <div className="panel-footer sprint-footer">
           <div className="btn-group">
-            <button type="button" className="btn btn-default pull-left no-side-margin">
+            <button type="button" className="btn btn-default pull-left no-side-margin" onClick={(e) => this.props.handleAddNewTask(this.props.panNumber -1)}>
               <span className="glyphicon glyphicon-list"></span> Add New Task
 						</button>
 
