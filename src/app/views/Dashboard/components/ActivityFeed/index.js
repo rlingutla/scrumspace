@@ -10,7 +10,7 @@ const parseActivityFeedData = (tasks) => {
 	});
 	return tasks.map((task) => task.history)
 	.reduce((a, b) => a.concat(b))
-	.sort((a, b) => a.modifiedTime - b.modifiedTime);
+	.sort((a, b) => b.modifiedTime - a.modifiedTime);
 };
 
 export default (props) => {
