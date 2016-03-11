@@ -4,7 +4,6 @@ import StoryPanel from './StoryPanel';
 
 const TaskFactory = () => {
 	return {
-		title: '',
 		description: ''
 	};
 };
@@ -67,10 +66,6 @@ export default class SprintPlan extends React.Component {
 				break;
 			case 'story-desc':
 				storyList[args[0]].description = e.target.value;
-				this.setState({stories: storyList});
-				break;
-			case 'task-name':
-				storyList[args[0]].tasks[args[1]].title = e.target.value;
 				this.setState({stories: storyList});
 				break;
 			case 'task-desc':
