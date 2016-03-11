@@ -4,20 +4,8 @@ import React from 'react';
 export default class TimeTable extends React.Component {
 	constructor(props){
 		super(props);
-    this.state = { data: props.data, name: '', start: '', end: ''};
+    //this.state = { data: props.data, name: '', start: '', end: ''};
 	}
-
-  handleNameChange(e) {
-    this.setState({ name: e.target.value });
-  }
-
-  handleStartChange(e) {
-    this.setState({ start: e.target.value });
-  }
-
-  handleEndChange(e) {
-    this.setState({ end: e.target.value });
-  }
 
 	render(){
 		return (
@@ -28,11 +16,19 @@ export default class TimeTable extends React.Component {
         <div className="panel-body">
           <div className="form-group">
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <div className="left-date-input">
                   <label>Enter Sprint Name</label>
                   <input type="text" className="form-control strech-input" placeholder="Name of Sprint"
-                  value={this.state.name} onChange={(e) => this.handleNameChange(e)}
+                  value={this.props.name} onChange={(e) => this.props.handleChange('time-name', e)}
+                  />
+                </div>
+              </div>
+							<div className="col-md-2">
+                <div className="left-date-input">
+                  <label>Enter Scrum Time</label>
+                  <input type="time" className="form-control strech-input" placeholder="Time of Scrum"
+                  value={this.props.scrumtime} onChange={(e) => this.props.handleChange('time-scrum', e)}
                   />
                 </div>
               </div>
@@ -40,7 +36,7 @@ export default class TimeTable extends React.Component {
                 <div className="left-date-input">
                   <label>Enter Start Date</label>
                   <input type="date" className="form-control strech-input" placeholder="Enter Start Date"
-                  value={this.state.start} onChange={(e) => this.handleStartChange(e)}
+                  value={this.props.startdate} onChange={(e) => this.props.handleChange('time-start', e)}
                   />
                 </div>
               </div>
@@ -48,7 +44,7 @@ export default class TimeTable extends React.Component {
                 <div className="right-date-input">
                   <label>Enter End Date</label>
                   <input type="date" className="form-control strech-input" placeholder="Enter End Date"
-                  value={this.state.end} onChange={(e) => this.handleEndChange(e)}
+                  value={this.props.enddate} onChange={(e) => this.props.handleChange('time-end', e)}
                   />
                 </div>
               </div>

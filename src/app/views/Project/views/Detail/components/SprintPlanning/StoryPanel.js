@@ -6,17 +6,7 @@ import Task from './Task';
 export default class StoryPanel extends React.Component {
 	constructor(props){
 		super(props);
-    this.state = { name: '', details: ''};
 	}
-
-  //since there are two inputs... there needs to be two functions
-  handleNameChange(e) {
-    this.setState({ name: e.target.value });
-  }
-
-  handleDetailChange(e) {
-    this.setState({ details: e.target.value });
-  }
 
 	render() {
 		//debugger;
@@ -24,7 +14,7 @@ export default class StoryPanel extends React.Component {
       <div className="panel panel-primary">
         <div className="panel-heading">
         {
-          (this.props.isOnly) ? null : <button type="button" className="close">&times;</button>
+          (this.props.isOnly) ? null : <button type="button" className="close" onClick={(e) => this.props.handleChange('remove-story', e, [this.props.panNumber -1])}>&times;</button>
         }
           <h4><span className="glyphicon glyphicon-book"></span> Story {this.props.panNumber}</h4>
         </div>
@@ -34,7 +24,7 @@ export default class StoryPanel extends React.Component {
               <div className="story-input sat-pad">
                 <label>Enter a Story</label>
                 <input type="text" className="form-control strech-input" placeholder="Something you want to get done!"
-                value={this.state.name} onChange={(e) => this.handleNameChange(e)}
+                value={this.props.story.title} onChange={(e) => this.props.handleChange('story-name', e, [this.props.panNumber -1])}
                 />
               </div>
             </div>
@@ -44,14 +34,14 @@ export default class StoryPanel extends React.Component {
               <div className="task-detail-input sat-pad">
                 <label>Enter Story Details</label>
                 <textarea className="form-control strech-input" rows="6" placeholder="Enter Story Details"
-                value={this.state.details} onChange={(e) => this.handleDetailChange(e)}
+                value={this.props.story.description} onChange={(e) => this.props.handleChange('story-desc', e, [this.props.panNumber -1])}
                 />
               </div>
             </div>
 						{
 							this.props.story.tasks.map((e,i,array) =>	{
 									return (
-										<Task taskNumber={i + 1} isOnly={array.length === 1} />
+										<Task key={i} taskNumber={i + 1} isOnly={array.length === 1} panNumber={this.props.panNumber} handleChange={this.props.handleChange} task={e}/>
 									);
 								})
 						}
