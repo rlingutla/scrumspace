@@ -168,7 +168,7 @@ button {
 		&.progress-bar-info {
 			background-color: #fff;
 			// border-color: darken(#fff, 20%);
-			box-shadow: darken(#fff, 20%) 0px 0px 0px 1px inset;
+			box-shadow: darken(#fff, 10%) 0px 0px 0px 1px inset;
 		}
 
 		&.progress-bar-warning {
