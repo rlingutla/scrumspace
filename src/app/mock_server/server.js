@@ -49,10 +49,15 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 						if(task._id == task_id){
 							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: new Date(), modifiedUser: getCurrentUser()}
 
-							return Object.assign({}, task, {
+							updatedTask = Object.assign({}, task, {
 								status: toType, 
-								history: [...task.history, historyItem ]
+								history: [
+									...task.history,
+									historyItem
+								]
 							});
+
+							return updatedTask;
 						} else return task;
 					})});
 				} else return story;
