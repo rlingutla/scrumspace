@@ -18,14 +18,14 @@ export default class StoryPanel extends React.Component {
   }
 
 
-	render(){
+	render() {
 		return (
       <div className="panel panel-primary">
         <div className="panel-heading">
         {
           (this.props.notOnly) ? <button type="button" className="close">&times;</button> : null
         }
-          <h4><span className="glyphicon glyphicon-book"></span> Story {this.props.number}</h4>
+          <h4><span className="glyphicon glyphicon-book"></span> Story {this.props.panNumber}</h4>
         </div>
         <div className="panel-body">
           <div className="row story-panel">
@@ -54,14 +54,19 @@ export default class StoryPanel extends React.Component {
           <div className="btn-group">
             <button type="button" className="btn btn-default pull-left no-side-margin">
               <span className="glyphicon glyphicon-list"></span> Add New Task
-            </button>
-            <button type="button" className="btn btn-default pull-left no-side-margin">
-              <span className="glyphicon glyphicon-plus"></span> Add New Story
-            </button>
+						</button>
+
+						{
+							(this.props.last) ? <button type="button" className="btn btn-default pull-left no-side-margin">
+	              <span className="glyphicon glyphicon-plus"></span> Add New Story
+	            </button> : null
+						}
           </div>
-          <button type="button" className="btn btn-success pull-right no-side-margin">
-            <span className="glyphicon glyphicon-ok"></span> Done
-          </button>
+					{
+						(this.props.last) ? <button type="button" className="btn btn-success pull-right no-side-margin">
+             <span className="glyphicon glyphicon-ok"></span> Done
+          	</button> : null
+					}
         </div>
       </div>
 		);
