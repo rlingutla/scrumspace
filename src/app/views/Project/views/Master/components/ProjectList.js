@@ -12,7 +12,7 @@ const ProjectList = (props) => {
 				<Row className="show-grid">
 					{props.projects.map((project, i) => {
 						return (
-							<Col xs={12} sm={6} md={4} key={i}>
+							<Col xs={12} sm={6} md={6} key={i}>
 								{/* pass down project object as props for ProjectItem */}
 								<ProjectItem {...project}/>
 							</Col>

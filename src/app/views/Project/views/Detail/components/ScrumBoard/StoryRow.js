@@ -14,7 +14,7 @@ class StoryRow extends React.Component {
 	getTaskArray(type){
 		let taskArr = [];
 		this.props.tasks.forEach((task) => {
-			if(task.status == type) taskArr.push(task);
+			if(task.status == type.title) taskArr.push(task);
 		});
 		return taskArr;
 	}
@@ -25,22 +25,22 @@ class StoryRow extends React.Component {
 				<td id="story-container">
 					<Story id={this.props.story_id} title={this.props.title} description={this.props.description} />
 				</td>
-				<TaskBin id="task-container" type={TaskTypes.UNASSIGNED}>
+				<TaskBin container="task-container" type={TaskTypes.UNASSIGNED}>
 					{this.getTaskArray(TaskTypes.UNASSIGNED).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} />
 					})}
 				</TaskBin>
-				<TaskBin id="doing-container" type={TaskTypes.DOING}>
+				<TaskBin container="doing-container" type={TaskTypes.DOING}>
 					{this.getTaskArray(TaskTypes.DOING).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} {...task}/>
 					})}
 				</TaskBin>
-				<TaskBin id="blocked-container" type={TaskTypes.BLOCKED}>
+				<TaskBin container="blocked-container" type={TaskTypes.BLOCKED}>
 					{this.getTaskArray(TaskTypes.BLOCKED).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} {...task} />
 					})}
 				</TaskBin>
-				<TaskBin id="done-container" type={TaskTypes.DONE}>
+				<TaskBin container="done-container" type={TaskTypes.DONE}>
 					{this.getTaskArray(TaskTypes.DONE).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} {...task} />
 					})}

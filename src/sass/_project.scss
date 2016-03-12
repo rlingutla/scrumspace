@@ -1,19 +1,27 @@
-#project-nav {
+
+#project-detail {
 	position:relative;
-	background: $blue-color;
+	background: #fff;
 	padding: 0 15px;
 	color: #fff;
-	max-height: 155px;
 	z-index: initial;
 	margin:0;
+	border-bottom: 1px solid $border-color;
 
-	& > .row {
-		padding: 30px 0;
+	.project-top-nav {
+		color: #000;
+		padding: 15px 0;
+
+		.nav-link {
+			font-size: 18px;
+		}
 	}
 
-	.project-details {
+	.project-detail-content {
+		// padding: 15px 0;
+
 		& > * {
-			vertical-align: middle;
+			vertical-align: middle;	
 		}
 	}
 
@@ -27,22 +35,23 @@
 	}
 
 	.detail-text {
-		display: inline-block;
-		margin-left: 20px;
+		display: block;
+		// margin-left: 20px;
 
 		h1 {
-			@include resetSpacing();
+			// @include resetSpacing();
 			font-size: 20px;
+			color: #000;
 
 			span[name='project-state'] {
-				color: $light-blue-color;
+				color: $dark-gray-color;
 				font-weight: 100;
 				font-style: italic;
 			}
 		}
 		h4 {
 			@include resetSpacing();
-			color: $light-blue-color;
+			color: $dark-gray-color;
 			margin-top: 5px;
 			font-size: 15px;
 		}
@@ -50,14 +59,19 @@
 }
 
 .project-info {
-	background: #fff;
-	padding: 15px;
-	margin-bottom:20px;
+	background: transparent;
+	border-bottom: 1px solid $border-color;
+    margin: 0 15px 20px 15px;
+    padding: 15px 0;
 
 	.progress-bar-details {
 		margin: 15px 0 5px;
 		color: $body-gray-color;
-		font-style: italic;
+
+		.detailNum {
+			color: $blue-color;
+			font-weight: bold;
+		}
 	}
 
     .date-range {
@@ -67,8 +81,11 @@
 
 .scrum-board {
 	// background-color: #F5F5F5;
-	background-color: rgba(255, 255, 255, .9);
+	// background-color: rgba(255, 255, 255, .9);
+	background:transparent;
 	border-radius: 0;
+	border:none;
+	margin-top: 10px;
 
 	table {
 		width: 100%;
@@ -80,8 +97,14 @@
 
 				th {
 					text-align: left;
-	    			border-bottom: 2px solid #EAEAEA;
-	    			font-weight: 600;
+	    			// border-bottom: 2px solid #EAEAEA;
+	    			font-weight: 400;
+	    			color: $body-gray-color;
+	    			font-size: 18px;
+
+	    			&.story-row {
+	    				border:none;
+	    			}
 				}
 			}
 		}
@@ -89,11 +112,19 @@
 			tr {
 				border-bottom: 1px solid #EFEFEF;
 			}
+			td, th {
+				padding-bottom: 15px;
+			}
+			tr:not(:first-child){
+				td {
+					padding-top:15px;
+				}
+			}
 			td {
 				vertical-align: top;
 
 				&.hovering {
-					background: #F9F9F9;
+					background: #F5F5F5;
 				}
 
 				.task {
@@ -123,24 +154,30 @@
 					}
 				}
 				// Task state coloring
-				&#task-container {
+				#task-container {
+					background: #F5F5F5;
+					margin-right: 15px;
+					padding:5px;
+					border: 1px solid lighten($border-color, 5%);
 				}
-				&#doing-container {
+
+				/* deprecate 
+				#doing-container {
 					.task {
 						border-color: $yellow-color;
 					}
 
 				}
-				&#blocked-container {
+				#blocked-container {
 					.task {
 						border-color: $red-color;
 					}
 				}
-				&#done-container {
+				#done-container {
 					.task {
 						border-color: $green-color;
 					}
-				}
+				}*/
 			}
 		}
 	}
@@ -150,15 +187,18 @@
 .project-nav.nav-tabs {
 	background: transparent;
 	border:none;
+	padding:0px;
 
 	li {
+		padding: 0 10px;
 		a {
 			border: none;
 			border-radius: 0;
 			margin:0;
-			color: $light-blue-color;
+			color: $dark-gray-color;
 			font-size: 15px;
 			cursor: pointer;
+			padding: 10px 0;
 
 			&:hover, &:focus, &:active {
 				border:none;
@@ -170,8 +210,8 @@
 
 		&.active {
 			a {
-				border-bottom: 4px solid #fff;
-				color: #fff;
+				border-bottom: 2px solid $blue-color;
+				color: $blue-color;
 				background: transparent;
 			}
 		}

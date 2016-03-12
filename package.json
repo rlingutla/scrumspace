@@ -44,6 +44,7 @@
     "express": "^4.13.4",
     "forever": "^0.15.1",
     "gulp-util": "^3.0.7",
+    "ionicons": "^2.0.1",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^2.2.0",
     "moment": "^2.12.0",

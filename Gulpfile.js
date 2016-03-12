@@ -21,11 +21,14 @@ gulp.task('run-build', function(callback) {
 
 /* Copy bootstrap files to dist*/
 gulp.task('vendorToDist', function () {
+  //CSS
   gulp.src(['node_modules/bootstrap/dist/css/*'])
       .pipe(gulp.dest('dist/css/'));
+  //JS
   gulp.src(['node_modules/bootstrap/dist/js/*'])
       .pipe(gulp.dest('dist/js/'));
-  gulp.src(['node_modules/bootstrap/dist/fonts/*'])
+  //Fonts
+  gulp.src(['node_modules/bootstrap/dist/fonts/*', 'node_modules/ionicons/fonts/*'])
       .pipe(gulp.dest('dist/fonts/'));
 });
 

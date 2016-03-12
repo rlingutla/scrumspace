@@ -1,12 +1,11 @@
 import React from 'react';
 import Sidebar from './components/Sidebar';
-
 import TopNav from './shared/components/TopNav';
 import { connect } from 'react-redux';
 
 const App = (props) => {
 	return (
-		 <div>
+		 <div className="app_loading">
 			<Sidebar />
 			{(props.loading) ? <TopNav/>:  props.children}
 		</div>
