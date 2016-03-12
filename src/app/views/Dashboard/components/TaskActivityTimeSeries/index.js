@@ -98,10 +98,10 @@ export default (props) => {
 		<div className="panel-wrapper">
 			<div className="row">
 				<div className="panel panel-default">
-					<div className="panel-container">
+					<div style={{minHeight: '380px'}}>
 						<div className="panel-body">
 							<div className="dashboard-summary">
-								<h4>Project Activity</h4>
+								<h4>Activity Time Series</h4>
 								<Line data={lineData} options={lineOptions} />
 							</div>
 						</div>
