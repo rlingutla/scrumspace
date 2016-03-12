@@ -7,7 +7,7 @@ export default class User extends React.Component {
 		this.state ={
 			data: 'Initial data'
 		};
-		this.updateState = this.updatedState.bind(this);
+		this.updateState = this.updateState.bind(this);
 	}
 	updateState(e)
 	{
