@@ -81,8 +81,10 @@
 
 .scrum-board {
 	// background-color: #F5F5F5;
-	background-color: rgba(255, 255, 255, .9);
+	// background-color: rgba(255, 255, 255, .9);
+	background:transparent;
 	border-radius: 0;
+	border:none;
 	margin-top: 10px;
 
 	table {
@@ -95,14 +97,28 @@
 
 				th {
 					text-align: left;
-	    			border-bottom: 2px solid #EAEAEA;
-	    			font-weight: 600;
+	    			// border-bottom: 2px solid #EAEAEA;
+	    			font-weight: 400;
+	    			color: $body-gray-color;
+	    			font-size: 18px;
+
+	    			&.story-row {
+	    				border:none;
+	    			}
 				}
 			}
 		}
 		tbody {
 			tr {
 				border-bottom: 1px solid #EFEFEF;
+			}
+			td, th {
+				padding-bottom: 15px;
+			}
+			tr:not(:first-child){
+				td {
+					padding-top:15px;
+				}
 			}
 			td {
 				vertical-align: top;
@@ -138,24 +154,30 @@
 					}
 				}
 				// Task state coloring
-				&#task-container {
+				#task-container {
+					background: #F5F5F5;
+					margin-right: 15px;
+					padding:5px;
+					border: 1px solid lighten($border-color, 5%);
 				}
-				&#doing-container {
+
+				/* deprecate 
+				#doing-container {
 					.task {
 						border-color: $yellow-color;
 					}
 
 				}
-				&#blocked-container {
+				#blocked-container {
 					.task {
 						border-color: $red-color;
 					}
 				}
-				&#done-container {
+				#done-container {
 					.task {
 						border-color: $green-color;
 					}
-				}
+				}*/
 			}
 		}
 	}

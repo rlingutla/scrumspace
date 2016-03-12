@@ -9,7 +9,7 @@ export default class ScrumBoardHeader extends React.Component {
 		return (
 			<thead>
 				<tr>
-				    <th>Stories</th>
+				    <th className="story-row"></th>
 				    <th>Tasks</th>
 				    <th>Doing</th>
 				    <th>Blocked</th>

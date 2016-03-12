@@ -46,7 +46,9 @@ class TaskBin extends React.Component {
 
 		return connectDropTarget(
 			<td id={this.props.id} className={isOver ? 'hovering':'' }>
-				{this.props.children}
+        <div id="task-container">
+				  {this.props.children}
+        </div>
 			</td>
 		)
 	}
