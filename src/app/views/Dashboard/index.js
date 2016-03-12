@@ -34,7 +34,7 @@ const Dashboard = (props) => {
 							<div className="container">
 								<div className="row">
 									<div className="col-md-6">
-										<UserTasks tasks={tasks} />
+										<UserTasks tasks={actionableTasks} />
 										<ActivityFeed tasks={tasks} />
 									</div>
 									<div className="col-md-6">
