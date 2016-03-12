@@ -40,6 +40,7 @@ export default class SprintPlan extends React.Component {
 		}
 	}
 
+	//following two functions are just parsers...
 	unixTimeToDate(time){
 		var t = new Date(time);
 		return t.toISOString().substring(0, 10);
@@ -76,7 +77,6 @@ export default class SprintPlan extends React.Component {
 
 	//all the state is managed at the highest level
 	//change = signal, e = event, args[0] = story, args[1] = task
-	//date... (new Date(blah)/1000).toFixed(0)
 	handleChange(change, e, args){
 		var storyList = this.state.stories;
 		switch(change){
