@@ -3,9 +3,6 @@ import TopNav from '../../shared/components/TopNav';
 import { User, Projects, Privacy, panel, ExternalSettings } from './components';
 import { connect } from 'react-redux';
 
-
-
-
 const Panel = (props) => {
 	return (
 		<div className="panel panel-primary">
