@@ -6,7 +6,8 @@ export default (props) => {
 			<div className="row">
 				<div className="col-md-6">
 					<div className="form-group">
-						<label>First Name:</label> <input className="form-control" id="first-name"placeholder="John" type="first-name" />
+						<label>First Name:</label>
+							<input className="form-control" id="first-name"placeholder="John" type="first-name" />
 					</div>
 				</div>
 				<div className="col-md-6">
@@ -24,7 +25,7 @@ export default (props) => {
 				</div>
 				<div className="col-md-6">
 					<div className="form-group">
-						<label for="email">User Name:</label> 
+						<label for="email">User Name:</label>
 						<input className="form-control" id="user-name" placeholder="jhsmith" type="user-name"/>
 					</div>
 				</div>

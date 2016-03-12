@@ -1,42 +1,34 @@
 import React from 'react';
+import taskTypes from '../../../../constants/taskTypes';
 
-const parseActivityFeedData = (tasks) => {
-	// set reference to task on history (TODO, IS this unclean?)
-	tasks.forEach((task) => {
-		task.history.forEach((history) => {
-			history.task = task;
-		});
-	});
-	return tasks.map((task) => task.history)
-	.reduce((a, b) => a.concat(b))
-	.sort((a, b) => a.modifiedTime - b.modifiedTime);
+const style = (borderColor) => {
+	return {
+		margin: '10px, 0px',
+		border: '1px solid ' + borderColor,
+		backgroundColor: borderColor,
+	    borderRadius: '3px',
+		width: '100%',
+		paddingTop: '20px',
+		paddingBottom: '20px',
+		paddingLeft: '5px',
+		paddingRight: '5px',
+		marginBottom: '10px'
+	};
+};
+
+const getStatusString = (fromStatus, toStatus) => {
+	if (!fromStatus) {
+		return ' was created.';
+	} else {
+		return 'was moved from ' + fromStatus + ' to ' + toStatus + '.';
+	}
 };
 
 export default (props) => {
-	const data = parseActivityFeedData(props.tasks);
+	const history = props.activity;
 	return (
-		<div className="row">
-			<div className="panel panel-default">
-				<div className="panel-container">
-					<div className="panel-body">
-						<div className="dashboard-summary">
-							<h4>Activity Feed</h4>
-							<div className="row">
-								<div className="col-md-12">
-									{
-										data.map((history, i) => {
-											var date = new Date(history.modifiedTime);
-											return <p key={i}>{new Array( (new Date(history.modifiedTime)).getMonth() + 1, (new Date(history.modifiedTime)).getDate() + 1, 'user:', history.modifiedUser, history.task.status).join(' ')}</p>
-										})
-									}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>	
-	)
-}
-
-
+		<div style={style(taskTypes[history.toStatus].color)}>
+			<span>{history.task.description} {getStatusString(history.fromStatus, history.toStatus)}</span>
+		</div>
+	);
+};
