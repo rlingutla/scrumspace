@@ -122,6 +122,22 @@ var initialData = {
 						'attachments': null
 					}
 				]
+			},
+			{
+				'_id': 1,
+				'title': 'Win',
+				'description': 'Win Win Win\nNo matter what',
+				'sprint_id': 0,
+				'tasks': [
+					{
+						'_id': 0,
+						'status': 'UNASSIGNED',
+						'assignedTo': 0,
+						'description': 'Beat hilldawg',
+						'history': [],
+						'attachments': null
+					}
+				]
 			}
 		]
 	},

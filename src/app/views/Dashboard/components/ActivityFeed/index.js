@@ -1,20 +1,26 @@
 import React from 'react';
 import ActivityFeedItem from './ActivityFeedItem';
 
-const parseActivityFeedData = (tasks) => {
+const fiveMostRecentActivities = (tasks) => {
 	// set reference to task on history (TODO, IS this unclean?, use computed properties?)
+	var allActivities = [];
+
 	tasks.forEach((task) => {
 		task.history.forEach((history) => {
-			history.task = task;
-		});
+			history.task = {
+				description: task.description
+			};
+			allActivities.push(history);
+			}
+		);
 	});
-	return tasks.map((task) => task.history)
-	.reduce((a, b) => a.concat(b))
+
+	return allActivities
 	.sort((a, b) => b.modifiedTime - a.modifiedTime);
 };
 
 export default (props) => {
-	const data = parseActivityFeedData(props.tasks);
+	var data = fiveMostRecentActivities(props.tasks).slice(0, 5); // TODO: implement scrolling ??
 	return (
 		<div className="row">
 			<div className="panel panel-default">

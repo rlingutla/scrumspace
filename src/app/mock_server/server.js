@@ -47,7 +47,7 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 				if(story._id == story_id){
 					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
 						if(task._id == task_id){
-							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: new Date(), modifiedUser: getCurrentUser()}
+							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: Date.now(), modifiedUser: getCurrentUser()}
 
 							updatedTask = Object.assign({}, task, {
 								status: toType,
