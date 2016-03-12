@@ -1,7 +1,7 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs';
-import { doughnutOptions } from '../constants/chartOptions';
-import taskTypes from '../../../constants/taskTypes_refactor';
+import { doughnutOptions } from '../../constants/chartOptions';
+import taskTypes from '../../../../constants/taskTypes';
 
 const capitalize = (s) => {
 	return s[0] + s.slice(1).toLowerCase();

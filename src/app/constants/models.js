@@ -9,7 +9,7 @@ export function projectDefault(){
 		'status': 'planning',
 		'current_sprint': null,
 		'avatar': '',
-		'sprints': {},
+		'sprints': [],
 		'stories': []
 	}
 }

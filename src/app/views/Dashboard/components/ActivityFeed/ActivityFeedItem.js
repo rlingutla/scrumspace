@@ -3,7 +3,7 @@ import taskTypes from '../../../../constants/taskTypes';
 
 const style = (borderColor) => {
 	return {
-		margin: '10px, 0px',
+		margin: '10px, 0px', 
 		border: '1px solid ' + borderColor,
 		backgroundColor: borderColor,
 	    borderRadius: '3px',
