@@ -50,7 +50,7 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: new Date(), modifiedUser: getCurrentUser()}
 
 							updatedTask = Object.assign({}, task, {
-								status: toType, 
+								status: toType,
 								history: [
 									...task.history,
 									historyItem

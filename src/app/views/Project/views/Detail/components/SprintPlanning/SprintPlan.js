@@ -1,6 +1,23 @@
 import React from 'react';
 import TimeTable from './TimeTable';
 import StoryPanel from './StoryPanel';
+//import { FUNCTIONNAME } from '../../../../../../actions/';
+/*import { connect } from 'react-redux';
+
+const mapStateToProps = (state, props) => {
+  return state;
+};
+
+const mapDispatchToProps = (dispatch) => {
+
+  return {
+    saveSprint: (id, name, start_date, end_date, scrum_time, stories) => {
+      dispatch(FUNCTIONNAME(id, name, start_date, end_date, scrum_time, stories));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SprintPlan); */
 
 const TaskFactory = () => {
 	return {
@@ -31,6 +48,7 @@ export default class SprintPlan extends React.Component {
 		}
 		else{
 			this.state = {
+				id: (this.props.current_sprint === null) ? 0 : this.props.current_sprint + 1,
 				name: '',
 				start_date: '',
 				end_date: '',
