@@ -28,7 +28,6 @@ export default class SprintPlan extends React.Component {
 				scrum_time: this.jsonTimeToTime(nextSprintInfo[0].scrum_time),
 				stories: (nextSprintInfo[1].length === 0) ? [StoryPanelFactory()] : nextSprintInfo[1]
 			};
-			debugger;
 		}
 		else{
 			this.state = {
