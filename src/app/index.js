@@ -1,6 +1,5 @@
 import React from 'react';
 import Sidebar from './components/Sidebar';
-
 import TopNav from './shared/components/TopNav';
 import { connect } from 'react-redux';
 
