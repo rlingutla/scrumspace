@@ -23,11 +23,11 @@ export default class SprintPlan extends React.Component {
 		var nextSprintInfo = this.nextSprintInfo(SprintID); //THIS ACTUALLY WORKS
 		//Code to change of the state of THIS if there is stuff in nextSprintInfo HERE
 		//console.log(nextSprintInfo);
-		if(nextSprintInfo[0] != null){
+		if(nextSprintInfo[0] !== null){
 			this.state = {
-				//name: nextSprintInfo[0].name,
-				start_date: nextSprintInfo[0].start_date,
-				end_date: nextSprintInfo[0].enddate,
+				name: nextSprintInfo[0].name,
+				start_date: this.timeToDate(nextSprintInfo[0].start_date),
+				end_date: this.timeToDate(nextSprintInfo[0].enddate),
 				scrum_time: nextSprintInfo[0].scrum_time,
 				stories: nextSprintInfo[1]
 			};
@@ -43,8 +43,14 @@ export default class SprintPlan extends React.Component {
 		}
 	}
 
+	timeToDate(time){
+		time = new Date(time).toLocaleString();
+		return time.substring(0, time.indexOf(' ') - 1).trim();
+	}
+
 	//all the state is managed at the highest level
 	//change = signal, e = event, args[0] = story, args[1] = task
+	//date... (new Date(blah)/1000).toFixed(0)
 	handleChange(change, e, args){
 		var storyList = this.state.stories;
 		switch(change){
@@ -88,11 +94,15 @@ export default class SprintPlan extends React.Component {
 				this.setState({stories: storyList});
 				break;
 			case 'save':
-				//CODE FOR SAVING HERE
+				this.handleSave();
 				break;
 			default:
 				console.log('error');
 		}
+	}
+
+	handleSave(){
+		
 	}
 
 	//This gets infor for a planned future sprint, if there is one.
