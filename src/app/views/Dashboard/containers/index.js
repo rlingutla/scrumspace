@@ -6,6 +6,7 @@ const isInSprint = (project) => {
 
 const mapStateToProps = (state) => {
 	let projects = state.projects.filter(isInSprint);
+	debugger;
 	return Object.assign({}, {
 		projects
 	});
