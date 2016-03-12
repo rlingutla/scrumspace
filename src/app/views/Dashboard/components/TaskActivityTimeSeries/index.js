@@ -9,12 +9,12 @@ var lineData = {
 		{
 			label: 'DOING',
 			fillColor: 'rgba(0,0,0,0)',
-			strokeColor: 'rgba(120, 224, 146, 1)',
-			pointColor: 'rgba(120, 224, 146, 1)',
+			strokeColor: 'rgba(255, 236, 159, 1)',
+			pointColor: 'rgba(255, 236, 159, 1)',
 			pointStrokeColor: '#fff',
 			pointHighlightFill: '#fff',
 			pointHighlightStroke: 'rgba(220,220,220,1)',
-			data: [0, 0, 0, 0, 0, 0, 0]
+			data: null
 		},{
 			label: 'BLOCKED',
 			fillColor: 'rgba(0,0,0,0)',
@@ -23,7 +23,7 @@ var lineData = {
 			pointStrokeColor: '#fff',
 			pointHighlightFill: '#fff',
 			pointHighlightStroke: 'rgba(220,220,220,1)',
-			data: [0, 0, 0, 0, 0, 0, 0]
+			data: null
 		}, {
 			label: 'UNASSIGNED',
 			fillColor: 'rgba(0,0,0,0)',
@@ -32,7 +32,7 @@ var lineData = {
 			pointStrokeColor: '#fff',
 			pointHighlightFill: '#fff',
 			pointHighlightStroke: 'rgba(220,220,220,1)',
-			data: [0, 0, 0, 0, 0, 0, 0]
+			data: null
 		},{
 			label: 'DONE',
 			fillColor: 'rgba(0,0,0,0)',
@@ -41,7 +41,7 @@ var lineData = {
 			pointStrokeColor: '#fff',
 			pointHighlightFill: '#fff',
 			pointHighlightStroke: 'rgba(220,220,220,1)',
-			data: [0, 0, 0, 0, 0, 0, 0]
+			data: null
 		}	
 
 
@@ -53,8 +53,12 @@ var lineData = {
 // TODO AND RETHINK THIS BETTER
 
 export default (props) => {
+	for (let i = 0; i < 4; i++) {
+		lineData.datasets[i].data = new Array (0, 0, 0, 0, 0, 0);
+	}
+
 	var d = new Date();
-	d.setDate(d.getDate() - 5);
+	d.setDate(d.getDate() - 6);
 
 	var types = ['DOING', 'BLOCKED', 'UNASSIGNED', 'DONE'];
 	
@@ -63,19 +67,29 @@ export default (props) => {
 	.reduce((a, b) => a.concat(b))
 	.sort((a, b) => a.modifiedTime > b.modifiedTime);
 
-	var timeMax = d.getTime();
 	const oneDay = 1000 * 60 * 60 * 24;
-	var timeMin = timeMax - oneDay;
+	var timeMax = d.getTime();
+	var timeMin = d.getTime() - oneDay;
 
 	for (var i = 0; i < 7; i++) {
-		types.forEach((type) => histories.filter((history) => {
-			var index = parseInt(types.indexOf(type),10);
-			var isOfType = (history.toStatus === type);
-			var isInTimeInterval = (history.modifiedTime > timeMin && history.modifiedTime < timeMax);
-			if (isInTimeInterval && isOfType) {
-				lineData.datasets[index].data[i] += 1;
+		types.forEach((type) => {
+			var index = parseInt(types.indexOf(type), 10);
+			if (i > 0) {
+				// Make it a running count
+				lineData.datasets[index].data[i] = lineData.datasets[index].data[i-1];
 			}
-		}));
+
+			histories.filter((history) => {
+				var hasMovedFromStatus = (history.fromStatus === type);
+				var hasMovedToStatus = (history.toStatus === type);
+				var isInTimeInterval = (history.modifiedTime > timeMin && history.modifiedTime < timeMax);
+				if (isInTimeInterval && hasMovedToStatus) {
+					lineData.datasets[index].data[i] += 1;
+				} else if (isInTimeInterval && hasMovedFromStatus) {
+					lineData.datasets[index].data[i] -= 1;
+				}
+			});
+		});
 		timeMax += oneDay;
 		timeMin += oneDay;
 	}
