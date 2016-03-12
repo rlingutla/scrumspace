@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 class NewProjModal extends React.Component{
- 
+
   constructor(props){
     super(props);
     // TODO: members can't be mapped like this.

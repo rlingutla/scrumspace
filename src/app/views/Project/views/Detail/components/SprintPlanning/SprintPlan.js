@@ -19,18 +19,16 @@ const StoryPanelFactory = () => {
 export default class SprintPlan extends React.Component {
 	constructor(props){
 		super(props);
-		var SprintID = this.props.current_sprint;
-		var nextSprintInfo = this.nextSprintInfo(SprintID); //THIS ACTUALLY WORKS
-		//Code to change of the state of THIS if there is stuff in nextSprintInfo HERE
-		//console.log(nextSprintInfo);
-		if(nextSprintInfo[0] !== null){
+		var nextSprintInfo = this.nextSprintInfo(this.props.current_sprint);
+		if(typeof nextSprintInfo[0] !== 'undefined'){
 			this.state = {
 				name: nextSprintInfo[0].name,
-				start_date: this.timeToDate(nextSprintInfo[0].start_date),
-				end_date: this.timeToDate(nextSprintInfo[0].enddate),
-				scrum_time: nextSprintInfo[0].scrum_time,
-				stories: nextSprintInfo[1]
+				start_date: this.unixTimeToDate(nextSprintInfo[0].start_date),
+				end_date: this.unixTimeToDate(nextSprintInfo[0].end_date),
+				scrum_time: this.jsonTimeToTime(nextSprintInfo[0].scrum_time),
+				stories: (nextSprintInfo[1].length === 0) ? [StoryPanelFactory()] : nextSprintInfo[1]
 			};
+			debugger;
 		}
 		else{
 			this.state = {
@@ -43,9 +41,38 @@ export default class SprintPlan extends React.Component {
 		}
 	}
 
-	timeToDate(time){
-		time = new Date(time).toLocaleString();
-		return time.substring(0, time.indexOf(' ') - 1).trim();
+	unixTimeToDate(time){
+		var t = new Date(time);
+		return t.toISOString().substring(0, 10);
+	}
+
+	jsonTimeToTime(time){
+		if(time.includes('AM')){
+			if(time.charAt(4) === ' '){ //1-9
+				return '0' + time.substring(0, 4);
+			}
+			else{ //12 am checked too
+				if(time.charAt(0) === 1 && time.charAt(1) === 2){
+					return ('00' + time.substring(2,5));
+				}
+				else {
+					return time.substring(0,5);
+				}
+			}
+		}
+		else{ //pm
+			if(time.charAt(4) === ' '){ //1-9
+				return '' + (12 + parseInt('' + time.charAt(0), 10)) + time.substring(1,4);
+			}
+			else{ //check 12pm
+				if(time.charAt(0) === 1 && time.charAt(1) === 2) {
+					return '12' + time.substring(2,5);
+				}
+				else{
+					return '' + (12 + parseInt('' + time.substring(0,2), 10)) + time.substring(2,5);
+				}
+			}
+		}
 	}
 
 	//all the state is managed at the highest level
@@ -102,15 +129,12 @@ export default class SprintPlan extends React.Component {
 	}
 
 	handleSave(){
-		
+
 	}
 
 	//This gets infor for a planned future sprint, if there is one.
 	nextSprintInfo(sprintID){
 		sprintID = sprintID + 1; //increment sprintID +1 to see what's being planned for the next sprint
-		if(this.props.stories[sprintID] === null){
-			return null;
-		}
 		return [this.props.sprints[sprintID], this.props.stories.filter(
 			function(value){
 				if(value.sprint_id === sprintID){

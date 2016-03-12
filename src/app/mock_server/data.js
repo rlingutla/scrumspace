@@ -35,14 +35,14 @@ var initialData = {
 		'sprints': [
 			{
 				'_id': 0,
-				'name': 'V2 Release',
+				'name': 'V1 Release',
 				'start_date': 1456900811760,
 				'end_date': 1458925200000,
 				'scrum_time': '9:00 AM'
 			},
 			{
 				'_id': 1,
-				'name': 'V1 Release',
+				'name': 'V2 Release',
 				'start_date': 1456900811760,
 				'end_date': 1456900811800,
 				'scrum_time': '9:00 AM'
