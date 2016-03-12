@@ -23,7 +23,7 @@ const projects = (state = [], action) => {
 						if(story._id == action.story_id){
 							return Object.assign({}, story, { tasks: story.tasks.map((task) => {
 								if(task._id == action.task_id){
-									return Object.assign({}, task, {status: action.toType});
+									return Object.assign({}, action.task);
 								} else return task;
 							})});
 						} else return story;
