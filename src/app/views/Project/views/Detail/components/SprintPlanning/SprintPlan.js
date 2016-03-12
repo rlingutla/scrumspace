@@ -1,8 +1,8 @@
 import React from 'react';
 import TimeTable from './TimeTable';
 import StoryPanel from './StoryPanel';
-//import { FUNCTIONNAME } from '../../../../../../actions/';
-/*import { connect } from 'react-redux';
+import { createNewSprint } from '../../../../../../actions/';
+import { connect } from 'react-redux';
 
 const mapStateToProps = (state, props) => {
   return state;
@@ -11,13 +11,11 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
 
   return {
-    saveSprint: (id, name, start_date, end_date, scrum_time, stories) => {
-      dispatch(FUNCTIONNAME(id, name, start_date, end_date, scrum_time, stories));
+    saveSprint: (pid, sid, name, start_date, end_date, scrum_time, stories) => {
+      dispatch(createNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories));
     }
   };
 };
-
-export default connect(mapStateToProps, mapDispatchToProps)(SprintPlan); */
 
 const TaskFactory = () => {
 	return {
@@ -39,16 +37,19 @@ export default class SprintPlan extends React.Component {
 		var nextSprintInfo = this.nextSprintInfo(this.props.current_sprint);
 		if(typeof nextSprintInfo[0] !== 'undefined'){
 			this.state = {
+        pid: this.props._id,
+        sid: nextSprintInfo[0],
 				name: nextSprintInfo[0].name,
-				start_date: this.unixTimeToDate(nextSprintInfo[0].start_date),
-				end_date: this.unixTimeToDate(nextSprintInfo[0].end_date),
-				scrum_time: this.jsonTimeToTime(nextSprintInfo[0].scrum_time),
+				start_date: nextSprintInfo[0].start_date,
+				end_date: nextSprintInfo[0].end_date,
+				scrum_time: nextSprintInfo[0].scrum_time,
 				stories: (nextSprintInfo[1].length === 0) ? [StoryPanelFactory()] : nextSprintInfo[1]
 			};
 		}
 		else{
 			this.state = {
-				id: (this.props.current_sprint === null) ? 0 : this.props.current_sprint + 1,
+        pid: this.props._id,
+				sid: (this.props.current_sprint === null) ? 0 : this.props.current_sprint + 1,
 				name: '',
 				start_date: '',
 				end_date: '',
@@ -60,38 +61,17 @@ export default class SprintPlan extends React.Component {
 
 	//following two functions are just parsers...
 	unixTimeToDate(time){
+    if(time === ''){
+      return '';
+    }
 		var t = new Date(time);
 		return t.toISOString().substring(0, 10);
 	}
 
-	jsonTimeToTime(time){
-		if(time.includes('AM')){
-			if(time.charAt(4) === ' '){ //1-9
-				return '0' + time.substring(0, 4);
-			}
-			else{ //12 am checked too
-				if(time.charAt(0) === 1 && time.charAt(1) === 2){
-					return ('00' + time.substring(2,5));
-				}
-				else {
-					return time.substring(0,5);
-				}
-			}
-		}
-		else{ //pm
-			if(time.charAt(4) === ' '){ //1-9
-				return '' + (12 + parseInt('' + time.charAt(0), 10)) + time.substring(1,4);
-			}
-			else{ //check 12pm
-				if(time.charAt(0) === 1 && time.charAt(1) === 2) {
-					return '12' + time.substring(2,5);
-				}
-				else{
-					return '' + (12 + parseInt('' + time.substring(0,2), 10)) + time.substring(2,5);
-				}
-			}
-		}
-	}
+  dateToUnixTime(time){
+    var t = new Date(time);
+    return (t/1000);
+  }
 
 	//all the state is managed at the highest level
 	//change = signal, e = event, args[0] = story, args[1] = task
@@ -138,6 +118,7 @@ export default class SprintPlan extends React.Component {
 				this.setState({stories: storyList});
 				break;
 			case 'save':
+        this.setState({start_date: this.dateToUnixTime(this.state.start_date), end_date: this.dateToUnixTime(this.state.end_date)});
 				this.handleSave();
 				break;
 			default:
@@ -169,7 +150,7 @@ export default class SprintPlan extends React.Component {
       <div className="content tab-offset container">
         <h2 id="settings">Sprint Planning</h2>
         <div className="panel-group">
-          <TimeTable name={this.state.name} scrumtime={this.state.scrum_time} startdate={this.state.start_date} enddate={this.state.end_date} handleChange={this.handleChange.bind(this)}/>
+          <TimeTable name={this.state.name} scrumtime={this.state.scrum_time} startdate={this.unixTimeToDate(this.state.start_date)} enddate={this.unixTimeToDate(this.state.end_date)} handleChange={this.handleChange.bind(this)}/>
 					{
 						this.state.stories.map((e,i,array) =>	{
 								return (
@@ -182,3 +163,5 @@ export default class SprintPlan extends React.Component {
 		);
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(SprintPlan);

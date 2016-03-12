@@ -27,7 +27,7 @@ export default class TimeTable extends React.Component {
 							<div className="col-md-2">
                 <div className="left-date-input">
                   <label>Enter Scrum Time</label>
-                  <input type="time" className="form-control strech-input" placeholder="Time of Scrum"
+                  <input type="text" className="form-control strech-input" placeholder="Time of Scrum"
                   value={this.props.scrumtime} onChange={(e) => this.props.handleChange('time-scrum', e)}
                   />
                 </div>

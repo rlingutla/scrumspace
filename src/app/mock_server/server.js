@@ -96,3 +96,14 @@ export function serverPostNewProject(title,description){
 	return emulateServerReturn(project, false);
 
 }
+
+export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
+	var projects = readDocument('projects');
+
+	projects.map((project) =>{
+		if(project._id === pid){
+			console.log('log');
+		}
+	});
+
+}

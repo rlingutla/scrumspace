@@ -1,4 +1,4 @@
-import { serverPutTaskState, serverPostNewProject } from '../mock_server/server';
+import { serverPutTaskState, serverPostNewProject, serverPostSprint } from '../mock_server/server';
 
 export const changeTaskState = (project_id, story_id, task_id, task) => {
 	return {
@@ -57,3 +57,30 @@ export function postAndCreateNewProject(title, description){
 	};
 }
 // export function
+export const createNewSprint = (pid, sid, name, start_date, end_date, scrum_time, stories) => {
+	return {
+		type: 'CREATE_NEW_SPRINT',
+		pid,
+		sid,
+		name,
+		start_date,
+		end_date,
+		scrum_time,
+		stories
+	};
+};
+
+function postSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
+	return serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories);
+}
+
+export function postNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
+	return function(dispatch){
+		return postSprint(pid, sid, name, start_date, end_date, scrum_time, stories).then(
+			sprint => {
+				dispatch(createNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories));
+			},
+			error => console.log('rip')
+		);
+	};
+}
