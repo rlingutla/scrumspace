@@ -1,7 +1,8 @@
 import React from 'react';
+import ActivityFeedItem from './ActivityFeedItem';
 
 const parseActivityFeedData = (tasks) => {
-	// set reference to task on history (TODO, IS this unclean?)
+	// set reference to task on history (TODO, IS this unclean?, use computed properties?)
 	tasks.forEach((task) => {
 		task.history.forEach((history) => {
 			history.task = task;
@@ -9,7 +10,7 @@ const parseActivityFeedData = (tasks) => {
 	});
 	return tasks.map((task) => task.history)
 	.reduce((a, b) => a.concat(b))
-	.sort((a, b) => a.modifiedTime - b.modifiedTime);
+	.sort((a, b) => b.modifiedTime - a.modifiedTime);
 };
 
 export default (props) => {
@@ -24,10 +25,7 @@ export default (props) => {
 							<div className="row">
 								<div className="col-md-12">
 									{
-										data.map((history, i) => {
-											var date = new Date(history.modifiedTime);
-											return <p key={i}>{new Array( (new Date(history.modifiedTime)).getMonth() + 1, (new Date(history.modifiedTime)).getDate() + 1, 'user:', history.modifiedUser, history.task.status).join(' ')}</p>
-										})
+										data.map((history, i) => <ActivityFeedItem activity={history} key={i}></ActivityFeedItem>)
 									}
 								</div>
 							</div>
@@ -36,7 +34,5 @@ export default (props) => {
 				</div>
 			</div>
 		</div>	
-	)
-}
-
-
+	);
+};

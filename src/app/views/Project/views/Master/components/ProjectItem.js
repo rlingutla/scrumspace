@@ -1,5 +1,5 @@
 import React from 'react';
-import utils from '../../../../../shared/utils/utils';
+import { verboseServerTime } from '../../../../../shared/utils/utils';
 import { Grid, Row, Col } from 'react-bootstrap';
 import ProjectStatus from '../../../shared/ProjectStatus';
 import { Link }  from 'react-router';
@@ -18,7 +18,8 @@ const lineOptions = {
 //get scrum time from a project object
 function getScrumTime(props){
 	if(props.current_sprint !== null){
-		return utils.verboseServerTime(props.sprints[props.current_sprint].scrum_time);
+		// return verboseServerTime(props.sprints[props.current_sprint].scrum_time);
+		return props.sprints[props.current_sprint].scrum_time;
 	}
 	else return '';
 }

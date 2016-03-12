@@ -1,5 +1,5 @@
 import React from 'react';
-import taskTypes from '../../../constants/taskTypes_refactor';
+import taskTypes from '../../../../constants/taskTypes_refactor';
 
 export default (props) => {
 	return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs';
-import { lineOptions } from '../constants/chartOptions';
+import { lineOptions } from '../../constants/chartOptions';
 
 // TODO: make this production ready
 const lineData = {

@@ -12,11 +12,6 @@ export default {
 		bsStyle: 'warning'
 	},
 	BLOCKED: {
-		title: 'BLOCKED',
-		color: colors.darkGray,
-		bsStyle: ''
-	},
-	BLOCKING: {
 		title: 'BLOCKING',
 		color: colors.red,
 		bsStyle: 'danger'

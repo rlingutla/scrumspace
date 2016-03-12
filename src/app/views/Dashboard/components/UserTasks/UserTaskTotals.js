@@ -1,5 +1,5 @@
 import React from 'react';
-import taskTypes from '../../../constants/taskTypes_refactor';
+import taskTypes from '../../../../constants/taskTypes_refactor';
 import UserTaskTotalsItem from './UserTaskTotalsItem';
 
 // used to check if a task is a certain status.
