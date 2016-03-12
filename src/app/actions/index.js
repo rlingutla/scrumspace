@@ -1,12 +1,12 @@
 import { serverPutTaskState, serverPostNewProject } from '../mock_server/server';
 
-export const changeTaskState = (project_id, story_id, task_id, toType) => {
+export const changeTaskState = (project_id, story_id, task_id, task) => {
 	return {
 		type: 'CHANGE_TASK_STATE',
 		project_id,
 		story_id,
 		task_id,
-		toType
+		task
 	};
 };
 
@@ -23,7 +23,8 @@ export function putAndChangeTaskState(project_id, story_id, task_id, toType){
 		return putTaskState(project_id, story_id, task_id, toType).then(
 			task => {
 				//dispatch with status from server
-				dispatch(changeTaskState(project_id, story_id, task_id, task.status))
+				// dispatch(changeTaskState(project_id, story_id, task_id, task.status))
+				dispatch(changeTaskState(project_id, story_id, task_id, task))
 			},
 			error => console.error("got an error", error)
 			// sauce => dispatch(makeASandwich(forPerson, sauce)),

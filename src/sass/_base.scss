@@ -42,9 +42,15 @@ html, body {
 				    cursor: pointer;
 				    @include hoverAction();
 
-				    .glyphicon {
+				    .glyphicon, .icon {
 				    	font-size: 20px;
 				    	margin-top: 13px;
+				    	display: inline-block;
+				    	font-style: normal;
+				    	font-weight: 400;
+				    	line-height: 1;
+				    	position: relative;
+				    	top: 1px;
 				    }
 
 				    &:hover {

@@ -2,6 +2,7 @@ import React from 'react';
 import ProjectAvatar from './Avatar';
 import NavTabBar from './Tabs/NavTabBar';
 import { daysDifference, verboseServerTime, getCurrentSprint } from '../../../../../shared/utils/utils';
+import Ionicon from '../../../../../shared/components/Ionicon';
 import { Row, Col, Glyphicon } from 'react-bootstrap';
 import { Link }  from 'react-router';
 
@@ -13,7 +14,7 @@ const ProjectNav = (props) => {
 		<div id="project-detail" className="navbar navbar-fixed-top">
 			<Row className="project-top-nav left-right-align">
 				<Col xs={6}>
-					<Link to="/project" className="nav-link"><Glyphicon glyph="chevron-left" /> Projects</Link>
+					<Link to="/project" className="nav-link"><Ionicon icon="ion-ios-arrow-back"/> Projects</Link>
 				</Col>
 				<Col xs={6}></Col>
 			</Row>
