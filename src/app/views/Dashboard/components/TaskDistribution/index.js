@@ -1,7 +1,7 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs';
 import { doughnutOptions } from '../../constants/chartOptions';
-import taskTypes from '../../../../constants/taskTypes_refactor';
+import taskTypes from '../../../../constants/taskTypes';
 
 const capitalize = (s) => {
 	return s[0] + s.slice(1).toLowerCase();
@@ -52,7 +52,7 @@ export default (props) => {
 		<div className="panel-wrapper">
 			<div className="row">
 				<div className="panel panel-default">
-					<div className="panel-container">
+					<div style={{minHeight: '380px'}}>
 						<div className="panel-body">
 							<div className="dashboard-summary">
 								<h4>Project Task Distribution</h4>

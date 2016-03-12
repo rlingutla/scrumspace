@@ -12,11 +12,11 @@ export default class Story extends React.Component {
 		                <div className="row left-right-align">
 		                    <div className="col-md-9"><a>{this.props.id}</a></div>
 		                    <div className="col-md-3">
-		                        <div className="control">
+		                        {/*<div className="control">
 		                            <button className="collapse-control" data-toggle="collapse" data-target=".collapse1">
 		                                <i className="glyphicon glyphicon-triangle-top"></i>
 		                            </button>
-		                        </div>
+		                        </div>*/}
 		                    </div>
 		                </div>
 		            </div>

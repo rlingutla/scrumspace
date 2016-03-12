@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button } from 'react-bootstrap';
 import ItemTypes from '../../../constants/itemTypes';
+import TaskTypes from '../../../constants/taskTypes';
 
 import { connect } from 'react-redux';
 import _ from 'underscore';
@@ -42,8 +43,15 @@ class Task extends React.Component {
 		this.setState({ modal: false });
 	}
 
+	getTaskStyle(status){
+		return { borderColor: TaskTypes[status].color }
+	}
+
 	render() {
 		const {connectDragSource, id, onMove, isDragging, ...props} = this.props;
+		const taskStyles = {
+
+		}
 
 		if(isDragging){
 			return (
@@ -55,7 +63,7 @@ class Task extends React.Component {
 
 		return connectDragSource(
 			<div>
-				<div className="task" onClick={this.openDetail}>
+				<div className="task" onClick={this.openDetail} style={this.getTaskStyle(this.props.status)}>
 				    <div className="heading">
 				        <div className="row left-right-align">
 				            <div className="col-md-6"><a>{this.props._id}</a></div>
