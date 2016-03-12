@@ -50,7 +50,7 @@ var initialData = {
 		],
 		'stories': [
 			{
-				'_id': 0,
+				'_id': 'DT-S0',
 				'title': 'Buy Hats',
 				'description': 'Design Hats \nOrder Hats\nSell Hats',
 				'sprint_id': 0,
@@ -124,7 +124,7 @@ var initialData = {
 				]
 			},
 			{
-				'_id': 1,
+				'_id': 'DT-S1',
 				'title': 'Win',
 				'description': 'Win Win Win\nNo matter what',
 				'sprint_id': 0,

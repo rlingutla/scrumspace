@@ -7,6 +7,7 @@ import { DropTarget } from 'react-dnd';
 const taskTarget = {
   canDrop(props, monitor) {
     const item = monitor.getItem();
+    debugger;
     return true;
   },
 
