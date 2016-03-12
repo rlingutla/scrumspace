@@ -73,9 +73,6 @@ export default (props) => {
 			var isOfType = (history.toStatus === type);
 			var isInTimeInterval = (history.modifiedTime > timeMin && history.modifiedTime < timeMax);
 			if (isInTimeInterval && isOfType) {
-				if (type === 'UNASSIGNED') {
-					debugger;
-				}
 				lineData.datasets[index].data[i] += 1;
 			}
 		}));
