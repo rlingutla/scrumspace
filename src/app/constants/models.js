@@ -13,6 +13,7 @@ export function projectDefault(){
 		'stories': [],
 		'commits':[],
 		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
+		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
 		'gCommits':[],
 		'color':'blue'
 	}
