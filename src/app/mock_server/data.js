@@ -127,8 +127,6 @@ var initialData = {
 				'_id': 'DT-S1',
 				'title': 'Win',
 				'description': 'Win Win Win\nNo matter what',
-				'commits':[3,1,6,4,8],
-    		'gCommits':[12,10,4,6,5,3],
 				'sprint_id': 0,
 				'tasks': [
 					{
@@ -147,7 +145,9 @@ var initialData = {
 				]
 			}
 		],
-    'color': '#'+Math.floor(Math.random()*16777215).toString(16)
+    'color': '#'+Math.floor(Math.random()*16777215).toString(16),
+		'commits':[3,1,6,4,8],
+		'gCommits':[12,10,4,6,5,3]
 	},
 	{
 		'_id': 1,
