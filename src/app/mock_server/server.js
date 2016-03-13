@@ -50,7 +50,7 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: Date.now(), modifiedUser: getCurrentUser()}
 
 							updatedTask = Object.assign({}, task, {
-								status: toType, 
+								status: toType,
 								history: [
 									...task.history,
 									historyItem
@@ -88,11 +88,82 @@ export function serverPostNewProject(title,description){
 		'status': 'planning',
 		'current_sprint': null,
 		'sprints': {},
-		'stories': []
+		'stories': [],
+		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
+    'gCommits':[10+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10)],
+		'color': '#'+Math.floor(Math.random()*16777215).toString(16)
 	};
 
 	writeDocument('projects', project);
 
 	return emulateServerReturn(project, false);
 
+}
+
+export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
+	var project = readDocument('projects');
+	//writes sprint data
+	stories = stories.filter((e) =>{
+		if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
+			return false;
+		}
+		else{
+			return true;
+		}
+	});
+	let sprint = {
+		'_id': sid,
+		'name': name,
+		'start_date': start_date,
+		'end_date': end_date,
+		'scrum_time': scrum_time
+	};
+	project[pid].sprints[sid] = sprint;
+	var notInSp = project[pid].stories.filter(
+		function(value){
+			if(value.sprint_id !== sid){
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	);
+	var nextID = (notInSp.length !== 0) ? notInSp[notInSp.length -1]._id + 1 : 0;
+	for(var i = 0; i < stories.length; i++){
+		let story = {
+			'_id': (nextID+i),
+			'title': stories[i].title,
+			'description': stories[i].description,
+			'sprint_id': sid,
+			'tasks': stories[i].tasks.map(
+				(e, i) => { let t = {
+						'_id': i,
+						'status': 'UNASSIGNED',
+						'assignedTo': null,
+						'description': e.description,
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: Date.now(),
+							modifiedUser : 0
+						}],
+						'attachments': null
+					};
+					return t;
+				}
+			).filter((e) =>{
+				if(e.description === null || e.description === '' || typeof e.description === 'undefined'){
+					return false;
+				}
+				else{
+					return true;
+				}
+			})
+		};
+		stories[i] = story;
+	}
+	project[pid].stories = notInSp.concat(stories);
+	writeDocument('projects', project[pid]);
+	return emulateServerReturn(project[pid], false);
 }
