@@ -15,7 +15,7 @@ class ProjectProgressBar extends React.Component {
 
 		this.props.stories.forEach((story) => {
 			story.tasks.forEach((task) => {
-				if(task.status == taskType.title) ++typeCount;
+				if(task.status === taskType.title) ++typeCount;
 				++total;
 			});
 		});
@@ -24,7 +24,7 @@ class ProjectProgressBar extends React.Component {
 			count: typeCount,
 			calc: calc,
 			total: total
-		}
+		};
 	}
 
 	daysLeft(){
@@ -41,7 +41,7 @@ class ProjectProgressBar extends React.Component {
 			'DOING': this.countType(TaskTypes.DOING).calc,
 			'BLOCKED': this.countType(TaskTypes.BLOCKED).calc,
 			'UNASSIGNED': this.countType(TaskTypes.UNASSIGNED).calc
-		}
+		};
 
 		return (
 			<div>
@@ -58,21 +58,23 @@ class ProjectProgressBar extends React.Component {
 			</div>
 		);
 	}
-};
+}
 
 //redux
 const mapStateToProps = (state) => {
 	return state;
-}
+};
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	let project = stateProps.projects.find((proj) => proj._id == ownProps.project_id);
+	let project = stateProps.projects.find((proj) => proj._id === ownProps.project_id);
 	return Object.assign(project, ownProps, dispatchProps);
 }
 
 //maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
   return {};
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(ProjectProgressBar);
+export default connect(mapStateToProps,
+					 mapDispatchToProps,
+					 mergeProps)(ProjectProgressBar);

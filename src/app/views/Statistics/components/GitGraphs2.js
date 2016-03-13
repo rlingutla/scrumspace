@@ -20,7 +20,6 @@ const GitGraphs2 = (props) => {
 	        {
 
 	          fillColor: props.color,
-	          /*  data: props.commits */
             data: props.gCommits
 	        }
 	    ]
