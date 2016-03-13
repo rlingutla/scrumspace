@@ -148,6 +148,7 @@ var initialData = {
 			}
 		],
 		'commits':[3,1,6,4,8],
+		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
 		'gCommits':[12,10,4,6,5],
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 
@@ -172,6 +173,7 @@ var initialData = {
 		'sprints': [],
 		'stories': [],
 		'commits':[4,7,2,8,9],
+		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
 		'gCommits':[18,15,6,9,11,13],
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 

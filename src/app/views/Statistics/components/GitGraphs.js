@@ -16,7 +16,7 @@ const GitGraphs = (props) => {
 
 	const barData = {
 
-	    labels: ['Mon','Tues','Wed','Thurs','Fri'],
+	    labels: props.timeFrame,
 	    datasets: [
 	        {
 	          fillColor: props.color,
