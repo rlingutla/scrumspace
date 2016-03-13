@@ -89,6 +89,7 @@ export function serverPostNewProject(title,description,members){
 		'current_sprint': null,
 		'sprints': {},
 		'stories': []
+		'color':
 	};
 
 	writeDocument('projects', project);
