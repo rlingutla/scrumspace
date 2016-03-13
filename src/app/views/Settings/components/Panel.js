@@ -10,7 +10,7 @@ export default (props) => {
 				{props.children}
 			</div>
 			{
-				(props.saveMethod) ? 
+				(props.saveMethod) ?
 				<div className="panel-footer settings-foot">
 					<button className="btn btn-success pull-right save" type="save">Save</button>
 				</div> : null

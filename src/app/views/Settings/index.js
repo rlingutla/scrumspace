@@ -11,7 +11,7 @@ export default () => {
 				<div className="container">
 					<div className="panel-group">
 
-						<Panel heading="User Settings" glyphicon="user" saveMethod={() => null}>
+						<Panel heading="User Settings" glyphicon="user">
 									<User />
 						</Panel>
 
