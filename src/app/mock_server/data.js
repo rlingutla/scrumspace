@@ -134,7 +134,12 @@ var initialData = {
 						'status': 'UNASSIGNED',
 						'assignedTo': 0,
 						'description': 'Beat hilldawg',
-						'history': [],
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					}
 				]
