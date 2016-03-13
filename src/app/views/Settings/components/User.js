@@ -18,7 +18,7 @@ export default class User extends React.Component {
 					<div className="col-md-6">
 						<div className="form-group">
 							<label>Last Name:</label>
-							<input className="form-control" text="text" onChange={(e) => this.props.updateState(e, 'last_name')} value={this.props.last_name} placeholder="Smith"/>
+							<input className="form-control" text="text" onChange={(e) => this.props.updateState((e, 'last_name'))} value={this.props.last_name} placeholder="Smith"/>
 						</div>
 					</div>
 				</div>
@@ -26,7 +26,7 @@ export default class User extends React.Component {
 					<div className="col-md-6">
 						<div className="form-group">
 							<label>Email address:</label>
-							<input className="form-control" value={this.props.email} onChange={(e) => this.props.updateState(e, 'email')} placeholder="john.smith@company.com"  />
+							<input className="form-control" value={this.props.email} onChange={(e) => this.props.updateState(e, 'email')} placeholder="john.smith@company.com"/>
 						</div>
 					</div>
 					<div className="col-md-6">

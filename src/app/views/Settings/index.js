@@ -13,6 +13,7 @@ class Settings extends React.Component {
 	}
 
 	updateState(event, property) {
+		debugger;
 		this.state[property] = event.target.value;
 		this.setState(this.state);
 	}
@@ -28,7 +29,7 @@ class Settings extends React.Component {
 								<User updateState={(e, type) => this.updateState(e, type)} {...this.state} />
 							</Panel>
 							<Panel heading="Privacy" glyphicon="lock" saveMethod={() => null}>
-								<Privacy password={this.state.password} updateState={(e) =>this.updateState(e, 'password')}/>
+								<Privacy password={this.state.password} updateState={(e, type) =>this.updateState(e, type)}/>
 							</Panel>
 						</div>
 					</div>
