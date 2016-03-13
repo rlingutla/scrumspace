@@ -1,26 +1,7 @@
 import React from 'react';
 import TopNav from '../../shared/components/TopNav';
-import { User, Projects, Privacy, panel, ExternalSettings } from './components';
+import { User, Projects, Privacy, Panel, ExternalSettings } from './components';
 import { connect } from 'react-redux';
-
-const Panel = (props) => {
-	return (
-		<div className="panel panel-primary">
-			<div className="panel-heading">
-				<h4><span className={'glyphicon glyphicon-' + props.glyphicon}></span> {props.heading}:</h4>
-			</div>
-			<div className="panel-body">
-				{props.children}
-			</div>
-			{
-				(props.saveMethod) ? <div className="panel-footer settings-foot">
-				<button className="btn btn-success pull-right save" type="save">Save</button>
-			</div> : null
-		}
-	</div>
-);
-};
-
 
 export default () => {
 	return (
@@ -30,7 +11,7 @@ export default () => {
 				<div className="container">
 					<div className="panel-group">
 
-						<Panel heading="User Settings" glyphicon="user" saveMethod={() => null}>
+						<Panel heading="User Settings" glyphicon="user">
 									<User />
 						</Panel>
 
