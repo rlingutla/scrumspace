@@ -10,6 +10,9 @@ export function projectDefault(){
 		'current_sprint': null,
 		'avatar': '',
 		'sprints': [],
-		'stories': []
+		'stories': [],
+		'commits':[],
+		'gCommits':[],
+		'color':'blue'
 	}
 }

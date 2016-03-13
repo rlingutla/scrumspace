@@ -38,20 +38,21 @@ function postNewProject(title, description,members){
 }
 
 // new project
-export const createNewProject = (title, description,members) => {
+export const createNewProject = (title, description,members,sprints) => {
 	return {
 		type: 'CREATE_NEW_PROJECT',
 		title,
 		description,
-		members
+		members,
+		sprints
 	};
 };
 
-export function postAndCreateNewProject(title, description,members){
+export function postAndCreateNewProject(title, description,members,sprints){
 	return function(dispatch){
-		return postNewProject(title, description,members).then(
+		return postNewProject(title, description,members,sprints).then(
        project => {
-				 dispatch(createNewProject(title,description,members));
+				 dispatch(createNewProject(title,description,members,sprints));
 			 },
 			 error => console.error('got an error', error)
 		);

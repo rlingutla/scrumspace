@@ -9,7 +9,8 @@ import { connect } from 'react-redux';
 const mapDispatchToProps = (dispatch) => {
   return {
     createNewProject: (title, description,members) => {
-      dispatch(postAndCreateNewProject(title, description,members));
+      dispatch(postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,
+      stories,commits,gCommits,color));
     }
 
   };
@@ -23,11 +24,15 @@ class NewProjModal extends React.Component{
     this.state = {
       title: '',
       description: '',
-      members: [
-        {
-          id: 1
-        }
-      ]
+      users: [{id: 1}],
+      status: 'planning',
+      current_sprint: null,
+      avatar: '',
+      sprints: [],
+      stories: [],
+      commits:[],
+      gCommits:[],
+      color:''
     };
   }
 
@@ -35,11 +40,13 @@ class NewProjModal extends React.Component{
     // TODO: VALIDATION CODE
 
     this.mylist = [{id:1}];
-    this.props.createNewProject(this.state.title, this.state.description, this.state.members);
+    this.props.createNewProject(this.state.title, this.state.description, this.state.users,
+      this.state.sprints,this.state.status, this.state.current_sprint, this.state.avatar,
+      this.state.stories, this.state.commits, this.state.gCommits,this.state.color);
 
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();
-    this.setState({members: this.mylist});
+    this.setState({users: this.mylist});
     // TODO RESET STATE OF MODAL HERE
   }
 
@@ -59,8 +66,8 @@ class NewProjModal extends React.Component{
   handleClick(e) {
     e.preventDefault();
     this.setState({
-      members: this.state.members.concat([{
-        id: this.state.members.length + 1
+      members: this.state.users.concat([{
+        id: this.state.users.length + 1
       }])
     });
   }

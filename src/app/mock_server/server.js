@@ -35,7 +35,7 @@ export function stateTree(userId){
 	};
 
 	return emulateServerReturn(stateTree);
-};
+}
 
 export function serverPutTaskState(project_id, story_id, task_id, toType){
 	let projects = readDocument("projects");
@@ -87,7 +87,7 @@ export function serverPostNewProject(title,description,members){
 		'users': members,
 		'status': 'planning',
 		'current_sprint': null,
-		'sprints': {},
+		'sprints': [],
 		'stories': [],
 		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
 		'gCommits':[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10)],
