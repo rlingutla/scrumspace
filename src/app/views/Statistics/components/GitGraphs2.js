@@ -15,7 +15,7 @@ const lineOptions = {
 const GitGraphs2 = (props) => {
 
 	const barData = {
-	    labels: ['Dylan', 'Abhay', 'Ryan','Drumpf','Supriya','Niha'],
+	    labels: ['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
 	    datasets: [
 	        {
 
