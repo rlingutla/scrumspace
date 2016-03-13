@@ -9,9 +9,9 @@ import { connect } from 'react-redux';
 const mapDispatchToProps = (dispatch) => {
   return {
     createNewProject: (title, description,users,status,current_sprint,avatar,sprints,
-    stories,commits,gCommits,color) => {
+    stories,commits,timeFrame,membersOnProj,gCommits,color) => {
       dispatch(postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,
-      stories,commits,gCommits,color));
+      stories,commits,timeFrame,membersOnProj,gCommits,color));
     }
 
   };
@@ -32,6 +32,8 @@ class NewProjModal extends React.Component{
       sprints: [],
       stories: [],
       commits:[],
+      timeFrame:[],
+      membersOnProj:[],
       gCommits:[],
       color:''
     };
@@ -43,7 +45,7 @@ class NewProjModal extends React.Component{
     this.emptyList = [{id:1}];
     this.props.createNewProject(this.state.title, this.state.description, this.state.users,
       this.state.sprints,this.state.status, this.state.current_sprint, this.state.avatar,
-      this.state.stories, this.state.commits, this.state.gCommits,this.state.color);
+      this.state.stories, this.state.commits, this.state.timeFrame,this.state.membersOnProj,this.state.gCommits,this.state.color);
 
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();

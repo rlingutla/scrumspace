@@ -15,10 +15,9 @@ const lineOptions = {
 const GitGraphs2 = (props) => {
 
 	const barData = {
-	    labels: ['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
+	    labels: props.membersOnProj,
 	    datasets: [
 	        {
-
 	          fillColor: props.color,
             data: props.gCommits
 	        }
