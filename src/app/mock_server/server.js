@@ -98,12 +98,55 @@ export function serverPostNewProject(title,description){
 }
 
 export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
-	var projects = readDocument('projects');
-
-	projects.map((project) =>{
-		if(project._id === pid){
-			console.log('log');
+	var project = readDocument('projects');
+	//writes sprint data
+	let sprint = {
+		'_id': sid,
+		'name': name,
+		'start_date': start_date,
+		'end_date': end_date,
+		'scrum_time': scrum_time
+	};
+	project[pid].sprints[sid] = sprint;
+	var notInSp = project[pid].stories.filter(
+		function(value){
+			if(value._id !== sid){
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
-	});
-
+	);
+	var lastID = notInSp[notInSp.length -1]._id;
+	for(var i = 0; i < stories.length; i++){
+		let story = {
+			'_id': (lastID+i+1),
+			'title': stories[i].title,
+			'description': stories[i].description,
+			'sprint_id': stories[i].sprint_id,
+			'tasks': stories[i].tasks.map(
+				(e, i) => { let t = {
+						'_id': i,
+						'status': 'UNASSIGNED',
+						'assignedTo': null,
+						'description': e.description,
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: Date.now(),
+							modifiedUser : 0
+						}],
+						'attachments': null
+					};
+					return t;
+				}
+			)
+		};
+		stories[i] = story;
+	}
+	project[pid].stories = notInSp.concat(stories);
+	console.log(project);
+	writeDocument('projects', project);
+	return emulateServerReturn(project, false);
 }

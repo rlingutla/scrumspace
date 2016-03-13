@@ -70,13 +70,13 @@ export const createNewSprint = (pid, sid, name, start_date, end_date, scrum_time
 	};
 };
 
-function postSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
+function postNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
 	return serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories);
 }
 
-export function postNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
+export function postAndCreateNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
 	return function(dispatch){
-		return postSprint(pid, sid, name, start_date, end_date, scrum_time, stories).then(
+		return postNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories).then(
 			sprint => {
 				dispatch(createNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories));
 			},

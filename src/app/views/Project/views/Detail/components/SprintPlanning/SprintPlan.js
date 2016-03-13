@@ -1,7 +1,7 @@
 import React from 'react';
 import TimeTable from './TimeTable';
 import StoryPanel from './StoryPanel';
-import { createNewSprint } from '../../../../../../actions/';
+import { postAndCreateNewSprint } from '../../../../../../actions/';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state, props) => {
@@ -11,8 +11,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
 
   return {
-    saveSprint: (pid, sid, name, start_date, end_date, scrum_time, stories) => {
-      dispatch(createNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories));
+    createNewSprint: (pid, sid, name, start_date, end_date, scrum_time, stories) => {
+      dispatch(postAndCreateNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories));
     }
   };
 };
@@ -38,7 +38,7 @@ export default class SprintPlan extends React.Component {
 		if(typeof nextSprintInfo[0] !== 'undefined'){
 			this.state = {
         pid: this.props._id,
-        sid: nextSprintInfo[0],
+        sid: nextSprintInfo[0]._id,
 				name: nextSprintInfo[0].name,
 				start_date: nextSprintInfo[0].start_date,
 				end_date: nextSprintInfo[0].end_date,
@@ -127,12 +127,13 @@ export default class SprintPlan extends React.Component {
 	}
 
 	handleSave(){
-
+    console.log("THey call me willie james huff");
+    this.props.createNewSprint(this.state.pid, this.state.sid, this.state.name, this.state.start_date, this.state.end_date, this.state.scrum_time, this.state.stories);
 	}
 
 	//This gets infor for a planned future sprint, if there is one.
 	nextSprintInfo(sprintID){
-		sprintID = sprintID + 1; //increment sprintID +1 to see what's being planned for the next sprint
+		sprintID = sprintID +1; //increment sprintID +1 to see what's being planned for the next sprint
 		return [this.props.sprints[sprintID], this.props.stories.filter(
 			function(value){
 				if(value.sprint_id === sprintID){

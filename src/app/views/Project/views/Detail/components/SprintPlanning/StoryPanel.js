@@ -60,7 +60,7 @@ export default class StoryPanel extends React.Component {
 						}
           </div>
 					{
-						(this.props.last) ? <button type="button" className="btn btn-success pull-right no-side-margin">
+						(this.props.last) ? <button type="button" className="btn btn-success pull-right no-side-margin" onClick={(e) => this.props.handleChange('save', e, [this.props.panNumber -1])}>
              <span className="glyphicon glyphicon-ok"></span> Done
           	</button> : null
 					}
