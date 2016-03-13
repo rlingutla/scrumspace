@@ -33,7 +33,7 @@ class NewProjModal extends React.Component{
 
   createNewProj() {
     // TODO: VALIDATION CODE
-    this.props.createNewProject(this.state.title, this.state.description);
+    this.props.createNewProject(this.state.title, this.state.description,this.state.members);
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();
     // TODO RESET STATE OF MODAL HERE

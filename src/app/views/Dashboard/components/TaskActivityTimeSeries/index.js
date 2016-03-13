@@ -1,66 +1,41 @@
 import React from 'react';
 import { Line } from 'react-chartjs';
 import { lineOptions } from '../../constants/chartOptions';
+import Panel from '../shared/Panel';
+import taskTypes from '../../../../constants/taskTypes';
 
-// TODO: make this production ready
-var lineData = {
-	labels: ['T-6', 'T-5', 'T-4', 'T-3', 'T-2', 'T-1', 'T'],
-	datasets: [
-		{
+
+const getLineDataObj = () => {
+	let lineData = {
+		labels: ['T-6', 'T-5', 'T-4', 'T-3', 'T-2', 'T-1', 'T'],
+		datasets: []
+	};
+
+	for (let status in taskTypes) {
+		lineData.datasets.push({
 			label: 'DOING',
 			fillColor: 'rgba(0,0,0,0)',
-			strokeColor: 'rgba(255, 236, 159, 1)',
-			pointColor: 'rgba(255, 236, 159, 1)',
+			strokeColor: taskTypes[status].color,
+			pointColor: taskTypes[status].color,
 			pointStrokeColor: '#fff',
 			pointHighlightFill: '#fff',
 			pointHighlightStroke: 'rgba(220,220,220,1)',
-			data: null
-		},{
-			label: 'BLOCKED',
-			fillColor: 'rgba(0,0,0,0)',
-			strokeColor: 'rgba(255, 159, 159, 1)',
-			pointColor: 'rgba(255, 159, 159, 1)',
-			pointStrokeColor: '#fff',
-			pointHighlightFill: '#fff',
-			pointHighlightStroke: 'rgba(220,220,220,1)',
-			data: null
-		}, {
-			label: 'UNASSIGNED',
-			fillColor: 'rgba(0,0,0,0)',
-			strokeColor: 'rgba(128,128,128,.5)',
-			pointColor: 'rgba(128,128,128,.5)',
-			pointStrokeColor: '#fff',
-			pointHighlightFill: '#fff',
-			pointHighlightStroke: 'rgba(220,220,220,1)',
-			data: null
-		},{
-			label: 'DONE',
-			fillColor: 'rgba(0,0,0,0)',
-			strokeColor: 'rgba(120, 224, 146, 1)',
-			pointColor: 'rgba(120, 224, 146, 1)',
-			pointStrokeColor: '#fff',
-			pointHighlightFill: '#fff',
-			pointHighlightStroke: 'rgba(220,220,220,1)',
-			data: null
-		}	
-
-
-	]
+			data: [0, 0, 0, 0, 0, 0]
+		});
+	}
+	return lineData;
 };
 
 // Create an array for each data set at the end of each day
 
-// TODO AND RETHINK THIS BETTER
+// TODO: refactor this...
 
 export default (props) => {
-	for (let i = 0; i < 4; i++) {
-		lineData.datasets[i].data = new Array (0, 0, 0, 0, 0, 0);
-	}
-
+	let lineData = getLineDataObj();
 	var d = new Date();
 	d.setDate(d.getDate() - 6);
 
-	var types = ['DOING', 'BLOCKED', 'UNASSIGNED', 'DONE'];
+	var types = ['UNASSIGNED', 'DOING', 'BLOCKED', 'DONE'];
 	
 	const histories = props.data
 	.map((task) => task.history)
@@ -78,7 +53,7 @@ export default (props) => {
 				// Make it a running count
 				lineData.datasets[index].data[i] = lineData.datasets[index].data[i-1];
 			}
-
+			// TODO: maybe use underscore?
 			histories.filter((history) => {
 				var hasMovedFromStatus = (history.fromStatus === type);
 				var hasMovedToStatus = (history.toStatus === type);
@@ -95,19 +70,8 @@ export default (props) => {
 	}
 
 	return (
-		<div className="panel-wrapper">
-			<div className="row">
-				<div className="panel panel-default">
-					<div className="panel-container">
-						<div className="panel-body">
-							<div className="dashboard-summary">
-								<h4>Project Activity</h4>
-								<Line data={lineData} options={lineOptions} />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<Panel title="Project Activity Time Series">
+			<Line data={lineData} options={lineOptions} />
+		</Panel>
 	);
 };

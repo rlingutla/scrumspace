@@ -50,7 +50,7 @@ var initialData = {
 		],
 		'stories': [
 			{
-				'_id': 0,
+				'_id': 'DT-S0',
 				'title': 'Buy Hats',
 				'description': 'Design Hats \nOrder Hats\nSell Hats',
 				'sprint_id': 0,
@@ -124,7 +124,7 @@ var initialData = {
 				]
 			},
 			{
-				'_id': 1,
+				'_id': 'DT-S1',
 				'title': 'Win',
 				'description': 'Win Win Win\nNo matter what',
 				'sprint_id': 0,
@@ -134,12 +134,20 @@ var initialData = {
 						'status': 'UNASSIGNED',
 						'assignedTo': 0,
 						'description': 'Beat hilldawg',
-						'history': [],
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					}
 				]
 			}
-		]
+		],
+    'color': '#'+Math.floor(Math.random()*16777215).toString(16),
+		'commits':[3,1,6,4,8],
+		'gCommits':[12,10,4,6,5,3]
 	},
 	{
 		'_id': 1,
@@ -159,7 +167,10 @@ var initialData = {
 		'current_sprint': null,
 		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
 		'sprints': [],
-		'stories': []
+		'stories': [],
+		'commits':[4,7,2,8,9],
+    'gCommits':[18,15,6,9,11,13],
+		'color': '#'+Math.floor(Math.random()*16777215).toString(16)
 	}
 	]
 };

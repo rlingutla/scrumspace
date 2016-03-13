@@ -88,7 +88,10 @@ export function serverPostNewProject(title,description){
 		'status': 'planning',
 		'current_sprint': null,
 		'sprints': {},
-		'stories': []
+		'stories': [],
+		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
+    'gCommits':[10+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10)],
+		'color': '#'+Math.floor(Math.random()*16777215).toString(16)
 	};
 
 	writeDocument('projects', project);

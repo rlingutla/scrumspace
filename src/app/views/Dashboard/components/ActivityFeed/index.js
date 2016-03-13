@@ -1,7 +1,8 @@
 import React from 'react';
 import ActivityFeedItem from './ActivityFeedItem';
+import Panel from '../shared/Panel';
 
-const fiveMostRecentActivities = (tasks) => {
+const activities = (tasks) => {
 	// set reference to task on history (TODO, IS this unclean?, use computed properties?)
 	var allActivities = [];
 
@@ -20,25 +21,16 @@ const fiveMostRecentActivities = (tasks) => {
 };
 
 export default (props) => {
-	var data = fiveMostRecentActivities(props.tasks).slice(0, 5); // TODO: implement scrolling ??
+	var data = activities(props.tasks).slice(0, 4); // TODO: implement scrolling ??
 	return (
-		<div className="row">
-			<div className="panel panel-default">
-				<div className="panel-container">
-					<div className="panel-body">
-						<div className="dashboard-summary">
-							<h4>Activity Feed</h4>
-							<div className="row">
-								<div className="col-md-12">
-									{
-										data.map((history, i) => <ActivityFeedItem activity={history} key={i}></ActivityFeedItem>)
-									}
-								</div>
-							</div>
-						</div>
-					</div>
+		<Panel title='Activity Feed'>
+			<div className="row">
+				<div className="col-md-12">
+					{
+						data.map((history, i) => <ActivityFeedItem activity={history} key={i}></ActivityFeedItem>)
+					}
 				</div>
 			</div>
-		</div>	
+		</Panel>
 	);
 };
