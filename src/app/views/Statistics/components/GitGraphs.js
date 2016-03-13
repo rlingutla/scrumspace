@@ -15,22 +15,13 @@ const lineOptions = {
 const GitGraphs = (props) => {
 
 	const barData = {
-<<<<<<< HEAD
-	    labels: ["Mon", "Tues", "Wed","Thurs","Fri"],
-	    datasets: [
-	        {
-	            fillColor: props.color,
-	          /*  data: [Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10)],*/
-              data: props.commits
-          }
-=======
+
 	    labels: ['Mon','Tues','Wed','Thurs','Fri'],
 	    datasets: [
 	        {
 	          fillColor: props.color,
             data: props.commits
 	        }
->>>>>>> 8c5b1a91a302f5e4ab1416a2441a977d6bb7b6c7
 	    ]
 	};
 
