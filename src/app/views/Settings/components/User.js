@@ -1,25 +1,19 @@
 import React from 'react';
 
+var MockUser = [  {first: 'Donald', last: 'Trump', username:'jtrump', email:'jtrump@america.com'}
+];
+
 export default class User extends React.Component {
-	constructor(props)
-	{
-		super(props);
-		this.state ={
-			data: 'Initial data'
-		};
-		this.updateState = this.updateState.bind(this);
-	}
-	updateState(e)
-	{
-		this.setState({data:e.target.value});
-	}
+
+
 	render() {
+		var myUser = MockUser[0];
 		return (
 			<div className="panel-body">
 				<div className="row">
 					<div className="col-md-6">
 						<div className="form-group">
-							<label>First Name:</label> <input className="form-control" id="first-name"placeholder="John" type="first-name" />
+							<label>First Name:</label> <input className="form-control" id="first-name"placeholder={myUser.first} type="first-name" />
 						</div>
 					</div>
 					<div className="col-md-6">
