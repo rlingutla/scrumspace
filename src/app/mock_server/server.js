@@ -104,11 +104,6 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 	var project = readDocument('projects');
 	//writes sprint data
 	//find pid
-	for(var c = 0; c < project.length; c++){
-		if(project[c]._id === pid){
-			pid = project[c]._id;
-		}
-	}
 	stories = stories.filter((e) =>{
 		if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
 			return false;

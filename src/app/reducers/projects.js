@@ -31,8 +31,9 @@ const projects = (state = [], action) => {
 				} else return project;
 			});
 		case 'CREATE_NEW_PROJECT':
+      //find right project
 			let project = _.defaults({
-        _id: 2,
+        _id: state.length,
 				title: action.title,
 				description: action.description
 			}, projectDefault());
@@ -43,11 +44,6 @@ const projects = (state = [], action) => {
 			]
     case 'CREATE_NEW_SPRINT':
       var p = state;
-      for(var c = 0; c < p.length; c++){
-    		if(p[c]._id === action.pid){
-    			action.pid = p[c]._id;
-    		}
-    	}
       action.stories = action.stories.filter((e) =>{
 				if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
 					return false;
