@@ -146,5 +146,6 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 		stories[i] = story;
 	}
 	project[pid].stories = notInSp.concat(stories);
+	writeDocument('projects', project[pid]);
 	return emulateServerReturn(project[pid], false);
 }
