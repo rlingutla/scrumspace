@@ -1,5 +1,7 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button } from 'react-bootstrap';
+import TaskDetailModal from '../views/Detail/components/TaskDetailModal';
+
 import ItemTypes from '../../../constants/itemTypes';
 import TaskTypes from '../../../constants/taskTypes';
 
@@ -13,47 +15,42 @@ import { changeTaskState, putAndChangeTaskState } from '../../../actions/';
 
 const taskSource = {
 	beginDrag(props){
-		// console.log("start draggin!", props);
 		return props;
 	}
-}
+};
 
 function collect(connect, monitor){
 	return {
 		connectDragSource: connect.dragSource(),
 		isDragging: monitor.isDragging()
-	}
-};
+	};
+}
 
 class Task extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { modal: false };
-
-		//give functions access to class this
-		this.openDetail = this.openDetail.bind(this);
-		this.closeDetail = this.closeDetail.bind(this);
+		this.state = { 
+			isModalOpen: false 
+		};
 	}
 
-	openDetail(){
-		this.setState({ modal: true });
-	}
-	closeDetail(){
-		this.setState({ modal: false });
+	changeModal(){
+		let modal = !this.state.isModalOpen;
+		this.setState({ isModalOpen: modal});
 	}
 
 	getTaskStyle(status){
-		return { borderColor: TaskTypes[status].color }
+		return { borderColor: TaskTypes[status].color };
 	}
 
 	render() {
 		const {connectDragSource, id, onMove, isDragging, ...props} = this.props;
 		const taskStyles = {
 
-		}
+		};
 
-		if(isDragging){
+		if (isDragging){
 			return (
 				<div>
 					<div className="task draggingSource"></div>
@@ -63,7 +60,8 @@ class Task extends React.Component {
 
 		return connectDragSource(
 			<div>
-				<div className="task" onClick={this.openDetail} style={this.getTaskStyle(this.props.status)}>
+				<div className="task" onClick={(e) => this.changeModal(e)} style={this.getTaskStyle(this.props.status)}>
+				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
 				    <div className="heading">
 				        <div className="row left-right-align">
 				            <div className="col-md-6"><a>{this.props._id}</a></div>
@@ -86,11 +84,17 @@ const mapStateToProps = (state) => {
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	//do our nasty search
 	let theTask = stateProps
-	.projects.find((proj) => proj._id == ownProps.project_id)
-	.stories.find((story) => story._id == ownProps.story_id)
-	.tasks.find((task) => task._id == ownProps.task_id);
-
-	return Object.assign(theTask, { project_id: ownProps.project_id, story_id: ownProps.story_id, _id: ownProps.task_id }, dispatchProps);
+	.projects.find((proj) => proj._id === ownProps.project_id)
+	.stories.find((story) => story._id === ownProps.story_id)
+	.tasks.find((task) => task._id === ownProps.task_id);
+	return Object.assign(theTask, 
+		{ 
+			project_id: ownProps.project_id, 
+			story_id: ownProps.story_id, 
+			_id: ownProps.task_id, 
+			users: ownProps.users 
+		}, 
+		dispatchProps);
 }
 
 //maps any actions this component dispatches to component props
@@ -101,7 +105,7 @@ const mapDispatchToProps = (dispatch) => {
   		dispatch(putAndChangeTaskState(project_id, story_id, task_id, toType));
   	}
   };
-}
+};
 
 export default connect(
   mapStateToProps,
