@@ -1,6 +1,7 @@
 import React from 'react';
 import { Line } from 'react-chartjs';
 import { lineOptions } from '../../constants/chartOptions';
+import Panel from '../shared/Panel';
 
 // TODO: make this production ready
 var lineData = {
@@ -95,19 +96,8 @@ export default (props) => {
 	}
 
 	return (
-		<div className="panel-wrapper">
-			<div className="row">
-				<div className="panel panel-default">
-					<div style={{minHeight: '380px'}}>
-						<div className="panel-body">
-							<div className="dashboard-summary">
-								<h4>Activity Time Series</h4>
-								<Line data={lineData} options={lineOptions} />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<Panel title="Project Activity Time Series">
+			<Line data={lineData} options={lineOptions} />
+		</Panel>
 	);
 };
