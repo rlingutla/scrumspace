@@ -34,7 +34,7 @@ const StoryPanelFactory = () => {
 export default class SprintPlan extends React.Component {
 	constructor(props){
 		super(props);
-		var nextSprintInfo = this.nextSprintInfo(this.props.current_sprint);
+		var nextSprintInfo = (this.props.sprints.length === 1) ? this.sprintInfo(0) : this.sprintInfo(this.props.current_sprint +1);
 		if(typeof nextSprintInfo[0] !== 'undefined'){
 			this.state = {
         pid: this.props._id,
@@ -127,13 +127,11 @@ export default class SprintPlan extends React.Component {
 	}
 
 	handleSave(){
-    console.log("THey call me willie james huff");
     this.props.createNewSprint(this.state.pid, this.state.sid, this.state.name, this.state.start_date, this.state.end_date, this.state.scrum_time, this.state.stories);
 	}
 
 	//This gets infor for a planned future sprint, if there is one.
-	nextSprintInfo(sprintID){
-		sprintID = sprintID +1; //increment sprintID +1 to see what's being planned for the next sprint
+	sprintInfo(sprintID){
 		return [this.props.sprints[sprintID], this.props.stories.filter(
 			function(value){
 				if(value.sprint_id === sprintID){

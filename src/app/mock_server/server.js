@@ -118,13 +118,13 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 			}
 		}
 	);
-	var lastID = notInSp[notInSp.length -1]._id;
+	var nextID = (notInSp.length !== 0) ? notInSp[notInSp.length -1]._id + 1 : 0;
 	for(var i = 0; i < stories.length; i++){
 		let story = {
-			'_id': (lastID+i+1),
+			'_id': (nextID+i),
 			'title': stories[i].title,
 			'description': stories[i].description,
-			'sprint_id': stories[i].sprint_id,
+			'sprint_id': sid,
 			'tasks': stories[i].tasks.map(
 				(e, i) => { let t = {
 						'_id': i,
@@ -146,7 +146,5 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 		stories[i] = story;
 	}
 	project[pid].stories = notInSp.concat(stories);
-	console.log(project);
-	writeDocument('projects', project);
-	return emulateServerReturn(project, false);
+	return emulateServerReturn(project[pid], false);
 }
