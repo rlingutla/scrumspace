@@ -100,6 +100,14 @@ export function serverPostNewProject(title,description){
 export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
 	var project = readDocument('projects');
 	//writes sprint data
+	stories = stories.filter((e) =>{
+		if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
+			return false;
+		}
+		else{
+			return true;
+		}
+	});
 	let sprint = {
 		'_id': sid,
 		'name': name,
@@ -110,7 +118,7 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 	project[pid].sprints[sid] = sprint;
 	var notInSp = project[pid].stories.filter(
 		function(value){
-			if(value._id !== sid){
+			if(value.sprint_id !== sid){
 				return true;
 			}
 			else {
@@ -141,7 +149,14 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 					};
 					return t;
 				}
-			)
+			).filter((e) =>{
+				if(e.description === null || e.description === '' || typeof e.description === 'undefined'){
+					return false;
+				}
+				else{
+					return true;
+				}
+			})
 		};
 		stories[i] = story;
 	}
