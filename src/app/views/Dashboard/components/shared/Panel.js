@@ -3,7 +3,7 @@ import React from 'react';
 export default (props) => {
 	return (
 		<div className="row">
-			<div className="panel panel-default">
+			<div className="panel panel-default" style={{marginRight: '20px'}}>
 				<div style={{minHeight: '380px'}}>
 					<div className="panel-body">
 						<div style={{textAlign: 'center'}}>
