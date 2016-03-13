@@ -127,6 +127,8 @@ var initialData = {
 				'_id': 'DT-S1',
 				'title': 'Win',
 				'description': 'Win Win Win\nNo matter what',
+				'commits':[3,1,6,4,8],
+    		'gCommits':[12,10,4,6,5,3],
 				'sprint_id': 0,
 				'tasks': [
 					{
@@ -144,7 +146,8 @@ var initialData = {
 					}
 				]
 			}
-		]
+		],
+    'color': '#'+Math.floor(Math.random()*16777215).toString(16)
 	},
 	{
 		'_id': 1,
@@ -164,7 +167,10 @@ var initialData = {
 		'current_sprint': null,
 		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
 		'sprints': [],
-		'stories': []
+		'stories': [],
+		'commits':[4,7,2,8,9],
+    'gCommits':[18,15,6,9,11,13],
+		'color': '#'+Math.floor(Math.random()*16777215).toString(16)
 	}
 	]
 };

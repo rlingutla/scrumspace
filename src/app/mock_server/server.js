@@ -88,8 +88,10 @@ export function serverPostNewProject(title,description){
 		'status': 'planning',
 		'current_sprint': null,
 		'sprints': {},
-		'stories': []
-		'color':
+		'stories': [],
+		'commits':[4,7,2,8,9],
+    'gCommits':[18,15,6,9,11,13],
+		'color': '#'+Math.floor(Math.random()*16777215).toString(16)
 	};
 
 	writeDocument('projects', project);
