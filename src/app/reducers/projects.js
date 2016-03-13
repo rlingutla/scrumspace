@@ -1,4 +1,4 @@
-import { projectDefault } from '../constants/models'; 
+import { projectDefault } from '../constants/models';
 import _ from 'underscore';
 
 const task = (state, action) => {
@@ -32,7 +32,7 @@ const projects = (state = [], action) => {
 			});
 		case 'CREATE_NEW_PROJECT':
 			let project = _.defaults({
-				title: action.title, 
+				title: action.title,
 				description: action.description
 			}, projectDefault());
 
@@ -40,6 +40,70 @@ const projects = (state = [], action) => {
 				...state,
 				project
 			]
+    case 'CREATE_NEW_SPRINT':
+      var p = state;
+      action.stories = action.stories.filter((e) =>{
+				if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
+					return false;
+				}
+				else{
+					return true;
+				}
+			});
+      let sprint = {
+        '_id': action.sid,
+        'name': action.name,
+        'start_date': action.start_date,
+        'end_date': action.end_date,
+        'scrum_time': action.scrum_time
+      };
+      p[action.pid].sprints[action.sid] = sprint;
+      var notInSp = p[action.pid].stories.filter(
+        function(value){
+          if(value.sprint_id !== action.sid){
+            return true;
+          }
+          else {
+            return false;
+          }
+        }
+      );
+      var nextID = (notInSp.length !== 0) ? notInSp[notInSp.length -1]._id + 1 : 0;
+      for(var i = 0; i < action.stories.length; i++){
+        let story = {
+          '_id': (nextID+i),
+          'title': action.stories[i].title,
+          'description': action.stories[i].description,
+          'sprint_id': action.sid,
+          'tasks': action.stories[i].tasks.map(
+            (e, i) => { let t = {
+                '_id': i,
+                'status': 'UNASSIGNED',
+                'assignedTo': null,
+                'description': e.description,
+                'history': [{
+                  fromStatus: null,
+                  toStatus: 'UNASSIGNED',
+                  modifiedTime: Date.now(),
+                  modifiedUser : 0
+                }],
+                'attachments': null
+              };
+              return t;
+            }
+          ).filter((e) =>{
+    				if(e.description === null || e.description === '' || typeof e.description === 'undefined'){
+    					return false;
+    				}
+    				else{
+    					return true;
+    				}
+    			})
+        };
+        action.stories[i] = story;
+      }
+      p[action.pid].stories = notInSp.concat(action.stories);
+      return p;
 		default: //just returning state for now
 			return state;
 	}
