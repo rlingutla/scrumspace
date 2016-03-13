@@ -1,3 +1,4 @@
+
 const xDaysAgoInUnixTime = (x) => {
 	return Date.now() - 1000* 60 * 60 * 24 * x;
 };
@@ -29,20 +30,21 @@ var initialData = {
 				'password': 'd4866854120e8bb207d6f8e11fce8b99'
 			}
 		],
+
 		'status': 'sprint',
 		'current_sprint': 0,
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
 		'sprints': [
 			{
 				'_id': 0,
-				'name': 'V2 Release',
+				'name': 'V1 Release',
 				'start_date': 1456900811760,
 				'end_date': 1458925200000,
 				'scrum_time': '9:00 AM'
 			},
 			{
 				'_id': 1,
-				'name': 'V1 Release',
+				'name': 'V2 Release',
 				'start_date': 1456900811760,
 				'end_date': 1456900811800,
 				'scrum_time': '9:00 AM'
@@ -134,12 +136,23 @@ var initialData = {
 						'status': 'UNASSIGNED',
 						'assignedTo': 0,
 						'description': 'Beat hilldawg',
-						'history': [],
+						'history': [{
+							fromStatus: null,
+							toStatus: 'UNASSIGNED',
+							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedUser : 0
+						}],
 						'attachments': null
 					}
 				]
 			}
-		]
+		],
+		'commits':[3,1,6,4,8],
+		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
+		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
+		'gCommits':[12,10,4,6,5,6],
+		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
+
 	},
 	{
 		'_id': 1,
@@ -159,7 +172,13 @@ var initialData = {
 		'current_sprint': null,
 		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
 		'sprints': [],
-		'stories': []
+		'stories': [],
+		'commits':[4,7,2,8,9],
+		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
+		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
+		'gCommits':[18,15,6,9,11,13],
+		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
+
 	}
 	]
 };

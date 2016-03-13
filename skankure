@@ -1,0 +1,546 @@
+[33mcommit a65105be3ba5d5c554cc0536754b7b1d64e61f36[m
+Merge: 45781d1 7b8d365
+Author: Dylan Fischler <efischler@umass.edu>
+Date:   Sun Mar 6 12:04:44 2016 -0500
+
+    Merge pull request #3 from dylanfischler/projectBoard
+    
+    Project board
+
+[33mcommit 7b8d365045087bc4847a504094993e0ae91663bb[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sun Mar 6 12:00:29 2016 -0500
+
+    fixed broken build, added stage-0 to deps
+
+[33mcommit 899598846e1c63f476b77fce86052d66905236ae[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 23:10:15 2016 -0500
+
+    refactoring
+
+[33mcommit 554e9f18cc7f57170905f64c44be21c535b7d5e6[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 22:53:47 2016 -0500
+
+    refactor into stateless component
+
+[33mcommit 7fde7df392477fb11b88aca92a01bb7b2aa7e559[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 22:48:29 2016 -0500
+
+    really cool exports w/ stage-0 preset, also refactoring dashboard into components
+
+[33mcommit c2d53c30aaa81e33e54ddefac079f31d5326e372[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 22:12:43 2016 -0500
+
+    charts again! with lots of inline options
+
+[33mcommit 9c34d12a927eb72e016c41c767a0d4874d198b37[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 21:23:41 2016 -0500
+
+    refactor
+
+[33mcommit 4b98306cd33f06bad5b6f74aa6cbf8fede7ca219[m
+Merge: 08fe628 ad3e0f7
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 21:11:18 2016 -0500
+
+    Merge branch 'projectBoard' of https://github.com/dylanfischler/startup-product-frontend-scrumspace into projectBoard
+
+[33mcommit 08fe628c117e6dfa394b761d612341028a02d3bd[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 21:11:06 2016 -0500
+
+    dat object assign
+
+[33mcommit ad3e0f799d4b269b5391bf6db68e009c0664fe4f[m
+Merge: 5eb25cf 5a5c6c9
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sat Mar 5 21:10:38 2016 -0500
+
+    Merge branch 'projectBoard' of https://github.com/dylanfischler/startup-product-frontend-scrumspace into projectBoard
+
+[33mcommit 5eb25cf3ebbf30e35975d4f9751bfd79add52cae[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sat Mar 5 21:10:24 2016 -0500
+
+    refactored container organization
+
+[33mcommit 5a5c6c9312119a3360a154f82c66fd82184fcd76[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 21:01:37 2016 -0500
+
+    removed
+
+[33mcommit b136e88f4e20dafca33b4a750221bdab727ea1ea[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 19:59:49 2016 -0500
+
+    removed some unneeded code
+
+[33mcommit f40471698be38728aae2e1e78355106b6e58177a[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 19:54:36 2016 -0500
+
+    server rendering works better w/ redux
+
+[33mcommit 21ca078cb8dc70274037783a5b338a12d0eefb37[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sat Mar 5 18:00:30 2016 -0500
+
+    added some initial data
+
+[33mcommit 597c74207f83ac759dcd0da35cd176e4fca38a49[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sat Mar 5 17:56:58 2016 -0500
+
+    app doesn't render now, abhay is fixing some initial loading stuff
+
+[33mcommit 5360c0230c8f98c4321b7acba290ee2499e4d599[m
+Merge: 458c77c 45781d1
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sat Mar 5 16:57:27 2016 -0500
+
+    Merge branch 'master' of https://github.com/dylanfischler/startup-product-frontend-scrumspace into projectBoard
+
+[33mcommit 45781d1b68ad0c063de88d630d3983350b09e63f[m
+Merge: 9e270e8 3d81f08
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sat Mar 5 16:54:57 2016 -0500
+
+    stuff
+
+[33mcommit 3d81f0855dc8430b9b35b1d6584bf5814448ea3f[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Sat Mar 5 13:40:54 2016 -0500
+
+    refactored
+
+[33mcommit 9e270e85d36b4d591c5660acec5ac63eded1049b[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Fri Mar 4 09:38:53 2016 -0500
+
+    some initial details for breadcrumbs
+
+[33mcommit f69d18a19646e3081c5ffc6360f8488d6ecef73a[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Fri Mar 4 01:10:06 2016 -0500
+
+    added nodemon to support server reloading
+
+[33mcommit 458c77cd776e8cce4c6a425417e5d1163000733f[m
+Merge: 4ebdf25 23338cb
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 20:15:03 2016 -0500
+
+    Merge branch 'master' of https://github.com/dylanfischler/startup-product-frontend-scrumspace into projectBoard
+
+[33mcommit 23338cb99196e5206732c3666edd26f7ec802b0b[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 20:14:46 2016 -0500
+
+    fixed indexRedirect
+
+[33mcommit 4ebdf25f63effca666b0c1c76c72ccfabb1e9446[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 20:06:56 2016 -0500
+
+    some initial scrum board stuff
+
+[33mcommit f46ad6dd385a421406d9bbc3ac484ae38e8c6fb2[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 18:52:33 2016 -0500
+
+    fixed some stuff
+
+[33mcommit 255f1cd52919eb63ecc1cc03b0e0b66e6436dcc8[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 17:14:24 2016 -0500
+
+    ...and.........lets fix it
+
+[33mcommit 27d019f7474af425ac31fd99c9701baad5c023db[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 17:10:47 2016 -0500
+
+    lets fail this MF
+
+[33mcommit f42b9e2611b4b1d6b9b77857eace3791f32fc328[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 17:09:59 2016 -0500
+
+    OMG I DID IT
+
+[33mcommit a6ca8a8bc4ce4584bae722f08891cf39812bae14[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 17:02:27 2016 -0500
+
+    well, I couldn't get webpack fail to fail the build :( BUT I fixed the actual error that was failing it so, I guess there's some good that came out of it
+
+[33mcommit 6e228f21a8c1542188f3ccde9c3f9337031ed6b3[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 16:44:22 2016 -0500
+
+    meh, try #2
+
+[33mcommit 382fff8d2b8ec437afb75ea82215bd9a31807698[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 16:35:06 2016 -0500
+
+    hopefully webpack failure will fail build task now
+
+[33mcommit 78281e99c89c27236228034191f866789f40ce6d[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 15:29:36 2016 -0500
+
+    started work on Project views. bandaid database.js until server render is fixed/disabled
+
+[33mcommit a8893dfceaeadbfcd990e28a73918a7497c7f86d[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Mar 3 00:29:24 2016 -0500
+
+    some project prop passin
+
+[33mcommit 7f79a134a7ed3a420695092599b2beb7f25e788e[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Wed Mar 2 18:47:04 2016 -0500
+
+    meh
+
+[33mcommit 7de6f03a09302abd7af3635b68120fb0276e328b[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Wed Mar 2 17:29:37 2016 -0500
+
+    added in dynamic project selection page
+
+[33mcommit 67073a910a21a47595cefdfa95517422a596b5f5[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Wed Mar 2 10:26:09 2016 -0500
+
+    some super intro project list work
+
+[33mcommit 1fc56142a4685b37f85f58420ed64b62b212bccb[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Wed Mar 2 09:44:17 2016 -0500
+
+    color scheme changes (in progress)
+
+[33mcommit 00ed659549989afeb0705fb8ed199dddc3851ef3[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Wed Mar 2 09:29:04 2016 -0500
+
+    populating initial data
+
+[33mcommit 087ab56f9da690d7fc46cdb6a051b3e69e5f1551[m
+Merge: b184340 c012951
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Wed Mar 2 09:05:46 2016 -0500
+
+    Merge branch 'implement_redux'
+
+[33mcommit b1843401257b927c933ea00f8a8e4215642ba692[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Wed Mar 2 09:05:18 2016 -0500
+
+    some mock additions
+
+[33mcommit adbaaca3186760e30cbbcb3aeb75095c0b334709[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Wed Mar 2 01:47:19 2016 -0500
+
+    added mock server and DB
+
+[33mcommit ad0e7f6a6808b981a124c2ec628268e4bc3aeb55[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Tue Mar 1 22:03:02 2016 -0500
+
+    removed unneeded script paths
+
+[33mcommit c01295118269380c5eca4102e3c5e4f852a354cd[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Tue Mar 1 21:42:58 2016 -0500
+
+    added in server sent initial state support on client side (disabled)
+
+[33mcommit 853f0331276b808bac31e50de41f6644cbf72032[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Tue Mar 1 21:31:14 2016 -0500
+
+    initial implementation
+
+[33mcommit 44057d5b6fbe655f1ddd090efd43a4b89e545a90[m
+Merge: 4a10800 97b27e0
+Author: Dylan Fischler <efischler@umass.edu>
+Date:   Tue Mar 1 20:04:52 2016 -0500
+
+    Merge pull request #2 from umass-cs-326/master
+    
+    merging in changes from 326 repo
+
+[33mcommit 97b27e01fc11b9a6822db120b291a0a22d1ca0f4[m
+Merge: b68e7ae acd49bb
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Tue Mar 1 20:03:35 2016 -0500
+
+    merging in org_refactor
+
+[33mcommit acd49bb930224cab2fc7ca8712c7e3d6b0c395a4[m
+Merge: ddc8d19 4a10800
+Author: Dylan Fischler <efischler@umass.edu>
+Date:   Tue Mar 1 19:56:54 2016 -0500
+
+    Merge pull request #4 from dylanfischler/master
+    
+    Pulling in changes to org_refactor in prep to merge into master
+
+[33mcommit 4a1080026cd52dc90b36c948ae551a9603b6f23a[m
+Author: Dylan Fischler <efischler@umass.edu>
+Date:   Tue Mar 1 19:37:58 2016 -0500
+
+    Update state_tree.md
+    
+    added in title
+
+[33mcommit 88648a25711f591043cc9e60537431f2211510c0[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Tue Mar 1 19:36:34 2016 -0500
+
+    updated README, added statetree, customized some npm scripts
+
+[33mcommit dcd6ff05081ad20a7328869dd321316dedd76ded[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Tue Mar 1 16:53:44 2016 -0500
+
+    fixed .eslintrc json errors
+
+[33mcommit b68e7aeea8cd03822442d5c2bb47e9cd17aac21a[m
+Author: Dylan Fischler <efischler@umass.edu>
+Date:   Fri Feb 26 17:24:27 2016 -0500
+
+    ER submission
+
+[33mcommit d825f6f329a9411f7ec2f2a879f7953b6085dff1[m
+Author: Dylan Fischler <efischler@umass.edu>
+Date:   Fri Feb 26 17:21:59 2016 -0500
+
+    Delete submission_03.pdf
+    
+    uploading a new one
+
+[33mcommit 50ae13b9cca567114c23e9824264bb804e4ca96c[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Fri Feb 26 17:20:19 2016 -0500
+
+    added ER submission
+
+[33mcommit e143dd8c09bc78ec876f628f065c08979a1db956[m
+Author: Rachana Lingutla <rlingutla@umass.edu>
+Date:   Fri Feb 26 14:52:30 2016 -0500
+
+    Added Part 3 report
+
+[33mcommit bcde1c5c7c5809a2a5292b67a7daa735e2b3b60d[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Fri Feb 26 00:18:36 2016 -0500
+
+    fixed broken event handlers
+
+[33mcommit 4ee57833ef5f22d54cda13a9dce180c2856c5aec[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Thu Feb 25 15:52:11 2016 -0500
+
+    some cleaning
+
+[33mcommit a86c911b0b6e39f6771c6c7cfcff808a63f0fd18[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Wed Feb 24 13:05:43 2016 -0500
+
+    more explicit server entry point
+
+[33mcommit a44eb61c0869065156551d4b06f70638e2f63839[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Tue Feb 23 23:11:56 2016 -0500
+
+    fixed some issues
+
+[33mcommit 3d5996373f4584a2f4803a66d636caaed3287e23[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Tue Feb 23 23:02:56 2016 -0500
+
+    refactoring
+
+[33mcommit 497195d65d263c184347e02a0de5cc9f87021aed[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Tue Feb 23 21:07:56 2016 -0500
+
+    refactoring
+
+[33mcommit 85a8d6550803ecf4884280e608d74ab4e39f08f5[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Tue Feb 23 19:36:53 2016 -0500
+
+    deploy
+
+[33mcommit 3917983b48ab9b173380afaf2312994472ef3715[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Tue Feb 23 19:12:58 2016 -0500
+
+    server-side rendering
+
+[33mcommit 69bf72086ad72a462f11cc753ca6e44118010925[m
+Merge: 6e59b72 e13cf90
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Tue Feb 23 01:24:56 2016 -0500
+
+    Merge branch 'master' of https://github.com/dylanfischler/startup-product-frontend-scrumspace
+
+[33mcommit 6e59b7244a5df7abc75cf3b8f782c73d1c3c4753[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Tue Feb 23 01:24:46 2016 -0500
+
+    moved to src
+
+[33mcommit e13cf90d7a92531ef11635e85f41eccd775ab218[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 13:19:18 2016 -0500
+
+    added folder-structure doc
+
+[33mcommit f98c2b3719823cc048f1400c728dc9723df76d4b[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Mon Feb 22 04:40:25 2016 -0500
+
+    wrong case, now it's fixed
+
+[33mcommit c4f94d1ef1da5a0bfe77b013e1b2cfb35c556e5c[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Mon Feb 22 03:33:28 2016 -0500
+
+    Everything will have a neat hierarchical structure now!
+
+[33mcommit 791060b7bcbf03e71822bca12788c3452098aa6e[m
+Author: Abhay Vatsa <avatsa@umass.edu>
+Date:   Mon Feb 22 02:52:42 2016 -0500
+
+    new structure for all except project
+
+[33mcommit f6c6e1619f6b22cb9c8080c26bb288935d0dfdda[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 01:29:52 2016 -0500
+
+    reverted test changes
+
+[33mcommit 7fbb404c413077318c1336079d12df93bfe0f375[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 01:22:52 2016 -0500
+
+    set up correct ports for app/deploy
+
+[33mcommit f10eeb98974a86e1ea8129a630a6fc7b039dd78d[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 01:17:37 2016 -0500
+
+    added slack and updated deploy hook
+
+[33mcommit 5420e8574aeece49b5a96ea410f37f859d23bc9b[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 01:10:23 2016 -0500
+
+    first real deploy test
+
+[33mcommit ba1e7d109b2c35d2836ecfd6182196de1894ea75[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 01:05:33 2016 -0500
+
+    added new deploy script
+
+[33mcommit 5c46fb74a7684e12afd0a537da6eead0ca1d85cb[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 00:58:54 2016 -0500
+
+    travis test#4
+
+[33mcommit e946e4e35ab150447905bf136add982e093e1d6a[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 00:50:06 2016 -0500
+
+    travis test#3
+
+[33mcommit 3fd36c4af31f8efe4b2bdcdc9301076ee4e61f6c[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 00:43:04 2016 -0500
+
+    travis test#2
+
+[33mcommit 4b20cd204e7a476143e9ef2e06c8ddfc3d987c80[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 00:29:37 2016 -0500
+
+    travis test#1
+
+[33mcommit b700a7b1a95b2a76eda847ffab263e8d41411a54[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Mon Feb 22 00:21:24 2016 -0500
+
+    added notifications to travis
+
+[33mcommit df2fab2c7a8ad980ea98d9ff081f99bc757dff29[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sun Feb 21 23:41:15 2016 -0500
+
+    starting travis stuff
+
+[33mcommit 7ea255c22810ce66493f72455b5c0e6cce5fa08d[m
+Merge: 6fb77fa 7583419
+Author: Dylan Fischler <efischler@umass.edu>
+Date:   Sun Feb 21 23:34:22 2016 -0500
+
+    Merge pull request #1 from dylanfischler/org_refactor
+    
+    Org refactor
+
+[33mcommit 6fb77fa0d5cfc882aa0f80085ebf25ddd17c18a4[m
+Author: Dylan Fischler <efischler@umass.edu>
+Date:   Sun Feb 21 23:18:19 2016 -0500
+
+    Delete TESTING.md
+
+[33mcommit 75834191a9fd9efd39f67e8ab4b3caca53a59f98[m
+Merge: a6c5a01 35e4ced
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sun Feb 21 23:17:18 2016 -0500
+
+    Merge branch 'master' of https://github.com/dylanfischler/startup-product-frontend-scrumspace into org_refactor
+
+[33mcommit a6c5a01a37628aeaa46d08b647d4219e551a6deb[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sun Feb 21 23:17:11 2016 -0500
+
+    added logging to deploy script
+
+[33mcommit 2687daa48c16b48446709a9f4a084537d6c01a71[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sun Feb 21 22:56:59 2016 -0500
+
+    topNav.js case change
+
+[33mcommit df60c00c5f40136c46e6e0040ed669c2eab5c7d9[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sun Feb 21 22:46:25 2016 -0500
+
+    some config port changes
+
+[33mcommit 96544e645a6492a3106729fcfd9662b89b80812b[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sun Feb 21 14:48:41 2016 -0500
+
+    org deploy test 2
+
+[33mcommit deb0f31c4702622204819858d971104476d6df63[m
+Author: Dylan Fischler <dylanfischler@gmail.com>
+Date:   Sun Feb 21 14:47:17 2016 -0500
+
+    MOREEEE

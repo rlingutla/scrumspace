@@ -1,9 +1,13 @@
 import React from 'react';
 import ProjectProgressBar from './ProjectProgressBar';
 import ScrumBoard from './ScrumBoard/ScrumBoard';
+import { getCurrentSprint } from '../../../../../shared/utils/utils';
 
 const BoardView = (props) => {
-	if(props.current_sprint != null)
+	let currentSprint = getCurrentSprint(props);
+
+
+	if(currentSprint)
 		return (
 			<div className="content">
 				<div className="project-info container-fluid">
