@@ -2,6 +2,7 @@ import React from 'react';
 import { Doughnut } from 'react-chartjs';
 import { doughnutOptions } from '../../constants/chartOptions';
 import taskTypes from '../../../../constants/taskTypes';
+import Panel from '../shared/Panel';
 
 const capitalize = (s) => {
 	return s[0] + s.slice(1).toLowerCase();
@@ -49,19 +50,8 @@ const getTaskDistribution = (tasks) => {
 
 export default (props) => {
 	return (
-		<div className="panel-wrapper">
-			<div className="row">
-				<div className="panel panel-default">
-					<div style={{minHeight: '380px'}}>
-						<div className="panel-body">
-							<div className="dashboard-summary">
-								<h4>Project Task Distribution</h4>
-								<Doughnut data={getTaskDistribution(props.tasks)} options={doughnutOptions}/>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<Panel title="Project Task Distribution">
+			<Doughnut data={getTaskDistribution(props.tasks)} options={doughnutOptions}/>
+		</Panel>
 	);
 };

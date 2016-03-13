@@ -16,7 +16,6 @@ export default (props) => {
 						<input className="form-control" id="new-password" placeholder="new password" type="last-name"/>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	);
