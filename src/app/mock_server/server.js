@@ -120,8 +120,8 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 	let sprint = {
 		'_id': sid,
 		'name': name,
-		'start_date': start_date,
-		'end_date': end_date,
+		'start_date': parseInt(moment(start_date).format('x')),
+		'end_date': parseInt(moment(end_date).format('x')),
 		'scrum_time': scrum_time
 	};
 	(typeof project[pid].sprints[sid] === 'undefined' || project[pid].sprints[sid] === null) ? project[pid].sprints[0] = sprint : project[pid].sprints[sid] = sprint;
