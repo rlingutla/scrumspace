@@ -18,6 +18,7 @@ export default class Project extends React.Component{
 
 	changeModal(){
     	this.setState({modalIsOpen : !this.state.modalIsOpen});
+			this.setState({users: this.emptyList});
 	}
 
 	render(){
