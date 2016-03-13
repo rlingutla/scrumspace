@@ -87,13 +87,12 @@ export function serverPostNewProject(title,description){
 		'users': [],
 		'status': 'planning',
 		'current_sprint': null,
-		'sprints': {},
+		'sprints': [],
 		'stories': [],
 		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
     'gCommits':[10+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10)],
 		'color': '#'+Math.floor(Math.random()*16777215).toString(16)
 	};
-
 	writeDocument('projects', project);
 
 	return emulateServerReturn(project, false);
@@ -103,6 +102,12 @@ export function serverPostNewProject(title,description){
 export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
 	var project = readDocument('projects');
 	//writes sprint data
+	//find pid
+	for(var c = 0; c < project.length; c++){
+		if(project[c]._id === pid){
+			pid = project[c]._id;
+		}
+	}
 	stories = stories.filter((e) =>{
 		if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
 			return false;
@@ -118,7 +123,7 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 		'end_date': end_date,
 		'scrum_time': scrum_time
 	};
-	project[pid].sprints[sid] = sprint;
+	(typeof project[pid].sprints[sid] === 'undefined' || project[pid].sprints[sid] === null) ? project[pid].sprints[0] = sprint : project[pid].sprints[sid] = sprint;
 	var notInSp = project[pid].stories.filter(
 		function(value){
 			if(value.sprint_id !== sid){
