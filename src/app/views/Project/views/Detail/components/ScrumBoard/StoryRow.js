@@ -37,7 +37,6 @@ class StoryRow extends React.Component {
 				</TaskBin>
 				<TaskBin container="blocked-container" type={TaskTypes.BLOCKED}>
 					{this.getTaskArray(TaskTypes.BLOCKED).map((task, i) => {
-						debugger;
 						return <Task task_id={task._id} {...this.props} key={i} {...task} />;
 					})}
 				</TaskBin>

@@ -15,6 +15,7 @@ const lineOptions = {
 const GitGraphs = (props) => {
 
 	const barData = {
+
 	    labels: ['Mon','Tues','Wed','Thurs','Fri'],
 	    datasets: [
 	        {

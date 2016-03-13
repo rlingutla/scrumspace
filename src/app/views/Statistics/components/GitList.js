@@ -48,7 +48,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {};
 };
-// TODO, does not update on new props passed from state tree from new proj modal
+
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps

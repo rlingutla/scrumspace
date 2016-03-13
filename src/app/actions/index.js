@@ -33,29 +33,35 @@ export function putAndChangeTaskState(project_id, story_id, task_id, toType){
 	};
 }
 
-function postNewProject(title, description){
-	return serverPostNewProject(title, description);
-}
+function postNewProject(title, description,users,status,current_sprint,avatar,sprints,
+	stories,commits,gCommits,color){
+		return serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
+			stories,commits,gCommits,color);
+		}
 
-// new project
-export const createNewProject = (title, description) => {
-	return {
-		type: 'CREATE_NEW_PROJECT',
-		title,
-		description
-	};
-};
+		// new project
+		export const createNewProject = (title, description,users,status,current_sprint,avatar,sprints,
+			stories,commits,gCommits,color) => {
+				return {
+					type: 'CREATE_NEW_PROJECT',
+					title, description,users,status,current_sprint,avatar,sprints,
+					stories,commits,gCommits,color
+				};
+			};
 
-export function postAndCreateNewProject(title, description){
-	return function(dispatch){
-		return postNewProject(title, description).then(
-       project => {
-				 dispatch(createNewProject(title,description));
-			 },
-			 error => console.error('got an error', error)
-		);
-	};
-}
+			export function postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,
+				stories,commits,gCommits,color){
+					return function(dispatch){
+						return postNewProject(title, description,users,status,current_sprint,avatar,sprints,
+							stories,commits,gCommits,color).then(
+								project => {
+									dispatch(createNewProject(title, description,users,status,current_sprint,avatar,sprints,
+										stories,commits,gCommits,color));
+									},
+									error => console.error('got an error', error)
+								);
+							};
+						}
 // export function
 export const createNewSprint = (pid, sid, name, start_date, end_date, scrum_time, stories) => {
 	return {

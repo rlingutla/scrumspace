@@ -31,7 +31,9 @@ const projects = (state = [], action) => {
 				} else return project;
 			});
 		case 'CREATE_NEW_PROJECT':
+      //find right project
 			let project = _.defaults({
+        _id: state.length,
 				title: action.title,
 				description: action.description
 			}, projectDefault());

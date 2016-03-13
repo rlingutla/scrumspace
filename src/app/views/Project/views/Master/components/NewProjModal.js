@@ -7,11 +7,13 @@ import { ToggleDisplay } from 'react-toggle-display';
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
-
   return {
-    createNewProject: (title, description) => {
-      dispatch(postAndCreateNewProject(title, description));
+    createNewProject: (title, description,users,status,current_sprint,avatar,sprints,
+    stories,commits,gCommits,color) => {
+      dispatch(postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,
+      stories,commits,gCommits,color));
     }
+
   };
 };
 
@@ -23,19 +25,29 @@ class NewProjModal extends React.Component{
     this.state = {
       title: '',
       description: '',
-      members: [
-        {
-          id: '1'
-        }
-      ]
+      users: [{id: 1}],
+      status: 'planning',
+      current_sprint: null,
+      avatar: '',
+      sprints: [],
+      stories: [],
+      commits:[],
+      gCommits:[],
+      color:''
     };
   }
 
   createNewProj() {
     // TODO: VALIDATION CODE
-    this.props.createNewProject(this.state.title, this.state.description,this.state.members);
+
+    this.emptyList = [{id:1}];
+    this.props.createNewProject(this.state.title, this.state.description, this.state.users,
+      this.state.sprints,this.state.status, this.state.current_sprint, this.state.avatar,
+      this.state.stories, this.state.commits, this.state.gCommits,this.state.color);
+
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();
+    this.setState({users: this.emptyList});
     // TODO RESET STATE OF MODAL HERE
   }
 
@@ -55,15 +67,16 @@ class NewProjModal extends React.Component{
   handleClick(e) {
     e.preventDefault();
     this.setState({
-      members: this.state.members.concat([{
-        id: this.state.members.length + 1
+      users: this.state.users.concat([{
+        id: this.state.users.length + 1
       }])
     });
   }
 
+
   render () {
     // TODO members.map() has no event handler! shouldn't be saving.
-    const members = this.state.members;
+    //const members = this.state.members;
     return (
       <div>
         <Modal show={this.props.show} onHide={this.props.changeModal}>
@@ -73,13 +86,13 @@ class NewProjModal extends React.Component{
           <Modal.Body>
             <h4><b>Enter Project Details</b></h4>
             <form>
-              <Input type="text" name="title" label="Enter project title" placeholder="Title" value={this.state.title} onChange={(e) => this.handleChange(e)} />
-              <Input type="text" name="description" label="Enter project description" placeholder="Description" value={this.state.description} onChange={(e) => this.handleChange(e)}/>
+              <Input type="text" name="title" placeholder="Enter project title" value={this.state.title} onChange={(e) => this.handleChange(e)} />
+              <Input type="text" name="description" placeholder="Enter project description" value={this.state.description} onChange={(e) => this.handleChange(e)}/>
             </form>
             <h4><b>Enter Members</b></h4>
             <form>
-              {members.map(note =>
-                  <Input type="text"  placeholder="Name" key={note.id}></Input>
+              {this.state.users.map(users =>
+                  <Input type="text"  placeholder="Name" key={users.id}></Input>
                 )}
             </form>
             <Button bsStyle="primary" onClick={(e) => this.handleClick(e)}>Add members</Button>

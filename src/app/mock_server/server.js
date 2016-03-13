@@ -35,7 +35,7 @@ export function stateTree(userId){
 	};
 
 	return emulateServerReturn(stateTree);
-};
+}
 
 export function serverPutTaskState(project_id, story_id, task_id, toType){
 	let projects = readDocument("projects");
@@ -75,7 +75,8 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 	return emulateServerReturn(updatedTask, updatedTask == undefined);
 }
 
-export function serverPostNewProject(title,description){
+export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
+stories,commits,gCommits,color){
 	// read in all projects, access last project in the array, get it's ID and increment that value
   var projects = readDocument("projects");
 	var prevId = projects[projects.length - 1]._id;
@@ -84,16 +85,15 @@ export function serverPostNewProject(title,description){
 		'_id': prevId + 1,
 		'title': title,
 		'description': description,
-		'users': [],
+		'users': users,
 		'status': 'planning',
 		'current_sprint': null,
-		'sprints': {},
+		'sprints': [],
 		'stories': [],
 		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
-    'gCommits':[10+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10),10+Math.floor(Math.random()*10)],
-		'color': '#'+Math.floor(Math.random()*16777215).toString(16)
+		'gCommits':[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
+		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 	};
-
 	writeDocument('projects', project);
 
 	return emulateServerReturn(project, false);
@@ -103,6 +103,7 @@ export function serverPostNewProject(title,description){
 export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
 	var project = readDocument('projects');
 	//writes sprint data
+	//find pid
 	stories = stories.filter((e) =>{
 		if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
 			return false;
@@ -114,11 +115,11 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 	let sprint = {
 		'_id': sid,
 		'name': name,
-		'start_date': start_date,
-		'end_date': end_date,
+		'start_date': parseInt(moment(start_date).format('x')),
+		'end_date': parseInt(moment(end_date).format('x')),
 		'scrum_time': scrum_time
 	};
-	project[pid].sprints[sid] = sprint;
+	(typeof project[pid].sprints[sid] === 'undefined' || project[pid].sprints[sid] === null) ? project[pid].sprints[0] = sprint : project[pid].sprints[sid] = sprint;
 	var notInSp = project[pid].stories.filter(
 		function(value){
 			if(value.sprint_id !== sid){
