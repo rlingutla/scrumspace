@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewProject: (title, description,members) => {
+    createNewProject: (title, description,users,status,current_sprint,avatar,sprints,
+    stories,commits,gCommits,color) => {
       dispatch(postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,
       stories,commits,gCommits,color));
     }
@@ -66,7 +67,7 @@ class NewProjModal extends React.Component{
   handleClick(e) {
     e.preventDefault();
     this.setState({
-      members: this.state.users.concat([{
+      users: this.state.users.concat([{
         id: this.state.users.length + 1
       }])
     });
@@ -89,8 +90,8 @@ class NewProjModal extends React.Component{
             </form>
             <h4><b>Enter Members</b></h4>
             <form>
-              {this.state.members.map(member =>
-                  <Input type="text"  placeholder="Name" key={member.id}></Input>
+              {this.state.users.map(users =>
+                  <Input type="text"  placeholder="Name" key={users.id}></Input>
                 )}
             </form>
             <Button bsStyle="primary" onClick={(e) => this.handleClick(e)}>Add members</Button>
