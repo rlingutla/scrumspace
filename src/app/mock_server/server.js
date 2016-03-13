@@ -50,7 +50,7 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: Date.now(), modifiedUser: getCurrentUser()}
 
 							updatedTask = Object.assign({}, task, {
-								status: toType, 
+								status: toType,
 								history: [
 									...task.history,
 									historyItem
@@ -89,6 +89,7 @@ export function serverPostNewProject(title,description){
 		'current_sprint': null,
 		'sprints': {},
 		'stories': []
+		'color':
 	};
 
 	writeDocument('projects', project);

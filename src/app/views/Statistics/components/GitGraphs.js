@@ -12,16 +12,14 @@ const lineOptions = {
 };
 
 
-const GitGraphs2 = (props) => {
+const GitGraphs = (props) => {
 
 	const barData = {
-	    labels: ['Dylan', 'Abhay', 'Ryan','Rachana','Supriya','Niha'],
+	    labels: ['Mon','Tues','Wed','Thurs','Fri'],
 	    datasets: [
 	        {
-
 	          fillColor: props.color,
-	          /*  data: props.commits */
-            data: props.gCommits
+            data: props.commits
 	        }
 	    ]
 	};
@@ -39,4 +37,4 @@ const GitGraphs2 = (props) => {
 	);
 };
 
-export default GitGraphs2;
+export default GitGraphs;
