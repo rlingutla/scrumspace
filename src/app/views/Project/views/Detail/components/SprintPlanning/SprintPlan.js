@@ -127,6 +127,7 @@ export default class SprintPlan extends React.Component {
 	}
 
 	handleSave(){
+    alert('Sprint has been created!');
     this.props.createNewSprint(this.state.pid, this.state.sid, this.state.name, this.state.start_date, this.state.end_date, this.state.scrum_time, this.state.stories);
 	}
 
