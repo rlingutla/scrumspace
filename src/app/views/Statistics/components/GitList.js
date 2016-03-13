@@ -1,5 +1,6 @@
 import React from 'react';
 import GitGraphs from './GitGraphs';
+import GitGraphs2 from './GitGraphs2';
 import { Grid, Row, Col } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
@@ -14,7 +15,7 @@ const GitList = (props) => {
 					{props.projects.map((project, i) => {
 						return (
 							<Col xs={12} sm={6} md={6} key={i}>
-								{/* pass down project object as props for ProjectItem */}
+								{/* pass down project object as props for GitGraphs*/}
 								<GitGraphs {...project}/>
 							</Col>
 						);
@@ -25,8 +26,8 @@ const GitList = (props) => {
             {props.projects.map((project, i) => {
               return (
                 <Col xs={12} sm={6} md={6} key={i}>
-                  {/* pass down project object as props for GitGraphs */}
-                  <GitGraphs {...project}/>
+                  {/* pass down project object as props for GitGraphs2 */}
+                  <GitGraphs2 {...project}/>
                 </Col>
               );
             })}

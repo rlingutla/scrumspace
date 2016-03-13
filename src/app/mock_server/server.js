@@ -50,7 +50,7 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: Date.now(), modifiedUser: getCurrentUser()}
 
 							updatedTask = Object.assign({}, task, {
-								status: toType, 
+								status: toType,
 								history: [
 									...task.history,
 									historyItem
@@ -75,7 +75,7 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 	return emulateServerReturn(updatedTask, updatedTask == undefined);
 }
 
-export function serverPostNewProject(title,description){
+export function serverPostNewProject(title,description,members){
 	// read in all projects, access last project in the array, get it's ID and increment that value
   var projects = readDocument("projects");
 	var prevId = projects[projects.length - 1]._id;
@@ -84,7 +84,7 @@ export function serverPostNewProject(title,description){
 		'_id': prevId + 1,
 		'title': title,
 		'description': description,
-		'users': [],
+		'users': members,
 		'status': 'planning',
 		'current_sprint': null,
 		'sprints': {},
