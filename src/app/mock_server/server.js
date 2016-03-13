@@ -76,7 +76,7 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 }
 
 export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
-stories,commits,timeFramegCommits,color){
+stories,commits,timeFrame,membersOnProj,gCommits,color){
 	// read in all projects, access last project in the array, get it's ID and increment that value
   var projects = readDocument("projects");
 	var prevId = projects[projects.length - 1]._id;
