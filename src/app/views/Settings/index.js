@@ -34,4 +34,3 @@ class Settings extends React.Component {
 }
 
 export default Container(Settings);
-	

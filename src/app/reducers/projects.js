@@ -8,21 +8,21 @@ const task = (state, action) => {
         id: action.id,
         text: action.text,
         completed: false
-      }
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 const projects = (state = [], action) => {
 	switch (action.type){
 		case 'CHANGE_TASK_STATE':
 			return state.map((project) => {
-				if(project._id == action.project_id){
+				if(project._id === action.project_id){
 					return Object.assign({}, project, { stories: project.stories.map((story) => {
-						if(story._id == action.story_id){
+						if(story._id === action.story_id){
 							return Object.assign({}, story, { tasks: story.tasks.map((task) => {
-								if(task._id == action.task_id){
+								if(task._id === action.task_id){
 									return Object.assign({}, action.task);
 								} else return task;
 							})});
@@ -41,7 +41,7 @@ const projects = (state = [], action) => {
 			return [
 				...state,
 				project
-			]
+			];
     case 'CREATE_NEW_SPRINT':
       var p = state;
       action.stories = action.stories.filter((e) =>{
