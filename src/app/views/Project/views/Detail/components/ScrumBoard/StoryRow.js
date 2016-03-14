@@ -68,8 +68,8 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 
 //maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
-  return {};
-}
+	return {};
+};
 
 export default connect(
   mapStateToProps,
