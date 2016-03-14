@@ -7,11 +7,11 @@ export default class TaskDetailModal extends React.Component{
 		super(props);
 	}
 
-	render(){
-		return <div></div>;
-	}
+	// render(){
+	// 	return <div></div>;
+	// }
 	//DISABLED
-	fakeRender(){
+	render(){
 		return (
 			<Modal show={this.props.isModalOpen} onHide={(e) => this.props.changeModal(e)}>
 				<Modal.Header closeButton>

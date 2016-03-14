@@ -1,4 +1,6 @@
 import React from 'react';
+import Ionicon from '../../../../../../shared/components/Ionicon';
+
 
 export default class Story extends React.Component {
 	constructor(props){
@@ -12,11 +14,9 @@ export default class Story extends React.Component {
 		                <div className="row left-right-align">
 		                    <div className="col-md-9"><a>{this.props.id}</a></div>
 		                    <div className="col-md-3">
-		                        {/*<div className="control">
-		                            <button className="collapse-control" data-toggle="collapse" data-target=".collapse1">
-		                                <i className="glyphicon glyphicon-triangle-top"></i>
-		                            </button>
-		                        </div>*/}
+		                        <div className="control">
+		                            <button className="transparent"><Ionicon icon="ion-edit" /></button>
+		                        </div>
 		                    </div>
 		                </div>
 		            </div>

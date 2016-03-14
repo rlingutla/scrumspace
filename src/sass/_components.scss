@@ -12,6 +12,12 @@ button {
 			background-color: $light-gray-color;
 		}
 	}
+	&.transparent {
+		background: transparent;
+		border: none;
+		color: $body-gray-color;
+		@include hoverAction();
+	}
 }
 
 // utils
