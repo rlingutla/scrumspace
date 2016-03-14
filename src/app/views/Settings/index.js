@@ -2,7 +2,7 @@ import React from 'react';
 import TopNav from '../../shared/components/TopNav';
 import { User, Projects, Privacy, Panel, ExternalSettings } from './components';
 import { connect } from 'react-redux';
-import Container from './Containers';
+import Container from './containers';
 
 class Settings extends React.Component {
 	constructor(props) {
