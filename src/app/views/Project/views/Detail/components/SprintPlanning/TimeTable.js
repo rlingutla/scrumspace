@@ -1,10 +1,9 @@
 import React from 'react';
 
-//Not much in here will need to be touched. I was cosidering not even abstracting this...
+// Not much in here will need to be touched. I was considering not even abstracting this...
 export default class TimeTable extends React.Component {
 	constructor(props){
 		super(props);
-		//this.state = { data: props.data, name: '', start: '', end: ''};
 	}
 
 	render(){
@@ -20,7 +19,7 @@ export default class TimeTable extends React.Component {
 								<div className="left-date-input">
 									<label>Enter Sprint Name</label>
 									<input type="text" className="form-control strech-input" placeholder="Name of Sprint"
-									value={this.props.name} onChange={(e) => this.props.handleChange('time-name', e)}
+									value={this.props.name} onChange={(e) => this.props.handleChange(e, ['name'])}
 									/>
 								</div>
 							</div>
@@ -28,7 +27,7 @@ export default class TimeTable extends React.Component {
 								<div className="left-date-input">
 									<label>Enter Scrum Time</label>
 									<input type="text" className="form-control strech-input" placeholder="Time of Scrum"
-									value={this.props.scrumtime} onChange={(e) => this.props.handleChange('time-scrum', e)}
+									value={this.props.scrumtime} onChange={(e) => this.props.handleChange(e, ['scrum_time'])}
 									/>
 								</div>
 							</div>
@@ -36,7 +35,7 @@ export default class TimeTable extends React.Component {
 								<div className="left-date-input">
 									<label>Enter Start Date</label>
 									<input type="date" className="form-control strech-input" placeholder="Enter Start Date"
-									value={this.props.startdate} onChange={(e) => this.props.handleChange('time-start', e)}
+									value={this.props.startdate} onChange={(e) => this.props.handleChange(e, ['start_date'])}
 									/>
 								</div>
 							</div>
@@ -44,7 +43,7 @@ export default class TimeTable extends React.Component {
 								<div className="right-date-input">
 									<label>Enter End Date</label>
 									<input type="date" className="form-control strech-input" placeholder="Enter End Date"
-									value={this.props.enddate} onChange={(e) => this.props.handleChange('time-end', e)}
+									value={this.props.enddate} onChange={(e) => this.props.handleChange(e, ['end_date'])}
 									/>
 								</div>
 							</div>

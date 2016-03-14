@@ -11,10 +11,6 @@ export const changeTaskState = (project_id, story_id, task_id, task) => {
 };
 
 function putTaskState(project_id, story_id, task_id, toType) {
-	// return fetch('https://www.google.com/', { method: 'GET',
-	//    mode: 'no-cors'
-	// });
-
 	return serverPutTaskState(project_id, story_id, task_id, toType);
 }
 
@@ -24,9 +20,9 @@ export function putAndChangeTaskState(project_id, story_id, task_id, toType){
 			task => {
 				//dispatch with status from server
 				// dispatch(changeTaskState(project_id, story_id, task_id, task.status))
-				dispatch(changeTaskState(project_id, story_id, task_id, task))
+				dispatch(changeTaskState(project_id, story_id, task_id, task));
 			},
-			error => console.error("got an error", error)
+			error => console.error('got an error', error)
 			// sauce => dispatch(makeASandwich(forPerson, sauce)),
 			// error => dispatch(apologize('The Sandwich Shop', forPerson, error))
 		);

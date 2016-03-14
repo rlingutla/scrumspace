@@ -9,7 +9,6 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-
 	return {
 		createNewSprint: (pid, sid, name, start_date, end_date, scrum_time, stories) => {
 			dispatch(postAndCreateNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories));
@@ -61,35 +60,38 @@ export default class SprintPlan extends React.Component {
 
 	//following two functions are just parsers...
 	unixTimeToDate(time){
-	if(time === ''){
-	  return '';
+	if (time === '') {
+		return '';
 	}
 		var t = new Date(time);
 		return t.toISOString().substring(0, 10);
 	}
 
-  dateToUnixTime(time){
-	var t = new Date(time);
-	return (t/1000);
-  }
+	dateToUnixTime(time){
+		var t = new Date(time);
+		return (t/1000);
+	}
 
-	//all the state is managed at the highest level
-	//change = signal, e = event, args[0] = story, args[1] = task
-	handleChange(change, e, args){
+	// all the state is managed at the LCA
+	// properties = an array of pe
+	// e = event, args[0] = story, args[1] = task
+	handleChange(e, properties, args) {
+		// Find the property to update if nested
+		var propertyToUpdate = this.state;
+		var i = 0;
+		while (i < properties.length - 1) {
+			propertyToUpdate = propertyToUpdate[properties[i]];
+		}
+
+		// Set value of property
+		propertyToUpdate[properties[i]] = e.target.value;
+		this.setState(this.state);
+
+		// TODO: CONTINUE TO REFACTOR THIS!
+		// switch statement, args, and below are not necessary!
 		var storyList = this.state.stories;
-		switch(change){
-			case 'time-name':
-				this.setState({name: e.target.value});
-				break;
-			case 'time-scrum':
-				this.setState({scrum_time: e.target.value});
-				break;
-			case 'time-start':
-				this.setState({start_date: e.target.value});
-				break;
-			case 'time-end':
-				this.setState({end_date: e.target.value});
-				break;
+
+		switch(properties){
 			case 'story-name':
 				storyList[args[0]].title = e.target.value;
 				this.setState({stories: storyList});
@@ -118,7 +120,10 @@ export default class SprintPlan extends React.Component {
 				this.setState({stories: storyList});
 				break;
 			case 'save':
-		this.setState({start_date: this.dateToUnixTime(this.state.start_date), end_date: this.dateToUnixTime(this.state.end_date)});
+				this.setState({
+					start_date: this.dateToUnixTime(this.state.start_date), 
+					end_date: this.dateToUnixTime(this.state.end_date)
+				});
 				this.handleSave();
 				break;
 			default:
@@ -131,7 +136,7 @@ export default class SprintPlan extends React.Component {
 		this.props.createNewSprint(this.state.pid, this.state.sid, this.state.name, this.state.start_date, this.state.end_date, this.state.scrum_time, this.state.stories);
 	}
 
-	//This gets infor for a planned future sprint, if there is one.
+	//This gets info for a planned future sprint, if there is one.
 	sprintInfo(sprintID){
 		return [this.props.sprints[sprintID], this.props.stories.filter(
 			function(value){
@@ -147,19 +152,19 @@ export default class SprintPlan extends React.Component {
 
 	render(){
 		return (
-	 	<div className="content tab-offset container">
-			<h2 id="settings">Sprint Planning</h2>
-			<div className="panel-group">
-			  <TimeTable name={this.state.name} scrumtime={this.state.scrum_time} startdate={this.unixTimeToDate(this.state.start_date)} enddate={this.unixTimeToDate(this.state.end_date)} handleChange={this.handleChange.bind(this)}/>
+		 	<div className="content tab-offset container">
+				<h2 id="settings">Sprint Planning</h2>
+				<div className="panel-group">
+				  <TimeTable name={this.state.name} scrumtime={this.state.scrum_time} startdate={this.unixTimeToDate(this.state.start_date)} enddate={this.unixTimeToDate(this.state.end_date)} handleChange={(e, properties) => this.handleChange(e, properties)} />
 						{
-							this.state.stories.map((e,i,array) =>	{
-									return (
-										<StoryPanel key={i} panNumber={i + 1} last={i + 1 === array.length} isOnly={array.length === 1} story={e} handleChange={this.handleChange.bind(this)}/>
-									);
-								})
+							this.state.stories.map((e,i,array) => {
+								return (
+									<StoryPanel key={i} panNumber={i + 1} last={i + 1 === array.length} isOnly={array.length === 1} story={e} handleChange={(e, properties) => this.handleChange(e, properties)}/>
+								);
+							})
 						}
+				</div>
 			</div>
-		</div>
 		);
 	}
 }
