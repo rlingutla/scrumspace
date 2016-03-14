@@ -24,7 +24,7 @@ const projects = (state = [], action) => {
 							return Object.assign({}, story, { tasks: story.tasks.map((task) => {
 								if (task._id === action.task_id){
 									return Object.assign({}, action.task);
-								} else return task;
+								}	else return task;
 							})});
 						} else return story;
 					})});

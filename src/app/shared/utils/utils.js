@@ -21,5 +21,5 @@ export function daysDifference(startDate, endDate){
 	return {
 		days: Math.round(days),
 		past: start > end
-	}
+	};
 }
