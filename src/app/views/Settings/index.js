@@ -13,7 +13,6 @@ class Settings extends React.Component {
 	}
 
 	updateState(event, property) {
-		debugger;
 		this.state[property] = event.target.value;
 		this.setState(this.state);
 	}
@@ -22,16 +21,11 @@ class Settings extends React.Component {
 		return (
 			<div id="content">
 				<TopNav view='Settings'/>
-				<div className="content container-fluid">
-					<div className="container">
-						<div className="panel-group">
-							<Panel heading="User Settings" glyphicon="user">
-								<User updateState={(e, type) => this.updateState(e, type)} {...this.state} />
-							</Panel>
-							<Panel heading="Privacy" glyphicon="lock" saveMethod={() => null}>
-								<Privacy password={this.state.password} updateState={(e, type) =>this.updateState(e, type)}/>
-							</Panel>
-						</div>
+				<div className="container">
+					<div className="panel-group">
+						<Panel heading="User Settings" glyphicon="user">
+							<User updateState={(e, type) => this.updateState(e, type)} saveMethod={() => null} {...this.state} />
+						</Panel>
 					</div>
 				</div>
 			</div>
