@@ -28,9 +28,16 @@ export default class SuggestionInput extends React.Component {
 		}
 	}
 
-	//TODO: needs to support suggestion click events
+	/* 
+	** TODO: this is super hacky
+	** blur events occur before onclick, so we need to delay
+	*/
+
 	handleBlur(e){
-		this.setState({ display:false, value: '', suggestions: [] });
+		e.preventDefault();
+		setTimeout((e) => {
+			this.setState({ display:false });
+		}, 300);
 	}
 
 
