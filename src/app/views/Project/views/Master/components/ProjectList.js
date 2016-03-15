@@ -2,7 +2,6 @@ import React from 'react';
 import ProjectItem from './ProjectItem';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { search } from '../../../../../mock_server/server';
-import SuggestionInput from '../../../../../shared/components/SuggestionInput';
 
 import { connect } from 'react-redux';
 import _ from 'underscore';
@@ -11,7 +10,6 @@ const ProjectList = (props) => {
 	return (
 		<div className="content">
 			<div className="project-container">
-				<SuggestionInput collection="users" searchKey="display_name" />
 				<Row className="show-grid">
 					{props.projects.map((project, i) => {
 						return (

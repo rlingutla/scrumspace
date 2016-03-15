@@ -213,7 +213,7 @@ button {
 	.suggestions {
 		position: absolute;
 		top: 26px;
-		z-index: 10;
+		z-index: 9999999;
 		width:100%;
 
 		ul {

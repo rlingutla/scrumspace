@@ -15,7 +15,10 @@ export default class SuggestionInput extends React.Component {
 	handleChange(e){
 		let text = e.target.value;
 		let results = search(text, this.props.collection, this.props.searchKey);
-		this.setState({ value: text, suggestions: results, display: results.length > 0, selected: 0 });
+		if(results.length > 0){
+			this.setState({ value: text, suggestions: results, display: true, selected: 0 });
+		}
+
 	}
 
 	handleFocus(e){
@@ -24,18 +27,16 @@ export default class SuggestionInput extends React.Component {
 		}
 	}
 
+	//TODO: needs to support suggestion click events
 	handleBlur(e){
-		//figure out how to check suggestion click
-		e.preventDefault();
-		//invalid input
-		// let text = (this.state.suggestions.indexOf(e.target.value) > -1) ? e.target.value:"";
-		// this.setState({ display:false, value: '', suggestions: [] });
+		this.setState({ display:false, value: '', suggestions: [] });
 	}
 
 
 	// suggestion events
 	handleClick(e, sug){
 		this.setState({ value: sug[this.props.searchKey], display:false });
+		this.props.updateState(sug);
 	}
 	handleHover(e, sug, index){
 		this.setState({ selected: index });
@@ -49,6 +50,7 @@ export default class SuggestionInput extends React.Component {
 				if(this.state.suggestions.length > 0){
 					e.target.blur();
 					this.setState({ value: this.state.suggestions[this.state.selected][this.props.searchKey], display:false });
+					this.props.updateState(this.state.suggestions[this.state.selected]);
 				}
 				break;
 			//down

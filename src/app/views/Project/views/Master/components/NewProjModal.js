@@ -3,6 +3,7 @@ import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } f
 import ProjectItem from './ProjectItem';
 import { postAndCreateNewProject } from '../../../../../actions/';
 import { ToggleDisplay } from 'react-toggle-display';
+import SuggestionInput from '../../../../../shared/components/SuggestionInput';
 
 import { connect } from 'react-redux';
 
@@ -25,7 +26,7 @@ class NewProjModal extends React.Component{
     this.state = {
       title: '',
       description: '',
-      users: [{id: 1}],
+      users: [-1],
       status: 'planning',
       current_sprint: null,
       avatar: '',
@@ -40,7 +41,8 @@ class NewProjModal extends React.Component{
   }
 
   createNewProj() {
-    // TODO: VALIDATION CODE
+    // TODO: VALIDATION CODE THAT DISABLES CREATE BUTTON
+
 
     this.emptyList = [{id:1}];
     this.props.createNewProject(this.state.title, this.state.description, this.state.users,
@@ -75,6 +77,15 @@ class NewProjModal extends React.Component{
     });
   }
 
+  memberAdded(member, index) {
+    this.setState({
+      users: this.state.users.map((user, i) => {
+        if(i === index) return member;
+        else return user;
+      })
+    });
+  }
+
 
   render () {
     // TODO members.map() has no event handler! shouldn't be saving.
@@ -93,8 +104,8 @@ class NewProjModal extends React.Component{
             </form>
             <h4><b>Enter Members</b></h4>
             <form>
-              {this.state.users.map(users =>
-                  <Input type="text"  placeholder="Name" key={users.id}></Input>
+              {this.state.users.map((users, i) =>
+                  <SuggestionInput collection="users" searchKey="display_name" updateState={(val) => this.memberAdded(val, i)} key={i}/>
                 )}
             </form>
             <Button bsStyle="primary" onClick={(e) => this.handleClick(e)}>Add members</Button>
