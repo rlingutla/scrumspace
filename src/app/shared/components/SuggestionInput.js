@@ -15,6 +15,7 @@ export default class SuggestionInput extends React.Component {
 	handleChange(e){
 		let text = e.target.value;
 		let results = search(text, this.props.collection, this.props.searchKey);
+
 		if(results.length > 0){
 			this.setState({ value: text, suggestions: results, display: true, selected: 0 });
 		}
@@ -69,7 +70,6 @@ export default class SuggestionInput extends React.Component {
 
 	}
 
-
 	render(){
 		return (
 			<div className="suggestion-input">
@@ -90,7 +90,9 @@ export default class SuggestionInput extends React.Component {
 								onClick={(e) => this.handleClick(e, sug)} 
 								onMouseEnter={(e) => this.handleHover(e, sug, i)} 
 								key={i}>
-								{sug[this.props.searchKey]}
+								{sug[this.props.searchKey].split('').map((char, i) => {
+									return (this.state.value.indexOf(char.toLowerCase()) > -1) ? <span key={i} className="highlight">{char}</span>:char;
+								})}
 							</li>
 						)}
 					</ul>

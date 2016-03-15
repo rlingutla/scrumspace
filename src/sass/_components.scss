@@ -234,6 +234,9 @@ button {
 					color: $blue-color;
 					cursor:pointer;
 				}
+				span.highlight {
+					font-weight: bold;
+				}
 
 				// &:hover {
 				// 	background: darken(#fff, 3%);
