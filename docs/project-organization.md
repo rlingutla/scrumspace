@@ -1,6 +1,4 @@
-<h1 class="title">Building Predictable User Interfaces</h1>
-<h1 class="date" >03.14.16</h1>
-<hr class="separator" />
+#Building Predictable User Interfaces
 
 # Separation of concerns
 
