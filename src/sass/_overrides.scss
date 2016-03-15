@@ -3,3 +3,18 @@ button {
 		outline:none !important;
 	}
 }
+
+input.form-control {
+	padding: 5px; 
+	border-radius: 0;
+	border: 1px solid $border-color;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+
+	&:focus {
+		border-color: $blue-color;
+		outline: 0;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
+}

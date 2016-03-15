@@ -202,3 +202,49 @@ button {
 	margin-left: 5px;
 	vertical-align: baseline;
 }
+
+.suggestion-input {
+	position:relative;
+
+	input {
+		width:100%;
+	}
+
+	.suggestions {
+		position: absolute;
+		top: 26px;
+		z-index: 10;
+		width:100%;
+
+		ul {
+			@include resetSpacing();
+			border: 1px solid $blue-color;
+			border-top: none;
+			max-height:200px;
+			overflow-y:scroll;
+			
+			li {
+				@include resetSpacing();
+				background: #fff;
+				list-style-type: none;
+				padding:5px;
+
+				&.selected {
+					background: darken(#fff, 3%);
+					color: $blue-color;
+					cursor:pointer;
+				}
+
+				// &:hover {
+				// 	background: darken(#fff, 3%);
+				// 	color: $blue-color;
+				// 	cursor:pointer;
+				// }
+				// &:active {
+				// 	background: darken(#fff, 5%);
+				// }
+
+			}
+		}
+	}
+}
