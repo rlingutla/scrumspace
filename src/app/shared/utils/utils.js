@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { search } from '../../mock_server/server';
 
 //Projects
 export function getCurrentSprint(props){
@@ -23,3 +24,9 @@ export function daysDifference(startDate, endDate){
 		past: start > end
 	};
 }
+
+// FOR SERVER SIDE SEARCHING LATER
+// export function search(str, collection, key, limit){
+// 	//TODO
+// 	return search(str, collection, key, limit);
+// }

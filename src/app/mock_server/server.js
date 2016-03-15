@@ -1,5 +1,6 @@
 import { readDocument, writeDocument, addDocument, initLocalStorage } from './database.js';
 import moment from 'moment';
+import _ from 'underscore';
 
 /**
  * Emulates how a REST call is *asynchronous* -- it calls your function back
@@ -169,4 +170,28 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 	project[pid].stories = notInSp.concat(stories);
 	writeDocument('projects', project[pid]);
 	return emulateServerReturn(project[pid], false);
+}
+
+/* 
+** str: search string
+** collection: target collection to search in 
+** key (optional): key to search on 
+** limit (optional): number of results
+*/
+export function search(str, collection, key = "_id", limit=15){
+	let searchCollection = readDocument(collection);
+	//if it's an object, map the values to an array
+	if(_.isObject(searchCollection)) searchCollection = _.values(searchCollection);
+	else if(!_.isArray(searchCollection)) return new Error("Supplied collection is invalid");
+	//strip some stuff from search
+	const escapeRegExp = (str_unesc) => str_unesc.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "");
+	let filtered = [];
+	//precalculate the regex once (faster)
+	let searchExpr = new RegExp(escapeRegExp(str).split('').join('\\w*').replace(/\W/, ""), 'i');
+	//loop through collection, find matching elements
+	searchCollection.forEach((user) => {
+		if(escapeRegExp(user.display_name).match(searchExpr)) filtered.push(user);
+	})
+
+	return filtered.slice(0, limit);
 }

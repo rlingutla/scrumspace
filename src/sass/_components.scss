@@ -12,6 +12,12 @@ button {
 			background-color: $light-gray-color;
 		}
 	}
+	&.transparent {
+		background: transparent;
+		border: none;
+		color: $body-gray-color;
+		@include hoverAction();
+	}
 }
 
 // utils
@@ -195,4 +201,53 @@ button {
 	background-color: #118AB2;
 	margin-left: 5px;
 	vertical-align: baseline;
+}
+
+.suggestion-input {
+	position:relative;
+
+	input {
+		width:100%;
+	}
+
+	.suggestions {
+		position: absolute;
+		top: 26px;
+		z-index: 9999999;
+		width:100%;
+
+		ul {
+			@include resetSpacing();
+			border: 1px solid $blue-color;
+			border-top: none;
+			max-height:200px;
+			overflow-y:scroll;
+			
+			li {
+				@include resetSpacing();
+				background: #fff;
+				list-style-type: none;
+				padding:5px;
+
+				&.selected {
+					background: darken(#fff, 3%);
+					color: $blue-color;
+					cursor:pointer;
+				}
+				span.highlight {
+					font-weight: bold;
+				}
+
+				// &:hover {
+				// 	background: darken(#fff, 3%);
+				// 	color: $blue-color;
+				// 	cursor:pointer;
+				// }
+				// &:active {
+				// 	background: darken(#fff, 5%);
+				// }
+
+			}
+		}
+	}
 }

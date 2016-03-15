@@ -13,6 +13,54 @@ var initialData = {
 			'email': 'america@donaldjtrump.com',
 			'display_name': 'DJ Trump',
 			'password': 'd4866854120e8bb207d6f8e11fce8b99'
+		},
+		1: {
+			'_id': 1,
+			'first_name': 'Abhay',
+			'last_name': 'Vatsa',
+			'email': 'someemail',
+			'display_name': 'Abhay Vatsa',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99'
+		},
+		2: {
+			'_id': 2,
+			'first_name': 'Dylan',
+			'last_name': 'Fischler',
+			'email': 'someemail',
+			'display_name': 'Dylan Fischler',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99'
+		},
+		3: {
+			'_id': 3,
+			'first_name': 'Niha',
+			'last_name': 'Venkatathri',
+			'email': 'someemail',
+			'display_name': 'Niha Venkatathri',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99'
+		},
+		4: {
+			'_id': 4,
+			'first_name': 'Ryan',
+			'last_name': 'Jerue',
+			'email': 'someemail',
+			'display_name': 'Ryan Jerue',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99'
+		},
+		5: {
+			'_id': 5,
+			'first_name': 'Supriya',
+			'last_name': 'Kankure',
+			'email': 'someemail',
+			'display_name': 'Supriya Kankure',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99'
+		},
+		6: {
+			'_id': 6,
+			'first_name': 'Rachana',
+			'last_name': 'Lingutla',
+			'email': 'someemail',
+			'display_name': 'Rachana Lingutla',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99'
 		}
 	},
 	projects: [
