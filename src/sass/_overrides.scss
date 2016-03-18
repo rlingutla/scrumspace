@@ -2,6 +2,10 @@ button {
 	&:focus {
 		outline:none !important;
 	}
+	//bootstrap button override
+	&.btn {
+		border-radius:0px;
+	}
 }
 
 input.form-control {
@@ -16,5 +20,25 @@ input.form-control {
 		outline: 0;
 		-webkit-box-shadow: none;
 		box-shadow: none;
+	}
+}
+
+// Modal Over
+.modal-backdrop {
+	background: #f1f1f1;
+	z-index: 9999;
+
+	&.in {
+		opacity:0.65;
+	}
+}
+.modal {
+	z-index: 9999;
+
+	.modal-content {
+		-webkit-box-shadow: none;
+		box-shadow: none;
+		border-radius:0;
+		border: 1px solid $border-color;
 	}
 }

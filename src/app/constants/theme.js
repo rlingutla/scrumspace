@@ -5,7 +5,7 @@ export const colors = {
 	green: '#78E092',
 	blue: '#35A7FF',
 	lightBlue: '#A7D9FF',
-	gray: '#FBFBFC',
+	gray: '#E8E8E8',
 	darkGray: '#656565',
 	lightGray: 'DFDFDF',
 	sidebar: '#F7F7F7'

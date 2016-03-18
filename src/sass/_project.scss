@@ -30,7 +30,7 @@
 		width:50px;
 		height:50px;
 		background-color: #fff;
-		border-radius: 5px;
+		border-radius: 3px;
 		border: 1px solid #fff;
 	}
 
@@ -158,26 +158,8 @@
 					background: #F5F5F5;
 					margin-right: 15px;
 					padding:5px;
-					border: 1px solid lighten($border-color, 5%);
+					// border: 1px solid lighten($border-color, 5%);
 				}
-
-				/* deprecate 
-				#doing-container {
-					.task {
-						border-color: $yellow-color;
-					}
-
-				}
-				#blocked-container {
-					.task {
-						border-color: $red-color;
-					}
-				}
-				#done-container {
-					.task {
-						border-color: $green-color;
-					}
-				}*/
 			}
 		}
 	}
@@ -356,8 +338,7 @@
 		}
 		&:hover {
 			.project-item {
-				border-color: darken($border-color, 15%);
-
+			    @include hoverAction(1.01, 0.99);
 			}
 		}
 	}
