@@ -4,21 +4,25 @@ export default {
 	UNASSIGNED: {
 		title: 'UNASSIGNED',
 		color: colors.gray,
-		bsStyle: 'info'
+		bsStyle: 'info',
+		display: 'Unassigned'
 	},
 	DOING: {
 		title: 'DOING',
 		color: colors.yellow,
-		bsStyle: 'warning'
+		bsStyle: 'warning',
+		display: 'Doing'
 	},
 	BLOCKED: {
 		title: 'BLOCKED',
 		color: colors.red,
-		bsStyle: 'danger'
+		bsStyle: 'danger',
+		display: 'Blocked'
 	},
 	DONE: {
 		title: 'DONE',
 		color: colors.green,
-		bsStyle: 'success'
+		bsStyle: 'success',
+		display: 'Done'
 	}
 };

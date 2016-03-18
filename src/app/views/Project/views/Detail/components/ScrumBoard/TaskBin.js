@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemTypes from '../../../../../../constants/itemTypes';
+import TaskTypes from '../../../../../../constants/taskTypes';
 import { changeTaskState } from '../../../../../../actions/';
 
 import { DropTarget } from 'react-dnd';
@@ -50,9 +51,11 @@ class TaskBin extends React.Component {
 		const { isOver, canDrop, connectDropTarget } = this.props;
 
 		return connectDropTarget(
-			<td id={this.props.id} className={isOver ? 'hovering':'' }>
-				<div id="task-container">
-					{this.props.children}
+			<td id={this.props.id}>
+				<div>
+					<div id="task-container" style={isOver ? {borderStyle: 'dashed', borderColor: '#A9A9A9'}:null}>
+						{this.props.children}
+					</div>
 				</div>
 			</td>
 		);

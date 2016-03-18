@@ -46,9 +46,6 @@ class Task extends React.Component {
 
 	render() {
 		const {connectDragSource, id, onMove, isDragging, ...props} = this.props;
-		const taskStyles = {
-
-		};
 
 		if (isDragging){
 			return (

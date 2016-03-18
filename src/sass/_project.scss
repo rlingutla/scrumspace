@@ -86,6 +86,8 @@
 	border-radius: 0;
 	border:none;
 	margin-top: 10px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 
 	table {
 		width: 100%;
@@ -97,10 +99,10 @@
 
 				th {
 					text-align: left;
-	    			// border-bottom: 2px solid #EAEAEA;
 	    			font-weight: 400;
 	    			color: $body-gray-color;
 	    			font-size: 18px;
+	    			padding-right: 15px;
 
 	    			&.story-row {
 	    				border:none;
@@ -122,6 +124,13 @@
 			}
 			td {
 				vertical-align: top;
+
+				& > div {
+					margin-right: 15px;
+					display: inline-block; 
+					height: 100%;
+					width: 90%;
+				}
 
 				&.hovering {
 					background: #F5F5F5;
@@ -156,9 +165,12 @@
 				// Task state coloring
 				#task-container {
 					background: #F5F5F5;
-					margin-right: 15px;
+					// margin-right: 15px;
 					padding:5px;
-					// border: 1px solid lighten($border-color, 5%);
+					border: 1px solid darken(#F5F5F5, 5%);
+					border-radius: 3px;
+					width:100%;
+					height:100%;
 				}
 			}
 		}
@@ -342,5 +354,41 @@
 			}
 		}
 	}
+}
+.task-detail {
+	.modal-content {
+		.task-story {
+			color: gray;
+			font-style: italic;
+		}
+	}
 
+	// &.UNASSIGNED {
+	// 	.modal-content {
+	// 		border-color: $gray-color;
+	// 	}
+	// }
+	// &.DOING {
+	// 	.modal-content {
+	// 		border-color: $yellow-color;
+	// 	}
+	// }
+	// &.BLOCKED {
+	// 	.modal-content {
+	// 		border-color: $red-color;
+	// 	}
+	// }
+	// &.DONE {
+	// 	.modal-content {
+	// 		border-color: $green-color;
+	// 	}
+	// }
+
+	.modal-header {
+		border:none;
+
+		.task_id {
+			color: $blue-color;
+		}
+	}
 }
