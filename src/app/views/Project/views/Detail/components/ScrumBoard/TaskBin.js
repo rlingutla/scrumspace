@@ -62,4 +62,4 @@ class TaskBin extends React.Component {
 	}
 }
 
-export default DropTarget(ItemTypes.TASK, taskTarget, collect)(TaskBin);
+export default DropTarget(props => ItemTypes.TASK+"_"+props.story_id, taskTarget, collect)(TaskBin);

@@ -108,4 +108,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(DragSource(ItemTypes.TASK, taskSource, collect)(Task));
+)(DragSource(props => ItemTypes.TASK+"_"+props.story_id, taskSource, collect)(Task));
