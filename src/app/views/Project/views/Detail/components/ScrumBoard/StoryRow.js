@@ -25,22 +25,22 @@ class StoryRow extends React.Component {
 				<td id="story-container">
 					<Story id={this.props.story_id} title={this.props.title} description={this.props.description} />
 				</td>
-				<TaskBin container="task-container" type={TaskTypes.UNASSIGNED}>
+				<TaskBin container="task-container" type={TaskTypes.UNASSIGNED} story_id={this.props.story_id}>
 					{this.getTaskArray(TaskTypes.UNASSIGNED).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} />;
 					})}
 				</TaskBin>
-				<TaskBin container="doing-container" type={TaskTypes.DOING}>
+				<TaskBin container="doing-container" type={TaskTypes.DOING} story_id={this.props.story_id}>
 					{this.getTaskArray(TaskTypes.DOING).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} {...task}/>;
 					})}
 				</TaskBin>
-				<TaskBin container="blocked-container" type={TaskTypes.BLOCKED}>
+				<TaskBin container="blocked-container" type={TaskTypes.BLOCKED} story_id={this.props.story_id}>
 					{this.getTaskArray(TaskTypes.BLOCKED).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} {...task} />;
 					})}
 				</TaskBin>
-				<TaskBin container="done-container" type={TaskTypes.DONE}>
+				<TaskBin container="done-container" type={TaskTypes.DONE} story_id={this.props.story_id}>
 					{this.getTaskArray(TaskTypes.DONE).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} {...task} />;
 					})}

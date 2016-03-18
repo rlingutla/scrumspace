@@ -6,13 +6,17 @@ import { Link }  from 'react-router';
 import { Line } from 'react-chartjs';
 
 const lineOptions = {
+	// showScale: false,
     scaleShowGridLines : false,
-		scaleShowLabels: false,
+	scaleShowLabels: false,
     scaleShowHorizontalLines: false,
     scaleShowVerticalLines: false,
-    bezierCurve : false,
+    bezierCurve : true,
+    bezierCurveTension : 0.4,
     pointDot : false,
-    responsive: true
+    responsive: true,
+    scaleFontFamily: "'Source Sans Pro', sans-serif",
+    tooltipFontFamily: "'Source Sans Pro', sans-serif"
 };
 
 //get scrum time from a project object
@@ -26,12 +30,12 @@ function getScrumTime(props){
 
 const ProjectItem = (props) => {
 	const lineData = {
-	    labels: ["mon", "tues", "wed"],
+	    labels: ["mon", "tues", "wed", "thur", "fri"],
 	    datasets: [
 	        {
 	            fillColor: "transparent",
 	            strokeColor: "#44A9FF",
-	            data: [Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10)]
+	            data: [Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10)]
 	        }
 	    ]
 	};

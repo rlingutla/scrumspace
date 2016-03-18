@@ -15,8 +15,13 @@ const taskTarget = {
 	},
 
 	drop(props, monitor, component) {
+		//check if dropping in correct story (not working)
+		if(component.props.story_id !== props.story_id) return false;
+
 		// Obtain the dragged item
 		const item = monitor.getItem();
+
+		//component.props.container has dropped target
 		item.moveTask(item.project_id, item.story_id, item._id, props.type.title);
 		return { moved: true };
 	  }
