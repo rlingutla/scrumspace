@@ -12,10 +12,7 @@ export default class ScrumBoardHeader extends React.Component {
 			<thead>
 				<tr>
 				    <th className="story-row"></th>
-				    <th>
-				    	Tasks
-				    	<Button style={{float: 'right'}}><Ionicon icon="ion-plus" /></Button>
-				    </th>
+				    <th>Tasks</th>
 				    <th>Doing</th>
 				    <th>Blocked</th>
 				    <th>Done</th>

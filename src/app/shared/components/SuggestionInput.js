@@ -19,7 +19,6 @@ export default class SuggestionInput extends React.Component {
 		if(results.length > 0){
 			this.setState({ value: text, suggestions: results, display: true, selected: 0 });
 		}
-
 	}
 
 	handleFocus(e){

@@ -189,8 +189,8 @@ export function search(str, collection, key = "_id", limit=15){
 	//precalculate the regex once (faster)
 	let searchExpr = new RegExp(escapeRegExp(str).split('').join('\\w*').replace(/\W/, ""), 'i');
 	//loop through collection, find matching elements
-	searchCollection.forEach((user) => {
-		if(escapeRegExp(user.display_name).match(searchExpr)) filtered.push(user);
+	searchCollection.forEach((obj) => {
+		if(escapeRegExp(obj[key]).match(searchExpr)) filtered.push(obj);
 	})
 
 	return filtered.slice(0, limit);
