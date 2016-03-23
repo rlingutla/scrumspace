@@ -26,7 +26,7 @@ class NewProjModal extends React.Component{
     this.state = {
       title: '',
       description: '',
-      users: [-1],
+      users: [],
       status: 'planning',
       current_sprint: null,
       avatar: '',
@@ -79,7 +79,7 @@ class NewProjModal extends React.Component{
 
   setMembers(members) {
     this.setState({
-      users: members
+      users: members.map((member) => member._id)
     });
   }
 
