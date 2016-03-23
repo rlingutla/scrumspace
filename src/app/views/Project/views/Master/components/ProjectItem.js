@@ -1,7 +1,7 @@
 import React from 'react';
 import { verboseServerTime } from '../../../../../shared/utils/utils';
 import { Grid, Row, Col } from 'react-bootstrap';
-import ProjectStatus from '../../../shared/ProjectStatus';
+import { ProjectStatus } from '../../../shared/ProjectStatus';
 import { Link }  from 'react-router';
 import { Line } from 'react-chartjs';
 
@@ -47,7 +47,7 @@ const ProjectItem = (props) => {
 					<Col xs={9} className="project-title">{props.title}</Col>
 					<Col xs={3} className="project-scrum-time">{getScrumTime(props)}</Col>
 				</Row>
-				<ProjectStatus status={props.status}/>
+				<ProjectStatus {...props}/>
 				<div className="chart-container">
 					<Line data={lineData} options={lineOptions} />
 				</div>

@@ -40,6 +40,10 @@ button {
 	}
 }
 
+.vertical-align {
+	@include vertical-align();
+}
+
 // TASKS
 .task {
 	background: #fff;

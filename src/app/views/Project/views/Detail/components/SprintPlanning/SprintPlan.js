@@ -155,7 +155,7 @@ export default class SprintPlan extends React.Component {
 		 	<div className="content tab-offset container">
 				<h2 id="settings">Sprint Planning</h2>
 				<div className="panel-group">
-				  <TimeTable name={this.state.name} scrumtime={this.state.scrum_time} startdate={this.unixTimeToDate(this.state.start_date)} enddate={this.unixTimeToDate(this.state.end_date)} handleChange={(e, properties) => this.handleChange(e, properties)} />
+				  {/*<TimeTable name={this.state.name} scrumtime={this.state.scrum_time} startdate={this.unixTimeToDate(this.state.start_date)} enddate={this.unixTimeToDate(this.state.end_date)} handleChange={(e, properties) => this.handleChange(e, properties)} />*/}
 						{
 							this.state.stories.map((e,i,array) => {
 								return (

@@ -28,9 +28,12 @@ class ProjectProgressBar extends React.Component {
 	}
 
 	daysLeft(){
+		let test = this.props;
+		/*
 		let sprint = getCurrentSprint(this.props);
 		let diff = daysDifference(Date.now(), sprint.end_date);
-		return (diff.past) ? 0:diff.days;
+		return (diff.past) ? 0:diff.days;*/
+		// let sprint = 
 	}
 
 

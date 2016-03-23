@@ -83,15 +83,15 @@ var initialData = {
 			{
 				'_id': 0,
 				'name': 'V1 Release',
-				'start_date': 1456900811760,
-				'end_date': 1458925200000,
+				'start_date': (new Date()).getTime(),
+				'duration': 14,
 				'scrum_time': '9:00 AM'
 			},
 			{
 				'_id': 1,
 				'name': 'V2 Release',
-				'start_date': 1456900811760,
-				'end_date': 1456900811800,
+				'duration': 7,
+				'start_date': null,
 				'scrum_time': '9:00 AM'
 			}
 		],
@@ -137,6 +137,7 @@ var initialData = {
 					{
 						'_id': 1,
 						'status': 'UNASSIGNED',
+						'assignedTo': [],
 						'description': 'Make Mexico pay for it',
 						'history': [{
 							fromStatus: null,
@@ -177,6 +178,7 @@ var initialData = {
 					{
 						'_id': 3,
 						'status': 'DONE',
+						'assignedTo': [],
 						'description': 'Replace Donald\'s Toupee',
 						'history': [{
 							fromStatus: 'DOING',
