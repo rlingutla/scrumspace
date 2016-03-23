@@ -3,7 +3,7 @@ import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } f
 import ProjectItem from './ProjectItem';
 import { postAndCreateNewProject } from '../../../../../actions/';
 import { ToggleDisplay } from 'react-toggle-display';
-import SuggestionInput from '../../../../../shared/components/SuggestionInput';
+import MultiSelect from '../../../../../shared/components/MultiSelect';
 
 import { connect } from 'react-redux';
 
@@ -68,21 +68,18 @@ class NewProjModal extends React.Component{
 
   }
 
-  handleClick(e) {
-    e.preventDefault();
-    this.setState({
-      users: this.state.users.concat([{
-        id: this.state.users.length + 1
-      }])
-    });
-  }
+  // handleClick(e) {
+  //   e.preventDefault();
+  //   this.setState({
+  //     users: this.state.users.concat([{
+  //       id: this.state.users.length + 1
+  //     }])
+  //   });
+  // }
 
-  memberAdded(member, index) {
+  setMembers(members) {
     this.setState({
-      users: this.state.users.map((user, i) => {
-        if(i === index) return member;
-        else return user;
-      })
+      users: members
     });
   }
 
@@ -104,11 +101,8 @@ class NewProjModal extends React.Component{
             </form>
             <h4><b>Enter Members</b></h4>
             <form>
-              {this.state.users.map((users, i) =>
-                  <SuggestionInput collection="users" searchKey="display_name" updateState={(val) => this.memberAdded(val, i)} key={i}/>
-                )}
+              <MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>
             </form>
-            <Button bsStyle="primary" onClick={(e) => this.handleClick(e)}>Add members</Button>
           </Modal.Body>
           <Modal.Footer>
             <Button bsStyle="success" onClick={(e) => this.createNewProj(e)}>Create</Button>

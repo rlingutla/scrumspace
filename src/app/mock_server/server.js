@@ -193,5 +193,6 @@ export function search(str, collection, key = "_id", limit=15){
 		if(escapeRegExp(obj[key]).match(searchExpr)) filtered.push(obj);
 	})
 
-	return filtered.slice(0, limit);
+	return emulateServerReturn(filtered.slice(0, limit), false);
+	// return emulateServerReturn([{ value: 'one', label: 'One' },{ value: 'two', label: 'Two' }], false);
 }
