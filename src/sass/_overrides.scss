@@ -40,5 +40,16 @@ input.form-control {
 		box-shadow: none;
 		border-radius:0;
 		border: 1px solid $border-color;
+
+		.modal-body {
+			overflow: visible;
+		}
+	}
+
+	.Select {
+		.Select-menu-outer {
+			// position: relative;
+			z-index: 5000;
+		}
 	}
 }
