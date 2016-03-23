@@ -79,7 +79,8 @@ class NewProjModal extends React.Component{
 
   setMembers(members) {
     this.setState({
-      users: members.map((member) => member._id)
+      // users: members.map((member) => member._id) //TODO: need to push only user ID (full object in for now to support mock server)
+      users: members
     });
   }
 

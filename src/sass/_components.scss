@@ -63,7 +63,7 @@ button {
     	min-height:50px;
     }
 
-	.heading {
+	.footer {
 		color: $blue-color;
 
 		.row {
@@ -71,24 +71,31 @@ button {
 		}
 
 		.avatar {
-			width: 25px;
-			height: 25px;
+			width: 20px;
+			height: 20px;
 			display: inline-block;
-			background: $light-gray-color;
+			background: #F1F1F1;
 			font-family: 'Glyphicons Halflings';
 			color: gray;
+			background-size: cover;
+			background-position: center;
+			border-radius: 2px;
 
-			&:before {
-				position: relative;
-				top: 2px;
-				left: -6px;
-				content: "\e008";
-				font-size: 12px;
+			&:not(:last-child) {
+				margin-right: 3px;
 			}
+
+			// &:before {
+			// 	position: relative;
+			// 	top: 4px;
+			// 	left: -5px;
+			// 	content: "\e008";
+			// 	font-size: 12px;
+			// }
 		}
 	}
 	.body {
-		padding: 5px 0;
+		padding-bottom: 5px;
 	}
 }
 .task-status {

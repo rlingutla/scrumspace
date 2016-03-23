@@ -12,7 +12,6 @@ import { DragSource } from 'react-dnd';
 
 import { changeTaskState, putAndChangeTaskState } from '../../../actions/';
 
-
 const taskSource = {
 	beginDrag(props){
 		return props;
@@ -55,21 +54,28 @@ class Task extends React.Component {
 			);
 		}
 
-		return connectDragSource(
+		let theTask = (
 			<div>
 				<div className="task" onClick={(e) => this.changeModal(e)} style={this.getTaskStyle(this.props.status)}>
 				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
-				    <div className="heading">
+				    <div className="body">{this.props.description}</div>
+				    <div className="footer">
 				        <div className="row left-right-align">
-				            <div className="col-md-6"><a>{this.props._id}</a></div>
-				            <div className="col-md-6"></div>
+				            {/* <div style={{float:'left'}}><a>{this.props._id}</a></div> */}
+				            <div style={{float:'right'}}>
+				            	{this.props.assignedTo ? 
+				            		this.props.assignedTo.map((user, i) => 
+				            			<span key={i} className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}></span>
+				            		):null
+				            	}
+				            </div>
 				        </div>
 				    </div>
-				    <div className="body">{this.props.description}</div>
 				</div>
-			</div>,
-			{dropEffect: 'move'}
+			</div>
 		);
+
+		return connectDragSource(theTask, {dropEffect: 'move'});
 	}
 }
 
