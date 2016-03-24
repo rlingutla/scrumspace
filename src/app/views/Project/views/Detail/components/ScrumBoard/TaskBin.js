@@ -5,6 +5,20 @@ import { changeTaskState } from '../../../../../../actions/';
 
 import { DropTarget } from 'react-dnd';
 
+const moveHandler = (item, target) => {
+	return new Promise((resolve, reject) => {
+		//moving from UNASSIGNED
+		if(item.status === TaskTypes.UNASSIGNED.title){
+			if(item.assignedTo.length < 1){
+				alert("Please assign a user")
+				return resolve(false);
+			}
+		}
+
+		return resolve(true);
+    });	
+}
+
 const taskTarget = {
 	canDrop(props, monitor) {
 		const item = monitor.getItem();
@@ -22,9 +36,14 @@ const taskTarget = {
 		// Obtain the dragged item
 		const item = monitor.getItem();
 
-		//component.props.container has dropped target
-		item.moveTask(item.project_id, item.story_id, item._id, props.type.title);
-		return { moved: true };
+		moveHandler(item, component).then((canDrop) => {
+			if(canDrop){
+				//component.props.container has dropped target
+				item.moveTask(item.project_id, item.story_id, item._id, props.type.title);
+				return { moved: true };
+			}
+			else return { moved: false };
+		});
 	  }
 	};
 
