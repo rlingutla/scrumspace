@@ -1,4 +1,4 @@
-import { projectDefault } from '../constants/models';
+import { project as projectModel } from '../constants/models';
 import _ from 'underscore';
 
 const task = (state, action) => {
@@ -36,7 +36,7 @@ const projects = (state = [], action) => {
 				_id: state.length,
 				title: action.title,
 				description: action.description
-			}, projectDefault());
+			}, projectModel());
 
 			return [
 				...state,
