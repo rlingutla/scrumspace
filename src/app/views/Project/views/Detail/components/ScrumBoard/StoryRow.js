@@ -23,7 +23,7 @@ class StoryRow extends React.Component {
 		return (
 			<tr>
 				<td id="story-container">
-					<Story id={this.props.story_id} title={this.props.title} description={this.props.description} />
+					<Story {...this.props} />
 				</td>
 				<TaskBin container="task-container" type={TaskTypes.UNASSIGNED} story_id={this.props.story_id}>
 					{this.getTaskArray(TaskTypes.UNASSIGNED).map((task, i) => {

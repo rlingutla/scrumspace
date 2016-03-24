@@ -30,6 +30,16 @@ const projects = (state = [], action) => {
 					})});
 				} else return project;
 			});
+		case 'CHANGE_STORY_STATE':
+			return state.map((project) => {
+				if (project._id === action.project_id){
+					return Object.assign({}, project, { stories: project.stories.map((story) => {
+						if (story._id === action.story._id){
+							return Object.assign({}, action.story)
+						} else return story;
+					})});
+				} else return project;
+			});
 		case 'CREATE_NEW_PROJECT':
 			//find right project
 			let project = _.defaults({

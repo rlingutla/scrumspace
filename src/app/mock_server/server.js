@@ -76,6 +76,28 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 	return emulateServerReturn(updatedTask, updatedTask == undefined);
 }
 
+export function serverPutStory(project_id, newStory){
+	let projects = readDocument("projects");
+	let updatedProject, updatedStory;
+	projects.map((project) => {
+		if(project._id == project_id){
+			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
+				if(story._id === newStory._id){
+					updatedStory = Object.assign({}, newStory);
+					return updatedStory;
+				}
+				else return story;
+			})});
+			return updatedProject;
+		}
+		else return project;
+	});
+	//write updated project object to server
+	writeDocument('projects', updatedProject);
+	serverLog("DB Updated", updatedStory);
+	return emulateServerReturn(updatedStory, updatedStory == undefined);
+}
+
 export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
 stories,commits,timeFrame,membersOnProj,gCommits,color){
 	// read in all projects, access last project in the array, get it's ID and increment that value
