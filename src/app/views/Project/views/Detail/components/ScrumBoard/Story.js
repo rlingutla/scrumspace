@@ -30,7 +30,7 @@ class Story extends React.Component {
 	handleBlur(target, e){
 		if(e.target.value){
 			this.toggleEdit(target, false);
-			let story = Object.assign({}, this.props, {[target]: e.target.value});
+			let story = Object.assign({}, this.props, {[target]: e.target.value.trim()});
 			//update the story
 			this.props.updateStory(this.props.project_id, story);
 		}
@@ -52,7 +52,6 @@ class Story extends React.Component {
 					e.target.blur();
 					this.handleBlur(target, e);
 				}
-				
 		}
 	}
 
@@ -79,6 +78,7 @@ class Story extends React.Component {
 		                	:<h5 className="editable" onClick={(e) => this.toggleEdit('title', true)}>{this.state.title.value}</h5>
 		                }
 		                {(this.state.description.editing) ? 
+		                	
 		                	<textarea autoFocus 
 		                		onChange={(e) => this.handleChange('description', e)} 
 		                		value={this.state.description.value} 
