@@ -2,8 +2,8 @@ import React from 'react';
 import ItemTypes from '../../../../../../constants/itemTypes';
 import TaskTypes from '../../../../../../constants/taskTypes';
 import { changeTaskState } from '../../../../../../actions/';
-
 import { DropTarget } from 'react-dnd';
+import AssignUserModal from './AssignUserModal';
 
 const moveHandler = (item, target) => {
 	return new Promise((resolve, reject) => {
@@ -64,19 +64,26 @@ function collect(connect, monitor) {
 class TaskBin extends React.Component {
 	constructor(props){
 		super(props);
+
+		// this.state({
+		// 	assignUserModal: false
+		// })
 	}
 
 	render(){
 		const { isOver, canDrop, connectDropTarget } = this.props;
 
 		return connectDropTarget(
-			<td id={this.props.id}>
-				<div>
-					<div id="task-container" style={isOver ? {borderStyle: 'dashed', borderColor: '#A9A9A9'}:null}>
-						{this.props.children}
+			<div>
+				<AssignUserModal isModalOpen={this.state.assignUserModal} />
+				<td id={this.props.id}>
+					<div>
+						<div id="task-container" style={isOver ? {borderStyle: 'dashed', borderColor: '#A9A9A9'}:null}>
+							{this.props.children}
+						</div>
 					</div>
-				</div>
-			</td>
+				</td>
+			</div>
 		);
 	}
 }
