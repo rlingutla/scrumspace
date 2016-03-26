@@ -15,7 +15,6 @@ var startupName = "scrumSpace";
 
 var data;
 
-
 /**
 * need to initialize data manually because of server side rendering
 */
@@ -42,7 +41,7 @@ function JSONClone(obj) {
 export function readDocument(collection, id) {
   // Clone the data. We do this to model a database, where you receive a
   // *copy* of an object and not the object itself.
-  if(id) return JSONClone(data[collection][id]);
+  if (id) return JSONClone(data[collection][id]);
   else return JSONClone(data[collection]);
 }
 
@@ -87,14 +86,9 @@ export class ResetDatabase extends React.Component {
     return (
       <button style={{width: 50+'px', height: 50+'px', overflow: 'hidden', fontSize: 12+'px', padding: 0}} className="btn btn-default" type="button" onClick={() => {
         resetDatabase();
-        window.alert("Database reset! Refreshing the page now...");
+        window.alert('Database reset! Refreshing the page now...');
         document.location.reload(false);
       }}>ResetDB</button>
     );
   }
 }
-
-// ReactDOM.render(
-//   <ResetDatabase />,
-//   document.getElementById('db-reset')
-// );
