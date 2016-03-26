@@ -1,5 +1,9 @@
 import React from 'react';
 
-const Wrapper = (props) => {
-	return <div style={{ padding: '15px' }}>props.children</div>;
-}
+export default (props)=> {
+	return (
+		<div style={{padding: '15px'}}>
+			{props.children}
+		</div>
+	);
+};

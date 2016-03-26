@@ -16,6 +16,20 @@ const task = (state, action) => {
 
 const projects = (state = [], action) => {
 	switch (action.type){
+		case 'UPDATE_TASK':
+			return state.map((project) => {
+				if (project._id === action.project_id){
+					return Object.assign({}, project, { stories: project.stories.map((story) => {
+						if (story._id === action.story_id){
+							return Object.assign({}, story, { tasks: story.tasks.map((task) => {
+								if (task._id === action.task._id){
+									return Object.assign({}, action.task);
+								}	else return task;
+							})});
+						} else return story;
+					})});
+				} else return project;
+			});
 		case 'CHANGE_TASK_STATE':
 			return state.map((project) => {
 				if (project._id === action.project_id){
