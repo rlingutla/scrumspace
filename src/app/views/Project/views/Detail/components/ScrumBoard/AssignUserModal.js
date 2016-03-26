@@ -13,16 +13,14 @@ export default class AssignUserModal extends React.Component{
 
 	render(){
 		return (
-			<div>
-				<Modal show={this.props.isModalOpen} onHide={(e) => this.props.changeModal(e)} className={"task-detail " + this.props.status}>
-					<Modal.Header closeButton>
-						<Modal.Title>Title</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						The Body
-					</Modal.Body>
-				</Modal>
-			</div>
+			<Modal show={this.props.isModalOpen} onHide={(e) => this.props.hideModal(e)} className={"task-detail " + this.props.status}>
+				<Modal.Header closeButton>
+					<Modal.Title>Assign a User</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					The Body
+				</Modal.Body>
+			</Modal>
 		);
 	}
 }

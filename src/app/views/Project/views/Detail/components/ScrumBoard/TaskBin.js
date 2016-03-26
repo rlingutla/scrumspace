@@ -10,7 +10,9 @@ const moveHandler = (item, target) => {
 		//moving from UNASSIGNED
 		if(item.status === TaskTypes.UNASSIGNED.title){
 			if(item.assignedTo.length < 1){
-				alert("Please assign a user")
+				target.setState({ 
+					assignUserModal: true
+				})
 				return resolve(false);
 			}
 		}
@@ -30,8 +32,7 @@ const taskTarget = {
 	},
 
 	drop(props, monitor, component) {
-		//check if dropping in correct story (not working)
-		if(component.props.story_id !== props.story_id) return false;
+		// if(component.props.story_id !== props.story_id) return false;
 
 		// Obtain the dragged item
 		const item = monitor.getItem();
@@ -44,8 +45,8 @@ const taskTarget = {
 			}
 			else return { moved: false };
 		});
-	  }
-	};
+	}
+};
 
 /**
  * Specifies which props to inject into your component.
@@ -64,26 +65,38 @@ function collect(connect, monitor) {
 class TaskBin extends React.Component {
 	constructor(props){
 		super(props);
+		let self = this;
+		this.state = {
+			assignUserModal: false
+		};
+	}
 
-		// this.state({
-		// 	assignUserModal: false
-		// })
+	queryUser(){
+		this.setState()
+	}
+
+	hideUserAssignModal(){
+		this.setState({assignUserModal: false});
 	}
 
 	render(){
 		const { isOver, canDrop, connectDropTarget } = this.props;
+		const containerStyle = {
+			marginRight: '15px',
+			display: 'inline-block',
+			height: '100%',
+			width: '90%'
+		}
 
 		return connectDropTarget(
-			<div>
-				<AssignUserModal isModalOpen={this.state.assignUserModal} />
-				<td id={this.props.id}>
-					<div>
-						<div id="task-container" style={isOver ? {borderStyle: 'dashed', borderColor: '#A9A9A9'}:null}>
-							{this.props.children}
-						</div>
+			<td id={this.props.id}>
+				<AssignUserModal isModalOpen={this.state.assignUserModal} hideModal={(e) => this.hideUserAssignModal(e)}/>
+				<div style={containerStyle}>
+					<div id="task-container" style={isOver ? {borderStyle: 'dashed', borderColor: '#A9A9A9'}:null}>
+						{this.props.children}
 					</div>
-				</td>
-			</div>
+				</div>
+			</td>
 		);
 	}
 }
