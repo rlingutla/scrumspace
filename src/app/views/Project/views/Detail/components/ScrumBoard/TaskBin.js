@@ -1,7 +1,6 @@
 import React from 'react';
 import ItemTypes from '../../../../../../constants/itemTypes';
 import TaskTypes from '../../../../../../constants/taskTypes';
-import { changeTaskState } from '../../../../../../actions/';
 
 import { DropTarget } from 'react-dnd';
 
@@ -22,8 +21,11 @@ const taskTarget = {
 		// Obtain the dragged item
 		const item = monitor.getItem();
 
+		// create new task object with updated status
+		let updatedTask = Object.assign({}, item, {status: props.type.title})
+
 		//component.props.container has dropped target
-		item.moveTask(item.project_id, item.story_id, item._id, props.type.title);
+		item.moveTask(item.project_id, item.story_id, updatedTask);
 		return { moved: true };
 	  }
 	};

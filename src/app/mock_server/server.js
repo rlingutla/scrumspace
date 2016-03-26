@@ -59,6 +59,42 @@ export function serverPutSettings(newData, properties){
 	return emulateServerReturn(oldSettings, true) ;
 }
 
+export function serverUpdateTask(project_id, story_id, changedTask){
+	let projects = readDocument('projects');
+	let updatedTask, updatedProject;
+
+	projects.map((project) => {
+		if(project._id === project_id){
+			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
+				if(story._id === story_id){
+					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
+						if(task._id === changedTask._id){
+							let historyItem = { fromStatus: task.status, toStatus: changedTask.status, modifiedTime: Date.now(), modifiedUser: getCurrentUser()};
+
+							updatedTask = Object.assign({}, task, changedTask, {
+								history: [
+									...task.history,
+									historyItem
+								]
+							});
+							return updatedTask;
+						} else return task;
+					})});
+				} else return story;
+			})});
+			return updatedProject;
+		} else return project;
+	});
+
+
+	//write updated project object to server
+	writeDocument('projects', updatedProject);
+
+	serverLog('DB Updated', updatedTask);
+
+	return emulateServerReturn(updatedTask, updatedTask === undefined);
+}
+
 export function serverPutTaskState(project_id, story_id, task_id, toType){
 	let projects = readDocument('projects');
 	let updatedTask, updatedProject;
