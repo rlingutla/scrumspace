@@ -90,6 +90,7 @@ export default class TaskDetailModal extends React.Component{
 					<br/>
 					<Row>
 						<Col xs={8}>
+							<Row>
 							<h4>Assigned To:</h4>
 							{this.props.assignedTo.map((user,i) => {
 								return (
@@ -105,7 +106,7 @@ export default class TaskDetailModal extends React.Component{
 								<MultiSelect className="form-control" aria-describedby="basic-addon1" collection="users"
 									labelKey="display_name" valueKey="_id" updateState={(members) => this.setAssignedTo(members)}/>
 								</div>
-
+							</Row>
 							</Col>
 							<Col xs={4} style={{textAlign:"right"}}>
 								<ButtonGroup vertical>
