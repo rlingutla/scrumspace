@@ -24,12 +24,13 @@ export function initDatabase(){
 }
 
 function serverLog(...msg){
-	console.log("SERVER MESSAGE:", ...msg);
+	console.log('SERVER MESSAGE:', ...msg);
 }
 
 export function stateTree(userId){
-	var userObj = readDocument("users", userId);
-	var projects = readDocument("projects");
+	var userObj = readDocument('users', userId);
+	var projects = readDocument('projects');
+	delete userObj.password; // TODO: this is bad design
 	var stateTree = {
 		user: userObj[userId],
 		projects
@@ -38,17 +39,72 @@ export function stateTree(userId){
 	return emulateServerReturn(stateTree);
 }
 
-export function serverPutTaskState(project_id, story_id, task_id, toType){
-	let projects = readDocument("projects");
+export function serverPutSettings(newData, properties){
+	var oldSettings = readDocument('users', newData._id.toString());
+
+	// check if password (TODO: fix this design AV)
+	if (newData.oldPassword === oldSettings.password) {
+		oldSettings.password = newData.newPassword;
+	} else {
+		for (let prop in newData) {
+			oldSettings[prop] = newData[prop];
+		}
+	}
+
+	//write updated project object to server
+	writeDocument('users', oldSettings);
+
+	serverLog('DB Updated', oldSettings);
+	return emulateServerReturn(oldSettings, false) ;
+}
+
+export function serverUpdateTask(project_id, story_id, changedTask){
+	let projects = readDocument('projects');
 	let updatedTask, updatedProject;
 
 	projects.map((project) => {
-		if(project._id == project_id){
+		if(project._id === project_id){
 			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-				if(story._id == story_id){
+				if(story._id === story_id){
 					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
-						if(task._id == task_id){
-							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: Date.now(), modifiedUser: getCurrentUser()}
+						if(task._id === changedTask._id){
+							let historyItem = { fromStatus: task.status, toStatus: changedTask.status, modifiedTime: Date.now(), modifiedUser: getCurrentUser()};
+
+							updatedTask = Object.assign({}, task, changedTask, {
+								history: [
+									...task.history,
+									historyItem
+								]
+							});
+							return updatedTask;
+						} else return task;
+					})});
+				} else return story;
+			})});
+			return updatedProject;
+		} else return project;
+	});
+
+
+	//write updated project object to server
+	writeDocument('projects', updatedProject);
+
+	serverLog('DB Updated', updatedTask);
+
+	return emulateServerReturn(updatedTask, updatedTask === undefined);
+}
+
+export function serverPutTaskState(project_id, story_id, task_id, toType){
+	let projects = readDocument('projects');
+	let updatedTask, updatedProject;
+
+	projects.map((project) => {
+		if(project._id === project_id){
+			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
+				if(story._id === story_id){
+					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
+						if(task._id === task_id){
+							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: Date.now(), modifiedUser: getCurrentUser()};
 
 							updatedTask = Object.assign({}, task, {
 								status: toType,
@@ -71,15 +127,37 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 	//write updated project object to server
 	writeDocument('projects', updatedProject);
 
-	serverLog("DB Updated", updatedTask);
+	serverLog('DB Updated', updatedTask);
 
-	return emulateServerReturn(updatedTask, updatedTask == undefined);
+	return emulateServerReturn(updatedTask, updatedTask === undefined);
+}
+
+export function serverPutStory(project_id, newStory){
+	let projects = readDocument('projects');
+	let updatedProject, updatedStory;
+	projects.map((project) => {
+		if(project._id == project_id){
+			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
+				if(story._id === newStory._id){
+					updatedStory = Object.assign({}, newStory);
+					return updatedStory;
+				}
+				else return story;
+			})});
+			return updatedProject;
+		}
+		else return project;
+	});
+	//write updated project object to server
+	writeDocument('projects', updatedProject);
+	serverLog('DB Updated', updatedStory);
+	return emulateServerReturn(updatedStory, updatedStory === undefined);
 }
 
 export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
 stories,commits,timeFrame,membersOnProj,gCommits,color){
 	// read in all projects, access last project in the array, get it's ID and increment that value
-  var projects = readDocument("projects");
+  var projects = readDocument('projects');
 	var prevId = projects[projects.length - 1]._id;
 
 	let project = {
@@ -230,21 +308,20 @@ export function serverMakeNewStory(project, title, description, tasks, story){
 ** key (optional): key to search on
 ** limit (optional): number of results
 */
-export function search(str, collection, key = "_id", limit=15){
+export function search(str, collection, key = '_id', limit=15){
 	let searchCollection = readDocument(collection);
 	//if it's an object, map the values to an array
-	if(_.isObject(searchCollection)) searchCollection = _.values(searchCollection);
-	else if(!_.isArray(searchCollection)) return new Error("Supplied collection is invalid");
+	if (_.isObject(searchCollection)) searchCollection = _.values(searchCollection);
+	else if(!_.isArray(searchCollection)) return new Error('Supplied collection is invalid');
 	//strip some stuff from search
-	const escapeRegExp = (str_unesc) => str_unesc.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "");
+	const escapeRegExp = (str_unesc) => str_unesc.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '');
 	let filtered = [];
 	//precalculate the regex once (faster)
-	let searchExpr = new RegExp(escapeRegExp(str).split('').join('\\w*').replace(/\W/, ""), 'i');
+	let searchExpr = new RegExp(escapeRegExp(str).split('').join('\\w*').replace(/\W/, ''), 'i');
 	//loop through collection, find matching elements
 	searchCollection.forEach((obj) => {
-		if(escapeRegExp(obj[key]).match(searchExpr)) filtered.push(obj);
-	})
+		if (escapeRegExp(obj[key]).match(searchExpr)) filtered.push(obj);
+	});
 
 	return emulateServerReturn(filtered.slice(0, limit), false);
-	// return emulateServerReturn([{ value: 'one', label: 'One' },{ value: 'two', label: 'Two' }], false);
 }

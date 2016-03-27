@@ -1,13 +1,26 @@
 import React from 'react';
 import ProjectProgressBar from './ProjectProgressBar';
 import ScrumBoard from './ScrumBoard/ScrumBoard';
-import { getCurrentSprint } from '../../../../../shared/utils/utils';
+import { Button } from 'react-bootstrap'; 
+import { getProjectStatus } from '../../../shared/ProjectStatus';
+import ProjectStatuses from '../../../../../constants/projectStatuses';
+// import { getCurrentSprint } from '../../../../../shared/utils/utils'; //TODO: deprecate
 
 const BoardView = (props) => {
-	let currentSprint = getCurrentSprint(props);
+	let status = getProjectStatus(props);
 
-
-	if(currentSprint)
+	if(status === ProjectStatuses.PLANNING){
+		return (
+			<div className="content">
+				<div className="project-info container-fluid">
+					<div>
+						<Button>Go Plan a Sprint</Button>
+					</div>
+				</div>
+			</div>
+		)
+	}
+	else if(status === ProjectStatuses.SPRINT){
 		return (
 			<div className="content">
 				<div className="project-info container-fluid">
@@ -16,14 +29,14 @@ const BoardView = (props) => {
 				<ScrumBoard {...props} />
 			</div>
 		);
-	else 
+	}
+	else if (status === ProjectStatuses.REVIEW){ //TODO: return the actual review board
 		return (
 			<div className="content">
-				<div className="project-info container-fluid">
-					<h1>Go plan a sprint!</h1>
-				</div>
+				Project is in review
 			</div>
 		)
+	}
 };
 
 export default BoardView;

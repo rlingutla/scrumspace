@@ -1,9 +1,27 @@
 import React from 'react';
 import ItemTypes from '../../../../../../constants/itemTypes';
 import TaskTypes from '../../../../../../constants/taskTypes';
-import { changeTaskState } from '../../../../../../actions/';
 
 import { DropTarget } from 'react-dnd';
+import AssignUserModal from './AssignUserModal';
+
+const moveHandler = (item, target) => {
+	return new Promise((resolve, reject) => {
+		//moving from UNASSIGNED
+		if(item.status === TaskTypes.UNASSIGNED.title && target.props.type !== TaskTypes.UNASSIGNED){
+			if(item.assignedTo.length < 1){
+				target.setState({ 
+					assignUserModal: Object.assign({}, 
+						target.state.assignUserModal, 
+						{visible: true, task: item, target: target.props.type.title})
+				})
+				return resolve(false);
+			}
+		}
+
+		return resolve(true);
+    });	
+}
 
 const taskTarget = {
 	canDrop(props, monitor) {
@@ -16,17 +34,24 @@ const taskTarget = {
 	},
 
 	drop(props, monitor, component) {
-		//check if dropping in correct story (not working)
-		if(component.props.story_id !== props.story_id) return false;
+		// if(component.props.story_id !== props.story_id) return false;
 
 		// Obtain the dragged item
 		const item = monitor.getItem();
 
-		//component.props.container has dropped target
-		item.moveTask(item.project_id, item.story_id, item._id, props.type.title);
-		return { moved: true };
-	  }
-	};
+		moveHandler(item, component).then((canDrop) => {
+			if(canDrop){
+				// create new task object with updated status
+				let updatedTask = Object.assign({}, item, {status: props.type.title})
+
+				//component.props.container has dropped target
+				item.moveTask(item.project_id, item.story_id, updatedTask);
+				return { moved: true };
+			}
+			else return { moved: false };
+		});
+	}
+};
 
 /**
  * Specifies which props to inject into your component.
@@ -45,14 +70,48 @@ function collect(connect, monitor) {
 class TaskBin extends React.Component {
 	constructor(props){
 		super(props);
+		this.state = {
+			assignUserModal: {
+				visible: false,
+				target: null
+			}
+		};
+	}
+
+	toggleUserAssignModal(visible){
+		this.setState({
+			assignUserModal: Object.assign({}, this.state.assignUserModal, {visible: visible})
+		});
+	}
+
+	assignUsersAndMove(users, target, task){
+		let updatedTask = Object.assign({}, task, {
+			assignedTo: users,
+			status: target
+		});
+
+		task.moveTask(task.project_id, task.story_id, updatedTask);
+		this.toggleUserAssignModal(false);
 	}
 
 	render(){
 		const { isOver, canDrop, connectDropTarget } = this.props;
+		const containerStyle = {
+			marginRight: '15px',
+			display: 'inline-block',
+			height: '100%',
+			width: '90%'
+		}
 
 		return connectDropTarget(
 			<td id={this.props.id}>
-				<div>
+				<AssignUserModal 
+					isModalOpen={this.state.assignUserModal.visible} 
+					hideModal={() => this.toggleUserAssignModal(false)}
+					callback={(users,target,task) => this.assignUsersAndMove(users,target,task)}
+					target={this.state.assignUserModal.target}
+					task={this.state.assignUserModal.task}/>
+				<div style={containerStyle}>
 					<div id="task-container" style={isOver ? {borderStyle: 'dashed', borderColor: '#A9A9A9'}:null}>
 						{this.props.children}
 					</div>

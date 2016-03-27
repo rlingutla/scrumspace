@@ -20,6 +20,10 @@ button {
 	}
 }
 
+.editable {
+	cursor: pointer;
+}
+
 // utils
 .left-right-align {
 	margin:0;
@@ -38,6 +42,10 @@ button {
 	& > :first-child {
 		text-align: center;
 	}
+}
+
+.vertical-align {
+	@include vertical-align();
 }
 
 // TASKS

@@ -12,9 +12,9 @@ export default (props) => {
 			{
 				(props.saveMethod) ?
 				<div className="panel-footer settings-foot">
-					<button className="btn btn-success pull-right save" type="save">Save</button>
+					<button onClick={props.saveMethod} className="btn btn-success pull-right save" type="save">Save</button>
 				</div> : null
 			}
 		</div>
-		);
+	);
 };

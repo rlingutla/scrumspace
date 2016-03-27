@@ -3,10 +3,10 @@ import { search } from '../../mock_server/server';
 
 //Projects
 export function getCurrentSprint(props){
-	let now = moment();
+	if(props.current_sprint === null) return null;
 
-	return props.sprints.find((sprint) => {
-		return (sprint.start_date <= now < sprint.end_date);
+	else return props.sprints.find((sprint) => {
+		return (sprint._id === props.current_sprint);
 	});
 }
 
@@ -21,7 +21,7 @@ export function daysDifference(startDate, endDate){
 	var days = moment.duration(end.diff(start)).asDays();
 	return {
 		days: Math.round(days),
-		past: start > end
+		past: start > end //does this make sense...?
 	};
 }
 

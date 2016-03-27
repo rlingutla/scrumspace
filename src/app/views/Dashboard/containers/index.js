@@ -5,7 +5,10 @@ const isInSprint = (project) => {
 };
 
 const mapStateToProps = (state) => {
-	let projects = state.projects.filter(isInSprint);
+	var projects = [];
+	if (state.projects.constructor === Array) {
+		projects = state.projects.filter(isInSprint);
+	}
 	return Object.assign({}, {
 		projects
 	});

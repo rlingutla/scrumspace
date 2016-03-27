@@ -1,29 +1,23 @@
 import { serverPutSettings } from '../../../mock_server/server';
 
-export const changeSettingsState = (project_id, story_id, task_id, task) => {
+export const changeSettingsState = (state) => {
 	return {
 		type: 'CHANGE_SETTINGS_STATE',
-		project_id,
-		story_id,
-		task_id,
-		task
+		state: state
 	};
 };
 
-function putSettings(project_id, story_id, task_id, toType) {
-	return serverPutSettings(project_id, story_id, task_id, toType);
+function putSettings(data, propertiesToUpdate) {
+	return serverPutSettings(data, propertiesToUpdate);
 }
 
-export function putAndChangeSettings(project_id, story_id, task_id, toType) {
+export function putAndChangeSettings(data, propertiesToUpdate) {
 	return function (dispatch) {
-		return putSettings(project_id, story_id, task_id, toType).then(
+		return putSettings(data, propertiesToUpdate).then(
 			task => {
-				//dispatch with status from server
-				dispatch(changeSettingsState(project_id, story_id, task_id, task));
+				dispatch(changeSettingsState(data, propertiesToUpdate));
 			},
 			error => console.error('got an error', error)
-			// sauce => dispatch(makeASandwich(forPerson, sauce)),
-			// error => dispatch(apologize('The Sandwich Shop', forPerson, error))
 		);
 	};
 }

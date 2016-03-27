@@ -4,6 +4,7 @@ import { ProgressBar } from 'react-bootstrap';
 import TaskTypes from '../../../../../constants/taskTypes';
 import { daysDifference, getCurrentSprint } from '../../../../../shared/utils/utils';
 import _ from 'underscore';
+import moment from 'moment';
 
 class ProjectProgressBar extends React.Component {
 	constructor(props) {
@@ -29,7 +30,10 @@ class ProjectProgressBar extends React.Component {
 
 	daysLeft(){
 		let sprint = getCurrentSprint(this.props);
-		let diff = daysDifference(Date.now(), sprint.end_date);
+		//calculated end date: add sprint duration to start_date
+		let end_date = moment(sprint.start_date).add(sprint.duration, 'days');
+		let diff = daysDifference(Date.now(), end_date);
+
 		return (diff.past) ? 0:diff.days;
 	}
 

@@ -23,19 +23,19 @@ class StoryRow extends React.Component {
 		return (
 			<tr>
 				<td id="story-container">
-					<Story id={this.props.story_id} title={this.props.title} description={this.props.description} />
+					<Story {...this.props} />
 				</td>
-				<TaskBin container="task-container" type={TaskTypes.UNASSIGNED} story_id={this.props.story_id}>
+				<TaskBin container="task-container" type={TaskTypes.UNASSIGNED} story_id={this.props.story_id} project_id={this.props.project_id}>
 					{this.getTaskArray(TaskTypes.UNASSIGNED).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} />;
 					})}
 				</TaskBin>
-				<TaskBin container="doing-container" type={TaskTypes.DOING} story_id={this.props.story_id}>
+				<TaskBin container="doing-container" type={TaskTypes.DOING} story_id={this.props.story_id} project_id={this.props.project_id}>
 					{this.getTaskArray(TaskTypes.DOING).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} {...task}/>;
 					})}
 				</TaskBin>
-				<TaskBin container="blocked-container" type={TaskTypes.BLOCKED} story_id={this.props.story_id}>
+				<TaskBin container="blocked-container" type={TaskTypes.BLOCKED} story_id={this.props.story_id} project_id={this.props.project_id}>
 					{this.getTaskArray(TaskTypes.BLOCKED).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} {...task} />;
 					})}

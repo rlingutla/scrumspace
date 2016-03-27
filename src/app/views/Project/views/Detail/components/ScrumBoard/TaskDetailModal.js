@@ -1,8 +1,8 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import TaskTypes from '../../../../../constants/taskTypes';
-import TaskStatus from '../../../shared/TaskStatus';
+import TaskTypes from '../../../../../../constants/taskTypes';
+import TaskStatus from '../../../../shared/TaskStatus';
 
 
 export default class TaskDetailModal extends React.Component{
@@ -26,17 +26,16 @@ export default class TaskDetailModal extends React.Component{
 						<TaskStatus status={this.props.status} />
 						<br></br>
 						<div className="row left-right-align">
-							{/*<div className="col-md-6">
+							<div className="col-md-6">
 								<b>Assigned To</b>
 								<br></br>
-								<ul >
-									<span>{(this.props.assignedTo > -1) ? this.props.users[this.props.assignedTo].display_name : "No assigned users"}</span>
+								<ul>
 									<button type="button" className="btn btn-default">
 										<span className="glyphicon glyphicon-trash"></span>
 									</button>
 								</ul>
 								<input type="text" className="form-control" id="inputMember" placeholder="Add Member"/>
-							</div>*/}
+							</div>
 						</div>
 					</Modal.Body>
 				</Modal>
