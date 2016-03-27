@@ -3,6 +3,7 @@ import Nav from './Nav';
 import Tab from './Tabs/Tab';
 import BoardView from './BoardView';
 import SprintPlan from './SprintPlanning/SprintPlan';
+import PlanView from './ProjectPlanning/PlanView';
 
 import { connect } from 'react-redux';
 import _ from 'underscore';
