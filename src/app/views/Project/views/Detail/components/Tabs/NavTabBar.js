@@ -3,7 +3,8 @@ import NavTab from './NavTab';
 
 const tabs = [
 	{ id: 0, name: "Board" },
-	{ id: 1, name: "Planning" }
+	{ id: 1, name: "Planning" },
+	{ id: 2, name: "Settings" }
 ];
 
 const NavTabBar = (props) => {
