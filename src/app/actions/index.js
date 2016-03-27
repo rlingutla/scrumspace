@@ -1,29 +1,23 @@
-import { serverPutTaskState, serverPostNewProject, serverPostSprint, serverPutStory } from '../mock_server/server';
+import { serverUpdateTask, serverPostNewProject, serverPostSprint, serverPutStory } from '../mock_server/server';
 
-export const changeTaskState = (project_id, story_id, task_id, task) => {
+export const updateTaskAction = (project_id, story_id, task) => {
 	return {
-		type: 'CHANGE_TASK_STATE',
+		type: 'UPDATE_TASK',
 		project_id,
 		story_id,
-		task_id,
 		task
 	};
 };
 
-function putTaskState(project_id, story_id, task_id, toType) {
-	return serverPutTaskState(project_id, story_id, task_id, toType);
-}
-
-export function putAndChangeTaskState(project_id, story_id, task_id, toType){
-	return function (dispatch) {
-		return putTaskState(project_id, story_id, task_id, toType).then(
+export function updateTask(project_id, story_id, task){
+	return function (dispatch){
+		return serverUpdateTask(project_id, story_id, task).then(
 			task => {
-				//dispatch with status from server
-				dispatch(changeTaskState(project_id, story_id, task_id, task));
+				dispatch(updateTaskAction(project_id, story_id, task));
 			},
 			error => console.error('got an error', error)
-		);
-	};
+		)
+	}
 }
 
 export const changeStoryState = (project_id, story) => {

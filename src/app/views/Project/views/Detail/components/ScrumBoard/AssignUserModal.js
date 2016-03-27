@@ -3,12 +3,27 @@ import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } f
 import { connect } from 'react-redux';
 import TaskTypes from '../../../../../../constants/taskTypes';
 import TaskStatus from '../../../../shared/TaskStatus';
+import MultiSelect from '../../../../../../shared/components/MultiSelect';
 
 
 export default class AssignUserModal extends React.Component{
 
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			users: []
+		}
+	}
+
+	setUsers(users){
+		this.setState({users});
+	}
+
+	assignHandler(){
+		if(this.state.users.length > 0){
+			this.props.callback(this.state.users, this.props.target, this.props.task)
+		}
 	}
 
 	render(){
@@ -18,8 +33,12 @@ export default class AssignUserModal extends React.Component{
 					<Modal.Title>Assign a User</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					The Body
+					<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(users) => this.setUsers(users)}/>
 				</Modal.Body>
+				<Modal.Footer>
+					<Button onClick={(e) => this.props.hideModal(e)}>Cancel</Button>
+					<Button bsStyle="primary" disabled={this.state.users.length < 1} onClick={(e) => this.assignHandler()}>Assign and Move Task</Button>
+				</Modal.Footer>
 			</Modal>
 		);
 	}

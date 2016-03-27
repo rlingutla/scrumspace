@@ -6,15 +6,16 @@ const mapStateToProps = (state) => {
 };
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
-	return stateProps;
+	return Object.assign({
+		...stateProps
+	}, dispatchProps);
 };
 
 // maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
-	debugger;
 	return {
-		putAndChangeSettings: (data) => {
-			dispatch(putAndChangeSettings(data));
+		putAndChangeSettings: (data, propertiesToUpdate) => {
+			dispatch(putAndChangeSettings(data, propertiesToUpdate));
 		}
 	};
 };

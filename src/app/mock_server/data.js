@@ -12,7 +12,7 @@ var initialData = {
 			'last_name': 'Trump',
 			'email': 'america@donaldjtrump.com',
 			'display_name': 'DJ Trump',
-			'password': 'd4866854120e8bb207d6f8e11fce8b99',
+			'password': 'catinthehat',
 			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
 		},
 		1: {
@@ -232,10 +232,10 @@ var initialData = {
 				]
 			}
 		],
-		'commits':[3,1,6,4,8],
+		'commits': [3,1,6,4,8],
 		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
 		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
-		'gCommits':[12,10,4,6,5,6],
+		'gCommits': [12,10,4,6,5,6],
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 
 	},

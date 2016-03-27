@@ -1,17 +1,19 @@
 import React from 'react';
 import ItemTypes from '../../../../../../constants/itemTypes';
 import TaskTypes from '../../../../../../constants/taskTypes';
-import { changeTaskState } from '../../../../../../actions/';
+
 import { DropTarget } from 'react-dnd';
 import AssignUserModal from './AssignUserModal';
 
 const moveHandler = (item, target) => {
 	return new Promise((resolve, reject) => {
 		//moving from UNASSIGNED
-		if(item.status === TaskTypes.UNASSIGNED.title){
+		if(item.status === TaskTypes.UNASSIGNED.title && target.props.type !== TaskTypes.UNASSIGNED){
 			if(item.assignedTo.length < 1){
 				target.setState({ 
-					assignUserModal: true
+					assignUserModal: Object.assign({}, 
+						target.state.assignUserModal, 
+						{visible: true, task: item, target: target.props.type.title})
 				})
 				return resolve(false);
 			}
@@ -39,8 +41,11 @@ const taskTarget = {
 
 		moveHandler(item, component).then((canDrop) => {
 			if(canDrop){
+				// create new task object with updated status
+				let updatedTask = Object.assign({}, item, {status: props.type.title})
+
 				//component.props.container has dropped target
-				item.moveTask(item.project_id, item.story_id, item._id, props.type.title);
+				item.moveTask(item.project_id, item.story_id, updatedTask);
 				return { moved: true };
 			}
 			else return { moved: false };
@@ -65,18 +70,28 @@ function collect(connect, monitor) {
 class TaskBin extends React.Component {
 	constructor(props){
 		super(props);
-		let self = this;
 		this.state = {
-			assignUserModal: false
+			assignUserModal: {
+				visible: false,
+				target: null
+			}
 		};
 	}
 
-	queryUser(){
-		this.setState()
+	toggleUserAssignModal(visible){
+		this.setState({
+			assignUserModal: Object.assign({}, this.state.assignUserModal, {visible: visible})
+		});
 	}
 
-	hideUserAssignModal(){
-		this.setState({assignUserModal: false});
+	assignUsersAndMove(users, target, task){
+		let updatedTask = Object.assign({}, task, {
+			assignedTo: users,
+			status: target
+		});
+
+		task.moveTask(task.project_id, task.story_id, updatedTask);
+		this.toggleUserAssignModal(false);
 	}
 
 	render(){
@@ -90,7 +105,12 @@ class TaskBin extends React.Component {
 
 		return connectDropTarget(
 			<td id={this.props.id}>
-				<AssignUserModal isModalOpen={this.state.assignUserModal} hideModal={(e) => this.hideUserAssignModal(e)}/>
+				<AssignUserModal 
+					isModalOpen={this.state.assignUserModal.visible} 
+					hideModal={() => this.toggleUserAssignModal(false)}
+					callback={(users,target,task) => this.assignUsersAndMove(users,target,task)}
+					target={this.state.assignUserModal.target}
+					task={this.state.assignUserModal.task}/>
 				<div style={containerStyle}>
 					<div id="task-container" style={isOver ? {borderStyle: 'dashed', borderColor: '#A9A9A9'}:null}>
 						{this.props.children}

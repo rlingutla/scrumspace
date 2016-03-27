@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default (props) => {
+export default (props)=> {
 	return (
-		<div>
+		<div style={{padding: '15px'}}>
 			{props.children}
 		</div>
 	);

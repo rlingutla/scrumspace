@@ -1,15 +1,18 @@
 import React from 'react';
 import TopNav from '../../shared/components/TopNav';
-import { User, Projects, Privacy, Panel, ExternalSettings } from './components';
-import { connect } from 'react-redux';
+import { UserSettings, Privacy } from './components';
 import Container from './containers';
+import Wrapper from '../../shared/components/Wrapper';
 
 class Settings extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
+		this.state= {};
+		Object.assign(this.state, {
+			oldPassword: '',
+			newPassword: '',
 			...props.user
-		};
+		});
 	}
 
 	updateState(event, property) {
@@ -18,16 +21,16 @@ class Settings extends React.Component {
 	}
 
 	render() {
+		var state = this.state; 
 		return (
 			<div id="content">
 				<TopNav view='Settings'/>
-				<div className="container">
+				<Wrapper>
 					<div className="panel-group">
-						<Panel heading="User Settings" glyphicon="user">
-							<User updateState={(e, type) => this.updateState(e, type)} saveMethod={() => null} {...this.state} />
-						</Panel>
+						<UserSettings saveMethod={() => this.props.putAndChangeSettings(state, [Object.keys(this.props.user)])} updateState={(e, type) => this.updateState(e, type)} {...state} />
+						<Privacy saveMethod={() => this.props.putAndChangeSettings(Object.assign({ oldPassword: state.oldPassword, newPassword: state.newPassword, _id: state._id}), ['password'])} updateState={(e, type) => this.updateState(e, type)} {...state} />
 					</div>
-				</div>
+				</Wrapper>
 			</div>
 		);
 	}
