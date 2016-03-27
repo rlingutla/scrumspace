@@ -1,7 +1,7 @@
 const initialStateTree = {
 	loading: true,
 	user: {},
-	projects: {}
+	projects: []
 };
 
 export default initialStateTree;

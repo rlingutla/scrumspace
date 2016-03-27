@@ -24,6 +24,10 @@ class Project extends React.Component {
 	}
 
 	render() {
+		// if project data not loaded yet
+		if(Object.keys(this.props).length < 1){
+			return null;
+		}
 		return (
 			<div>
 				{/* Renders project detail view, passes project details down as props */}
@@ -48,9 +52,10 @@ const mapStateToProps = (state) => {
 
 // pulls out current project from projects object, pushes to props
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	return stateProps.projects.find((proj) => {
+	let project = stateProps.projects.find((proj) => {
 		if(proj._id == ownProps.id) return true
 	});
+	return project || {};
 }
 
 //maps any actions this component dispatches to component props
