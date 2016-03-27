@@ -2,6 +2,7 @@ import React from 'react';
 import Ionicon from '../../../../../../shared/components/Ionicon';
 import { connect } from 'react-redux';
 import { putStory } from '../../../../../../actions/';
+import Textarea from 'react-textarea-autosize';
 
 
 class Story extends React.Component {
@@ -29,8 +30,13 @@ class Story extends React.Component {
 
 	handleBlur(target, e){
 		if(e.target.value){
+			let value = e.target.value;
 			this.toggleEdit(target, false);
-			let story = Object.assign({}, this.props, {[target]: e.target.value.trim()});
+
+			// TODO: not working
+			value = (value.charAt(value.length - 1) === '\n') ? value.substring(0,value.length - 1):value;
+
+			let story = Object.assign({}, this.props, {[target]: value});
 			//update the story
 			this.props.updateStory(this.props.project_id, story);
 		}
@@ -69,7 +75,7 @@ class Story extends React.Component {
 		            </div>
 		            <div className="body">
 		                {(this.state.title.editing) ? 
-		                	<input autoFocus 
+		                	<input className="form-control" autoFocus 
 		                		onChange={(e) => this.handleChange('title', e)} 
 		                		value={this.state.title.value} 
 		                		onBlur={(e) => this.handleBlur('title', e)}
@@ -79,12 +85,11 @@ class Story extends React.Component {
 		                }
 		                {(this.state.description.editing) ? 
 		                	
-		                	<textarea autoFocus 
+		                	<Textarea className="form-control" autoFocus 
 		                		onChange={(e) => this.handleChange('description', e)} 
 		                		value={this.state.description.value} 
 		                		onBlur={(e) => this.handleBlur('description', e)}
-		                		onKeyDown={(e) => this.handleKeyDown('description', e)}
-		                	/>
+		                		onKeyDown={(e) => this.handleKeyDown('description', e)}/>
 		                	:<ul className="editable" onClick={(e) => this.toggleEdit('description', true)}>{this.state.description.value.split("\n").map((desc, i) => <li key={i}>{desc}</li>)}</ul>
 		                }
 		                

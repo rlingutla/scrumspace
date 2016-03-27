@@ -8,7 +8,7 @@ button {
 	}
 }
 
-input.form-control {
+input.form-control, textarea.form-control {
 	padding: 5px; 
 	border-radius: 0;
 	border: 1px solid $border-color;
