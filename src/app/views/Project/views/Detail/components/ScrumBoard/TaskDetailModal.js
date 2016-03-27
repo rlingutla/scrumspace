@@ -96,13 +96,14 @@ export default class TaskDetailModal extends React.Component{
 									<ButtonGroup>
 										<Button><AssignedMember key={i} {...user} /></Button>
 										<Button><strong>X</strong></Button>
-										<span></span>
 									</ButtonGroup>
 								);
 							})}
+							<br></br>
 							<div className="input-group">
-								<span className="input-group-addon" id="basic-addon1"><Button><span id="basic-addon1" className="glyphicon glyphicon-plus"></span></Button></span>
-								<MultiSelect className="form-control" aria-describedby="basic-addon1" collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setAssignedTo(members)}/>
+								<span className="input-group-addon" id="basic-addon1"> <span className="glyphicon glyphicon-plus"></span></span>
+								<MultiSelect className="form-control" aria-describedby="basic-addon1" collection="users"
+									labelKey="display_name" valueKey="_id" updateState={(members) => this.setAssignedTo(members)}/>
 								</div>
 
 							</Col>
