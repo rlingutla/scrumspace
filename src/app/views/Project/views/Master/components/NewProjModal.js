@@ -68,15 +68,6 @@ class NewProjModal extends React.Component{
 
   }
 
-  // handleClick(e) {
-  //   e.preventDefault();
-  //   this.setState({
-  //     users: this.state.users.concat([{
-  //       id: this.state.users.length + 1
-  //     }])
-  //   });
-  // }
-
   setMembers(members) {
     this.setState({
       // users: members.map((member) => member._id) //TODO: need to push only user ID (full object in for now to support mock server)
@@ -84,13 +75,19 @@ class NewProjModal extends React.Component{
     });
   }
 
+ fieldReset(e){
+  e.preventDefault();
+  this.props.changeModal();
+  this.setState({title:'', description:''});
+
+ }
 
   render () {
     // TODO members.map() has no event handler! shouldn't be saving.
     //const members = this.state.members;
     return (
       <div>
-        <Modal show={this.props.show} onHide={this.props.changeModal}>
+        <Modal show={this.props.show} onHide={(e)=> this.fieldReset(e)}>
           <Modal.Header closeButton>
             <Modal.Title>Create a new project</Modal.Title>
           </Modal.Header>
