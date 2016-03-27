@@ -3,7 +3,7 @@ import { serverPutSettings } from '../../../mock_server/server';
 export const changeSettingsState = (state) => {
 	return {
 		type: 'CHANGE_SETTINGS_STATE',
-		...state
+		state: state
 	};
 };
 

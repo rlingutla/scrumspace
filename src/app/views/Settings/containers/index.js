@@ -6,9 +6,9 @@ const mapStateToProps = (state) => {
 };
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
-	return Object.assign({
+	return Object.assign(dispatchProps,{
 		...stateProps
-	}, dispatchProps);
+	}, );
 };
 
 // maps any actions this component dispatches to component props

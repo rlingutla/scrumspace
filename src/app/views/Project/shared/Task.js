@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button } from 'react-bootstrap';
 import TaskDetailModal from '../views/Detail/components/ScrumBoard/TaskDetailModal';
+import AssignUserModal from '../views/Detail/components/ScrumBoard/AssignUserModal';
 
 import ItemTypes from '../../../constants/itemTypes';
 import TaskTypes from '../../../constants/taskTypes';
@@ -15,6 +16,12 @@ import { updateTask } from '../../../actions/';
 const taskSource = {
 	beginDrag(props){
 		return props;
+	},
+	endDrag(props, monitor, component){
+		if(monitor.didDrop()){
+			let task = monitor.getDropResult();
+			let item = monitor.getItem();
+		}
 	}
 };
 
@@ -30,13 +37,18 @@ class Task extends React.Component {
 		super(props);
 
 		this.state = { 
-			isModalOpen: false 
+			isModalOpen: false,
+			assignUserModal: false
 		};
 	}
 
 	changeModal(){
 		let modal = !this.state.isModalOpen;
 		this.setState({ isModalOpen: modal});
+	}
+
+	hideUserAssignModal(){
+		this.setState({assignUserModal: false});
 	}
 
 	getTaskStyle(status){
@@ -56,6 +68,7 @@ class Task extends React.Component {
 
 		let theTask = (
 			<div>
+				<AssignUserModal isModalOpen={this.state.assignUserModal} hideModal={(e) => this.hideUserAssignModal(e)}/>
 				<div className="task" onClick={(e) => this.changeModal(e)} style={this.getTaskStyle(this.props.status)}>
 				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
 				    <div className="body">{this.props.description}</div>
