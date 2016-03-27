@@ -15,6 +15,13 @@ export default class TaskDetailModal extends React.Component{
 
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			description: {
+				value: props.description,
+				editing: false
+			}
+		}
 	}
 
 	setAssignedTo(members) {
@@ -51,10 +58,10 @@ export default class TaskDetailModal extends React.Component{
 		switch(e.keyCode){
 			//enter key pressed
 			case 13:
-				if(!e.shiftKey){
-					e.target.blur();
-					this.handleBlur(target, e);
-				}
+			if(!e.shiftKey){
+				e.target.blur();
+				this.handleBlur(target, e);
+			}
 		}
 	}
 
@@ -66,35 +73,38 @@ export default class TaskDetailModal extends React.Component{
 						<Modal.Title>
 							<span className="task_id">{this.props._id} </span>
 
-						{this.props.description}
-
-						{(this.props.description.editing) ?
-							<input autoFocus
-								onChange={(e) => this.handleChange('title', e)}
-								value={this.props.description.value}
-								onBlur={(e) => this.handleBlur('title', e)}
-								onKeyDown={(e) => this.handleKeyDown('title', e)}
-							/>
-							:<h5 className="editable" onClick={(e) => this.toggleEdit('title', true)}>{this.props.description.value}</h5>
+							{(this.props.description) ?
+								<input autoFocus
+									onChange={(e) => this.handleChange('title', e)}
+									value={this.props.description}
+									onBlur={(e) => this.handleBlur('title', e)}
+									onKeyDown={(e) => this.handleKeyDown('title', e)}
+									/>
+								:<h4 className="editable" onClick={(e) => this.toggleEdit('title', true)}>{this.props.description}</h4>
 						}
-							<span className="task-story">, from story {this.props.story_id}</span>
-						</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<TaskStatus status={this.props.status} />
-						<br/>
-						<Row>
-							<Col xs={8}>
-								<h4>Assigned To:</h4>
-								{this.props.assignedTo.map((user,i) => {
-									return (
-										<ButtonGroup horizontal>
+						<span className="task-story">, from story {this.props.story_id}</span>
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<TaskStatus status={this.props.status} />
+					<br/>
+					<Row>
+						<Col xs={8}>
+							<h4>Assigned To:</h4>
+							{this.props.assignedTo.map((user,i) => {
+								return (
+									<ButtonGroup>
 										<Button><AssignedMember key={i} {...user} /></Button>
-										<Button><span className="glyphicon glyphicon-remove"></span></Button>
-										</ButtonGroup>);
-								})}
-								<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setAssignedTo(members)}/>
-								<Button><span className="glyphicon glyphicon-plus"></span></Button>
+										<Button><strong>X</strong></Button>
+										<span></span>
+									</ButtonGroup>
+								);
+							})}
+							<div className="input-group">
+								<span className="input-group-addon" id="basic-addon1"><Button><span id="basic-addon1" className="glyphicon glyphicon-plus"></span></Button></span>
+								<MultiSelect className="form-control" aria-describedby="basic-addon1" collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setAssignedTo(members)}/>
+								</div>
+
 							</Col>
 							<Col xs={4} style={{textAlign:"right"}}>
 								<ButtonGroup vertical>
@@ -108,4 +118,5 @@ export default class TaskDetailModal extends React.Component{
 			</div>
 		);
 	}
+
 }
