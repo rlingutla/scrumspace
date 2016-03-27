@@ -4,6 +4,7 @@ import ProjectItem from './ProjectItem';
 import { postAndCreateNewProject } from '../../../../../actions/';
 import { ToggleDisplay } from 'react-toggle-display';
 import MultiSelect from '../../../../../shared/components/MultiSelect';
+import {Decorator as FormsyElement} from 'formsy-react';
 
 import { connect } from 'react-redux';
 
@@ -76,10 +77,8 @@ class NewProjModal extends React.Component{
   }
 
  fieldReset(e){
-  e.preventDefault();
   this.props.changeModal();
   this.setState({title:'', description:''});
-
  }
 
   render () {
@@ -94,7 +93,7 @@ class NewProjModal extends React.Component{
           <Modal.Body>
             <h4><b>Enter Project Details</b></h4>
             <form>
-              <Input type="text" name="title" placeholder="Enter project title" value={this.state.title} onChange={(e) => this.handleChange(e)} />
+              <Input type="text" name="title" placeholder="Enter project title" validations= "tIsFilled" value={this.state.title} onChange={(e) => this.handleChange(e)} />
               <Input type="text" name="description" placeholder="Enter project description" value={this.state.description} onChange={(e) => this.handleChange(e)}/>
             </form>
             <h4><b>Enter Members</b></h4>
