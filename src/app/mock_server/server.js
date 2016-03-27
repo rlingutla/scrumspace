@@ -55,8 +55,7 @@ export function serverPutSettings(newData, properties){
 	writeDocument('users', oldSettings);
 
 	serverLog('DB Updated', oldSettings);
-
-	return emulateServerReturn(oldSettings, true) ;
+	return emulateServerReturn(oldSettings, false) ;
 }
 
 export function serverUpdateTask(project_id, story_id, changedTask){
