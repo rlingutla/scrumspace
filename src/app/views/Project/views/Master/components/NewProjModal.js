@@ -76,10 +76,8 @@ class NewProjModal extends React.Component{
   }
 
  fieldReset(e){
-  e.preventDefault();
   this.props.changeModal();
   this.setState({title:'', description:''});
-
  }
 
   render () {
