@@ -85,7 +85,7 @@ export default class TaskDetailModal extends React.Component{
 						<span className="task-story">, from story {this.props.story_id}</span>
 					</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>
+				<Modal.Body style={{ paddingTop: 0 }}>
 					<TaskStatus status={this.props.status} />
 					<br/>
 					<Row>
@@ -93,8 +93,8 @@ export default class TaskDetailModal extends React.Component{
 							<h4>Assigned To:</h4>
 							{this.props.assignedTo.map((user,i) => {
 								return (
-									<ButtonGroup>
-										<Button><AssignedMember key={i} {...user} /></Button>
+									<ButtonGroup key={i}>
+										<Button><AssignedMember {...user} /></Button>
 										<Button><strong>X</strong></Button>
 										<span></span>
 									</ButtonGroup>
