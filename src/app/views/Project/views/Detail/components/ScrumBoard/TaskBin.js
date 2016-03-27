@@ -7,8 +7,8 @@ import AssignUserModal from './AssignUserModal';
 
 const moveHandler = (item, target) => {
 	return new Promise((resolve, reject) => {
-		//moving from UNASSIGNED
-		if(item.status === TaskTypes.UNASSIGNED.title && target.props.type !== TaskTypes.UNASSIGNED){
+		//moving from UNASSIGNED requires assigned users (moving to DONE is allowed)
+		if(item.status === TaskTypes.UNASSIGNED.title && (target.props.type !== TaskTypes.UNASSIGNED || target.props.type !== TaskTypes.DONE)){
 			if(item.assignedTo.length < 1){
 				target.setState({ 
 					assignUserModal: Object.assign({}, 
