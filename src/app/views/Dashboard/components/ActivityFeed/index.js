@@ -21,7 +21,7 @@ const activities = (tasks) => {
 };
 
 export default (props) => {
-	var data = activities(props.tasks).slice(0, 4); // TODO: implement scrolling ??
+	var data = activities(props.tasks);
 	return (
 		<Panel title='Activity Feed'>
 			<div className="row">
