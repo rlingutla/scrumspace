@@ -36,9 +36,6 @@ class Project extends React.Component {
 					<Tab tab-id={1} active-tab={this.state.activeTab}>
 						<PlanView {...this.props}/>
 					</Tab>
-					<Tab tab-id={2} active-tab={this.state.activeTab}>
-						<SprintPlan {...this.props}/> {/* This is getting phased out */}
-					</Tab>
 				</div>
 			</div>
     	);
