@@ -103,79 +103,131 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 
 }
 
-export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
-	var project = readDocument('projects');
-	//writes sprint data
-	//find pid
-	stories = stories.filter((e) =>{
-		if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
-			return false;
-		}
-		else{
-			return true;
-		}
-	});
-	let sprint = {
-		'_id': sid,
-		'name': name,
-		'start_date': parseInt(moment(start_date).format('x')),
-		'end_date': parseInt(moment(end_date).format('x')),
-		'scrum_time': scrum_time
-	};
-	(typeof project[pid].sprints[sid] === 'undefined' || project[pid].sprints[sid] === null) ? project[pid].sprints[0] = sprint : project[pid].sprints[sid] = sprint;
-	var notInSp = project[pid].stories.filter(
-		function(value){
-			if(value.sprint_id !== sid){
-				return true;
+export function serverPostSprint(project, name, duration, time, sprint){
+	//sprint is not passed through if it is a new sprint hence the type is undefined
+	var projects = readDocument('project');
+	//The following is to get the value of the project and sprint to be added or edited.
+	var project_i, sprint_i;
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === project) {
+			project_i = i;
+			for(let j = 0; j < projects[i].sprints.length && typeof sprint !== 'undefined'; j++){
+				if(projects[i].sprints[j]._id === sprint){
+					sprint_i = j;
+					break;
+				}
 			}
-			else {
-				return false;
-			}
+			break;
 		}
-	);
-	var nextID = (notInSp.length !== 0) ? notInSp[notInSp.length -1]._id + 1 : 0;
-	for(var i = 0; i < stories.length; i++){
-		let story = {
-			'_id': (nextID+i),
-			'title': stories[i].title,
-			'description': stories[i].description,
-			'sprint_id': sid,
-			'tasks': stories[i].tasks.map(
-				(e, i) => { let t = {
-						'_id': i,
-						'status': 'UNASSIGNED',
-						'assignedTo': null,
-						'description': e.description,
-						'history': [{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: Date.now(),
-							modifiedUser : 0
-						}],
-						'attachments': null
-					};
-					return t;
-				}
-			).filter((e) =>{
-				if(e.description === null || e.description === '' || typeof e.description === 'undefined'){
-					return false;
-				}
-				else{
-					return true;
-				}
-			})
-		};
-		stories[i] = story;
 	}
-	project[pid].stories = notInSp.concat(stories);
-	writeDocument('projects', project[pid]);
-	return emulateServerReturn(project[pid], false);
+	if(typeof sprint === 'undefined')
+		sprint_i = projects[project_i].sprints.length;
+	////////////////////////////////////////////////////
+	let newSprint ={
+		'_id': sprint_i,
+		'name': name,
+		'start_date': null,
+		'duration': duration,
+		'scrum_time': time
+	};
+	projects[project_i].sprints[sprint._id] = newSprint;
+	writeDocument('projects', projects[project_i]);
+	return emulateServerReturn(projects[project_i], false);
 }
 
-/* 
+export function serverMoveStory(project, story, sprint){
+	var projects = readDocument('project');
+	var project_i, story_i;
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === project) {
+			project_i = i;
+			for(let j = 0; j < projects[i].stories.length; j++){
+				if(projects[i].stories[j]._id === story){
+					story_i = j;
+					break;
+				}
+			}
+		}
+	}
+	projects[project_i].story[story_i].sprint_id = sprint;
+	writeDocument('projects', projects[project_i]);
+	return emulateServerReturn(projects[project_i], false);
+}
+export function serverRemoveSprint(project, sprint){
+	var projects = readDocument('project');
+	//The following is to get the value of the project and sprint to be added or edited.
+	var project_i, sprint_i;
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === project) {
+			project_i = i;
+			for(let j = 0; j < projects[i].sprints.length; j++){
+				if(projects[i].sprints[j]._id === sprint){
+					sprint_i = j;
+					break;
+				}
+			}
+			break;
+		}
+	}
+	////////////////////////////////////////////////////
+	projects[project_i].sprints.splice(sprint_i, 1);
+	writeDocument('projects', projects[project_i]);
+	return emulateServerReturn(projects[project_i], false);
+}
+
+export function serverMakeNewStory(project, title, description, tasks, story){
+	//story does not need to be passed through
+	var projects = readDocument('project');
+	var project_i, story_i, sprint_id;
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === project) {
+			project_i = i;
+			for(let j = 0; j < projects[i].stories.length && typeof story !== 'undefined'; j++){
+				if(projects[i].stories[j]._id === story){
+					story_i = j;
+					sprint_id = projects[i].stories[j].sprint_id;
+					break;
+				}
+			}
+			break;
+		}
+	}
+	if(typeof story === 'undefined'){
+		story_i = projects[project_i].stories.length;
+		sprint_id = null;
+	}
+	var newTasks;
+	for(let i = 0; i < projects[project_i].stories.length; i++){
+		newTasks[i] = {
+			'_id': i,
+			'status': 'UNASSIGNED',
+			'assignedTo': [],
+			'description': tasks[i].description,
+			'history': [{
+				fromStatus: null,
+				toStatus: 'UNASSIGNED',
+				modifiedTime: Date.now(),
+				modifiedUser : 0
+			}],
+			'attachements': null
+		};
+	}
+	let newStory = {
+		'_id': 'DT-S' + story_i,
+		'title': title,
+		'description': description,
+		'sprint_id': sprint_id,
+		'tasks': newTasks
+	};
+	projects[project_i].stories[story_i] = newStory;
+	writeDocument('projects', projects[project_i]);
+	return emulateServerReturn(projects[project_i], false);
+}
+
+/*
 ** str: search string
-** collection: target collection to search in 
-** key (optional): key to search on 
+** collection: target collection to search in
+** key (optional): key to search on
 ** limit (optional): number of results
 */
 export function search(str, collection, key = "_id", limit=15){
