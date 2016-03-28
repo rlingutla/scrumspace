@@ -66,6 +66,7 @@ export default class TaskDetailModal extends React.Component{
 	}
 
 	render(){
+
 		return (
 			<div className={"task-detail " + this.props.status}>
 				<Modal show={this.props.isModalOpen} onHide={(e) => this.props.changeModal(e)} className={"task-detail " + this.props.status}>
@@ -90,30 +91,34 @@ export default class TaskDetailModal extends React.Component{
 					<br/>
 					<Row>
 						<Col xs={8}>
-							<Row>
-							<h4>Assigned To:</h4>
+
+							<h5>Assigned To:</h5>
 							{this.props.assignedTo.map((user,i) => {
 								return (
-									<ButtonGroup>
-										<Button><AssignedMember key={i} {...user} /></Button>
-										<Button><strong>X</strong></Button>
-									</ButtonGroup>
+									<Row >
+									<ButtonGroup style={{paddingBottom:10}} >
+										<Button ><AssignedMember key={i} {...user} /></Button>
+										<Button ><strong>X</strong></Button>
+								</ButtonGroup>
+								</Row>
 								);
 							})}
-							<br></br>
+
 							<div className="input-group">
 								<span className="input-group-addon" id="basic-addon1"> <span className="glyphicon glyphicon-plus"></span></span>
 								<MultiSelect className="form-control" aria-describedby="basic-addon1" collection="users"
 									labelKey="display_name" valueKey="_id" updateState={(members) => this.setAssignedTo(members)}/>
 								</div>
-							</Row>
+
 							</Col>
+
 							<Col xs={4} style={{textAlign:"right"}}>
 								<ButtonGroup vertical>
 									<Button>Take Task</Button>
 									<Button bsStyle="danger">Delete Task</Button>
 								</ButtonGroup>
 							</Col>
+
 						</Row>
 					</Modal.Body>
 				</Modal>
