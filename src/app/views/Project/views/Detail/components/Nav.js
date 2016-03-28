@@ -16,9 +16,7 @@ const ProjectNav = (props) => {
 				<Col xs={6}>
 					<Link to="/project" className="nav-link"><Ionicon icon="ion-ios-arrow-back"/> Projects</Link>
 				</Col>
-				<Col xs={6}>
-					<Button><Ionicon icon="ion-ios-gear"/></Button>
-				</Col>
+				<Col xs={6}></Col>
 			</Row>
 			<Row className="row center-align">
 				<div className="project-detail-content">

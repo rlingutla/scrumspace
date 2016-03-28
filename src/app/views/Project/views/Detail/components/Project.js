@@ -4,7 +4,7 @@ import Tab from './Tabs/Tab';
 import BoardView from './BoardView';
 import SprintPlan from './SprintPlanning/SprintPlan';
 import PlanView from './ProjectPlanning/PlanView';
-
+import Settings from './Settings/Settings';
 import { connect } from 'react-redux';
 import _ from 'underscore';
 
@@ -25,6 +25,10 @@ class Project extends React.Component {
 	}
 
 	render() {
+		// if project data not loaded yet
+		if(Object.keys(this.props).length < 1){
+			return null;
+		}
 		return (
 			<div>
 				{/* Renders project detail view, passes project details down as props */}
@@ -35,6 +39,9 @@ class Project extends React.Component {
 					</Tab>
 					<Tab tab-id={1} active-tab={this.state.activeTab}>
 						<PlanView {...this.props}/>
+					</Tab>
+					<Tab tab-id={2} active-tab={this.state.activeTab}>
+						<Settings />
 					</Tab>
 				</div>
 			</div>
@@ -49,9 +56,10 @@ const mapStateToProps = (state) => {
 
 // pulls out current project from projects object, pushes to props
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	return stateProps.projects.find((proj) => {
+	let project = stateProps.projects.find((proj) => {
 		if(proj._id == ownProps.id) return true
 	});
+	return project || {};
 }
 
 //maps any actions this component dispatches to component props
