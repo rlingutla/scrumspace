@@ -30,8 +30,8 @@ export default class PlanView extends React.Component {
 		this.state ={
 			sprints: this.props.sprints,
 			stories: this.props.stories,
-			storyModal: [false, StoryFactory()],
-			sprintModal: [false, SprintFactory()]
+			storyModal: [false, StoryFactory()], //the object at the ladder end of this array is what gets written to the server.
+			sprintModal: [false, SprintFactory()] //the object at the ladder end of this array is what gets written to the server.
 		};
 	}
 
@@ -54,7 +54,7 @@ export default class PlanView extends React.Component {
 	}
 
 	handleEdit(value, item){ //these will have an ID...
-
+		//modify to search for item from list of sprints by id.
 		if(value === 'sprint'){
 			this.updateState('sprintModal', [true, item]);
 		}
@@ -69,7 +69,7 @@ export default class PlanView extends React.Component {
 
 				break;
 			case 'story':
-				this.storyModal[1].tasks = data.tasks;
+
 				break;
 			default:
 
@@ -84,6 +84,9 @@ export default class PlanView extends React.Component {
 				this.state.storyModal[1]['tasks'][task] = e.target.value;
 				break;
 			case 'add':
+				if(this.state.storyModal[1]['tasks'][this.state.storyModal[1]['tasks'].length-1].description === ''){
+					return;
+				}
 				this.state.storyModal[1]['tasks'] = this.state.storyModal[1]['tasks'].concat([{description: ''}]);
 				break;
 			case 'delete':
