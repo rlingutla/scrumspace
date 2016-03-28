@@ -3,7 +3,7 @@ import Backlog from './Backlog';
 import SprintRow from './SprintRow';
 import NewSprintModal from './NewSprintModal';
 import NewStoryModal from './NewProjectModal/NewStoryModal';
-import { postProjectPlan } from '../../../../../../actions/';
+import { postProjectPlan } from '../../../../../actions/';
 import {connect} from 'react-redux';
 
 const mapStateToProps = (state, props) => {
@@ -90,11 +90,9 @@ export default class PlanView extends Component {
 		}
 	}
 
-	save(signal){
-		var data;
+	save(signal, data){
 		switch (signal) {
 			case 'story':
-				//data
 				let model = {
 					project:  this.props._id,
 					title: data.title,

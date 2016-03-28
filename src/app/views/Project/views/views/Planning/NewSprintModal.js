@@ -44,7 +44,7 @@ export default class NewSprintModal extends React.Component {
 						</div>
 	        </Modal.Body>
 	        <Modal.Footer>
-	          <button type="button" className="btn btn-default" data-dismiss="modal" onClick={(e) => this.props.save('sprint')}>Done</button>
+	          <button type="button" className="btn btn-default" data-dismiss="modal" onClick={(e) => this.props.save('sprint', this.props.data)}>Done</button>
 	        </Modal.Footer>
 				</Modal>
       </div>
