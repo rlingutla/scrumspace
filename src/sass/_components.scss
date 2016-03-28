@@ -3,7 +3,7 @@ a {
 }
 button {
 	&.btn.btn-default {
-		border-radius: $border-radius;
+		// border-radius: $border-radius;
 
 		&:hover {
 			background-color: lighten($light-gray-color, 10%);
@@ -88,10 +88,12 @@ button {
 			background-size: cover;
 			background-position: center;
 			border-radius: 2px;
+			margin-left: 3px;
+			margin-bottom: 3px;
 
-			&:not(:last-child) {
-				margin-right: 3px;
-			}
+			// &:not(:last-child) {
+			// 	margin-right: 3px;
+			// }
 
 			// &:before {
 			// 	position: relative;

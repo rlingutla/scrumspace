@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput, Row, Col, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
+import Ionicon from '../../../../../../shared/components/Ionicon';
 import { connect } from 'react-redux';
 import TaskTypes from '../../../../../../constants/taskTypes';
 import TaskStatus from '../../../../shared/TaskStatus';
@@ -20,7 +21,8 @@ class TaskDetailModal extends React.Component{
 			description: {
 				value: props.task.description,
 				editing: false
-			}
+			},
+			assignedTo: []
 		}
 	}
 
@@ -65,7 +67,37 @@ class TaskDetailModal extends React.Component{
 		}
 	}
 
+	addMembers(){
+		let task = Object.assign({}, 
+			this.props.task, 
+			{assignedTo: [
+				...this.props.task.assignedTo,
+				...this.state.assignedTo
+			]}
+		);
+		// update the task
+		this.props.updateTask(task.project_id, task.story_id, task);
+		this.setState({assignedTo: []})
+	}
+
+	removeMember(user){
+		let task = Object.assign({}, 
+			this.props.task, 
+			//new assignedTo array with user removed
+			{assignedTo: this.props.task.assignedTo.filter((member) => member._id !== user._id)}
+		);
+		// update the task
+		this.props.updateTask(task.project_id, task.story_id, task);
+	}
+
+	//filter out already assigned users
+	filterAssignedList(option,filter){
+		let user = this.props.task.assignedTo.find((user) => (user._id === option._id));
+		return (user) ? false:true;
+	}
+
 	render(){
+
 		return (
 			<div className={"task-detail " + this.props.status}>
 				<Modal show={this.props.isModalOpen} onHide={(e) => this.props.changeModal(e)} className={"task-detail " + this.props.task.status}>
@@ -85,32 +117,42 @@ class TaskDetailModal extends React.Component{
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body style={{ paddingTop: 0 }}>
-					<TaskStatus status={this.props.task.status} />
-					<br/>
-					<Row>
-						<Col xs={8}>
-							<Row>
-							<h4>Assigned To:</h4>
-							{this.props.task.assignedTo.map((user,i) => {
-								return (
-									<ButtonGroup key={i}>
-										<Button><AssignedMember {...user} /></Button>
-										<Button><strong>X</strong></Button>
-									</ButtonGroup>
-								);
-							})}
-							<br></br>
-							<div className="input-group">
-								<span className="input-group-addon" id="basic-addon1"> <span className="glyphicon glyphicon-plus"></span></span>
-								<MultiSelect className="form-control" aria-describedby="basic-addon1" collection="users"
-									labelKey="display_name" valueKey="_id" updateState={(members) => this.setAssignedTo(members)}/>
-								</div>
-							</Row>
+						<TaskStatus status={this.props.task.status} />
+						<br/>
+						<Row className="left-right-align">
+							<Col xs={8}>
+								<h5>Assigned To:</h5>
+								{this.props.task.assignedTo.map((user,i) => {
+									return (
+										<ButtonGroup style={{paddingBottom: '10px', marginRight: '10px'}} key={i}>
+											<Button className="fake"><AssignedMember {...user} /></Button>
+											<Button style={{fontSize: '20px'}} onClick={(e) => this.removeMember(user)}>
+												<span><Ionicon icon="ion-ios-close-empty"/></span>
+											</Button>
+										</ButtonGroup>
+									);
+								})}
+
+								<hr />
+
+								<MultiSelect className="form-control" 
+									collection="users"
+									labelKey="display_name" 
+									valueKey="_id" 
+									updateState={(members) => this.setAssignedTo(members)} 
+									filterOption={this.filterAssignedList.bind(this)}/>
+								<Button 
+									disabled={this.state.assignedTo.length < 1}
+									style={{marginTop: '10px'}} 
+									bsStyle="primary" 
+									onClick={(e) => this.addMembers(e)}>
+									Add Members
+								</Button>
 							</Col>
 							<Col xs={4} style={{textAlign:"right"}}>
 								<ButtonGroup vertical>
-									<Button>Take Task</Button>
-									<Button bsStyle="danger">Delete Task</Button>
+									<Button disabled>Take Task</Button>
+									<Button disabled bsStyle="danger">Delete Task</Button>
 								</ButtonGroup>
 							</Col>
 						</Row>
@@ -132,7 +174,11 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	.projects.find((proj) => proj._id === ownProps.project_id)
 	.stories.find((story) => story._id === ownProps.story_id)
 	.tasks.find((task) => task._id === ownProps._id);
-	return Object.assign({ isModalOpen: ownProps.isModalOpen, changeModal: ownProps.changeModal, updateTask: ownProps.updateTask }, {task: theTask}, dispatchProps);
+	return Object.assign(
+		{ isModalOpen: ownProps.isModalOpen, changeModal: ownProps.changeModal, updateTask: ownProps.updateTask }, 
+		{ task: theTask }, 
+		dispatchProps
+	);
 }
 
 //maps any actions this component dispatches to component props

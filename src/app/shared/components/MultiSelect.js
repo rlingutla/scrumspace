@@ -29,6 +29,7 @@ export default class MultiSelect extends React.Component {
 			    valueKey={this.props.valueKey}
 			    onChange={this.handleChange.bind(this)}
 			    value={this.state.values}
+			    filterOption={this.props.filterOption}
 			/>
 		);
 	}
