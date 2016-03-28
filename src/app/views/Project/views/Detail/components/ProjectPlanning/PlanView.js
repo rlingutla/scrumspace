@@ -1,6 +1,7 @@
 import React from 'react';
 import Backlog from './Backlog';
 import SprintRow from './SprintRow';
+import NewSprintModal from './NewSprintModal';
 
 const SprintFactory = () => {
 	return {
@@ -65,13 +66,17 @@ export default class PlanView extends React.Component {
 
 	}
 
-	updateState(property, value, event){
+	updateState(property, value, e){
 		if(property === 'storyModal'){
 			this.state.storyModal[0] = true;
-			this.state.storyModal[1]['value'] = event.target.value;
+			this.state.storyModal[1]['value'] = e.target.value;
+		}
+		if(property === 'sprintModal'){
+			this.state.storyModal[0] = true;
+			this.state.storyModal[1]['value'] = e.target.value;
 		}
 		else{
-			this.state[property] = (event === null) ? value : event.target.value;
+			this.state[property] = (e === null) ? value : e.target.value;
 		}
 		this.setState(this.state);
 	}

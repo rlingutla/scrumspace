@@ -20,7 +20,7 @@ export default class SprintRow extends React.Component {
 						{
 							this.props.stories.map( (e, i, array) =>{
 								return(
-									<Story key={i} index={i} data={e} last={i === array.length -1} isOnly={array.length === 1} updateState={this.props.updateState}/>
+									<Story key={i} index={i} data={e} last={i === array.length -1} isOnly= {array.length === 1} updateState={this.props.updateState}/>
 								);
 							})
 						}
