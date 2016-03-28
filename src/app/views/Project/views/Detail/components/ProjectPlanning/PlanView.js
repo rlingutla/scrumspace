@@ -3,6 +3,21 @@ import Backlog from './Backlog';
 import SprintRow from './SprintRow';
 import NewSprintModal from './NewSprintModal';
 import NewStoryModal from './NewProjectModal/NewStoryModal';
+import { postProjectPlan } from '../../../../../../actions/';
+import {connect} from 'react-redux';
+
+const mapStateToProps = (state, props) => {
+	return state; //TODO
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		saveThis: (signal, data) => {
+			dispatch(postProjectPlan(signal, data));
+		}
+	};
+};
+
 
 const SprintFactory = () => {
 	return {
@@ -73,29 +88,47 @@ export default class PlanView extends React.Component {
 			this.updateState('sprintModal', [true, this.getSprintByID(item._id)]);
 		}
 		else if (value === 'story') {
-			console.log(this.getStoryByID(item._id));
-			console.log(this.props);
+			//console.log(this.getStoryByID(item._id));
+			//console.log(this.props);
 			this.updateState('storyModal', [true, this.getStoryByID(item._id)]);
 		}
 	}
 
-	save(signal, data){
+	save(signal){
+		var data;
 		switch (signal) {
-			case 'sprint':
-
-				break;
 			case 'story':
-
+				//data 
+				let model = {
+					project:  this.props._id,
+					title: data.title,
+					description: data.description,
+					tasks: data.tasks,
+					time: data.scrum_time
+				};
+				if(typeof data._id !== 'undefined')
+					model.story = data._id;
+				this.props.saveThis('NEW_STORY', model);
+				break;
+			case 'sprint':
+				let model1 ={
+					project: this.props._id,
+					name: data.name,
+					duration: data.duration,
+					time: data.time
+				};
+				if(typeof data._id !== 'undefined')
+					model.sprint = data._id;
+				this.props.saveThis('NEW_SPRINT', model1);
 				break;
 			default:
-
+				console.log('I am Crying');
 		}
 		//redux!
 	}
 
 	handleTask(signal, task, e){
 		this.state.storyModal[0] = true;
-		debugger;
 		switch (signal) {
 			case 'change':
 				this.state.storyModal[1]['tasks'][task].description = e.target.value;
@@ -111,7 +144,6 @@ export default class PlanView extends React.Component {
 				break;
 		}
 		this.setState(this.state);
-		debugger;
 	}
 
 	updateState(property, value, e){
@@ -181,3 +213,5 @@ export default class PlanView extends React.Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlanView);
