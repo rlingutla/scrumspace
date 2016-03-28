@@ -70,8 +70,10 @@ export default (props) => {
 	}
 
 	return (
-		<Panel title="Project Activity Time Series">
-			<Line data={lineData} options={lineOptions} />
-		</Panel>
+		<div className="col-md-6 col-lg-6">
+			<Panel title="Project Activity Time Series">
+				<Line data={lineData} options={lineOptions} />
+			</Panel>
+		</div>
 	);
 };

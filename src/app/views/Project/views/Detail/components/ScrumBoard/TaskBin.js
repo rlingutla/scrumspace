@@ -7,8 +7,8 @@ import AssignUserModal from './AssignUserModal';
 
 const moveHandler = (item, target) => {
 	return new Promise((resolve, reject) => {
-		//moving from UNASSIGNED
-		if(item.status === TaskTypes.UNASSIGNED.title && target.props.type !== TaskTypes.UNASSIGNED){
+		//moving from UNASSIGNED requires assigned users (moving to DONE is allowed)
+		if(item.status === TaskTypes.UNASSIGNED.title && (target.props.type !== TaskTypes.UNASSIGNED || target.props.type !== TaskTypes.DONE)){
 			if(item.assignedTo.length < 1){
 				target.setState({ 
 					assignUserModal: Object.assign({}, 
@@ -45,7 +45,7 @@ const taskTarget = {
 				let updatedTask = Object.assign({}, item, {status: props.type.title})
 
 				//component.props.container has dropped target
-				item.moveTask(item.project_id, item.story_id, updatedTask);
+				item.updateTask(item.project_id, item.story_id, updatedTask);
 				return { moved: true };
 			}
 			else return { moved: false };
@@ -90,7 +90,7 @@ class TaskBin extends React.Component {
 			status: target
 		});
 
-		task.moveTask(task.project_id, task.story_id, updatedTask);
+		task.updateTask(task.project_id, task.story_id, updatedTask);
 		this.toggleUserAssignModal(false);
 	}
 

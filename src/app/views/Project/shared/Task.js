@@ -72,7 +72,7 @@ class Task extends React.Component {
 				<div className="task" onClick={(e) => this.changeModal(e)} style={this.getTaskStyle(this.props.status)}>
 				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
 				    <div className="body">{this.props.description}</div>
-				    <div className="footer">
+				    <div className="footer" style={{padding: '5px 0'}}>
 				        <div className="row left-right-align">
 				            {/* <div style={{float:'left'}}><a>{this.props._id}</a></div> */}
 				            <div style={{float:'right'}}>
@@ -108,7 +108,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 			project_id: ownProps.project_id, 
 			story_id: ownProps.story_id, 
 			_id: ownProps.task_id, 
-			users: ownProps.users 
+			users: ownProps.users  //TODO: can we take this out?
 		}, 
 		dispatchProps);
 }
@@ -116,7 +116,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 //maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
   return {
-  	moveTask: (project_id, story_id, task) => {
+  	updateTask: (project_id, story_id, task) => {
   		// dispatch(changeTaskState(project_id, story_id, task_id, toType));
   		dispatch(updateTask(project_id, story_id, task));
   	}
