@@ -6,26 +6,9 @@ export default class NewStoryModal extends React.Component {
   constructor(props){
 		super(props);
 		//data represents a story
-		this.state={
-			data: this.props.data
-		};
+
 	}
 
-	removeTask(index){
-		this.state.data.tasks.splice(index, 1);
-		this.setState(this.state);
-	}
-
-	addTask(){
-		let x = this.state;
-		x.data.tasks = x.data.tasks.concat([{description: ''}]);
-		this.setState(x);
-	}
-
-	changeDescription(e, i){
-		this.state.data.tasks[i].description = e.target.value;
-		this.setState(this.state);
-	}
 
 	render() {
 		return (
@@ -57,19 +40,21 @@ export default class NewStoryModal extends React.Component {
 									</div>
 								</div>
 								{
-									this.state.data.tasks.map((e,i,array) => {
+									this.props.data.tasks.map((e,i,array) => {
+										if(e.description !== '' || i === array.length -1){
 											return (
-												<Task key={i} index={i} isOnly={array.length === 1} changeDescription={this.changeDescription.bind(this)} removeTask={this.removeTask.bind(this)} data={e}/>
+												<Task key={i} index={i} isOnly={array.length === 1} handleTask={this.props.handleTask} data={e}/>
 											);
-										})
+										}
+									})
 								}
 							</div>
 		        </Modal.Body>
 		        <Modal.Footer>
-							<button type="button" className="btn btn-default pull-left no-side-margin" onClick={(e) => this.addTask()}>
+							<button type="button" className="btn btn-default pull-left no-side-margin" onClick={(e) => this.props.handleTask('add')}>
 								<span className="glyphicon glyphicon-list"></span> Add New Task
 							</button>
-		          <button type="button" className="btn btn-default" data-dismiss="modal" onClick={(e) => this.props.save(this.state.data)}>Done</button>
+		          <button type="button" className="btn btn-default" data-dismiss="modal" onClick={(e) => this.props.save('story')}>Done</button>
 		        </Modal.Footer>
 					</Modal>
 	      </div>

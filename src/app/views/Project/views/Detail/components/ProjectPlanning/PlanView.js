@@ -30,8 +30,8 @@ export default class PlanView extends React.Component {
 		this.state ={
 			sprints: this.props.sprints,
 			stories: this.props.stories,
-			storyModal: [false, StoryFactory()],
-			sprintModal: [false, SprintFactory()]
+			storyModal: [false, StoryFactory()], //the object at the ladder end of this array is what gets written to the server.
+			sprintModal: [false, SprintFactory()] //the object at the ladder end of this array is what gets written to the server.
 		};
 	}
 
@@ -54,7 +54,7 @@ export default class PlanView extends React.Component {
 	}
 
 	handleEdit(value, item){ //these will have an ID...
-
+		//modify to search for item from list of sprints by id.
 		if(value === 'sprint'){
 			this.updateState('sprintModal', [true, item]);
 		}
@@ -69,12 +69,31 @@ export default class PlanView extends React.Component {
 
 				break;
 			case 'story':
-				this.storyModal[1].tasks = data.tasks;
+
 				break;
 			default:
 
 		}
 		//redux!
+	}
+
+	handleTask(signal, task, e){
+		this.state.storyModal[0] = true;
+		switch (signal) {
+			case 'change':
+				this.state.storyModal[1]['tasks'][task] = e.target.value;
+				break;
+			case 'add':
+				if(this.state.storyModal[1]['tasks'][this.state.storyModal[1]['tasks'].length-1].description === ''){
+					return;
+				}
+				this.state.storyModal[1]['tasks'] = this.state.storyModal[1]['tasks'].concat([{description: ''}]);
+				break;
+			case 'delete':
+				this.state.storyModal[1]['tasks'].splice(task, 1);
+				break;
+		}
+		this.setState(this.state);
 	}
 
 	updateState(property, value, e){
@@ -107,7 +126,7 @@ export default class PlanView extends React.Component {
       <div className="container">
 				<NewSprintModal isOpen={this.state.sprintModal[0]} data={this.state.sprintModal[1]}
 					updateState={this.updateState.bind(this)} save={this.save.bind(this)} changeModal={this.changeSprintModal.bind(this)}/>
-				<NewStoryModal isOpen={this.state.storyModal[0]} data={this.state.storyModal[1]}
+				<NewStoryModal isOpen={this.state.storyModal[0]} data={this.state.storyModal[1]} handleTask={this.handleTask.bind(this)}
 					updateState={this.updateState.bind(this)} save={this.save.bind(this)} changeModal={this.changeStoryModal.bind(this)}/>
         <div className="panel-group">
           <Backlog updateState={this.updateState.bind(this)} handleNew={this.handleNew.bind(this)}
