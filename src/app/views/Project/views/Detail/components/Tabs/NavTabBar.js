@@ -15,7 +15,6 @@ const NavTabBar = (props) => {
 			<NavTab name={tab.name} key={tab.id} projectID={props._id} tab-id={tab.id} active-tab={props['active-tab']} tab-change={props['tab-change']} />
 		);
 	});
-	debugger;
     return (
         <div>
             <ul className="nav nav-tabs project-nav" role="tablist">

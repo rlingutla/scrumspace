@@ -3,21 +3,6 @@ import Backlog from './Backlog';
 import SprintRow from './SprintRow';
 import NewSprintModal from './NewSprintModal';
 import NewStoryModal from './NewProjectModal/NewStoryModal';
-import { postProjectPlan } from '../../../../../actions/';
-import {connect} from 'react-redux';
-
-const mapStateToProps = (state, props) => {
-	return state; //TODO
-};
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		saveThis: (signal, data) => {
-			dispatch(postProjectPlan(signal, data));
-		}
-	};
-};
-
 
 const SprintFactory = () => {
 	return {
@@ -39,7 +24,7 @@ const StoryFactory = () => {
 	};
 };
 
-export default class PlanView extends Component {
+class PlanView extends Component {
   constructor(props){
 		super(props);
 		this.state ={
@@ -48,7 +33,7 @@ export default class PlanView extends Component {
 		};
 	}
 
-	handleNew(value){
+	handleNew(value) {
 		if(value === 'sprint'){
 			this.updateState('sprintModal', [true, SprintFactory()]);
 		}
@@ -186,7 +171,7 @@ export default class PlanView extends Component {
 						{/* todo, can above this.props.stories filter ternary be removed? and below .sprints*/}
 				{
 					(this.props.sprints || []).map( (e, i) => {
-						if(e.start_date !== null){ //need to add and time greater than today
+						if (e.start_date !== null) { //need to add and time greater than today
 							return (
 								<SprintRow key={i} data={e} updateState={this.updateState.bind(this)}
 									handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
@@ -200,7 +185,7 @@ export default class PlanView extends Component {
 										}
 									)}
 								/>
-						);}
+						)};
 					})
 				}
         </div>
@@ -209,4 +194,4 @@ export default class PlanView extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlanView);
+export default Container(PlanView);
