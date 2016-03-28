@@ -23,14 +23,12 @@ const activities = (tasks) => {
 export default (props) => {
 	var data = activities(props.tasks);
 	return (
-		<Panel title='Activity Feed'>
-			<div className="row">
-				<div className="col-md-12">
-					{
-						data.map((history, i) => <ActivityFeedItem activity={history} key={i}></ActivityFeedItem>)
-					}
-				</div>
-			</div>
-		</Panel>
+		<div className="col-md-6 col-lg-6">
+			<Panel title='Activity Feed'>
+				{
+					data.map((history, i) => <ActivityFeedItem activity={history} key={i}></ActivityFeedItem>)
+				}
+			</Panel>
+		</div>
 	);
 };
