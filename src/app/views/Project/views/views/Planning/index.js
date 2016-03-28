@@ -3,7 +3,7 @@ import Backlog from './Backlog';
 import SprintRow from './SprintRow';
 import NewSprintModal from './NewSprintModal';
 import NewStoryModal from './NewProjectModal/NewStoryModal';
-import Container from './containers/';
+
 
 const SprintFactory = () => {
 	return {
@@ -76,16 +76,35 @@ class PlanView extends Component {
 		}
 	}
 
-	save(signal, data){
+	save(signal){
+		var data;
 		switch (signal) {
-			case 'sprint':
-
-				break;
 			case 'story':
-
+				//data
+				let model = {
+					project:  this.props._id,
+					title: data.title,
+					description: data.description,
+					tasks: data.tasks,
+					time: data.scrum_time
+				};
+				if(typeof data._id !== 'undefined')
+					model.story = data._id;
+				this.props.saveThis('NEW_STORY', model);
+				break;
+			case 'sprint':
+				let model1 ={
+					project: this.props._id,
+					name: data.name,
+					duration: data.duration,
+					time: data.time
+				};
+				if(typeof data._id !== 'undefined')
+					model.sprint = data._id;
+				this.props.saveThis('NEW_SPRINT', model1);
 				break;
 			default:
-
+				console.log('I am Crying');
 		}
 		//redux!
 	}

@@ -210,6 +210,7 @@ export function serverPostSprint(project, name, duration, time, sprint){
 	};
 	projects[project_i].sprints[sprint._id] = newSprint;
 	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 
@@ -229,6 +230,7 @@ export function serverMoveStory(project, story, sprint){
 	}
 	projects[project_i].story[story_i].sprint_id = sprint;
 	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 export function serverRemoveStory(project, story){
@@ -248,6 +250,7 @@ export function serverRemoveStory(project, story){
 	}
 	projects[project_i].stories.splice(story_i, 1);
 	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 export function serverRemoveSprint(project, sprint){
@@ -266,9 +269,15 @@ export function serverRemoveSprint(project, sprint){
 			break;
 		}
 	}
+	//set stories of to null to move them to the backlog
+	for(let i in projects[project_i].stories){
+		if(projects[project_i].stories[i].sprint_id === sprint)
+			projects[project_i].stories[i].sprint_id = null;
+	}
 	////////////////////////////////////////////////////
 	projects[project_i].sprints.splice(sprint_i, 1);
 	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 
@@ -318,6 +327,7 @@ export function serverMakeNewStory(project, title, description, tasks, story){
 	};
 	projects[project_i].stories[story_i] = newStory;
 	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 
