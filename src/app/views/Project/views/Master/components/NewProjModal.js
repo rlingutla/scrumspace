@@ -35,7 +35,7 @@ class NewProjModal extends React.Component{
       commits:[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
       timeFrame:['Mon','Tues', 'Wed', 'Thurs', 'Fri'],
       membersOnProj:[],
-      gCommits:[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
+      gCommits:[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
       color:'#'+Math.floor(Math.random()*16777215).toString(16),
       mapInputs:['foo','bar']
     };
@@ -45,7 +45,7 @@ class NewProjModal extends React.Component{
     // TODO: VALIDATION CODE THAT DISABLES CREATE BUTTON
 
 
-    this.emptyList = [{id:1}];
+    this.emptyList = [];
     this.props.createNewProject(this.state.title, this.state.description, this.state.users,
       this.state.status, this.state.current_sprint, this.state.avatar, this.state.sprints,
       this.state.stories, this.state.commits, this.state.timeFrame,this.state.membersOnProj,this.state.gCommits,this.state.color);
@@ -74,7 +74,7 @@ class NewProjModal extends React.Component{
       this.setState({
         // users: members.map((member) => member._id) //TODO: need to push only user ID (full object in for now to support mock server)
         users: members,
-        membersOnProj: members.map((member) => member.first_name)  
+        membersOnProj: members.map((member) => member.first_name)
       });
     }
   }

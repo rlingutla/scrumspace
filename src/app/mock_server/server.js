@@ -173,7 +173,7 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
     'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
 		'membersOnProj': membersOnProj,
-		'gCommits':[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
+		'gCommits':[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 	};
 	writeDocument('projects', project);

@@ -13,7 +13,9 @@ const lineOptions = {
 
 
 const GitGraphs2 = (props) => {
-
+if (props.membersOnProj.length !== props.gCommits.length){
+     props.gCommits.splice(props.membersOnProj.length);
+}
 	const barData = {
 	    labels: props.membersOnProj,
 	    datasets: [

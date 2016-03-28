@@ -18,7 +18,7 @@ export default class Statistics extends React.Component{
 			<div id="content">
 				<TopNav view="Git Statistics"/>
 				<Wrapper>
-				<GitList />
+					<GitList />
 				</Wrapper>
 			</div>
 		);
