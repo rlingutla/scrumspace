@@ -3,8 +3,8 @@ import Nav from './Nav';
 import Tab from './Tabs/Tab';
 import BoardView from './BoardView';
 import SprintPlan from './SprintPlanning/SprintPlan';
+import PlanView from './ProjectPlanning/PlanView';
 import Settings from './Settings/Settings';
-
 import { connect } from 'react-redux';
 import _ from 'underscore';
 
@@ -38,7 +38,7 @@ class Project extends React.Component {
 						<BoardView {...this.props} />
 					</Tab>
 					<Tab tab-id={1} active-tab={this.state.activeTab}>
-						<SprintPlan {...this.props}/>
+						<PlanView {...this.props}/>
 					</Tab>
 					<Tab tab-id={2} active-tab={this.state.activeTab}>
 						<Settings />
