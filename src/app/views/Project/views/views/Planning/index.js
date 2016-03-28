@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Backlog from './Backlog';
 import SprintRow from './SprintRow';
 import NewSprintModal from './NewSprintModal';
@@ -39,7 +39,7 @@ const StoryFactory = () => {
 	};
 };
 
-export default class PlanView extends React.Component {
+export default class PlanView extends Component {
   constructor(props){
 		super(props);
 		this.state ={
@@ -58,10 +58,9 @@ export default class PlanView extends React.Component {
 	}
 
 	handleRemove(value, item){
-		if(value === 'sprint'){
+		if (value === 'sprint'){
 			//redux!!!!!
-		}
-		else if (value === 'story') {
+		} else if (value === 'story') {
 			//redux!!!!!
 		}
 	}
@@ -84,12 +83,9 @@ export default class PlanView extends React.Component {
 
 	handleEdit(value, item){ //these will have an ID...
 		//modify to search for item from list of sprints by id.
-		if(value === 'sprint'){
+		if (value === 'sprint'){
 			this.updateState('sprintModal', [true, this.getSprintByID(item._id)]);
-		}
-		else if (value === 'story') {
-			//console.log(this.getStoryByID(item._id));
-			//console.log(this.props);
+		} else if (value === 'story') {
 			this.updateState('storyModal', [true, this.getStoryByID(item._id)]);
 		}
 	}
@@ -98,7 +94,7 @@ export default class PlanView extends React.Component {
 		var data;
 		switch (signal) {
 			case 'story':
-				//data 
+				//data
 				let model = {
 					project:  this.props._id,
 					title: data.title,
@@ -162,12 +158,12 @@ export default class PlanView extends React.Component {
 	}
 
 	changeSprintModal(){
-    this.state.sprintModal = [!this.state.sprintModal[0], this.state.sprintModal[1]];
+    	this.state.sprintModal = [!this.state.sprintModal[0], this.state.sprintModal[1]];
 		this.setState(this.State);
 	}
 
 	changeStoryModal(){
-    this.state.storyModal = [!this.state.storyModal[0], this.state.storyModal[1]];
+    	this.state.storyModal = [!this.state.storyModal[0], this.state.storyModal[1]];
 		this.setState(this.State);
 	}
 
@@ -181,7 +177,7 @@ export default class PlanView extends React.Component {
         <div className="panel-group">
           <Backlog updateState={this.updateState.bind(this)} handleNew={this.handleNew.bind(this)}
 						handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
-						stories={this.props.stories.filter(
+						stories={(this.props.stories || []).filter(
 							function(value){
 								if(value.sprint_id === null)
 									return true;
@@ -189,9 +185,10 @@ export default class PlanView extends React.Component {
 									return false;
 							}
 						)}/>
+						{/* todo, can above this.props.stories filter ternary be removed? and below .sprints*/}
 				{
-					this.props.sprints.map( (e, i) => {
-						if(e.start_date !== null){ //need to add and time greater than today make it null too
+					(this.props.sprints || []).map( (e, i) => {
+						if(e.start_date !== null){ //need to add and time greater than today
 							return (
 								<SprintRow key={i} data={e} updateState={this.updateState.bind(this)}
 									handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}

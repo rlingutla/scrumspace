@@ -3,16 +3,18 @@ import { search } from '../../mock_server/server';
 
 //Projects
 export function getCurrentSprint(props){
+	// TODO get rid of this:
+	var sprints = props.sprints || [];
 	if(props.current_sprint === null) return null;
 
-	else return props.sprints.find((sprint) => {
+	else return sprints.find((sprint) => {
 		return (sprint._id === props.current_sprint);
 	});
 }
 
 //Date Time
 export function verboseServerTime(serverTime) {
-	return moment(serverTime).format("MMMM Do");
+	return moment(serverTime).format('MMMM Do');
 }
 
 //TODO

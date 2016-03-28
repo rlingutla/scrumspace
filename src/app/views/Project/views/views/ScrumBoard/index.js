@@ -1,7 +1,7 @@
 import React from 'react';
 import ScrumBoardHeader from './ScrumBoardHeader';
 import StoryRow from './StoryRow';
-import { getCurrentSprint } from '../../../../../../shared/utils/utils';
+import { getCurrentSprint } from '../../../../../shared/utils/utils';
 //redux
 import { connect } from 'react-redux';
 //DnD Stuff
@@ -15,8 +15,8 @@ class ScrumBoard extends React.Component {
 
 	getSprintStories(){
 		let currentSprint = getCurrentSprint(this.props);
-
-		return this.props.stories.filter((story) => {
+		// TODO this ternary operator should go?
+		return (this.props.stories ? this.props.stories: []).filter((story) => {
 			return story.sprint_id === currentSprint._id;
 		});
 	}

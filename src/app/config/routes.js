@@ -5,8 +5,11 @@ import { Route, IndexRedirect, IndexRoute } from 'react-router';
 import App from '../index';
 import { Dashboard, Project, Settings, Statistics } from '../views';
 
-/* Project Components */
+/* Project Views */
 import { ProjectDetail, ProjectMaster } from '../views/Project/views'; 
+
+/* TODO, can this be somewhere else */
+import { ScrumBoard, ProjectSettings, Planning } from '../views/Project/views';
 
 export default
 <Route path='/' component={App} store={this}>
@@ -14,7 +17,12 @@ export default
 	<Route path='dashboard' name="Dashboard" component={Dashboard} />
 	<Route path='project' name="Projects" component={Project}>
 		<IndexRoute component={ProjectMaster} />
-		<Route path='detail/:id' component={ProjectDetail} />
+		<Route path=':id' component={ProjectDetail}>
+			<IndexRoute component={ScrumBoard} />	
+			<Route path='planning' component={Planning} />
+			<Route path='settings' component={ProjectSettings} />
+			<Route path='scrumboard' component={ScrumBoard} />
+		</Route>
 	</Route>
 	<Route path="settings" component={Settings} />
 	<Route path="statistics" component={Statistics} />

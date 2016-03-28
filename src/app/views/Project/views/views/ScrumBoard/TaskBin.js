@@ -1,6 +1,6 @@
 import React from 'react';
-import ItemTypes from '../../../../../../constants/itemTypes';
-import TaskTypes from '../../../../../../constants/taskTypes';
+import ItemTypes from '../../../../../constants/itemTypes';
+import TaskTypes from '../../../../../constants/taskTypes';
 
 import { DropTarget } from 'react-dnd';
 import AssignUserModal from './AssignUserModal';

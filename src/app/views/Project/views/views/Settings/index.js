@@ -5,7 +5,7 @@ export default class Settings extends React.Component {
 		super(props);
 	}
 
-	render(){
+	render() {
 		return <div className="content">Settings</div>;
 	}
-};
+}

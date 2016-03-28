@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import TaskTypes from '../../../../../../constants/taskTypes';
-import TaskStatus from '../../../../shared/TaskStatus';
-import MultiSelect from '../../../../../../shared/components/MultiSelect';
+import TaskTypes from '../../../../../constants/taskTypes';
+import TaskStatus from '../../../shared/TaskStatus';
+import MultiSelect from '../../../../../shared/components/MultiSelect';
 
 
 export default class AssignUserModal extends React.Component{
@@ -13,7 +13,7 @@ export default class AssignUserModal extends React.Component{
 
 		this.state = {
 			users: []
-		}
+		};
 	}
 
 	setUsers(users){
@@ -21,14 +21,14 @@ export default class AssignUserModal extends React.Component{
 	}
 
 	assignHandler(){
-		if(this.state.users.length > 0){
-			this.props.callback(this.state.users, this.props.target, this.props.task)
+		if (this.state.users.length > 0) {
+			this.props.callback(this.state.users, this.props.target, this.props.task);
 		}
 	}
 
 	render(){
 		return (
-			<Modal show={this.props.isModalOpen} onHide={(e) => this.props.hideModal(e)} className={"task-detail " + this.props.status}>
+			<Modal show={this.props.isModalOpen} onHide={(e) => this.props.hideModal(e)} className={'task-detail ' + this.props.status}>
 				<Modal.Header closeButton>
 					<Modal.Title>Assign a User</Modal.Title>
 				</Modal.Header>

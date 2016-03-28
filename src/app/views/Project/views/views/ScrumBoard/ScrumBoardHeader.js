@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import Ionicon from '../../../../../../shared/components/Ionicon';
+import Ionicon from '../../../../../shared/components/Ionicon';
 
 export default class ScrumBoardHeader extends React.Component {
 	constructor(props) {

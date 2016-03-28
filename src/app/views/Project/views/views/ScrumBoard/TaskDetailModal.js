@@ -1,16 +1,16 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput, Row, Col, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
-import Ionicon from '../../../../../../shared/components/Ionicon';
+import Ionicon from '../../../../../shared/components/Ionicon';
 import { connect } from 'react-redux';
-import TaskTypes from '../../../../../../constants/taskTypes';
-import TaskStatus from '../../../../shared/TaskStatus';
-import MultiSelect from '../../../../../../shared/components/MultiSelect';
+import TaskTypes from '../../../../../constants/taskTypes';
+import TaskStatus from '../../../shared/TaskStatus';
+import MultiSelect from '../../../../../shared/components/MultiSelect';
 
 const AssignedMember = (props) => {
 	return(
 		<span>{props.first_name} {props.last_name} </span>
-	)
-}
+	);
+};
 
 class TaskDetailModal extends React.Component{
 
@@ -23,7 +23,7 @@ class TaskDetailModal extends React.Component{
 				editing: false
 			},
 			assignedTo: []
-		}
+		};
 	}
 
 	setAssignedTo(members) {
@@ -77,7 +77,7 @@ class TaskDetailModal extends React.Component{
 		);
 		// update the task
 		this.props.updateTask(task.project_id, task.story_id, task);
-		this.setState({assignedTo: []})
+		this.setState({assignedTo: []});
 	}
 
 	removeMember(user){
@@ -93,14 +93,13 @@ class TaskDetailModal extends React.Component{
 	//filter out already assigned users
 	filterAssignedList(option,filter){
 		let user = this.props.task.assignedTo.find((user) => (user._id === option._id));
-		return (user) ? false:true;
+		return (user) ? false : true;
 	}
 
 	render(){
-
 		return (
-			<div className={"task-detail " + this.props.status}>
-				<Modal show={this.props.isModalOpen} onHide={(e) => this.props.changeModal(e)} className={"task-detail " + this.props.task.status}>
+			<div className={'task-detail ' + this.props.status}>
+				<Modal show={this.props.isModalOpen} onHide={(e) => this.props.changeModal(e)} className={'task-detail ' + this.props.task.status}>
 					<Modal.Header closeButton>
 						<Modal.Title>
 							{/*<span className="task_id">{this.props.task._id} </span>*/}
@@ -153,7 +152,7 @@ class TaskDetailModal extends React.Component{
 									Add Members
 								</Button>
 							</Col>
-							<Col xs={4} style={{textAlign:"right"}}>
+							<Col xs={4} style={{textAlign:'right'}}>
 								<ButtonGroup vertical>
 									<Button disabled>Take Task</Button>
 									<Button disabled bsStyle="danger">Delete Task</Button>

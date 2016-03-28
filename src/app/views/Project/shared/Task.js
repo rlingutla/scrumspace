@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button } from 'react-bootstrap';
-import TaskDetailModal from '../views/Detail/components/ScrumBoard/TaskDetailModal';
-import AssignUserModal from '../views/Detail/components/ScrumBoard/AssignUserModal';
+import TaskDetailModal from '../views/views//ScrumBoard/TaskDetailModal';
+import AssignUserModal from '../views/views/ScrumBoard/AssignUserModal';
 
 import ItemTypes from '../../../constants/itemTypes';
 import TaskTypes from '../../../constants/taskTypes';
@@ -127,4 +127,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(DragSource(props => ItemTypes.TASK+"_"+props.story_id, taskSource, collect)(Task));
+)(DragSource(props => ItemTypes.TASK + '_' + props.story_id, taskSource, collect)(Task));
