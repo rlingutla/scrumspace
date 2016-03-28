@@ -28,8 +28,6 @@ export default class PlanView extends React.Component {
   constructor(props){
 		super(props);
 		this.state ={
-			sprints: this.props.sprints,
-			stories: this.props.stories,
 			storyModal: [false, StoryFactory()], //the object at the ladder end of this array is what gets written to the server.
 			sprintModal: [false, SprintFactory()] //the object at the ladder end of this array is what gets written to the server.
 		};
@@ -53,13 +51,31 @@ export default class PlanView extends React.Component {
 		}
 	}
 
+	getSprintByID(id){
+		for(var i in this.props.sprints){
+			if(this.props.sprints[i]._id === id){
+				return this.props.sprints[i];
+			}
+		}
+		console.log('houston we have a problem');
+	}
+	getStoryByID(id){
+		for(var i in this.props.stories){
+			if(this.props.stories[i]._id === id)
+				return this.props.stories[i];
+		}
+		console.log('Mayday Mayday!');
+	}
+
 	handleEdit(value, item){ //these will have an ID...
 		//modify to search for item from list of sprints by id.
 		if(value === 'sprint'){
-			this.updateState('sprintModal', [true, item]);
+			this.updateState('sprintModal', [true, this.getSprintByID(item._id)]);
 		}
 		else if (value === 'story') {
-			this.updateState('storyModal', [true, item]);
+			console.log(this.getStoryByID(item._id));
+			console.log(this.props);
+			this.updateState('storyModal', [true, this.getStoryByID(item._id)]);
 		}
 	}
 
@@ -79,9 +95,10 @@ export default class PlanView extends React.Component {
 
 	handleTask(signal, task, e){
 		this.state.storyModal[0] = true;
+		debugger;
 		switch (signal) {
 			case 'change':
-				this.state.storyModal[1]['tasks'][task] = e.target.value;
+				this.state.storyModal[1]['tasks'][task].description = e.target.value;
 				break;
 			case 'add':
 				if(this.state.storyModal[1]['tasks'][this.state.storyModal[1]['tasks'].length-1].description === ''){
@@ -94,6 +111,7 @@ export default class PlanView extends React.Component {
 				break;
 		}
 		this.setState(this.state);
+		debugger;
 	}
 
 	updateState(property, value, e){
@@ -141,7 +159,7 @@ export default class PlanView extends React.Component {
 						)}/>
 				{
 					this.props.sprints.map( (e, i) => {
-						if(e.start_date !== null){ //need to add and time greater than today
+						if(e.start_date !== null){ //need to add and time greater than today make it null too
 							return (
 								<SprintRow key={i} data={e} updateState={this.updateState.bind(this)}
 									handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
