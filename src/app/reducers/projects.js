@@ -59,7 +59,17 @@ const projects = (state = [], action) => {
 			let project = _.defaults({
 				_id: state.length,
 				title: action.title,
-				description: action.description
+				description: action.description,
+				color: action.color,
+				gCommits: action.gCommits, 
+				status: action.status,
+				current_sprint: action.current_sprint,
+				avatar: action.avatar,
+				sprints: action.sprints,
+				stories: action.stories,
+				commits: action.commits,
+				timeFrame: action.timeFrame,
+				membersOnProj:action.membersOnProj
 			}, projectModel());
 
 			return [

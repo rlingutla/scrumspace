@@ -250,10 +250,10 @@ export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_tim
 	return emulateServerReturn(project[pid], false);
 }
 
-/* 
+/*
 ** str: search string
-** collection: target collection to search in 
-** key (optional): key to search on 
+** collection: target collection to search in
+** key (optional): key to search on
 ** limit (optional): number of results
 */
 export function search(str, collection, key = '_id', limit=15){

@@ -4,7 +4,7 @@ import ProjectItem from './ProjectItem';
 import { postAndCreateNewProject } from '../../../../../actions/';
 import { ToggleDisplay } from 'react-toggle-display';
 import MultiSelect from '../../../../../shared/components/MultiSelect';
-import {Decorator as FormsyElement} from 'formsy-react';
+/*import {Decorator as FormsyElement} from 'formsy-react';*/
 
 import { connect } from 'react-redux';
 
@@ -33,11 +33,11 @@ class NewProjModal extends React.Component{
       avatar: '',
       sprints: [],
       stories: [],
-      commits:[],
+      commits:[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
       timeFrame:[],
       membersOnProj:[],
-      gCommits:[],
-      color:''
+      gCommits:[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
+      color:'#'+Math.floor(Math.random()*16777215).toString(16)
     };
   }
 
