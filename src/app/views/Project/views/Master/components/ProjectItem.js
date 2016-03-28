@@ -61,7 +61,7 @@ const processGraphData = (project) => {
 			//is history entry within current day in DAY_RANGE
 			if(moment(historyObj.modifiedTime).isBetween(moment(currDay).startOf('day'), moment(currDay).endOf('day'))){
 				//increment counter
-				++datasets[historyObj.toStatus][i];
+				++datasets[historyObj.toStatus][DAY_RANGE - (i + 1)];
 			}
 		});
 	}
