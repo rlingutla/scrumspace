@@ -13,7 +13,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	let project = projects.find((proj) => {
 		return proj._id === parseInt(ownProps.params.id, 10);
 	});
-	return Object.assign({...project}, {...ownProps});
+	return Object.assign({...project}, {...ownProps}, {...dispatchProps});
 }
 
 //maps any actions this component dispatches to component props
