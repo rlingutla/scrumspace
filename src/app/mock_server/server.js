@@ -159,7 +159,7 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 	// read in all projects, access last project in the array, get it's ID and increment that value
   var projects = readDocument('projects');
 	var prevId = projects[projects.length - 1]._id;
-	
+
 	let project = {
 		'_id': prevId + 1,
 		'title': title,
@@ -172,7 +172,7 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 		'stories': [],
 		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
     'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
+		'membersOnProj': membersOnProj,
 		'gCommits':[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 	};
