@@ -45,9 +45,8 @@ const mapStateToProps = (state) => {
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	// todo get rid of this:
 	var projects = stateProps.projects || [];
-	debugger;
 	let project = projects.find((proj) => {
-		if(proj._id === ownProps.id) return true;
+		return proj._id === ownProps.id;
 	});
 
 	return Object.assign({...project}, {...ownProps});
