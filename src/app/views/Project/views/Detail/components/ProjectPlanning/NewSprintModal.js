@@ -9,9 +9,8 @@ export default class NewSprintModal extends React.Component {
 	render() {
 		return (
       <div className="sprint-modal">
-				<Modal show={this.props.isOpen} onHide={this.props.updateState('sprintModalOpen', [false, null])}>
+				<Modal show={this.props.isOpen} onHide={this.props.changeModal}>
 	        <Modal.Header closeButton>
-	          <h4 className="modal-title">New Sprint</h4>
 						<Modal.Title>
 							<span className="task_id">Sprint</span>
 						</Modal.Title>
@@ -20,23 +19,23 @@ export default class NewSprintModal extends React.Component {
 						<div className="row">
 							<div className="col-md-4">
 								<div className="left-date-input">
-									<label>Enter Sprint Name</label>
+									<label>Sprint Name</label>
 									<input type="text" className="form-control strech-input" placeholder="Name of Sprint"
-									value={this.props.data.name} onChange={(e) =>this.props.updateState('sprintModal', 'title', e)}
+									value={this.props.data.name} onChange={(e) =>this.props.updateState('sprintModal', 'name', e)}
 									/>
 								</div>
 							</div>
-							<div className="col-md-2">
+							<div className="col-md-4">
 								<div className="left-date-input">
-									<label>Enter Scrum Time</label>
+									<label>Scrum Time</label>
 									<input type="text" className="form-control strech-input" placeholder="Time of Scrum"
 									value={this.props.data.scrum_time} onChange={(e) => this.props.updateState('sprintModal', 'scrum_time', e)}
 									/>
 								</div>
 							</div>
-							<div className="col-md-3">
+							<div className="col-md-4">
 								<div className="left-date-input">
-									<label>Enter Duration</label>
+									<label>Duration</label>
 									<input type="text" className="form-control strech-input" placeholder="Enter Duration"
 									value={this.props.data.duration} onChange={(e) => this.props.updateState('sprintModal', 'duration', e)}
 									/>
@@ -45,7 +44,7 @@ export default class NewSprintModal extends React.Component {
 						</div>
 	        </Modal.Body>
 	        <Modal.Footer>
-	          <button type="button" className="btn btn-default" data-dismiss="modal">Done</button>
+	          <button type="button" className="btn btn-default" data-dismiss="modal" onClick={(e) => this.props.save()}>Done</button>
 	        </Modal.Footer>
 				</Modal>
       </div>
