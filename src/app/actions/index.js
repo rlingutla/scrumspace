@@ -39,24 +39,24 @@ export function putStory(project_id, story){
 	}
 }
 
-function postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,gCommits,color){
-	return serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,gCommits,color);
+function postNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
+	return serverPostNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color);
 }
 
 // new project
-export const createNewProject = (title, description,users,status,current_sprint,avatar,sprints, stories,commits,gCommits,color) => {
+export const createNewProject = (	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color) => {
 	return {
 		type: 'CREATE_NEW_PROJECT',
 		title, description,users,status,current_sprint,avatar,sprints,
-		stories,commits,gCommits,color
+		stories,commits,timeFrame,membersOnProj,gCommits,color
 	};
 };
 
-export function postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,gCommits,color){
+export function postAndCreateNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
 	return function(dispatch){
-		return postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,gCommits,color).then(
+		return postNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color).then(
 			project => {
-				dispatch(createNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,gCommits,color));
+				dispatch(createNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color));
 			},
 			error => console.error('got an error', error)
 		);

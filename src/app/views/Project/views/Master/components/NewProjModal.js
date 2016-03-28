@@ -4,7 +4,6 @@ import ProjectItem from './ProjectItem';
 import { postAndCreateNewProject } from '../../../../../actions/';
 import { ToggleDisplay } from 'react-toggle-display';
 import MultiSelect from '../../../../../shared/components/MultiSelect';
-/*import {Decorator as FormsyElement} from 'formsy-react';*/
 
 import { connect } from 'react-redux';
 
@@ -34,10 +33,11 @@ class NewProjModal extends React.Component{
       sprints: [],
       stories: [],
       commits:[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
-      timeFrame:[],
+      timeFrame:['Mon','Tues', 'Wed', 'Thurs', 'Fri'],
       membersOnProj:[],
       gCommits:[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
-      color:'#'+Math.floor(Math.random()*16777215).toString(16)
+      color:'#'+Math.floor(Math.random()*16777215).toString(16),
+      mapInputs:['foo','bar']
     };
   }
 
@@ -47,12 +47,12 @@ class NewProjModal extends React.Component{
 
     this.emptyList = [{id:1}];
     this.props.createNewProject(this.state.title, this.state.description, this.state.users,
-      this.state.sprints,this.state.status, this.state.current_sprint, this.state.avatar,
+      this.state.status, this.state.current_sprint, this.state.avatar, this.state.sprints,
       this.state.stories, this.state.commits, this.state.timeFrame,this.state.membersOnProj,this.state.gCommits,this.state.color);
 
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();
-    this.setState({users: this.emptyList});
+    this.setState({users: this.emptyList,title:'', description:''});
     // TODO RESET STATE OF MODAL HERE
   }
 
@@ -70,10 +70,13 @@ class NewProjModal extends React.Component{
   }
 
   setMembers(members) {
-    this.setState({
-      // users: members.map((member) => member._id) //TODO: need to push only user ID (full object in for now to support mock server)
-      users: members
-    });
+    if(members.length > 1){
+      this.setState({
+        // users: members.map((member) => member._id) //TODO: need to push only user ID (full object in for now to support mock server)
+        users: members,
+        membersOnProj: members.map((member) => member.first_name)  
+      });
+    }
   }
 
  fieldReset(e){
@@ -102,7 +105,7 @@ class NewProjModal extends React.Component{
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="success" onClick={(e) => this.createNewProj(e)}>Create</Button>
+            <Button bsStyle="success" disabled={(this.state.title.length && this.state.description.length && this.state.users.length) < 1} onClick={(e) => this.createNewProj(e)}>Create</Button>
           </Modal.Footer>
         </Modal>
       </div>

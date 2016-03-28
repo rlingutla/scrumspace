@@ -159,7 +159,7 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 	// read in all projects, access last project in the array, get it's ID and increment that value
   var projects = readDocument('projects');
 	var prevId = projects[projects.length - 1]._id;
-
+	
 	let project = {
 		'_id': prevId + 1,
 		'title': title,
@@ -167,6 +167,7 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 		'users': users,
 		'status': 'planning',
 		'current_sprint': null,
+		'avatar': '',
 		'sprints': [],
 		'stories': [],
 		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
