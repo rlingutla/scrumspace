@@ -11,15 +11,20 @@ export default class SprintRow extends React.Component {
 		return (
       <div className="panel panel-primary">
         <div className="panel-heading">
-          <h4>Sprint 1 </h4> </div>
+					{
+						(this.props.isOnly) ? null : <button type="button" className="close" onClick={(e) => this.props.handleChange('remove-story', e, [this.props.panNumber -1])}>&times;</button>
+					}
+          <h4>{this.props.data.name}</h4> </div>
         <div className="panel-body">
           <div className="row">
-            <Story/>
-            <Story/>
+						{
+							this.props.stories.map( (e, i, array) =>{
+								return(
+									<Story key={i} index={i} data={e} last={i === array.length -1} isOnly={array.length === 1} updateState={this.props.updateState}/>
+								);
+							})
+						}
           </div>
-        </div>
-        <div className="panel-footer settings-foot">
-          <button type="save" data-toggle="modal" data-target="#myModal2" className="btn btn-success pull-right save">New Sprint</button>
         </div>
       </div>
     );

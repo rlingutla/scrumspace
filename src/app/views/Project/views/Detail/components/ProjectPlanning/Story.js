@@ -10,9 +10,9 @@ export default class Story extends React.Component {
 		return (
       <div className="col-md-3">
         <div className="panel panel-default" data-toggle="modal" data-target="#myModal">
-          <div className="panel-heading">story 1</div>
+          <div className="panel-heading">{this.props.data.title}</div>
           <div className="panel-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscingoldent, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+            <p>{this.props.data.description}</p>
           </div>
         </div>
       </div>

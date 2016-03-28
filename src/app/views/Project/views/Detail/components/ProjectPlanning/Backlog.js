@@ -1,5 +1,5 @@
 import React from 'react';
-import Story from './Story'
+import Story from './Story';
 
 //Holds stories not tied to a sprint
 export default class Backlog extends React.Component {
@@ -14,10 +14,13 @@ export default class Backlog extends React.Component {
           <h4>Backlog </h4> </div>
         <div className="panel-body">
           <div className="row">
-            <Story/>
-            <Story/>
-            <Story/>
-            <Story/>
+						{
+							this.props.stories.map( (e, i, array) =>{
+								return(
+									<Story key={i} data={e} last={i === array.length -1} updateState={this.props.updateState}/>
+								);
+							})
+						}
           </div>
         </div>
         <div className="panel-footer settings-foot">

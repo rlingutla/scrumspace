@@ -231,6 +231,25 @@ export function serverMoveStory(project, story, sprint){
 	writeDocument('projects', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
+export function serverRemoveStory(project, story){
+	var projects = readDocument('project');
+	var project_i, story_i;
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === project) {
+			project_i = i;
+			for(let j = 0; j < projects[i].sprints.length; j++){
+				if(projects[i].stories[j]._id === story){
+					story_i = j;
+					break;
+				}
+			}
+			break;
+		}
+	}
+	projects[project_i].stories.splice(story_i, 1);
+	writeDocument('projects', projects[project_i]);
+	return emulateServerReturn(projects[project_i], false);
+}
 export function serverRemoveSprint(project, sprint){
 	var projects = readDocument('project');
 	//The following is to get the value of the project and sprint to be added or edited.
