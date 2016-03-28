@@ -77,6 +77,7 @@ class PlanView extends Component {
 	}
 
 	save(signal, data){
+		debugger;
 		switch (signal) {
 			case 'story':
 				let model = {
@@ -95,10 +96,10 @@ class PlanView extends Component {
 					project: this.props._id,
 					name: data.name,
 					duration: data.duration,
-					time: data.time
+					time: data.scrum_time
 				};
 				if(typeof data._id !== 'undefined')
-					model.sprint = data._id;
+					model1.sprint = data._id;
 				this.props.saveThis('NEW_SPRINT', model1);
 				break;
 			default:
@@ -172,7 +173,7 @@ class PlanView extends Component {
 						{/* todo, can above this.props.stories filter ternary be removed? and below .sprints*/}
 				{
 					(this.props.sprints || []).map( (e, i) => {
-						if (e.start_date !== null) { //need to add and time greater than today
+						if (/*e.start_date !== null/**/true){ //need to add and time greater than today
 							return (
 								<SprintRow key={i} data={e} updateState={this.updateState.bind(this)}
 									handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
@@ -186,7 +187,7 @@ class PlanView extends Component {
 										}
 									)}
 								/>
-						)};
+						);}
 					})
 				}
         </div>

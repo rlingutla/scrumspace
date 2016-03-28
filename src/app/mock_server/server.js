@@ -183,7 +183,7 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 
 export function serverPostSprint(project, name, duration, time, sprint){
 	//sprint is not passed through if it is a new sprint hence the type is undefined
-	var projects = readDocument('project');
+	var projects = readDocument('projects');
 	//The following is to get the value of the project and sprint to be added or edited.
 	var project_i, sprint_i;
 	for(let i = 0; i < projects.length; i++){
@@ -208,14 +208,14 @@ export function serverPostSprint(project, name, duration, time, sprint){
 		'duration': duration,
 		'scrum_time': time
 	};
-	projects[project_i].sprints[sprint._id] = newSprint;
+	projects[project_i].sprints[sprint_i] = newSprint;
 	writeDocument('projects', projects[project_i]);
 	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 
 export function serverMoveStory(project, story, sprint){
-	var projects = readDocument('project');
+	var projects = readDocument('projects');
 	var project_i, story_i;
 	for(let i = 0; i < projects.length; i++){
 		if (projects[i]._id === project) {
@@ -234,7 +234,7 @@ export function serverMoveStory(project, story, sprint){
 	return emulateServerReturn(projects[project_i], false);
 }
 export function serverRemoveStory(project, story){
-	var projects = readDocument('project');
+	var projects = readDocument('projects');
 	var project_i, story_i;
 	for(let i = 0; i < projects.length; i++){
 		if (projects[i]._id === project) {
@@ -254,7 +254,7 @@ export function serverRemoveStory(project, story){
 	return emulateServerReturn(projects[project_i], false);
 }
 export function serverRemoveSprint(project, sprint){
-	var projects = readDocument('project');
+	var projects = readDocument('projects');
 	//The following is to get the value of the project and sprint to be added or edited.
 	var project_i, sprint_i;
 	for(let i = 0; i < projects.length; i++){
@@ -282,8 +282,9 @@ export function serverRemoveSprint(project, sprint){
 }
 
 export function serverMakeNewStory(project, title, description, tasks, story){
+	debugger;
 	//story does not need to be passed through
-	var projects = readDocument('project');
+	var projects = readDocument('projects');
 	var project_i, story_i, sprint_id;
 	for(let i = 0; i < projects.length; i++){
 		if (projects[i]._id === project) {
@@ -302,8 +303,8 @@ export function serverMakeNewStory(project, title, description, tasks, story){
 		story_i = projects[project_i].stories.length;
 		sprint_id = null;
 	}
-	var newTasks;
-	for(let i = 0; i < projects[project_i].stories.length; i++){
+	var newTasks = [];
+	for(let i = 0; i < tasks.length; i++){
 		newTasks[i] = {
 			'_id': i,
 			'status': 'UNASSIGNED',
