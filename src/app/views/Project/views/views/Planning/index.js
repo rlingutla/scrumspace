@@ -3,6 +3,7 @@ import Backlog from './Backlog';
 import SprintRow from './SprintRow';
 import NewSprintModal from './NewSprintModal';
 import NewStoryModal from './NewProjectModal/NewStoryModal';
+import Container from './containers';
 
 const SprintFactory = () => {
 	return {
