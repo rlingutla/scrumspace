@@ -11,14 +11,14 @@ const AssignedMember = (props) => {
 	)
 }
 
-export default class TaskDetailModal extends React.Component{
+class TaskDetailModal extends React.Component{
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			description: {
-				value: props.description,
+				value: props.task.description,
 				editing: false
 			}
 		}
@@ -40,9 +40,9 @@ export default class TaskDetailModal extends React.Component{
 	handleBlur(target, e){
 		if(e.target.value){
 			this.toggleEdit(target, false);
-			let story = Object.assign({}, this.props, {[target]: e.target.value.trim()});
-			//update the story
-			this.props.updateStory(this.props.project_id, story);
+			let task = Object.assign({}, this.props.task, {[target]: e.target.value.trim()});
+			// update the task
+			this.props.updateTask(task.project_id, task.story_id, task);
 		}
 
 	}
@@ -68,31 +68,30 @@ export default class TaskDetailModal extends React.Component{
 	render(){
 		return (
 			<div className={"task-detail " + this.props.status}>
-				<Modal show={this.props.isModalOpen} onHide={(e) => this.props.changeModal(e)} className={"task-detail " + this.props.status}>
+				<Modal show={this.props.isModalOpen} onHide={(e) => this.props.changeModal(e)} className={"task-detail " + this.props.task.status}>
 					<Modal.Header closeButton>
 						<Modal.Title>
-							<span className="task_id">{this.props._id} </span>
-
-							{(this.props.description) ?
-								<input autoFocus
-									onChange={(e) => this.handleChange('title', e)}
-									value={this.props.description}
-									onBlur={(e) => this.handleBlur('title', e)}
-									onKeyDown={(e) => this.handleKeyDown('title', e)}
-									/>
-								:<h4 className="editable" onClick={(e) => this.toggleEdit('title', true)}>{this.props.description}</h4>
-						}
-						<span className="task-story">, from story {this.props.story_id}</span>
-					</Modal.Title>
-				</Modal.Header>
-				<Modal.Body style={{ paddingTop: 0 }}>
-					<TaskStatus status={this.props.status} />
+							{/*<span className="task_id">{this.props.task._id} </span>*/}
+							{(this.state.description.editing) ?
+								<input className="form-control" autoFocus
+									onChange={(e) => this.handleChange('description', e)}
+									value={this.state.description.value}
+									onBlur={(e) => this.handleBlur('description', e)}
+									onKeyDown={(e) => this.handleKeyDown('description', e)}
+									style={{width: 'auto'}}/>
+								:<span className="editable" onClick={(e) => this.toggleEdit('description', true)}>{this.props.task.description}</span>
+							}
+							<span className="task-story">, from story {this.props.task.story_id}</span>
+						</Modal.Title>
+					</Modal.Header>
+					<Modal.Body style={{ paddingTop: 0 }}>
+					<TaskStatus status={this.props.task.status} />
 					<br/>
 					<Row>
 						<Col xs={8}>
 							<Row>
 							<h4>Assigned To:</h4>
-							{this.props.assignedTo.map((user,i) => {
+							{this.props.task.assignedTo.map((user,i) => {
 								return (
 									<ButtonGroup key={i}>
 										<Button><AssignedMember {...user} /></Button>
@@ -120,5 +119,29 @@ export default class TaskDetailModal extends React.Component{
 			</div>
 		);
 	}
-
 }
+
+//redux
+const mapStateToProps = (state) => {
+	return state;
+};
+
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	//do our nasty search
+	let theTask = stateProps
+	.projects.find((proj) => proj._id === ownProps.project_id)
+	.stories.find((story) => story._id === ownProps.story_id)
+	.tasks.find((task) => task._id === ownProps._id);
+	return Object.assign({ isModalOpen: ownProps.isModalOpen, changeModal: ownProps.changeModal, updateTask: ownProps.updateTask }, {task: theTask}, dispatchProps);
+}
+
+//maps any actions this component dispatches to component props
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(TaskDetailModal);

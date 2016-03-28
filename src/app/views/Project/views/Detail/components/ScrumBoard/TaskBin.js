@@ -45,7 +45,7 @@ const taskTarget = {
 				let updatedTask = Object.assign({}, item, {status: props.type.title})
 
 				//component.props.container has dropped target
-				item.moveTask(item.project_id, item.story_id, updatedTask);
+				item.updateTask(item.project_id, item.story_id, updatedTask);
 				return { moved: true };
 			}
 			else return { moved: false };
@@ -90,7 +90,7 @@ class TaskBin extends React.Component {
 			status: target
 		});
 
-		task.moveTask(task.project_id, task.story_id, updatedTask);
+		task.updateTask(task.project_id, task.story_id, updatedTask);
 		this.toggleUserAssignModal(false);
 	}
 
