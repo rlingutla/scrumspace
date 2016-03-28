@@ -1,12 +1,13 @@
 import React from 'react';
-import { verboseServerTime } from '../../../../../shared/utils/utils';
+import { verboseServerTime, getCurrentTasks } from '../../../../../shared/utils/utils';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { ProjectStatus } from '../../../shared/ProjectStatus';
 import { Link }  from 'react-router';
 import { Line } from 'react-chartjs';
+import taskTypes from '../../../../../constants/taskTypes';
+import moment from 'moment';
 
 const lineOptions = {
-	// showScale: false,
     scaleShowGridLines : false,
 	scaleShowLabels: false,
     scaleShowHorizontalLines: false,
@@ -16,29 +17,68 @@ const lineOptions = {
     pointDot : false,
     responsive: true,
     scaleFontFamily: "'Source Sans Pro', sans-serif",
-    tooltipFontFamily: "'Source Sans Pro', sans-serif"
+    tooltipFontFamily: "'Source Sans Pro', sans-serif",
+    showTooltips: false
 };
+
+const getLineDataObj = (range, datasets) => {
+	let genDataSets = [];
+	for(let dataset in datasets){
+		genDataSets.push({
+			label: dataset,
+			fillColor: "transparent",
+			strokeColor: taskTypes[dataset].color, 
+			data: datasets[dataset]
+		});
+	}
+
+	return {
+		labels: Array(range).fill(0).map((n, i) => {
+			let d = (range-(i+1));
+			return 'T'+((d > 0) ? '-'+d:'');
+		}),
+		datasets: genDataSets
+	};
+};
+
+const processGraphData = (project) => {
+	const DAY_RANGE=5;
+
+	const histories = getCurrentTasks(project)
+		.map((task) => task.history)
+		.reduce((a,b) => a.concat(b), [])
+		.sort((a,b) => a.modifiedTime > b.modifiedTime);
+
+	let today = moment().startOf('day');
+
+	//init dataset object with each taskType
+	let datasets = {};
+	for(let taskType in taskTypes) datasets[taskType] = Array(DAY_RANGE).fill(0);	
+
+	for(let i = 0; i < DAY_RANGE; ++i){
+		let currDay = moment(today).subtract(i, 'days');
+		histories.forEach((historyObj) => {
+			//is history entry within current day in DAY_RANGE
+			if(moment(historyObj.modifiedTime).isBetween(moment(currDay).startOf('day'), moment(currDay).endOf('day'))){
+				//increment counter
+				++datasets[historyObj.toStatus][i];
+			}
+		});
+	}
+
+	return getLineDataObj(DAY_RANGE, datasets);
+}
 
 //get scrum time from a project object
 function getScrumTime(props){
 	if(props.current_sprint !== null){
-		// return verboseServerTime(props.sprints[props.current_sprint].scrum_time);
 		return props.sprints[props.current_sprint].scrum_time;
 	}
 	else return '';
 }
 
 const ProjectItem = (props) => {
-	const lineData = {
-	    labels: ["mon", "tues", "wed", "thur", "fri"],
-	    datasets: [
-	        {
-	            fillColor: "transparent",
-	            strokeColor: "#44A9FF",
-	            data: [Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10)]
-	        }
-	    ]
-	};
+	const lineData = processGraphData(props);
 
 	return (
 		<Link to={`/project/detail/${props._id}`} >

@@ -129,7 +129,7 @@ var initialData = {
 						'history': [{
 							fromStatus: null,
 							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedTime: xDaysAgoInUnixTime(2),
 							modifiedUser : 0
 						}],
 						'attachments': null
@@ -142,7 +142,7 @@ var initialData = {
 						'history': [{
 							fromStatus: null,
 							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedTime: xDaysAgoInUnixTime(4),
 							modifiedUser : 0
 						}],
 						'attachments': null
@@ -170,7 +170,7 @@ var initialData = {
 						},{
 							fromStatus: null,
 							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedTime: xDaysAgoInUnixTime(1),
 							modifiedUser : 0
 						}],
 						'attachments': null
@@ -224,7 +224,7 @@ var initialData = {
 						'history': [{
 							fromStatus: null,
 							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedTime: xDaysAgoInUnixTime(3),
 							modifiedUser : 0
 						}],
 						'attachments': null
