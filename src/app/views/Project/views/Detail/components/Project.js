@@ -1,8 +1,7 @@
 import React from 'react';
 import Nav from './Nav';
 import Tab from './Tabs/Tab';
-import { connect } from 'react-redux';
-import _ from 'underscore';
+import Container from './containers';
 
 /* Project details on a particular project*/
 class Project extends React.Component {
@@ -36,29 +35,4 @@ class Project extends React.Component {
   	}
 }
 
-//redux
-const mapStateToProps = (state) => {
-	return state;
-};
-
-// pulls out current project from projects object, pushes to props
-function mergeProps(stateProps, dispatchProps, ownProps) {
-	// todo get rid of this:
-	var projects = stateProps.projects || [];
-	let project = projects.find((proj) => {
-		return proj._id === ownProps.id;
-	});
-
-	return Object.assign({...project}, {...ownProps});
-}
-
-//maps any actions this component dispatches to component props
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
-)(Project);
+export default Container(Project);

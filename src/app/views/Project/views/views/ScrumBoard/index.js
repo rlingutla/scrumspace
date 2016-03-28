@@ -2,11 +2,10 @@ import React from 'react';
 import ScrumBoardHeader from './ScrumBoardHeader';
 import StoryRow from './StoryRow';
 import { getCurrentSprint } from '../../../../../shared/utils/utils';
-//redux
-import { connect } from 'react-redux';
 //DnD Stuff
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import Container from './containers';
 
 class ScrumBoard extends React.Component {
 	constructor(props) {
@@ -41,4 +40,4 @@ class ScrumBoard extends React.Component {
 	}
 }
 
-export default DragDropContext(HTML5Backend)(ScrumBoard);
+export default Container(DragDropContext(HTML5Backend)(ScrumBoard));
