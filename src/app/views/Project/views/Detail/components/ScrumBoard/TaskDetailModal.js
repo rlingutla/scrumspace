@@ -121,19 +121,23 @@ class TaskDetailModal extends React.Component{
 						<br/>
 						<Row className="left-right-align">
 							<Col xs={8}>
-								<h5>Assigned To:</h5>
-								{this.props.task.assignedTo.map((user,i) => {
-									return (
-										<ButtonGroup style={{paddingBottom: '10px', marginRight: '10px'}} key={i}>
-											<Button className="fake"><AssignedMember {...user} /></Button>
-											<Button style={{fontSize: '20px'}} onClick={(e) => this.removeMember(user)}>
-												<span><Ionicon icon="ion-ios-close-empty"/></span>
-											</Button>
-										</ButtonGroup>
-									);
-								})}
+								{(this.props.task.assignedTo.length > 0) ? 
+									<div>
+										<h5>Assigned To:</h5>
+										{this.props.task.assignedTo.map((user,i) => {
+											return (
+												<ButtonGroup style={{paddingBottom: '10px', marginRight: '10px'}} key={i}>
+													<Button className="fake"><AssignedMember {...user} /></Button>
+													<Button style={{fontSize: '20px'}} onClick={(e) => this.removeMember(user)}>
+														<span><Ionicon icon="ion-ios-close-empty"/></span>
+													</Button>
+												</ButtonGroup>
+											);
+										})}
+										
+									</div>:null}
 
-								<hr />
+									<hr />
 
 								<MultiSelect className="form-control" 
 									collection="users"
