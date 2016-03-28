@@ -25,29 +25,25 @@ const Dashboard = (props) => {
 		<div id="content">
 			<TopNav view="Dashboard"/>
 			<div className="container-fluid">
-				<div style={{padding: '15px'}}>
-					{ 
-						props.projects.map((project, i) => { 
-							let tasks = taskSelector(new Array(project), () => true, () => true);
-							let actionableTasks = tasks.filter(isActionable);
-							return (
-								<ProjectWidget key={i} project={project}> 
-									<ProjectHeader id={project._id} title={project.title}/>
-										<div className="row">
-											<div className="col-md-6">
-												<UserTasks tasks={actionableTasks} />
-												<ActivityFeed tasks={tasks} />
-											</div>
-											<div className="col-md-6">
-												<TaskDistribution tasks={tasks} />
-												<TaskActivityTimeSeries data={tasks} />
-											</div>
-										</div>
-								</ProjectWidget>
-							);
-						}) 
-					}
-				</div>
+				{ 
+					props.projects.map((project, i) => { 
+						let tasks = taskSelector(new Array(project), () => true, () => true);
+						let actionableTasks = tasks.filter(isActionable);
+						return (
+							<ProjectWidget key={i} project={project}> 
+								<ProjectHeader id={project._id} avatar={project.avatar} title={project.title}/>
+								<div className="row">
+									<UserTasks tasks={actionableTasks} />
+									<TaskDistribution tasks={tasks} />
+								</div>
+								<div className="row">
+									<TaskActivityTimeSeries data={tasks} />
+									<ActivityFeed tasks={tasks} />
+								</div>
+							</ProjectWidget>
+						);
+					}) 
+				}
 			</div>
 		</div>
 	);
