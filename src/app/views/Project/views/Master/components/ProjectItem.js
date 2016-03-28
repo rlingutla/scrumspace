@@ -30,18 +30,17 @@ function getScrumTime(props){
 
 const ProjectItem = (props) => {
 	const lineData = {
-	    labels: ["mon", "tues", "wed", "thur", "fri"],
+	    labels: ['mon', 'tues', 'wed', 'thur', 'fri'],
 	    datasets: [
 	        {
-	            fillColor: "transparent",
-	            strokeColor: "#44A9FF",
+	            fillColor: 'transparent',
+	            strokeColor: '#44A9FF',
 	            data: [Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10), Math.floor(Math.random()*10)]
 	        }
 	    ]
 	};
-
 	return (
-		<Link to={`/project/detail/${props._id}`} >
+		<Link to={`/project/${props._id}`} >
 			<div className="project-item">
 				<Row className="left-right-align">
 					<Col xs={9} className="project-title">{props.title}</Col>

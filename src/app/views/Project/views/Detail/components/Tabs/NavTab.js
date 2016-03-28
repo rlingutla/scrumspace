@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 class NavTab extends React.Component {
 	constructor(props) {
@@ -8,7 +9,6 @@ class NavTab extends React.Component {
 			active: this.props['active-tab'] === this.props['tab-id']
 		};
 
-		this.clickHandler = this.clickHandler.bind(this);
 	}
 
 	clickHandler(){
@@ -18,7 +18,11 @@ class NavTab extends React.Component {
 
 	render() {
 		return (
-			<li onClick={this.clickHandler} role="presentation" className={(this.props['active-tab'] === this.props['tab-id']) ? 'active':null}><a>{this.props.name}</a></li>
+			<li onClick={(e) => this.clickHandler()} role="presentation" className={(this.props['active-tab'] === this.props['tab-id']) ? 'active':null}>
+				<Link activeClassName="selected" to={'/project/'+ this.props.projectID + '/' + this.props.name}>
+					{this.props.name}
+				</Link>
+			</li>
 		);
 	}
 }
