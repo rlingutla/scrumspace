@@ -9,7 +9,6 @@ const mapStateToProps = (state) => {
 // pulls out current project from projects object, pushes to props
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	// todo get rid of this:
-	debugger;
 	var projects = stateProps.projects || [];
 	let project = projects.find((proj) => {
 		return proj._id === parseInt(ownProps.params.id, 10);
@@ -25,7 +24,6 @@ const mapDispatchToProps = (dispatch) => {
 		}
 	};
 };
-
 
 export default (component) => connect(
   mapStateToProps,

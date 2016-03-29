@@ -92,7 +92,6 @@ const projects = (state = [], action) => {
 				}
 				return project;
 			});
-			debugger;
 			return hello;
   		default: //just returning state for now
 			return state;
