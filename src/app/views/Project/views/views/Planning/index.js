@@ -103,6 +103,7 @@ class PlanView extends Component {
 					model1.sprint = data._id;
 				}
 				this.props.saveThis('NEW_SPRINT', model1);
+				this.changeSprintModal();
 				break;
 			default:
 				console.log('I am Crying');

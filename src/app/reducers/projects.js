@@ -49,7 +49,7 @@ const projects = (state = [], action) => {
 				if (project._id === action.project_id){
 					return Object.assign({}, project, { stories: project.stories.map((story) => {
 						if (story._id === action.story._id){
-							return Object.assign({}, action.story)
+							return Object.assign({}, action.story);
 						} else return story;
 					})});
 				} else return project;
@@ -70,17 +70,29 @@ const projects = (state = [], action) => {
 		  break;
 		case 'NEW_STORY':
 			return state.map((project) => {
-			  if (project._id === action.project._id) {
-				return action.project;
-			  }
-				return project;
+				return (project._id === action.project._id) ? action.project : project;
 			});
 		case 'REMOVE_SPRINT':
-		  break;
+			break;
 		case 'NEW_SPRINT':
-		  break;
+			return state.map((project) => {
+				if (project._id === action.project._id) {
+					var newSprint = Object.assign({
+						duration: action.data.duration,
+						time: action.data.time,
+						name: action.data.name
+					});
+					var sprints = project.sprints.concat(newSprint);
+					return Object.assign({
+						sprints: sprints
+					}, {
+						...project
+					});
+				}
+				return project;
+			});
   		default: //just returning state for now
-		return state;
+			return state;
 	}
 };
 
