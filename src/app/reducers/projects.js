@@ -66,8 +66,21 @@ const projects = (state = [], action) => {
 				...state,
 				project
 			];
-		default: //just returning state for now
-			return state;
+		case 'REMOVE_STORY':
+		  break;
+		case 'NEW_STORY':
+			return state.map((project) => {
+			  if (project._id === action.project._id) {
+				return action.project;
+			  }
+				return project;
+			});
+		case 'REMOVE_SPRINT':
+		  break;
+		case 'NEW_SPRINT':
+		  break;
+  		default: //just returning state for now
+		return state;
 	}
 };
 

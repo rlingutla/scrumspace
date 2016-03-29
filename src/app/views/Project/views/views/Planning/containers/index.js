@@ -3,6 +3,7 @@ import { postProjectPlan } from '../../../../../../actions/';
 
 //redux
 const mapStateToProps = (state) => {
+	debugger;
 	return state;
 };
 

@@ -7,8 +7,7 @@ import projectPlanning from '../views/Project/views/views/Planning/reducers/';
 const scrumApp = combineReducers({
 	user,
 	projects,
-	settings,
-	projectPlanning
+	settings
 });
 
 export default scrumApp;
