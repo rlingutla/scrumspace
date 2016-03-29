@@ -14,7 +14,7 @@ export default class SprintRow extends React.Component {
 					{
 						(this.props.isCurrentSprint) ? null : <button type="button" className="close" onClick={(e) => this.props.handleRemove('sprint', this.props.data)}>&times;</button>
 					}
-          <h4 onClick={e => this.props.handleEdit('sprint', this.props.data)}>{this.props.data.name}</h4> </div>
+          <h4 style={{cursor: 'pointer'}} onClick={e => this.props.handleEdit('sprint', this.props.data)}>{this.props.data.name}</h4> </div>
         <div className="panel-body">
           <div className="row">
 						{
