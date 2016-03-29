@@ -1,43 +1,50 @@
 import React from 'react';
-import ScrumBoardHeader from './ScrumBoardHeader';
-import StoryRow from './StoryRow';
-import { getCurrentSprint } from '../../../../../shared/utils/utils';
-//DnD Stuff
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import ScrumBoard from './ScrumBoard';
+import { Button } from 'react-bootstrap'; 
+import { getProjectStatus } from '../../../shared/ProjectStatus';
+import ProjectStatuses from '../../../../../constants/projectStatuses';
 import Container from './containers';
+import ProjectProgressBar from './ProjectProgressBar';
+import { Link } from 'react-router';
 
-class ScrumBoard extends React.Component {
-	constructor(props) {
-		super(props);
+// import { getCurrentSprint } from '../../../../../shared/utils/utils'; //TODO: deprecate
+
+const BoardView = (props) => {
+
+	if (!props.status) {
+		return <div>Loading...</div>; // TODO: this checks for project data, maybe goes in below function?
 	}
 
-	getSprintStories(){
-		let currentSprint = getCurrentSprint(this.props);
-		// TODO this ternary operator should go?
-		return (this.props.stories ? this.props.stories: []).filter((story) => {
-			return story.sprint_id === currentSprint._id;
-		});
-	}
+	let status = getProjectStatus(props);
 
-	render() {
+	if (status === ProjectStatuses.PLANNING) {
 		return (
-			<div className="container-fluid">
-			    <div className="panel panel-default scrum-board">
-			        <div className="panel-body">
-			            <table>
-			            	<ScrumBoardHeader />
-			                <tbody>
-			                	{this.getSprintStories().map((story, i) => {
-			                		return (<StoryRow users={this.props.users} key={i} project_id={this.props._id} story_id={story._id}/>);
-			                	})}
-			                </tbody>
-			            </table>
-			        </div>
-			    </div>
+			<div className="content">
+				<div className="project-info container-fluid">
+					<div>
+						<Link to={'/project/' + props._id + '/planning'}> 
+							<Button>Go Plan a Sprint</Button>
+						</Link>
+					</div>
+				</div>
+			</div>
+		);
+	} else if (status === ProjectStatuses.SPRINT) {
+		return (
+			<div className="content">
+				<div className="project-info container-fluid">
+					<ProjectProgressBar project_id={props._id} />
+				</div>
+				<ScrumBoard {...props} />
+			</div>
+		);
+	} else if (status === ProjectStatuses.REVIEW) { //TODO: return the actual review board
+		return (
+			<div className="content">
+				Project is in review
 			</div>
 		);
 	}
-}
+};
 
-export default Container(DragDropContext(HTML5Backend)(ScrumBoard));
+export default Container(BoardView);

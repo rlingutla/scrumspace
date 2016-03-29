@@ -11,7 +11,6 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	let project = projects.find((proj) => {
 		return proj._id === parseInt(ownProps.params.id, 10);
 	});
-
 	return Object.assign({...project}, {...ownProps});
 }
 
@@ -20,8 +19,8 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default (Component) => connect(
+export default (component) => connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(Component);
+)(component);
