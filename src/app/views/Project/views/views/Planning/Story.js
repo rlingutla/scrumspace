@@ -22,6 +22,7 @@ function collect(connect, monitor){
 class Story extends React.Component {
   constructor(props){
 		super(props);
+    this.state = this.props;
 	}
 
 	render() {

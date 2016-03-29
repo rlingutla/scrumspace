@@ -73,6 +73,8 @@ function postNewProjectPlan(signal, data){
 			return serverRemoveSprint(data.project, data.sprint);
 		case 'NEW_SPRINT':
 			return serverPostSprint(data.project, data.name, data.duration, data.time, data.sprint);
+		case 'MOVE_STORY':
+			return serverMoveStory(data.project, data.story, data.sprint);
 		default:
 			console.log('And so here lies Ryan, a sad programmer');
 	}
