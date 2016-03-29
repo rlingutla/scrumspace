@@ -75,22 +75,25 @@ const projects = (state = [], action) => {
 		case 'REMOVE_SPRINT':
 			break;
 		case 'NEW_SPRINT':
-			return state.map((project) => {
+			var hello = state.map((project) => {
 				if (project._id === action.project._id) {
 					var newSprint = Object.assign({
 						duration: action.data.duration,
-						time: action.data.time,
-						name: action.data.name
+						scrum_time: action.data.time,
+						name: action.data.name,
+						start_date: null,
+						id: project.sprints.length
 					});
-					var sprints = project.sprints.concat(newSprint);
 					return Object.assign({
-						sprints: sprints
-					}, {
 						...project
+					}, {
+						sprints: project.sprints.concat(newSprint)
 					});
 				}
 				return project;
 			});
+			debugger;
+			return hello;
   		default: //just returning state for now
 			return state;
 	}

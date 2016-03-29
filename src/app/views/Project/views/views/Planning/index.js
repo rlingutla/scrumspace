@@ -89,11 +89,10 @@ class PlanView extends Component {
 					model.story = data._id;
 				}
 				this.props.saveThis('NEW_STORY', model);
-				debugger;
 				this.changeStoryModal();
 				break;
 			case 'sprint':
-				let model1 ={
+				let model1 = {
 					project: this.props._id,
 					name: data.name,
 					duration: data.duration,
@@ -155,7 +154,7 @@ class PlanView extends Component {
 
 	render() {
 		return (
-		<div className="container">
+		<div className="container" style={{paddingTop: '15px'}}>
 			<NewSprintModal isOpen={this.state.sprintModal[0]} data={this.state.sprintModal[1]}
 				updateState={this.updateState.bind(this)} save={this.save.bind(this)} changeModal={this.changeSprintModal.bind(this)}/>
 			<NewStoryModal isOpen={this.state.storyModal[0]} data={this.state.storyModal[1]} handleTask={this.handleTask.bind(this)}
