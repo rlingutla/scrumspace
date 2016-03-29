@@ -37,8 +37,7 @@ class PlanView extends Component {
 	handleNew(value) {
 		if(value === 'sprint'){
 			this.updateState('sprintModal', [true, SprintFactory()]);
-		}
-		else if (value === 'story') {
+		} else if (value === 'story') {
 			this.updateState('storyModal', [true, StoryFactory()]);
 		}
 	}
@@ -52,16 +51,16 @@ class PlanView extends Component {
 	}
 
 	getSprintByID(id){
-		for(var i in this.props.sprints){
-			if(this.props.sprints[i]._id === id){
+		for (var i in this.props.sprints){
+			if (this.props.sprints[i]._id === id){
 				return this.props.sprints[i];
 			}
 		}
 		console.log('houston we have a problem');
 	}
 	getStoryByID(id){
-		for(var i in this.props.stories){
-			if(this.props.stories[i]._id === id)
+		for (var i in this.props.stories){
+			if (this.props.stories[i]._id === id)
 				return this.props.stories[i];
 		}
 		console.log('Mayday Mayday!');
@@ -76,7 +75,7 @@ class PlanView extends Component {
 		}
 	}
 
-	save(signal, data){
+	save(signal, data) {
 		switch (signal) {
 			case 'story':
 				let model = {
@@ -86,9 +85,12 @@ class PlanView extends Component {
 					tasks: data.tasks,
 					time: data.scrum_time
 				};
-				if(typeof data._id !== 'undefined')
+				if (typeof data._id !== 'undefined') {
 					model.story = data._id;
+				}
 				this.props.saveThis('NEW_STORY', model);
+				debugger;
+				this.changeStoryModal();
 				break;
 			case 'sprint':
 				let model1 ={
@@ -97,8 +99,9 @@ class PlanView extends Component {
 					duration: data.duration,
 					time: data.scrum_time
 				};
-				if(typeof data._id !== 'undefined')
+				if (typeof data._id !== 'undefined') {
 					model1.sprint = data._id;
+				}
 				this.props.saveThis('NEW_SPRINT', model1);
 				break;
 			default:
@@ -130,12 +133,10 @@ class PlanView extends Component {
 		if(property === 'storyModal' && typeof e !== 'undefined'){
 			this.state.storyModal[0] = true;
 			this.state.storyModal[1][value] = e.target.value;
-		}
-		else if(property === 'sprintModal' && typeof e !== 'undefined'){
+		} else if(property === 'sprintModal' && typeof e !== 'undefined'){
 			this.state.sprintModal[0] = true;
 			this.state.sprintModal[1][value] = e.target.value;
-		}
-		else{
+		} else{
 			this.state[property] = (e === null || typeof e === 'undefined') ? value : e.target.value;
 		}
 		this.setState(this.state);
@@ -143,54 +144,48 @@ class PlanView extends Component {
 
 	changeSprintModal(){
     	this.state.sprintModal = [!this.state.sprintModal[0], this.state.sprintModal[1]];
-		this.setState(this.State);
+		this.setState(this.state);
 	}
 
 	changeStoryModal(){
     	this.state.storyModal = [!this.state.storyModal[0], this.state.storyModal[1]];
-		this.setState(this.State);
+		this.setState(this.state);
 	}
 
 	render() {
 		return (
-      <div className="container">
-				<NewSprintModal isOpen={this.state.sprintModal[0]} data={this.state.sprintModal[1]}
-					updateState={this.updateState.bind(this)} save={this.save.bind(this)} changeModal={this.changeSprintModal.bind(this)}/>
-				<NewStoryModal isOpen={this.state.storyModal[0]} data={this.state.storyModal[1]} handleTask={this.handleTask.bind(this)}
-					updateState={this.updateState.bind(this)} save={this.save.bind(this)} changeModal={this.changeStoryModal.bind(this)}/>
-        <div className="panel-group">
-          <Backlog updateState={this.updateState.bind(this)} handleNew={this.handleNew.bind(this)}
-						handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
-						stories={(this.props.stories || []).filter(
-							function(value){
-								if(value.sprint_id === null)
-									return true;
-								else
-									return false;
-							}
-						)}/>
-						{/* todo, can above this.props.stories filter ternary be removed? and below .sprints*/}
+		<div className="container">
+			<NewSprintModal isOpen={this.state.sprintModal[0]} data={this.state.sprintModal[1]}
+				updateState={this.updateState.bind(this)} save={this.save.bind(this)} changeModal={this.changeSprintModal.bind(this)}/>
+			<NewStoryModal isOpen={this.state.storyModal[0]} data={this.state.storyModal[1]} handleTask={this.handleTask.bind(this)}
+				updateState={this.updateState.bind(this)} save={this.save.bind(this)} changeModal={this.changeStoryModal.bind(this)}/>
+			<div className="panel-group">
+				<Backlog updateState={this.updateState.bind(this)} handleNew={this.handleNew.bind(this)}
+							handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
+							stories={(this.props.stories || []).filter(
+								function(value){
+									if(value.sprint_id === null)
+										return true;
+									else
+										return false;
+								}
+							)}/>
+							{/* todo, can above this.props.stories filter ternary be removed? and below .sprints*/}
 				{
-					(this.props.sprints || []).map( (e, i) => {
-						if (/*e.start_date !== null/**/true){ //need to add and time greater than today
+					(this.props.sprints || [])
+					.map( (e, i) => {
+						if (true){ // TODO: need to add and time greater than today
 							return (
 								<SprintRow key={i} data={e} updateState={this.updateState.bind(this)}
 									handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
 									isOnly={this.props.sprints.length === 1}
-									stories={this.props.stories.filter(
-										function(value){
-											if(value.sprint_id === e._id)
-												return true;
-											else
-												return false;
-										}
-									)}
+									stories={this.props.stories.filter((value) => value.sprint_id === e._id)}
 								/>
 						);}
 					})
 				}
-        </div>
-      </div>
+			</div>
+		</div>
     );
   }
 }
