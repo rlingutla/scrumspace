@@ -12,7 +12,7 @@ export default class Story extends React.Component {
         <div className="panel panel-default" data-toggle="modal" data-target="#myModal ">
           <div className="panel-heading">
 						{
-							(this.props.isOnly) ? null : <button type="button" className="close" onClick={this.props.handleRemove('story', this.props.data)}>&times;</button>
+							(this.props.isOnly) ? null : <button type="button" className="close" onClick={e => this.props.handleRemove('story', this.props.data)}>&times;</button>
 						}
 						{this.props.data.title}
 					</div>

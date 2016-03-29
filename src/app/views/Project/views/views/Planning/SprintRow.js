@@ -10,11 +10,11 @@ export default class SprintRow extends React.Component {
 	render() {
 		return (
       <div className="panel panel-primary">
-        <div className="panel-heading" onClick={e => this.props.handleEdit('sprint', this.props.data)}>
+        <div className="panel-heading">
 					{
 						(this.props.isOnly) ? null : <button type="button" className="close" onClick={(e) => this.props.handleRemove('sprint', this.props.data)}>&times;</button>
 					}
-          <h4>{this.props.data.name}</h4> </div>
+          <h4 onClick={e => this.props.handleEdit('sprint', this.props.data)}>{this.props.data.name}</h4> </div>
         <div className="panel-body">
           <div className="row">
 						{

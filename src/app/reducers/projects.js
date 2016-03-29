@@ -67,13 +67,17 @@ const projects = (state = [], action) => {
 				project
 			];
 		case 'REMOVE_STORY':
-		  break;
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
+			});
 		case 'NEW_STORY':
 			return state.map((project) => {
 				return (project._id === action.project._id) ? action.project : project;
 			});
 		case 'REMOVE_SPRINT':
-			break;
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
+			});
 		case 'NEW_SPRINT':
 			var hello = state.map((project) => {
 				if (project._id === action.project._id) {

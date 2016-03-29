@@ -43,10 +43,24 @@ class PlanView extends Component {
 	}
 
 	handleRemove(value, item){
-		if (value === 'sprint'){
-			//redux!!!!!
-		} else if (value === 'story') {
-			//redux!!!!!
+		var model;
+		switch (value) {
+			case 'sprint':
+				model ={
+					project: this.props._id,
+					sprint: item._id
+				};
+				this.props.saveThis('REMOVE_SPRINT', model);
+				break;
+			case 'story':
+				model ={
+					project: this.props._id,
+					story: item._id
+				};
+				this.props.saveThis('REMOVE_STORY', model);
+				break;
+			default:
+				console('Tom Brady is the best ever.');
 		}
 	}
 
@@ -76,9 +90,10 @@ class PlanView extends Component {
 	}
 
 	save(signal, data) {
+		var model;
 		switch (signal) {
 			case 'story':
-				let model = {
+				model = {
 					project:  this.props._id,
 					title: data.title,
 					description: data.description,
@@ -92,16 +107,16 @@ class PlanView extends Component {
 				this.changeStoryModal();
 				break;
 			case 'sprint':
-				let model1 = {
+				model = {
 					project: this.props._id,
 					name: data.name,
 					duration: data.duration,
 					time: data.scrum_time
 				};
 				if (typeof data._id !== 'undefined') {
-					model1.sprint = data._id;
+					model.sprint = data._id;
 				}
-				this.props.saveThis('NEW_SPRINT', model1);
+				this.props.saveThis('NEW_SPRINT', model);
 				this.changeSprintModal();
 				break;
 			default:
