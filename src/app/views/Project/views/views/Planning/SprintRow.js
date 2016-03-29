@@ -45,7 +45,8 @@ class SprintRow extends React.Component {
 					{
 						(this.props.isCurrentSprint) ? null : <button type="button" className="close" onClick={(e) => this.props.handleRemove('sprint', this.props.data)}>&times;</button>
 					}
-          <h4 onClick={e => this.props.handleEdit('sprint', this.props.data)}>{this.props.data.name}</h4> </div>
+
+          <h4 style={{cursor: 'pointer'}} onClick={e => this.props.handleEdit('sprint', this.props.data)}>{this.props.data.name}</h4> </div>
         <div className="panel-body" style={isOver ? {background: '#E8E8E8',borderWidth: '1px', borderStyle: 'dashed', borderColor: '#A9A9A9', minHeight: '120px'}:{minHeight: '120px'}}>
           <div className="row">
 						{

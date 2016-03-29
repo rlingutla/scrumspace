@@ -86,7 +86,7 @@ const projects = (state = [], action) => {
 						scrum_time: action.data.time,
 						name: action.data.name,
 						start_date: null,
-						id: project.sprints.length
+						_id: project.sprints.length
 					});
 					return Object.assign({
 						...project
