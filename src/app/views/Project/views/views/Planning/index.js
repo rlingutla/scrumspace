@@ -132,9 +132,9 @@ class PlanView extends Component {
 				this.state.storyModal[1]['tasks'][task].description = e.target.value;
 				break;
 			case 'add':
-				if(this.state.storyModal[1]['tasks'][this.state.storyModal[1]['tasks'].length-1].description === ''){
+				/*if(this.state.storyModal[1]['tasks'][this.state.storyModal[1]['tasks'].length-1].description === ''){
 					return;
-				}
+				} */
 				this.state.storyModal[1]['tasks'] = this.state.storyModal[1]['tasks'].concat([{description: ''}]);
 				break;
 			case 'delete':
@@ -187,16 +187,19 @@ class PlanView extends Component {
 							)}/>
 							{/* todo, can above this.props.stories filter ternary be removed? and below .sprints*/}
 				{
-					(this.props.sprints || [])
-					.map( (e, i) => {
-						if (true){ // TODO: need to add and time greater than today
-							return (
-								<SprintRow key={i} data={e} updateState={this.updateState.bind(this)}
-									handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
-									isOnly={this.props.sprints.length === 1}
-									stories={this.props.stories.filter((value) => value.sprint_id === e._id)}
-								/>
-						);}
+					(this.props.sprints || []).filter((e) =>{
+						if(e.start_date === null)
+							return true;
+						else
+							return false;
+					}).map( (e, i, array) => {
+						return (
+							<SprintRow key={i} data={e} updateState={this.updateState.bind(this)}
+								handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
+								isOnly={array.length === 1}
+								stories={this.props.stories.filter((value) => value.sprint_id === e._id)}
+							/>
+						);
 					})
 				}
 			</div>
