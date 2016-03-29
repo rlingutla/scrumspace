@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } from 'react-bootstrap';
 
-export default class NewSprintModal extends React.Component {
-  constructor(props){
+export default class NewSprintModal extends Component {
+	constructor(props){
 		super(props);
 	}
 
 	render() {
 		return (
-      <div className="sprint-modal">
+			<div className="sprint-modal">
 				<Modal show={this.props.isOpen} onHide={this.props.changeModal}>
-	        <Modal.Header closeButton>
+				    <Modal.Header closeButton>
 						<Modal.Title>
 							<span className="task_id">Sprint</span>
 						</Modal.Title>
 					</Modal.Header>
-	        <Modal.Body>
+					<Modal.Body>
 						<div className="row">
 							<div className="col-md-4">
 								<div className="left-date-input">
@@ -42,12 +42,12 @@ export default class NewSprintModal extends React.Component {
 								</div>
 							</div>
 						</div>
-	        </Modal.Body>
-	        <Modal.Footer>
-	          <button type="button" className="btn btn-default" data-dismiss="modal" onClick={(e) => this.props.save('sprint', this.props.data)}>Done</button>
-	        </Modal.Footer>
+					</Modal.Body>
+					<Modal.Footer>
+						<button type="button" className="btn btn-default" data-dismiss="modal" onClick={(e) => this.props.save('sprint', this.props.data)}>Done</button>
+					</Modal.Footer>
 				</Modal>
-      </div>
-    );
-  }
+			</div>
+		);
+	}
 }
