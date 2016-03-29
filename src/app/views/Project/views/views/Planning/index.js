@@ -4,6 +4,9 @@ import SprintRow from './SprintRow';
 import NewSprintModal from './NewSprintModal';
 import NewStoryModal from './NewProjectModal/NewStoryModal';
 import Container from './containers';
+//DnD stuff
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const SprintFactory = () => {
 	return {
@@ -169,7 +172,7 @@ class PlanView extends Component {
 
 	render() {
 		return (
-		<div className="container" style={{paddingTop: '15px'}}>
+		<div id="project-planning" className="container" style={{paddingTop: '15px'}}>
 			<NewSprintModal isOpen={this.state.sprintModal[0]} data={this.state.sprintModal[1]}
 				updateState={this.updateState.bind(this)} save={this.save.bind(this)} changeModal={this.changeSprintModal.bind(this)}/>
 			<NewStoryModal isOpen={this.state.storyModal[0]} data={this.state.storyModal[1]} handleTask={this.handleTask.bind(this)}
@@ -201,5 +204,5 @@ class PlanView extends Component {
     );
   }
 }
-
-export default Container(PlanView);
+export default Container(DragDropContext(HTML5Backend)(PlanView));
+// export default Container(PlanView);

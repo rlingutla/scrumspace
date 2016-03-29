@@ -395,3 +395,16 @@
 		}
 	}
 }
+//planning 
+#project-planning {
+	.planning-story {
+		@include hoverAction();
+		opacity:1 !important;
+		cursor: 'move';
+		@include transition();
+
+		&:active {
+			transform: rotateZ(2deg);
+		}
+	}
+}
