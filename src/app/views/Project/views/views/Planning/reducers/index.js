@@ -3,6 +3,7 @@ const projectPlanning = (state = {}, action) => {
     case 'REMOVE_STORY':
       break;
     case 'NEW_STORY':
+      debugger;
       return action.project;
     case 'REMOVE_SPRINT':
       break;

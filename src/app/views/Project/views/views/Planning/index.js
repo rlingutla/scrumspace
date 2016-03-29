@@ -77,7 +77,6 @@ class PlanView extends Component {
 	}
 
 	save(signal, data){
-		debugger;
 		switch (signal) {
 			case 'story':
 				let model = {

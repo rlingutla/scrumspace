@@ -282,7 +282,6 @@ export function serverRemoveSprint(project, sprint){
 }
 
 export function serverMakeNewStory(project, title, description, tasks, story){
-	debugger;
 	//story does not need to be passed through
 	var projects = readDocument('projects');
 	var project_i, story_i, sprint_id;
