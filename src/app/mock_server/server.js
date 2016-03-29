@@ -302,6 +302,13 @@ export function serverMakeNewStory(project, title, description, tasks, story){
 		story_i = projects[project_i].stories.length;
 		sprint_id = null;
 	}
+	//remove any empty tasks
+	tasks = tasks.filter((e) => {
+		if(e.description === '')
+			return false;
+		else
+			return true;
+	});
 	var newTasks = [];
 	for(let i = 0; i < tasks.length; i++){
 		newTasks[i] = {

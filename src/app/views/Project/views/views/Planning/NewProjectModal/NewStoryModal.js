@@ -39,12 +39,11 @@ export default class NewStoryModal extends React.Component {
 							</div>
 							{
 								this.props.data.tasks.map((e,i,array) => {
-									if (e.description !== '' || i === array.length -1){
-										return (
-											<Task key={i} index={i} isOnly={array.length === 1} handleTask={this.props.handleTask} data={e}/>
-										);
+									return (
+										<Task key={i} index={i} isOnly={array.length === 1} handleTask={this.props.handleTask} data={e}/>
+									);
 									}
-								})
+								)
 							}
 						</div>
 					</Modal.Body>
