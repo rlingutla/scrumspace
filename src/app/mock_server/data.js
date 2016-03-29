@@ -12,7 +12,62 @@ var initialData = {
 			'last_name': 'Trump',
 			'email': 'america@donaldjtrump.com',
 			'display_name': 'DJ Trump',
-			'password': 'd4866854120e8bb207d6f8e11fce8b99'
+			'password': 'catinthehat',
+			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+		},
+		1: {
+			'_id': 1,
+			'first_name': 'Abhay',
+			'last_name': 'Vatsa',
+			'email': 'someemail',
+			'display_name': 'Abhay Vatsa',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99',
+			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+		},
+		2: {
+			'_id': 2,
+			'first_name': 'Dylan',
+			'last_name': 'Fischler',
+			'email': 'someemail',
+			'display_name': 'Dylan Fischler',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99',
+			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+		},
+		3: {
+			'_id': 3,
+			'first_name': 'Niha',
+			'last_name': 'Venkatathri',
+			'email': 'someemail',
+			'display_name': 'Niha Venkatathri',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99',
+			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+		},
+		4: {
+			'_id': 4,
+			'first_name': 'Ryan',
+			'last_name': 'Jerue',
+			'email': 'someemail',
+			'display_name': 'Ryan Jerue',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99',
+			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+		},
+		5: {
+			'_id': 5,
+			'first_name': 'Supriya',
+			'last_name': 'Kankure',
+			'email': 'someemail',
+			'display_name': 'Supriya Kankure',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99',
+			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+		},
+		6: {
+			'_id': 6,
+			'first_name': 'Rachana',
+			'last_name': 'Lingutla',
+			'email': 'someemail',
+			'display_name': 'Rachana Lingutla',
+			'password': 'd4866854120e8bb207d6f8e11fce8b99',
+			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
 		}
 	},
 	projects: [
@@ -20,17 +75,7 @@ var initialData = {
 		'_id': 0,
 		'title': 'Drumpf',
 		'description': 'Make America Great Again',
-		'users': [
-			{
-				'_id': 0,
-				'first_name': 'Donald',
-				'last_name': 'Trump',
-				'email': 'america@donaldjtrump.com',
-				'display_name': 'DJ Trump',
-				'password': 'd4866854120e8bb207d6f8e11fce8b99'
-			}
-		],
-
+		'users': [0],
 		'status': 'sprint',
 		'current_sprint': 0,
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
@@ -38,15 +83,15 @@ var initialData = {
 			{
 				'_id': 0,
 				'name': 'V1 Release',
-				'start_date': 1456900811760,
-				'end_date': 1458925200000,
+				'start_date': (new Date()).getTime(),
+				'duration': 14,
 				'scrum_time': '9:00 AM'
 			},
 			{
 				'_id': 1,
 				'name': 'V2 Release',
-				'start_date': 1456900811760,
-				'end_date': 1456900811800,
+				'duration': 7,
+				'start_date': null,
 				'scrum_time': '9:00 AM'
 			}
 		],
@@ -60,12 +105,31 @@ var initialData = {
 					{
 						'_id': 0,
 						'status': 'UNASSIGNED',
-						'assignedTo': 0,
+						'assignedTo': [
+							{
+								'_id': 0,
+								'first_name': 'Donald',
+								'last_name': 'Trump',
+								'email': 'america@donaldjtrump.com',
+								'display_name': 'DJ Trump',
+								'password': 'd4866854120e8bb207d6f8e11fce8b99',
+								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+							},
+							{
+								'_id': 1,
+								'first_name': 'Abhay',
+								'last_name': 'Vatsa',
+								'email': 'someemail',
+								'display_name': 'Abhay Vatsa',
+								'password': 'd4866854120e8bb207d6f8e11fce8b99',
+								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+							}
+						],
 						'description': 'Find a Designer',
 						'history': [{
 							fromStatus: null,
 							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedTime: xDaysAgoInUnixTime(2),
 							modifiedUser : 0
 						}],
 						'attachments': null
@@ -73,12 +137,12 @@ var initialData = {
 					{
 						'_id': 1,
 						'status': 'UNASSIGNED',
-						'assignedTo': 0,
+						'assignedTo': [],
 						'description': 'Make Mexico pay for it',
 						'history': [{
 							fromStatus: null,
 							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedTime: xDaysAgoInUnixTime(4),
 							modifiedUser : 0
 						}],
 						'attachments': null
@@ -86,7 +150,17 @@ var initialData = {
 					{
 						'_id': 2,
 						'status': 'BLOCKED',
-						'assignedTo': 0,
+						'assignedTo': [
+							{
+								'_id': 0,
+								'first_name': 'Donald',
+								'last_name': 'Trump',
+								'email': 'america@donaldjtrump.com',
+								'display_name': 'DJ Trump',
+								'password': 'd4866854120e8bb207d6f8e11fce8b99',
+								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+							}
+						],
 						'description': 'Make Donald Drumpf again',
 						'history': [{
 							fromStatus: 'UNASSIGNED',
@@ -96,7 +170,7 @@ var initialData = {
 						},{
 							fromStatus: null,
 							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedTime: xDaysAgoInUnixTime(1),
 							modifiedUser : 0
 						}],
 						'attachments': null
@@ -104,6 +178,7 @@ var initialData = {
 					{
 						'_id': 3,
 						'status': 'DONE',
+						'assignedTo': [],
 						'description': 'Replace Donald\'s Toupee',
 						'history': [{
 							fromStatus: 'DOING',
@@ -134,12 +209,22 @@ var initialData = {
 					{
 						'_id': 0,
 						'status': 'UNASSIGNED',
-						'assignedTo': 0,
+						'assignedTo': [
+							{
+								'_id': 0,
+								'first_name': 'Donald',
+								'last_name': 'Trump',
+								'email': 'america@donaldjtrump.com',
+								'display_name': 'DJ Trump',
+								'password': 'd4866854120e8bb207d6f8e11fce8b99',
+								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+							}
+						],
 						'description': 'Beat hilldawg',
 						'history': [{
 							fromStatus: null,
 							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(5),
+							modifiedTime: xDaysAgoInUnixTime(3),
 							modifiedUser : 0
 						}],
 						'attachments': null
@@ -147,10 +232,10 @@ var initialData = {
 				]
 			}
 		],
-		'commits':[3,1,6,4,8],
+		'commits': [3,1,6,4,8],
 		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
 		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
-		'gCommits':[12,10,4,6,5,6],
+		'gCommits': [12,10,4,6,5,6],
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 
 	},
@@ -158,16 +243,7 @@ var initialData = {
 		'_id': 1,
 		'title': 'Feel the Bern',
 		'description': 'Fight the Power',
-		'users': [
-			{
-				'_id': 0,
-				'first_name': 'Donald',
-				'last_name': 'Trump',
-				'email': 'america@donaldjtrump.com',
-				'display_name': 'DJ Trump',
-				'password': 'd4866854120e8bb207d6f8e11fce8b99'
-			}
-		],
+		'users': [0],
 		'status': 'planning',
 		'current_sprint': null,
 		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',

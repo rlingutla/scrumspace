@@ -3,7 +3,7 @@ a {
 }
 button {
 	&.btn.btn-default {
-		border-radius: $border-radius;
+		// border-radius: $border-radius;
 
 		&:hover {
 			background-color: lighten($light-gray-color, 10%);
@@ -12,6 +12,16 @@ button {
 			background-color: $light-gray-color;
 		}
 	}
+	&.transparent {
+		background: transparent;
+		border: none;
+		color: $body-gray-color;
+		@include hoverAction();
+	}
+}
+
+.editable {
+	cursor: pointer;
 }
 
 // utils
@@ -32,6 +42,10 @@ button {
 	& > :first-child {
 		text-align: center;
 	}
+}
+
+.vertical-align {
+	@include vertical-align();
 }
 
 // TASKS
@@ -57,7 +71,7 @@ button {
     	min-height:50px;
     }
 
-	.heading {
+	.footer {
 		color: $blue-color;
 
 		.row {
@@ -65,25 +79,43 @@ button {
 		}
 
 		.avatar {
-			width: 25px;
-			height: 25px;
+			width: 20px;
+			height: 20px;
 			display: inline-block;
-			background: $light-gray-color;
+			background: #F1F1F1;
 			font-family: 'Glyphicons Halflings';
 			color: gray;
+			background-size: cover;
+			background-position: center;
+			border-radius: 2px;
+			margin-left: 3px;
+			margin-bottom: 3px;
 
-			&:before {
-				position: relative;
-				top: 2px;
-				left: -6px;
-				content: "\e008";
-				font-size: 12px;
-			}
+			// &:not(:last-child) {
+			// 	margin-right: 3px;
+			// }
+
+			// &:before {
+			// 	position: relative;
+			// 	top: 4px;
+			// 	left: -5px;
+			// 	content: "\e008";
+			// 	font-size: 12px;
+			// }
 		}
 	}
 	.body {
-		padding: 5px 0;
+		padding-bottom: 5px;
 	}
+}
+.task-status {
+	padding:2px 10px;
+	background: lighten($border-color, 12%);
+	border: 1px solid $border-color;
+	display:inline-block;
+	color: darken($border-color, 30%);
+	margin-bottom:8px;
+	border-radius: $border-radius;
 }
 
 // Task state coloring
@@ -149,6 +181,10 @@ button {
     	h5 {
     		font-size: 16px;
     	}
+    	input {
+    		font-size: 16px;
+    		padding:5px;
+    	}
     }
 }
 
@@ -195,4 +231,53 @@ button {
 	background-color: #118AB2;
 	margin-left: 5px;
 	vertical-align: baseline;
+}
+
+.suggestion-input {
+	position:relative;
+
+	input {
+		width:100%;
+	}
+
+	.suggestions {
+		position: absolute;
+		top: 26px;
+		z-index: 9999999;
+		width:100%;
+
+		ul {
+			@include resetSpacing();
+			border: 1px solid $blue-color;
+			border-top: none;
+			max-height:200px;
+			overflow-y:scroll;
+			
+			li {
+				@include resetSpacing();
+				background: #fff;
+				list-style-type: none;
+				padding:5px;
+
+				&.selected {
+					background: darken(#fff, 3%);
+					color: $blue-color;
+					cursor:pointer;
+				}
+				span.highlight {
+					font-weight: bold;
+				}
+
+				// &:hover {
+				// 	background: darken(#fff, 3%);
+				// 	color: $blue-color;
+				// 	cursor:pointer;
+				// }
+				// &:active {
+				// 	background: darken(#fff, 5%);
+				// }
+
+			}
+		}
+	}
 }

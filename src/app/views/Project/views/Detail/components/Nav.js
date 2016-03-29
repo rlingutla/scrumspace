@@ -1,15 +1,14 @@
 import React from 'react';
 import ProjectAvatar from './Avatar';
 import NavTabBar from './Tabs/NavTabBar';
-import { daysDifference, verboseServerTime, getCurrentSprint } from '../../../../../shared/utils/utils';
-import Ionicon from '../../../../../shared/components/Ionicon';
-import { Row, Col, Glyphicon } from 'react-bootstrap';
+import { daysDifference, verboseServerTime, getCurrentSprint } from 'app/shared/utils/utils';
+import Ionicon from 'app/shared/components/Ionicon';
+import { Row, Col, Glyphicon, Button } from 'react-bootstrap';
 import { Link }  from 'react-router';
 
 
 const ProjectNav = (props) => {
 	let currentSprint = getCurrentSprint(props);
-
 	return (
 		<div id="project-detail" className="navbar navbar-fixed-top">
 			<Row className="project-top-nav left-right-align">
@@ -26,20 +25,16 @@ const ProjectNav = (props) => {
 							{props.title}
 							{currentSprint ? <span name="project-state">, {currentSprint.name}</span>:null}
 						</h1>
-						{(props.current_sprint) ? 
+						{currentSprint ? 
 							<h4>
-								<span name="sprint-start-date">
-									{verboseServerTime(currentSprint.start_date)}
-								</span> - 
-								<span name="sprint-end-date">
-									{verboseServerTime(currentSprint.end_date)}
-								</span>
+								<span name="sprint-start-date">{verboseServerTime(currentSprint.start_date)}</span> - 
+								<span name="sprint-end-date">{verboseServerTime(currentSprint.end_date)}</span>
 							</h4>
-							:null}
+						:null}
 					</div>
 				</div>
 			</Row>
-			<NavTabBar active-tab={props['active-tab']} tab-change={props['tab-change']} />
+			<NavTabBar _id={props.id} active-tab={props['active-tab']} />
 		</div>
 	);
 };

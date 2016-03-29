@@ -1,24 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 class NavTab extends React.Component {
 	constructor(props) {
 		super(props);
-		
-		this.state = {
-			active: this.props['active-tab'] === this.props['tab-id']
-		};
-
-		this.clickHandler = this.clickHandler.bind(this);
-	}
-
-	clickHandler(){
-		this.props['tab-change'](this.props['tab-id']);
-		this.setState({ active: true });
 	}
 
 	render() {
 		return (
-			<li onClick={this.clickHandler} role="presentation" className={(this.props['active-tab'] === this.props['tab-id']) ? 'active':null}><a>{this.props.name}</a></li>
+			<li role="presentation" className={(this.props['active-tab'] === this.props['tab-id']) ? 'active':null}>
+				<Link activeClassName="selected" to={'/project/'+ this.props.projectID + '/' + this.props['tab-id']}>
+					{this.props.name}
+				</Link>
+			</li>
 		);
 	}
 }

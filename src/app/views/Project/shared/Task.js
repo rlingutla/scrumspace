@@ -1,21 +1,27 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button } from 'react-bootstrap';
-import TaskDetailModal from '../views/Detail/components/TaskDetailModal';
+import TaskDetailModal from '../views/views/ScrumBoard/TaskDetailModal';
+import AssignUserModal from '../views/views/ScrumBoard/AssignUserModal';
 
-import ItemTypes from '../../../constants/itemTypes';
-import TaskTypes from '../../../constants/taskTypes';
+import ItemTypes from 'app/shared/constants/itemTypes';
+import TaskTypes from 'app/shared/constants/taskTypes';
 
 import { connect } from 'react-redux';
 import _ from 'underscore';
 
 import { DragSource } from 'react-dnd';
 
-import { changeTaskState, putAndChangeTaskState } from '../../../actions/';
-
+import { updateTask } from '../../../actions/';
 
 const taskSource = {
 	beginDrag(props){
 		return props;
+	},
+	endDrag(props, monitor, component){
+		if(monitor.didDrop()){
+			let task = monitor.getDropResult();
+			let item = monitor.getItem();
+		}
 	}
 };
 
@@ -31,7 +37,8 @@ class Task extends React.Component {
 		super(props);
 
 		this.state = { 
-			isModalOpen: false 
+			isModalOpen: false,
+			assignUserModal: false
 		};
 	}
 
@@ -40,15 +47,16 @@ class Task extends React.Component {
 		this.setState({ isModalOpen: modal});
 	}
 
+	hideUserAssignModal(){
+		this.setState({assignUserModal: false});
+	}
+
 	getTaskStyle(status){
 		return { borderColor: TaskTypes[status].color };
 	}
 
 	render() {
 		const {connectDragSource, id, onMove, isDragging, ...props} = this.props;
-		const taskStyles = {
-
-		};
 
 		if (isDragging){
 			return (
@@ -58,21 +66,29 @@ class Task extends React.Component {
 			);
 		}
 
-		return connectDragSource(
+		let theTask = (
 			<div>
+				<AssignUserModal isModalOpen={this.state.assignUserModal} hideModal={(e) => this.hideUserAssignModal(e)}/>
 				<div className="task" onClick={(e) => this.changeModal(e)} style={this.getTaskStyle(this.props.status)}>
 				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
-				    <div className="heading">
+				    <div className="body">{this.props.description}</div>
+				    <div className="footer" style={{padding: '5px 0'}}>
 				        <div className="row left-right-align">
-				            <div className="col-md-6"><a>{this.props._id}</a></div>
-				            <div className="col-md-6"></div>
+				            {/* <div style={{float:'left'}}><a>{this.props._id}</a></div> */}
+				            <div style={{float:'right'}}>
+				            	{this.props.assignedTo ? 
+				            		this.props.assignedTo.map((user, i) => 
+				            			<span key={i} className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}></span>
+				            		):null
+				            	}
+				            </div>
 				        </div>
 				    </div>
-				    <div className="body">{this.props.description}</div>
 				</div>
-			</div>,
-			{dropEffect: 'move'}
+			</div>
 		);
+
+		return connectDragSource(theTask, {dropEffect: 'move'});
 	}
 }
 
@@ -92,7 +108,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 			project_id: ownProps.project_id, 
 			story_id: ownProps.story_id, 
 			_id: ownProps.task_id, 
-			users: ownProps.users 
+			users: ownProps.users  //TODO: can we take this out?
 		}, 
 		dispatchProps);
 }
@@ -100,9 +116,9 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 //maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
   return {
-  	moveTask: (project_id, story_id, task_id, toType) => {
+  	updateTask: (project_id, story_id, task) => {
   		// dispatch(changeTaskState(project_id, story_id, task_id, toType));
-  		dispatch(putAndChangeTaskState(project_id, story_id, task_id, toType));
+  		dispatch(updateTask(project_id, story_id, task));
   	}
   };
 };
@@ -111,4 +127,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(DragSource(ItemTypes.TASK, taskSource, collect)(Task));
+)(DragSource(props => ItemTypes.TASK + '_' + props.story_id, taskSource, collect)(Task));

@@ -1,7 +1,7 @@
 import React from 'react';
-import taskSelector from '../../constants/taskSelector';
-
+import taskSelector from 'app/shared/constants/taskSelector';
 import TopNav from '../../shared/components/TopNav';
+import Wrapper from '../../shared/components/Wrapper';
 
 import {
 	ProjectWidget,
@@ -24,29 +24,27 @@ const Dashboard = (props) => {
 	return (
 		<div id="content">
 			<TopNav view="Dashboard"/>
-			{ 
-				props.projects.map((project, i) => { 
-					let tasks = taskSelector(new Array(project), () => true, () => true);
-					let actionableTasks = tasks.filter(isActionable);
-					return (
-						<ProjectWidget key={i} project={project}> 
-							<ProjectHeader id={project._id} title={project.title}/>
-							<div className="container">
+			<div className="container-fluid">
+				{ 
+					props.projects.map((project, i) => { 
+						let tasks = taskSelector(new Array(project), () => true, () => true);
+						let actionableTasks = tasks.filter(isActionable);
+						return (
+							<ProjectWidget key={i} project={project}> 
+								<ProjectHeader id={project._id} avatar={project.avatar} title={project.title}/>
 								<div className="row">
-									<div className="col-md-6">
-										<UserTasks tasks={actionableTasks} />
-										<ActivityFeed tasks={tasks} />
-									</div>
-									<div className="col-md-6">
-										<TaskDistribution tasks={tasks} />
-										<TaskActivityTimeSeries data={tasks} />
-									</div>
+									<UserTasks tasks={actionableTasks} />
+									<TaskDistribution tasks={tasks} />
 								</div>
-							</div>
-						</ProjectWidget>
-					);
-				}) 
-			}
+								<div className="row">
+									<TaskActivityTimeSeries data={tasks} />
+									<ActivityFeed tasks={tasks} />
+								</div>
+							</ProjectWidget>
+						);
+					}) 
+				}
+			</div>
 		</div>
 	);
 };

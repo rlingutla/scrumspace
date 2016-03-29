@@ -1,5 +1,6 @@
 import { readDocument, writeDocument, addDocument, initLocalStorage } from './database.js';
 import moment from 'moment';
+import _ from 'underscore';
 
 /**
  * Emulates how a REST call is *asynchronous* -- it calls your function back
@@ -23,12 +24,13 @@ export function initDatabase(){
 }
 
 function serverLog(...msg){
-	console.log("SERVER MESSAGE:", ...msg);
+	console.log('SERVER MESSAGE:', ...msg);
 }
 
 export function stateTree(userId){
-	var userObj = readDocument("users", userId);
-	var projects = readDocument("projects");
+	var userObj = readDocument('users', userId);
+	var projects = readDocument('projects');
+	delete userObj.password; // TODO: this is bad design
 	var stateTree = {
 		user: userObj[userId],
 		projects
@@ -37,17 +39,72 @@ export function stateTree(userId){
 	return emulateServerReturn(stateTree);
 }
 
-export function serverPutTaskState(project_id, story_id, task_id, toType){
-	let projects = readDocument("projects");
+export function serverPutSettings(newData, properties){
+	var oldSettings = readDocument('users', newData._id.toString());
+
+	// check if password (TODO: fix this design AV)
+	if (newData.oldPassword === oldSettings.password) {
+		oldSettings.password = newData.newPassword;
+	} else {
+		for (let prop in newData) {
+			oldSettings[prop] = newData[prop];
+		}
+	}
+
+	//write updated project object to server
+	writeDocument('users', oldSettings);
+
+	serverLog('DB Updated', oldSettings);
+	return emulateServerReturn(oldSettings, false) ;
+}
+
+export function serverUpdateTask(project_id, story_id, changedTask){
+	let projects = readDocument('projects');
 	let updatedTask, updatedProject;
 
 	projects.map((project) => {
-		if(project._id == project_id){
+		if(project._id === project_id){
 			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-				if(story._id == story_id){
+				if(story._id === story_id){
 					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
-						if(task._id == task_id){
-							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: Date.now(), modifiedUser: getCurrentUser()}
+						if(task._id === changedTask._id){
+							let historyItem = { fromStatus: task.status, toStatus: changedTask.status, modifiedTime: Date.now(), modifiedUser: getCurrentUser()};
+
+							updatedTask = Object.assign({}, task, changedTask, {
+								history: [
+									...task.history,
+									historyItem
+								]
+							});
+							return updatedTask;
+						} else return task;
+					})});
+				} else return story;
+			})});
+			return updatedProject;
+		} else return project;
+	});
+
+
+	//write updated project object to server
+	writeDocument('projects', updatedProject);
+
+	serverLog('DB Updated', updatedTask);
+
+	return emulateServerReturn(updatedTask, updatedTask === undefined);
+}
+
+export function serverPutTaskState(project_id, story_id, task_id, toType){
+	let projects = readDocument('projects');
+	let updatedTask, updatedProject;
+
+	projects.map((project) => {
+		if(project._id === project_id){
+			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
+				if(story._id === story_id){
+					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
+						if(task._id === task_id){
+							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: Date.now(), modifiedUser: getCurrentUser()};
 
 							updatedTask = Object.assign({}, task, {
 								status: toType,
@@ -70,15 +127,37 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 	//write updated project object to server
 	writeDocument('projects', updatedProject);
 
-	serverLog("DB Updated", updatedTask);
+	serverLog('DB Updated', updatedTask);
 
-	return emulateServerReturn(updatedTask, updatedTask == undefined);
+	return emulateServerReturn(updatedTask, updatedTask === undefined);
+}
+
+export function serverPutStory(project_id, newStory){
+	let projects = readDocument('projects');
+	let updatedProject, updatedStory;
+	projects.map((project) => {
+		if(project._id == project_id){
+			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
+				if(story._id === newStory._id){
+					updatedStory = Object.assign({}, newStory);
+					return updatedStory;
+				}
+				else return story;
+			})});
+			return updatedProject;
+		}
+		else return project;
+	});
+	//write updated project object to server
+	writeDocument('projects', updatedProject);
+	serverLog('DB Updated', updatedStory);
+	return emulateServerReturn(updatedStory, updatedStory === undefined);
 }
 
 export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
 stories,commits,timeFrame,membersOnProj,gCommits,color){
 	// read in all projects, access last project in the array, get it's ID and increment that value
-  var projects = readDocument("projects");
+  var projects = readDocument('projects');
 	var prevId = projects[projects.length - 1]._id;
 
 	let project = {
@@ -102,71 +181,188 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 
 }
 
-export function serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
-	var project = readDocument('projects');
-	//writes sprint data
-	//find pid
-	stories = stories.filter((e) =>{
-		if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
-			return false;
-		}
-		else{
-			return true;
-		}
-	});
-	let sprint = {
-		'_id': sid,
-		'name': name,
-		'start_date': parseInt(moment(start_date).format('x')),
-		'end_date': parseInt(moment(end_date).format('x')),
-		'scrum_time': scrum_time
-	};
-	(typeof project[pid].sprints[sid] === 'undefined' || project[pid].sprints[sid] === null) ? project[pid].sprints[0] = sprint : project[pid].sprints[sid] = sprint;
-	var notInSp = project[pid].stories.filter(
-		function(value){
-			if(value.sprint_id !== sid){
-				return true;
+export function serverPostSprint(project, name, duration, time, sprint){
+	//sprint is not passed through if it is a new sprint hence the type is undefined
+	var projects = readDocument('projects');
+	//The following is to get the value of the project and sprint to be added or edited.
+	var project_i, sprint_i;
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === project) {
+			project_i = i;
+			for(let j = 0; j < projects[i].sprints.length && typeof sprint !== 'undefined'; j++){
+				if(projects[i].sprints[j]._id === sprint){
+					sprint_i = j;
+					break;
+				}
 			}
-			else {
-				return false;
-			}
+			break;
 		}
-	);
-	var nextID = (notInSp.length !== 0) ? notInSp[notInSp.length -1]._id + 1 : 0;
-	for(var i = 0; i < stories.length; i++){
-		let story = {
-			'_id': (nextID+i),
-			'title': stories[i].title,
-			'description': stories[i].description,
-			'sprint_id': sid,
-			'tasks': stories[i].tasks.map(
-				(e, i) => { let t = {
-						'_id': i,
-						'status': 'UNASSIGNED',
-						'assignedTo': null,
-						'description': e.description,
-						'history': [{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: Date.now(),
-							modifiedUser : 0
-						}],
-						'attachments': null
-					};
-					return t;
-				}
-			).filter((e) =>{
-				if(e.description === null || e.description === '' || typeof e.description === 'undefined'){
-					return false;
-				}
-				else{
-					return true;
-				}
-			})
-		};
-		stories[i] = story;
 	}
-	project[pid].stories = notInSp.concat(stories);
-	writeDocument('projects', project[pid]);
-	return emulateServerReturn(project[pid], false);
+	if(typeof sprint === 'undefined')
+		sprint_i = projects[project_i].sprints.length;
+	////////////////////////////////////////////////////
+	let newSprint ={
+		'_id': sprint_i,
+		'name': name,
+		'start_date': null,
+		'duration': duration,
+		'scrum_time': time
+	};
+	projects[project_i].sprints[sprint_i] = newSprint;
+	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
+	return emulateServerReturn(projects[project_i], false);
+}
+
+export function serverMoveStory(project, story, sprint){
+	var projects = readDocument('projects');
+	var project_i, story_i;
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === project) {
+			project_i = i;
+			for(let j = 0; j < projects[i].stories.length; j++){
+				if(projects[i].stories[j]._id === story){
+					story_i = j;
+					break;
+				}
+			}
+		}
+	}
+	projects[project_i].story[story_i].sprint_id = sprint;
+	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
+	return emulateServerReturn(projects[project_i], false);
+}
+export function serverRemoveStory(project, story){
+	var projects = readDocument('projects');
+	var project_i, story_i;
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === project) {
+			project_i = i;
+			for(let j = 0; j < projects[i].stories.length; j++){
+				if(projects[i].stories[j]._id === story){
+					story_i = j;
+					break;
+				}
+			}
+			break;
+		}
+	}
+	if(projects[project_i].stories[story_i].sprint_id !== null){
+		projects[project_i].stories[story_i].sprint_id = null;
+	}
+	else{
+		projects[project_i].stories.splice(story_i, 1);
+	}
+	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
+	return emulateServerReturn(projects[project_i], false);
+}
+export function serverRemoveSprint(project, sprint){
+	var projects = readDocument('projects');
+	//The following is to get the value of the project and sprint to be added or edited.
+	var project_i, sprint_i;
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === project) {
+			project_i = i;
+			for(let j = 0; j < projects[i].sprints.length; j++){
+				if(projects[i].sprints[j]._id === sprint){
+					sprint_i = j;
+					break;
+				}
+			}
+			break;
+		}
+	}
+	//set stories of to null to move them to the backlog
+	for(let i in projects[project_i].stories){
+		if(projects[project_i].stories[i].sprint_id === sprint)
+			projects[project_i].stories[i].sprint_id = null;
+	}
+	////////////////////////////////////////////////////
+	projects[project_i].sprints.splice(sprint_i, 1);
+	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
+	return emulateServerReturn(projects[project_i], false);
+}
+
+export function serverMakeNewStory(project, title, description, tasks, story){
+	//story does not need to be passed through
+	var projects = readDocument('projects');
+	var project_i, story_i, sprint_id;
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === project) {
+			project_i = i;
+			for(let j = 0; j < projects[i].stories.length && typeof story !== 'undefined'; j++){
+				if(projects[i].stories[j]._id === story){
+					story_i = j;
+					sprint_id = projects[i].stories[j].sprint_id;
+					break;
+				}
+			}
+			break;
+		}
+	}
+	if(typeof story === 'undefined'){
+		story_i = projects[project_i].stories.length;
+		sprint_id = null;
+	}
+	//remove any empty tasks
+	tasks = tasks.filter((e) => {
+		if(e.description === '')
+			return false;
+		else
+			return true;
+	});
+	var newTasks = [];
+	for(let i = 0; i < tasks.length; i++){
+		newTasks[i] = {
+			'_id': i,
+			'status': 'UNASSIGNED',
+			'assignedTo': [],
+			'description': tasks[i].description,
+			'history': [{
+				fromStatus: null,
+				toStatus: 'UNASSIGNED',
+				modifiedTime: Date.now(),
+				modifiedUser : 0
+			}],
+			'attachements': null
+		};
+	}
+	let newStory = {
+		'_id': 'DT-S' + story_i,
+		'title': title,
+		'description': description,
+		'sprint_id': sprint_id,
+		'tasks': newTasks
+	};
+	projects[project_i].stories[story_i] = newStory;
+	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
+	return emulateServerReturn(projects[project_i], false);
+}
+
+/*
+** str: search string
+** collection: target collection to search in
+** key (optional): key to search on
+** limit (optional): number of results
+*/
+export function search(str, collection, key = '_id', limit=15){
+	let searchCollection = readDocument(collection);
+	//if it's an object, map the values to an array
+	if (_.isObject(searchCollection)) searchCollection = _.values(searchCollection);
+	else if(!_.isArray(searchCollection)) return new Error('Supplied collection is invalid');
+	//strip some stuff from search
+	const escapeRegExp = (str_unesc) => str_unesc.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '');
+	let filtered = [];
+	//precalculate the regex once (faster)
+	let searchExpr = new RegExp(escapeRegExp(str).split('').join('\\w*').replace(/\W/, ''), 'i');
+	//loop through collection, find matching elements
+	searchCollection.forEach((obj) => {
+		if (escapeRegExp(obj[key]).match(searchExpr)) filtered.push(obj);
+	});
+
+	return emulateServerReturn(filtered.slice(0, limit), false);
 }

@@ -2,4 +2,69 @@ button {
 	&:focus {
 		outline:none !important;
 	}
+	//bootstrap button override
+	&.btn,&.btn.btn-default {
+		border-radius:0px;
+	}
+	&.fake, &.fake:hover, &.fake:active {
+		cursor: default !important;
+		background-color: transparent !important;
+		border-color: $border-color !important;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
+}
+
+input.form-control, textarea.form-control {
+	padding: 5px; 
+	border-radius: 0;
+	border: 1px solid $border-color;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	display:inline-block;
+
+	&:focus {
+		border-color: $blue-color;
+		outline: 0;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
+}
+
+// Modal Over
+.modal-backdrop {
+	background: #f1f1f1;
+	z-index: 9999;
+
+	&.in {
+		opacity:0.65;
+	}
+}
+.modal {
+	z-index: 9999;
+
+	.modal-content {
+		-webkit-box-shadow: none;
+		box-shadow: none;
+		border-radius:0;
+		border: 1px solid $border-color;
+
+		.modal-body.select-support {
+			overflow: visible;
+		}
+	}
+
+	.Select {
+		.Select-menu-outer {
+			// position: relative;
+			z-index: 5000;
+		}
+		.Select-control {
+			border-radius:0;
+			&:hover {
+				box-shadow: none;
+				cursor: pointer;
+			}
+		}
+	}
 }

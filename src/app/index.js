@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from './components/Sidebar';
 import TopNav from './shared/components/TopNav';
-import { connect } from 'react-redux';
+import Container from './containers/';
 
 const App = (props) => {
 	return (
@@ -12,26 +12,4 @@ const App = (props) => {
 	);
 };
 
-
-const mapStateToProps = (state) => {
-	return state;
-};
-
-function mergeProps(stateProps, dispatchProps, ownProps) {
-	return Object.assign({}, ownProps, {
-		loading: stateProps.loading
-	});
-}
-
-// maps any actions this component dispatches to component props
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-const AppContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
-)(App);
-
-export default AppContainer;
+export default Container(App);

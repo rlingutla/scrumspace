@@ -1,112 +1,103 @@
-import { projectDefault } from '../constants/models';
+import { project as projectModel } from 'app/shared/constants/models';
 import _ from 'underscore';
 
 const task = (state, action) => {
-  switch (action.type) {
-    case 'CHANGE_TASK_STATE':
-      return {
-        id: action.id,
-        text: action.text,
-        completed: false
-      }
-    default:
-      return state
-  }
-}
+	switch (action.type) {
+		case 'CHANGE_TASK_STATE':
+			return {
+				id: action.id,
+				text: action.text,
+				completed: false
+			};
+		default:
+			return state;
+	}
+};
 
 const projects = (state = [], action) => {
 	switch (action.type){
-		case 'CHANGE_TASK_STATE':
+		case 'UPDATE_TASK':
 			return state.map((project) => {
-				if(project._id == action.project_id){
+				if (project._id === action.project_id){
 					return Object.assign({}, project, { stories: project.stories.map((story) => {
-						if(story._id == action.story_id){
+						if (story._id === action.story_id){
 							return Object.assign({}, story, { tasks: story.tasks.map((task) => {
-								if(task._id == action.task_id){
+								if (task._id === action.task._id){
 									return Object.assign({}, action.task);
-								} else return task;
+								}	else return task;
 							})});
 						} else return story;
 					})});
 				} else return project;
 			});
+		case 'CHANGE_TASK_STATE':
+			return state.map((project) => {
+				if (project._id === action.project_id){
+					return Object.assign({}, project, { stories: project.stories.map((story) => {
+						if (story._id === action.story_id){
+							return Object.assign({}, story, { tasks: story.tasks.map((task) => {
+								if (task._id === action.task_id){
+									return Object.assign({}, action.task);
+								}	else return task;
+							})});
+						} else return story;
+					})});
+				} else return project;
+			});
+		case 'CHANGE_STORY_STATE':
+			return state.map((project) => {
+				if (project._id === action.project_id){
+					return Object.assign({}, project, { stories: project.stories.map((story) => {
+						if (story._id === action.story._id){
+							return Object.assign({}, action.story);
+						} else return story;
+					})});
+				} else return project;
+			});
 		case 'CREATE_NEW_PROJECT':
-      //find right project
+			//find right project
 			let project = _.defaults({
-        _id: state.length,
+				_id: state.length,
 				title: action.title,
 				description: action.description
-			}, projectDefault());
+			}, projectModel());
 
 			return [
 				...state,
 				project
-			]
-    case 'CREATE_NEW_SPRINT':
-      var p = state;
-      action.stories = action.stories.filter((e) =>{
-				if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
-					return false;
-				}
-				else{
-					return true;
-				}
+			];
+		case 'REMOVE_STORY':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
 			});
-      let sprint = {
-        '_id': action.sid,
-        'name': action.name,
-        'start_date': action.start_date,
-        'end_date': action.end_date,
-        'scrum_time': action.scrum_time
-      };
-      p[action.pid].sprints[action.sid] = sprint;
-      var notInSp = p[action.pid].stories.filter(
-        function(value){
-          if(value.sprint_id !== action.sid){
-            return true;
-          }
-          else {
-            return false;
-          }
-        }
-      );
-      var nextID = (notInSp.length !== 0) ? notInSp[notInSp.length -1]._id + 1 : 0;
-      for(var i = 0; i < action.stories.length; i++){
-        let story = {
-          '_id': (nextID+i),
-          'title': action.stories[i].title,
-          'description': action.stories[i].description,
-          'sprint_id': action.sid,
-          'tasks': action.stories[i].tasks.map(
-            (e, i) => { let t = {
-                '_id': i,
-                'status': 'UNASSIGNED',
-                'assignedTo': null,
-                'description': e.description,
-                'history': [{
-                  fromStatus: null,
-                  toStatus: 'UNASSIGNED',
-                  modifiedTime: Date.now(),
-                  modifiedUser : 0
-                }],
-                'attachments': null
-              };
-              return t;
-            }
-          ).filter((e) =>{
-    				if(e.description === null || e.description === '' || typeof e.description === 'undefined'){
-    					return false;
-    				}
-    				else{
-    					return true;
-    				}
-    			})
-        };
-        action.stories[i] = story;
-      }
-      p[action.pid].stories = notInSp.concat(action.stories);
-      return p;
-		default: //just returning state for now
+		case 'NEW_STORY':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
+			});
+		case 'REMOVE_SPRINT':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
+			});
+		case 'NEW_SPRINT':
+			var hello = state.map((project) => {
+				if (project._id === action.project._id) {
+					var newSprint = Object.assign({
+						duration: action.data.duration,
+						scrum_time: action.data.time,
+						name: action.data.name,
+						start_date: null,
+						_id: project.sprints.length
+					});
+					return Object.assign({
+						...project
+					}, {
+						sprints: project.sprints.concat(newSprint)
+					});
+				}
+				return project;
+			});
+			return hello;
+  		default: //just returning state for now
 			return state;
 	}
 };

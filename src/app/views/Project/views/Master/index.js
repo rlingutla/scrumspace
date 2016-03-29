@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNav from '../../../../shared/components/TopNav';
+import TopNav from 'app/shared/components/TopNav';
 import ProjectList from './components/ProjectList';
 import {Button,Glyphicon} from 'react-bootstrap';
 import NewProjModal from './components/NewProjModal';
@@ -25,9 +25,9 @@ export default class Project extends React.Component{
 		return (
 			<div id="content">
 				<TopNav view="Projects">
-					<Button onClick={this.handleClick.bind(this)}>Create Project <Glyphicon glyph="plus" /></Button>
+					<Button onClick={(e) => this.handleClick(e)}>Create Project <Glyphicon glyph="plus" /></Button>
 				</TopNav>
-				<NewProjModal show={this.state.modalIsOpen} changeModal={this.changeModal.bind(this)} />
+				<NewProjModal show={this.state.modalIsOpen} changeModal={(e) => this.changeModal()} />
 				<ProjectList />
 			</div>
 		);

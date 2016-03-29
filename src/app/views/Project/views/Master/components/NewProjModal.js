@@ -3,6 +3,7 @@ import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } f
 import ProjectItem from './ProjectItem';
 import { postAndCreateNewProject } from '../../../../../actions/';
 import { ToggleDisplay } from 'react-toggle-display';
+import MultiSelect from 'app/shared/components/MultiSelect';
 
 import { connect } from 'react-redux';
 
@@ -25,7 +26,7 @@ class NewProjModal extends React.Component{
     this.state = {
       title: '',
       description: '',
-      users: [{id: 1}],
+      users: [],
       status: 'planning',
       current_sprint: null,
       avatar: '',
@@ -40,7 +41,8 @@ class NewProjModal extends React.Component{
   }
 
   createNewProj() {
-    // TODO: VALIDATION CODE
+    // TODO: VALIDATION CODE THAT DISABLES CREATE BUTTON
+
 
     this.emptyList = [{id:1}];
     this.props.createNewProject(this.state.title, this.state.description, this.state.users,
@@ -66,12 +68,19 @@ class NewProjModal extends React.Component{
 
   }
 
-  handleClick(e) {
-    e.preventDefault();
+  // handleClick(e) {
+  //   e.preventDefault();
+  //   this.setState({
+  //     users: this.state.users.concat([{
+  //       id: this.state.users.length + 1
+  //     }])
+  //   });
+  // }
+
+  setMembers(members) {
     this.setState({
-      users: this.state.users.concat([{
-        id: this.state.users.length + 1
-      }])
+      // users: members.map((member) => member._id) //TODO: need to push only user ID (full object in for now to support mock server)
+      users: members
     });
   }
 
@@ -85,7 +94,7 @@ class NewProjModal extends React.Component{
           <Modal.Header closeButton>
             <Modal.Title>Create a new project</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className="select-support">
             <h4><b>Enter Project Details</b></h4>
             <form>
               <Input type="text" name="title" placeholder="Enter project title" value={this.state.title} onChange={(e) => this.handleChange(e)} />
@@ -93,11 +102,8 @@ class NewProjModal extends React.Component{
             </form>
             <h4><b>Enter Members</b></h4>
             <form>
-              {this.state.users.map(users =>
-                  <Input type="text"  placeholder="Name" key={users.id}></Input>
-                )}
+              <MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>
             </form>
-            <Button bsStyle="primary" onClick={(e) => this.handleClick(e)}>Add members</Button>
           </Modal.Body>
           <Modal.Footer>
             <Button bsStyle="success" onClick={(e) => this.createNewProj(e)}>Create</Button>

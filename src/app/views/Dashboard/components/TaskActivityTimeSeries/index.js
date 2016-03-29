@@ -2,7 +2,7 @@ import React from 'react';
 import { Line } from 'react-chartjs';
 import { lineOptions } from '../../constants/chartOptions';
 import Panel from '../shared/Panel';
-import taskTypes from '../../../../constants/taskTypes';
+import taskTypes from 'app/shared/constants/taskTypes';
 
 
 const getLineDataObj = () => {
@@ -70,8 +70,10 @@ export default (props) => {
 	}
 
 	return (
-		<Panel title="Project Activity Time Series">
-			<Line data={lineData} options={lineOptions} />
-		</Panel>
+		<div className="col-md-6 col-lg-6">
+			<Panel title="Project Activity Time Series">
+				<Line data={lineData} options={lineOptions} />
+			</Panel>
+		</div>
 	);
 };

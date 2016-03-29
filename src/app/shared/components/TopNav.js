@@ -6,7 +6,7 @@ const TopNav = (props) => {
 		<nav id="top-nav" className="navbar navbar-fixed-top navbar-default">
 			<div className="container-fluid">
 				<div className="nav-left">
-					<a className="navbar-brand" href="/">{view}</a>
+					<a className="navbar-brand">{view}</a>
 				</div>
 				<div className="nav-right">
 					{props.children}

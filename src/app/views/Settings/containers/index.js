@@ -1,16 +1,23 @@
 import { connect } from 'react-redux';
+import { putAndChangeSettings } from '../actions';
 
 const mapStateToProps = (state) => {
 	return state;
 };
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
-	return stateProps;
+	return Object.assign(dispatchProps,{
+		...stateProps
+	}, );
 };
 
 // maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
-  return {};
+	return {
+		putAndChangeSettings: (data, propertiesToUpdate) => {
+			dispatch(putAndChangeSettings(data, propertiesToUpdate));
+		}
+	};
 };
 
 export default (component) => {

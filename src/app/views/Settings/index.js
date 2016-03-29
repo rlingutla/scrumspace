@@ -1,43 +1,39 @@
 import React from 'react';
 import TopNav from '../../shared/components/TopNav';
-import { User, Projects, Privacy, Panel, ExternalSettings } from './components';
-import { connect } from 'react-redux';
-import Container from './Containers';
+import { UserSettings, Privacy } from './components';
+import Container from './containers';
+import Wrapper from '../../shared/components/Wrapper';
 
 class Settings extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
+		this.state= {};
+		Object.assign(this.state, {
+			oldPassword: '',
+			newPassword: '',
 			...props.user
-		};
+		});
 	}
 
 	updateState(event, property) {
-		debugger;
 		this.state[property] = event.target.value;
 		this.setState(this.state);
 	}
 
 	render() {
+		var state = this.state; 
 		return (
 			<div id="content">
 				<TopNav view='Settings'/>
-				<div className="content container-fluid">
-					<div className="container">
-						<div className="panel-group">
-							<Panel heading="User Settings" glyphicon="user">
-								<User updateState={(e, type) => this.updateState(e, type)} {...this.state} />
-							</Panel>
-							<Panel heading="Privacy" glyphicon="lock" saveMethod={() => null}>
-								<Privacy password={this.state.password} updateState={(e, type) =>this.updateState(e, type)}/>
-							</Panel>
-						</div>
+				<Wrapper>
+					<div className="panel-group">
+						<UserSettings saveMethod={() => this.props.putAndChangeSettings(state, [Object.keys(this.props.user)])} updateState={(e, type) => this.updateState(e, type)} {...state} />
+						<Privacy saveMethod={() => this.props.putAndChangeSettings(Object.assign({ oldPassword: state.oldPassword, newPassword: state.newPassword, _id: state._id}), ['password'])} updateState={(e, type) => this.updateState(e, type)} {...state} />
 					</div>
-				</div>
+				</Wrapper>
 			</div>
 		);
 	}
 }
 
 export default Container(Settings);
-	
