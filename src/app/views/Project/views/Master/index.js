@@ -25,7 +25,7 @@ export default class Project extends React.Component{
 		return (
 			<div id="content">
 				<TopNav view="Projects">
-					<Button onClick={(e) => this.handleClick()}>Create Project <Glyphicon glyph="plus" /></Button>
+					<Button onClick={(e) => this.handleClick(e)}>Create Project <Glyphicon glyph="plus" /></Button>
 				</TopNav>
 				<NewProjModal show={this.state.modalIsOpen} changeModal={(e) => this.changeModal()} />
 				<ProjectList />

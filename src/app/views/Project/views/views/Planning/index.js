@@ -26,7 +26,7 @@ const StoryFactory = () => {
 };
 
 class PlanView extends Component {
-  constructor(props){
+	constructor(props){
 		super(props);
 		this.state ={
 			storyModal: [false, StoryFactory()], //the object at the ladder end of this array is what gets written to the server.

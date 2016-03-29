@@ -18,7 +18,8 @@ export default
 	<Route path='project' name="Projects" component={Project}>
 		<IndexRoute component={ProjectMaster} />
 		<Route path=':id' component={ProjectDetail}>
-			<IndexRoute component={ScrumBoard} />	
+			{/*<IndexRoute component={ScrumBoard} />*/}
+			<IndexRedirect to="scrumboard" />
 			<Route path='planning' component={Planning} />
 			<Route path='settings' component={ProjectSettings} />
 			<Route path='scrumboard' component={ScrumBoard} />
