@@ -1,3 +1,4 @@
 export default {
-	TASK: 'TASK'
+	TASK: 'TASK',
+	STORY: 'STORY'
 };
