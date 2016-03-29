@@ -115,7 +115,7 @@ class TaskDetailModal extends React.Component{
 							<span className="task-story">, from story {this.props.task.story_id}</span>
 						</Modal.Title>
 					</Modal.Header>
-					<Modal.Body style={{ paddingTop: 0 }}>
+					<Modal.Body style={{ paddingTop: 0 }} className="select-support">
 						<TaskStatus status={this.props.task.status} />
 						<br/>
 						<Row className="left-right-align">

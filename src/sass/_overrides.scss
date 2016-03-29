@@ -49,7 +49,7 @@ input.form-control, textarea.form-control {
 		border-radius:0;
 		border: 1px solid $border-color;
 
-		.modal-body {
+		.modal-body.select-support {
 			overflow: visible;
 		}
 	}

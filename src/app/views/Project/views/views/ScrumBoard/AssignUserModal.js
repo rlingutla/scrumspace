@@ -32,7 +32,7 @@ export default class AssignUserModal extends React.Component{
 				<Modal.Header closeButton>
 					<Modal.Title>Assign a User</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>
+				<Modal.Body className="select-support">
 					<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(users) => this.setUsers(users)}/>
 				</Modal.Body>
 				<Modal.Footer>
