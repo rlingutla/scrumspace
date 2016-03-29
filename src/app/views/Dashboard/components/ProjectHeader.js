@@ -19,7 +19,7 @@ export default (props) => {
 						<div style={{position: 'relative', float: 'left'}}>
 							<img style={avatarStyle} src={props.avatar} />
 						</div>
-						<Link style={{float: 'left', marginLeft: '10px'}} activeClassName="selected" to={'/project/detail/' + props.id}>
+						<Link style={{float: 'left', marginLeft: '10px'}} activeClassName="selected" to={'/project/' + props.id}>
 							<h3>{props.title}</h3>
 						</Link>
 					</div>
