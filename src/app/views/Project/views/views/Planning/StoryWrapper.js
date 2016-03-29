@@ -13,7 +13,7 @@ export default class StoryWrapper extends React.Component {
 					{
 						this.props.stories.map( (e, i, array) =>{
 							return(
-								<Story key={i} index={i} data={e} last={i === array.length -1} handleRemove={this.props.handleRemove} isOnly= {array.length === 1}
+								<Story key={i} index={i} data={e} last={i === array.length -1} handleRemove={this.props.handleRemove}
 									updateState={this.props.updateState} handleEdit={this.props.handleEdit}/>
 							);
 						})

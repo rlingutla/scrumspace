@@ -187,17 +187,11 @@ class PlanView extends Component {
 							)}/>
 							{/* todo, can above this.props.stories filter ternary be removed? and below .sprints*/}
 				{
-					(this.props.sprints || []).filter((e) =>{
-						if(e.start_date === null)
-							return true;
-						else
-							return false;
-					}).map( (e, i, array) => {
+					(this.props.sprints || []).map( (e, i, array) => {
 						return (
 							<SprintRow key={i} data={e} updateState={this.updateState.bind(this)}
 								handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
-								isOnly={array.length === 1}
-								stories={this.props.stories.filter((value) => value.sprint_id === e._id)}
+								stories={this.props.stories.filter((value) => value.sprint_id === e._id)} isCurrentSprint={e._id === this.props.current_sprint}
 							/>
 						);
 					})

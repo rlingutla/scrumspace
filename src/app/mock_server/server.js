@@ -248,7 +248,12 @@ export function serverRemoveStory(project, story){
 			break;
 		}
 	}
-	projects[project_i].stories.splice(story_i, 1);
+	if(projects[project_i].stories[story_i].sprint_id !== null){
+		projects[project_i].stories[story_i].sprint_id = null;
+	}
+	else{
+		projects[project_i].stories.splice(story_i, 1);
+	}
 	writeDocument('projects', projects[project_i]);
 	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
