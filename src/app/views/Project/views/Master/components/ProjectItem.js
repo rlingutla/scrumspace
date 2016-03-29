@@ -1,10 +1,10 @@
 import React from 'react';
-import { verboseServerTime, getCurrentTasks } from '../../../../../shared/utils/utils';
+import { verboseServerTime, getCurrentTasks } from 'app/shared/utils/utils';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { ProjectStatus } from '../../../shared/ProjectStatus';
 import { Link }  from 'react-router';
 import { Line } from 'react-chartjs';
-import taskTypes from '../../../../../constants/taskTypes';
+import taskTypes from 'app/shared/constants/taskTypes';
 import moment from 'moment';
 
 const lineOptions = {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ProgressBar } from 'react-bootstrap';
-import TaskTypes from '../../../../../constants/taskTypes';
-import { daysDifference, getCurrentSprint } from '../../../../../shared/utils/utils';
+import TaskTypes from 'app/shared/constants/taskTypes';
+import { daysDifference, getCurrentSprint } from 'app/shared/utils/utils';
 import _ from 'underscore';
 import moment from 'moment';
 

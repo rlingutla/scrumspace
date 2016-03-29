@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNav from '../../../../shared/components/TopNav';
+import TopNav from 'app/shared/components/TopNav';
 import ProjectList from './components/ProjectList';
 import {Button,Glyphicon} from 'react-bootstrap';
 import NewProjModal from './components/NewProjModal';

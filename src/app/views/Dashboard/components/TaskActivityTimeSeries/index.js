@@ -2,7 +2,7 @@ import React from 'react';
 import { Line } from 'react-chartjs';
 import { lineOptions } from '../../constants/chartOptions';
 import Panel from '../shared/Panel';
-import taskTypes from '../../../../constants/taskTypes';
+import taskTypes from 'app/shared/constants/taskTypes';
 
 
 const getLineDataObj = () => {

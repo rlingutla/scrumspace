@@ -1,6 +1,6 @@
 import React from 'react';
 import Task from '../../../shared/Task';
-import TaskTypes from '../../../../../constants/taskTypes';
+import TaskTypes from 'app/shared/constants/taskTypes';
 import Story from './Story';
 import TaskBin from './TaskBin';
 

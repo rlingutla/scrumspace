@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import TaskTypes from '../../../../../constants/taskTypes';
+import TaskTypes from 'app/shared/constants/taskTypes';
 import TaskStatus from '../../../shared/TaskStatus';
-import MultiSelect from '../../../../../shared/components/MultiSelect';
+import MultiSelect from 'app/shared/components/MultiSelect';
 
 
 export default class AssignUserModal extends React.Component{

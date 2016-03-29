@@ -1,6 +1,6 @@
 import React from 'react';
 import { daysDifference, getCurrentSprint } from '../../../shared/utils/utils';
-import ProjectStatuses from '../../../constants/projectStatuses';
+import ProjectStatuses from 'app/shared/constants/projectStatuses';
 
 export function getProjectStatus(project){
 	if (project.current_sprint === null) return ProjectStatuses.PLANNING;

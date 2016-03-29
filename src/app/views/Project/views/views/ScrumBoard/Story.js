@@ -1,5 +1,5 @@
 import React from 'react';
-import Ionicon from '../../../../../shared/components/Ionicon';
+import Ionicon from 'app/shared/components/Ionicon';
 import { connect } from 'react-redux';
 import { putStory } from '../../../../../actions/';
 import Textarea from 'react-textarea-autosize';

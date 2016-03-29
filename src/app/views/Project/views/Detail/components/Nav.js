@@ -1,8 +1,8 @@
 import React from 'react';
 import ProjectAvatar from './Avatar';
 import NavTabBar from './Tabs/NavTabBar';
-import { daysDifference, verboseServerTime, getCurrentSprint } from '../../../../../shared/utils/utils';
-import Ionicon from '../../../../../shared/components/Ionicon';
+import { daysDifference, verboseServerTime, getCurrentSprint } from 'app/shared/utils/utils';
+import Ionicon from 'app/shared/components/Ionicon';
 import { Row, Col, Glyphicon, Button } from 'react-bootstrap';
 import { Link }  from 'react-router';
 

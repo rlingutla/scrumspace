@@ -1,7 +1,7 @@
 import React from 'react';
 import ScrumBoardHeader from './ScrumBoardHeader';
 import StoryRow from './StoryRow';
-import { getCurrentSprint } from '../../../../../shared/utils/utils';
+import { getCurrentSprint } from 'app/shared/utils/utils';
 //DnD Stuff
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';

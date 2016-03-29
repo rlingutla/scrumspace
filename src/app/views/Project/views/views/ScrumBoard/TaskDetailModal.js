@@ -1,10 +1,10 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput, Row, Col, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
-import Ionicon from '../../../../../shared/components/Ionicon';
+import Ionicon from 'app/shared/components/Ionicon';
 import { connect } from 'react-redux';
-import TaskTypes from '../../../../../constants/taskTypes';
+import TaskTypes from 'app/shared/constants/taskTypes';
 import TaskStatus from '../../../shared/TaskStatus';
-import MultiSelect from '../../../../../shared/components/MultiSelect';
+import MultiSelect from 'app/shared/components/MultiSelect';
 
 const AssignedMember = (props) => {
 	return(

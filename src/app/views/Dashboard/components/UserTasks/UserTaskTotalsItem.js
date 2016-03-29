@@ -1,5 +1,5 @@
 import React from 'react';
-import taskTypes from '../../../../constants/taskTypes';
+import taskTypes from 'app/shared/constants/taskTypes';
 
 const tileStyle = (color) =>  {
 	return {

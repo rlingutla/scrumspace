@@ -1,10 +1,10 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button } from 'react-bootstrap';
-import TaskDetailModal from '../views/views//ScrumBoard/TaskDetailModal';
+import TaskDetailModal from '../views/views/ScrumBoard/TaskDetailModal';
 import AssignUserModal from '../views/views/ScrumBoard/AssignUserModal';
 
-import ItemTypes from '../../../constants/itemTypes';
-import TaskTypes from '../../../constants/taskTypes';
+import ItemTypes from 'app/shared/constants/itemTypes';
+import TaskTypes from 'app/shared/constants/taskTypes';
 
 import { connect } from 'react-redux';
 import _ from 'underscore';

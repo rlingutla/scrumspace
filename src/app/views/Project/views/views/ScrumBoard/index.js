@@ -2,7 +2,7 @@ import React from 'react';
 import ScrumBoard from './ScrumBoard';
 import { Button } from 'react-bootstrap'; 
 import { getProjectStatus } from '../../../shared/ProjectStatus';
-import ProjectStatuses from '../../../../../constants/projectStatuses';
+import ProjectStatuses from 'app/shared/constants/projectStatuses';
 import Container from './containers';
 import ProjectProgressBar from './ProjectProgressBar';
 import { Link } from 'react-router';

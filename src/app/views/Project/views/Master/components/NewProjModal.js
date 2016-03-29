@@ -3,7 +3,7 @@ import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput } f
 import ProjectItem from './ProjectItem';
 import { postAndCreateNewProject } from '../../../../../actions/';
 import { ToggleDisplay } from 'react-toggle-display';
-import MultiSelect from '../../../../../shared/components/MultiSelect';
+import MultiSelect from 'app/shared/components/MultiSelect';
 
 import { connect } from 'react-redux';
 
