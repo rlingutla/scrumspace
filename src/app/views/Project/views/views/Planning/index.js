@@ -133,6 +133,7 @@ class PlanView extends Component {
 				break;
 			case 'add':
 				if(this.state.storyModal[1]['tasks'][this.state.storyModal[1]['tasks'].length-1].description === ''){
+					//TODO: need to alert the user why this is failing, can't just fail it
 					return;
 				}
 				this.state.storyModal[1]['tasks'] = this.state.storyModal[1]['tasks'].concat([{description: ''}]);

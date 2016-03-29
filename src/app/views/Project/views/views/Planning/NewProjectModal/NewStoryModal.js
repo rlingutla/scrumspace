@@ -14,7 +14,7 @@ export default class NewStoryModal extends React.Component {
 				<Modal show={this.props.isOpen} onHide={this.props.changeModal}>
 					<Modal.Header closeButton>
 						<Modal.Title>
-							<span className="task_id">Sprint</span>
+							<span className="task_id">Story</span>
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
