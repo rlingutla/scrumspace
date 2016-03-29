@@ -239,7 +239,7 @@ export function serverRemoveStory(project, story){
 	for(let i = 0; i < projects.length; i++){
 		if (projects[i]._id === project) {
 			project_i = i;
-			for(let j = 0; j < projects[i].sprints.length; j++){
+			for(let j = 0; j < projects[i].stories.length; j++){
 				if(projects[i].stories[j]._id === story){
 					story_i = j;
 					break;
