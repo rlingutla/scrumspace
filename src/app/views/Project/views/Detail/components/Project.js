@@ -7,17 +7,7 @@ import Container from './containers';
 class Project extends React.Component {
 	constructor(props) {
 		super(props);
-		//initialize tabs to Board view
-		this.state = {
-			activeTab: 0
-		};
-		this.onTabChange = this.onTabChange.bind(this);
 	}
-
-	onTabChange(tabID) {
-		this.setState({ activeTab: tabID });
-	}
-
 	render() {
 		// if project data not loaded yet
 		if (Object.keys(this.props).length < 1){
@@ -26,7 +16,7 @@ class Project extends React.Component {
 		return (
 			<div>
 				{/* Renders project detail view, passes project details down as props */}
-				<Nav active-tab={this.state.activeTab} tab-change={this.onTabChange} {...this.props}/>
+				<Nav active-tab={this.props.view} {...this.props}/>
 				<div id="tab-container">
 					{this.props.children}
 				</div>

@@ -34,7 +34,7 @@ const ProjectNav = (props) => {
 					</div>
 				</div>
 			</Row>
-			<NavTabBar _id={props.id} active-tab={props['active-tab']} tab-change={props['tab-change']} />
+			<NavTabBar _id={props.id} active-tab={props['active-tab']} />
 		</div>
 	);
 };
