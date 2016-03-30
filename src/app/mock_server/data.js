@@ -122,7 +122,7 @@ var initialData = {
 								'email': 'someemail',
 								'display_name': 'Abhay Vatsa',
 								'password': 'd4866854120e8bb207d6f8e11fce8b99',
-								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+								'avatar_url': 'http://www.abhayvatsa.com/img/abhay.png'
 							}
 						],
 						'description': 'Find a Designer',
