@@ -8,12 +8,12 @@ var initialData = {
 	users: {
 		0: {
 			'_id': 0,
-			'first_name': 'Donald',
-			'last_name': 'Trump',
-			'email': 'america@donaldjtrump.com',
-			'display_name': 'DJ Trump',
+			'first_name': 'John',
+			'last_name': 'Vilk',
+			'email': 'jvilk@umass.edu',
+			'display_name': 'VilkBot',
 			'password': 'catinthehat',
-			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+			'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
 		},
 		1: {
 			'_id': 1,
@@ -108,12 +108,12 @@ var initialData = {
 						'assignedTo': [
 							{
 								'_id': 0,
-								'first_name': 'Donald',
-								'last_name': 'Trump',
-								'email': 'america@donaldjtrump.com',
-								'display_name': 'DJ Trump',
-								'password': 'd4866854120e8bb207d6f8e11fce8b99',
-								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+								'first_name': 'John',
+								'last_name': 'Vilk',
+								'email': 'jvilk@umass.edu',
+								'display_name': 'VilkBot',
+								'password': 'catinthehat',
+								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
 							},
 							{
 								'_id': 1,
@@ -153,12 +153,12 @@ var initialData = {
 						'assignedTo': [
 							{
 								'_id': 0,
-								'first_name': 'Donald',
-								'last_name': 'Trump',
-								'email': 'america@donaldjtrump.com',
-								'display_name': 'DJ Trump',
-								'password': 'd4866854120e8bb207d6f8e11fce8b99',
-								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+								'first_name': 'John',
+								'last_name': 'Vilk',
+								'email': 'jvilk@umass.edu',
+								'display_name': 'VilkBot',
+								'password': 'catinthehat',
+								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
 							}
 						],
 						'description': 'Make Donald Drumpf again',
@@ -212,12 +212,12 @@ var initialData = {
 						'assignedTo': [
 							{
 								'_id': 0,
-								'first_name': 'Donald',
-								'last_name': 'Trump',
-								'email': 'america@donaldjtrump.com',
-								'display_name': 'DJ Trump',
-								'password': 'd4866854120e8bb207d6f8e11fce8b99',
-								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+								'first_name': 'John',
+								'last_name': 'Vilk',
+								'email': 'jvilk@umass.edu',
+								'display_name': 'VilkBot',
+								'password': 'catinthehat',
+								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
 							}
 						],
 						'description': 'Beat hilldawg',
