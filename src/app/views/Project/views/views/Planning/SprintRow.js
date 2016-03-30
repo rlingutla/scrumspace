@@ -7,17 +7,14 @@ import { DropTarget } from 'react-dnd';
 
 const storyTarget = {
 	canDrop(props, monitor) {
-		const item = monitor.getItem();
+		let item = monitor.getItem();
 		return true;
 	},
 
 	hover(props, monitor, component) {},
 	drop(props, monitor, component) {
-    //debugger;
-    let item = monitor.getItem();
-    props.save('move-story', item, props._id);
-		//do redux stuff
-		let item = monitor.getItem();
+	    let item = monitor.getItem();
+	    props.save('move-story', item.data, props._id);
 	}
 };
 
