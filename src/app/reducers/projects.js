@@ -83,25 +83,10 @@ const projects = (state = [], action) => {
 				return (project._id === action.project._id) ? action.project : project;
 			});
 		case 'NEW_SPRINT':
-			var hello = state.map((project) => {
-				if (project._id === action.project._id) {
-					var newSprint = Object.assign({
-						duration: action.data.duration,
-						scrum_time: action.data.time,
-						name: action.data.name,
-						start_date: null,
-						_id: project.sprints.length
-					});
-					return Object.assign({
-						...project
-					}, {
-						sprints: project.sprints.concat(newSprint)
-					});
-				}
-				return project;
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
 			});
-			return hello;
-  		default: //just returning state for now
+  	default: //just returning state for now
 			return state;
 	}
 };
