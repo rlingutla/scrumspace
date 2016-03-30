@@ -14,6 +14,7 @@ const storyTarget = {
 	hover(props, monitor, component) {},
 	drop(props, monitor, component) {
 		//do redux stuff
+		let item = monitor.getItem();
 	}
 };
 
