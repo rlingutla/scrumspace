@@ -123,7 +123,6 @@ class PlanView extends Component {
 				this.changeSprintModal();
 				break;
 			case 'move-story':
-				debugger;
 				model ={
 					project: this.props._id,
 					story: data._id,

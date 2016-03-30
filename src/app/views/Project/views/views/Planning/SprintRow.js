@@ -13,8 +13,8 @@ const storyTarget = {
 
 	hover(props, monitor, component) {},
 	drop(props, monitor, component) {
-	    let item = monitor.getItem();
-	    props.save('move-story', item.data, props._id);
+	  let item = monitor.getItem();
+	  props.save('move-story', item.data, props.data._id);
 	}
 };
 
