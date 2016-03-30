@@ -1,11 +1,13 @@
 import React from 'react';
-import { verboseServerTime, getCurrentTasks } from 'app/shared/utils/utils';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { ProjectStatus } from '../../../shared/ProjectStatus';
 import { Link }  from 'react-router';
 import { Line } from 'react-chartjs';
-import taskTypes from 'app/shared/constants/taskTypes';
 import moment from 'moment';
+
+import { verboseServerTime, getCurrentTasks } from 'app/shared/utils/utils';
+import taskTypes from 'app/shared/constants/taskTypes';
+
+import { ProjectStatus } from 'Project/shared/ProjectStatus';
 
 const lineOptions = {
     scaleShowGridLines : false,

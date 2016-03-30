@@ -1,15 +1,20 @@
 import React from 'react';
 import { Route, IndexRedirect, IndexRoute } from 'react-router';
 
-/* Main Components also known as Views, Widgets */
 import App from '../index';
+
+/* Root-level views of application e.g. /Dashboard , /Project */
 import { Dashboard, Project, Settings, Statistics } from '../views';
 
-/* Project Views */
-import { ProjectDetail, ProjectMaster } from '../views/Project/views'; 
+/*
+	Views at /Project/
+*/
+import  { ProjectMaster, ProjectID } from '../views/Project/views/'; 
 
-/* TODO, can this be somewhere else */
-import { ScrumBoard, ProjectSettings, Planning } from '../views/Project/views';
+/* 
+	Views at /Project/ProjectID/
+ */
+import { ProjectScrumBoard, ProjectSettings, ProjectPlanning } from '../views/Project/views/ProjectID/views/';
 
 export default
 <Route path='/' component={App} store={this}>
@@ -17,12 +22,11 @@ export default
 	<Route path='dashboard' name="Dashboard" component={Dashboard} />
 	<Route path='project' name="Projects" component={Project}>
 		<IndexRoute component={ProjectMaster} />
-		<Route path=':id' component={ProjectDetail}>
-			{/*<IndexRoute component={ScrumBoard} />*/}
+		<Route path=':id' component={ProjectID}>
 			<IndexRedirect to="scrumboard" />
-			<Route path='planning' component={Planning} />
+			<Route path='scrumboard' component={ProjectScrumBoard} />
+			<Route path='planning' component={ProjectPlanning} />
 			<Route path='settings' component={ProjectSettings} />
-			<Route path='scrumboard' component={ScrumBoard} />
 		</Route>
 	</Route>
 	<Route path="settings" component={Settings} />

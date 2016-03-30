@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button } from 'react-bootstrap';
-import TaskDetailModal from '../views/views/ScrumBoard/TaskDetailModal';
-import AssignUserModal from '../views/views/ScrumBoard/AssignUserModal';
+import TaskDetailModal from '../views/ProjectID/views/ScrumBoard/TaskDetailModal';
+import AssignUserModal from '../views/ProjectID/views/ScrumBoard/AssignUserModal';
 
 import ItemTypes from 'app/shared/constants/itemTypes';
 import TaskTypes from 'app/shared/constants/taskTypes';

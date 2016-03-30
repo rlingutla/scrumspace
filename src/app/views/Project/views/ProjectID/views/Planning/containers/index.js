@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { postProjectPlan } from '../../../../../../actions/';
+import { postProjectPlan } from '../../../../../../../actions/';
 
 //redux
 const mapStateToProps = (state) => {
