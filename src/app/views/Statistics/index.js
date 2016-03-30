@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNav from '../../shared/components/TopNav';
+import TopNav from 'app/shared/components/TopNav';
 import GitList from './components/GitList';
 
 /* Master for all user projects */

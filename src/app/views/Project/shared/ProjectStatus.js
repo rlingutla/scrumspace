@@ -1,5 +1,5 @@
 import React from 'react';
-import { daysDifference, getCurrentSprint } from '../../../shared/utils/utils';
+import { daysDifference, getCurrentSprint } from 'app/shared/utils/utils';
 import ProjectStatuses from 'app/shared/constants/projectStatuses';
 
 export function getProjectStatus(project){
