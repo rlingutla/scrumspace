@@ -228,7 +228,7 @@ export function serverMoveStory(project, story, sprint){
 			}
 		}
 	}
-	projects[project_i].story[story_i].sprint_id = sprint;
+	projects[project_i].stories[story_i].sprint_id = sprint;
 	writeDocument('projects', projects[project_i]);
 	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);

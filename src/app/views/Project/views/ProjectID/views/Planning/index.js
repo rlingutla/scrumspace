@@ -92,7 +92,7 @@ class PlanView extends Component {
 		}
 	}
 
-	save(signal, data) {
+	save(signal, data, other) {
 		var model;
 		switch (signal) {
 			case 'story':
@@ -121,6 +121,14 @@ class PlanView extends Component {
 				}
 				this.props.saveThis('NEW_SPRINT', model);
 				this.changeSprintModal();
+				break;
+			case 'move-story':
+				model ={
+					project: this.props._id,
+					story: data._id,
+					sprint: other
+				};
+				this.props.saveThis('MOVE_STORY', model);
 				break;
 			default:
 				console.log('I am Crying');
@@ -180,7 +188,7 @@ class PlanView extends Component {
 			<div className="panel-group">
 				<Backlog updateState={this.updateState.bind(this)} handleNew={this.handleNew.bind(this)}
 							handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
-							stories={(this.props.stories || []).filter(
+							 save={this.save.bind(this)} stories={(this.props.stories || []).filter(
 								function(value){
 									if(value.sprint_id === null)
 										return true;
@@ -192,7 +200,7 @@ class PlanView extends Component {
 				{
 					(this.props.sprints || []).map( (e, i, array) => {
 						return (
-							<SprintRow key={i} data={e} updateState={this.updateState.bind(this)}
+							<SprintRow key={i} data={e} updateState={this.updateState.bind(this)} save={this.save.bind(this)}
 								handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
 								stories={this.props.stories.filter((value) => value.sprint_id === e._id)} isCurrentSprint={e._id === this.props.current_sprint}
 							/>

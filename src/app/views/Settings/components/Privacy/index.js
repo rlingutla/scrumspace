@@ -8,7 +8,7 @@ export default (props) => {
 				<div className="col-md-6">
 					<div className="form-group">
 						<label>Old Password:</label>
-							<input className="form-control" type="password" value={props.oldPassword} onChange={(e) => props.updateState(e, 'oldPassword')} placeholder="Old Password" />
+						<input className="form-control" type="password" value={props.oldPassword} onChange={(e) => props.updateState(e, 'oldPassword')} placeholder="Old Password" />
 					</div>
 				</div>
 				<div className="col-md-6">

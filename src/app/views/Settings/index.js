@@ -1,8 +1,9 @@
 import React from 'react';
-import TopNav from '../../shared/components/TopNav';
+import TopNav from 'app/shared/components/TopNav';
+import Wrapper from 'app/shared/components/Wrapper';
+
 import { UserSettings, Privacy } from './components';
 import Container from './containers';
-import Wrapper from '../../shared/components/Wrapper';
 
 class Settings extends React.Component {
 	constructor(props) {

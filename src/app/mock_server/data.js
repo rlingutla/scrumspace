@@ -8,12 +8,12 @@ var initialData = {
 	users: {
 		0: {
 			'_id': 0,
-			'first_name': 'Donald',
-			'last_name': 'Trump',
-			'email': 'america@donaldjtrump.com',
-			'display_name': 'DJ Trump',
+			'first_name': 'John',
+			'last_name': 'Vilk',
+			'email': 'jvilk@umass.edu',
+			'display_name': 'VilkBot',
 			'password': 'catinthehat',
-			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+			'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
 		},
 		1: {
 			'_id': 1,
@@ -22,7 +22,7 @@ var initialData = {
 			'email': 'someemail',
 			'display_name': 'Abhay Vatsa',
 			'password': 'd4866854120e8bb207d6f8e11fce8b99',
-			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+			'avatar_url': 'http://www.abhayvatsa.com/img/abhay.png'
 		},
 		2: {
 			'_id': 2,
@@ -31,7 +31,7 @@ var initialData = {
 			'email': 'someemail',
 			'display_name': 'Dylan Fischler',
 			'password': 'd4866854120e8bb207d6f8e11fce8b99',
-			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+			'avatar_url': 'http://www.dylanfischler.com/includes/me_bw.jpg'
 		},
 		3: {
 			'_id': 3,
@@ -40,7 +40,7 @@ var initialData = {
 			'email': 'someemail',
 			'display_name': 'Niha Venkatathri',
 			'password': 'd4866854120e8bb207d6f8e11fce8b99',
-			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+			'avatar_url': 'http://umasscswomen.weebly.com/uploads/3/8/0/8/38087803/3410479.jpg?153'
 		},
 		4: {
 			'_id': 4,
@@ -49,7 +49,7 @@ var initialData = {
 			'email': 'someemail',
 			'display_name': 'Ryan Jerue',
 			'password': 'd4866854120e8bb207d6f8e11fce8b99',
-			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa7AAAAJGQ2NjlmY2MzLTgzYjctNGRhYy05ZmY2LTkxOGE3Mzg2NWU2MA.jpg'
 		},
 		5: {
 			'_id': 5,
@@ -58,7 +58,7 @@ var initialData = {
 			'email': 'someemail',
 			'display_name': 'Supriya Kankure',
 			'password': 'd4866854120e8bb207d6f8e11fce8b99',
-			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa1AAAAJDRjMTU3ZTA2LTFkMTEtNDM1MS04YjQ0LWI0YzRlOTExODQ3NA.jpg'
 		},
 		6: {
 			'_id': 6,
@@ -67,7 +67,7 @@ var initialData = {
 			'email': 'someemail',
 			'display_name': 'Rachana Lingutla',
 			'password': 'd4866854120e8bb207d6f8e11fce8b99',
-			'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+			'avatar_url': 'https://avatars.slack-edge.com/2016-02-07/20575719908_a1012b8fe4efe81099c3_72.png'
 		}
 	},
 	projects: [
@@ -108,12 +108,12 @@ var initialData = {
 						'assignedTo': [
 							{
 								'_id': 0,
-								'first_name': 'Donald',
-								'last_name': 'Trump',
-								'email': 'america@donaldjtrump.com',
-								'display_name': 'DJ Trump',
-								'password': 'd4866854120e8bb207d6f8e11fce8b99',
-								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+								'first_name': 'John',
+								'last_name': 'Vilk',
+								'email': 'jvilk@umass.edu',
+								'display_name': 'VilkBot',
+								'password': 'catinthehat',
+								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
 							},
 							{
 								'_id': 1,
@@ -122,7 +122,7 @@ var initialData = {
 								'email': 'someemail',
 								'display_name': 'Abhay Vatsa',
 								'password': 'd4866854120e8bb207d6f8e11fce8b99',
-								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+								'avatar_url': 'http://www.abhayvatsa.com/img/abhay.png'
 							}
 						],
 						'description': 'Find a Designer',
@@ -153,12 +153,12 @@ var initialData = {
 						'assignedTo': [
 							{
 								'_id': 0,
-								'first_name': 'Donald',
-								'last_name': 'Trump',
-								'email': 'america@donaldjtrump.com',
-								'display_name': 'DJ Trump',
-								'password': 'd4866854120e8bb207d6f8e11fce8b99',
-								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+								'first_name': 'John',
+								'last_name': 'Vilk',
+								'email': 'jvilk@umass.edu',
+								'display_name': 'VilkBot',
+								'password': 'catinthehat',
+								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
 							}
 						],
 						'description': 'Make Donald Drumpf again',
@@ -212,12 +212,12 @@ var initialData = {
 						'assignedTo': [
 							{
 								'_id': 0,
-								'first_name': 'Donald',
-								'last_name': 'Trump',
-								'email': 'america@donaldjtrump.com',
-								'display_name': 'DJ Trump',
-								'password': 'd4866854120e8bb207d6f8e11fce8b99',
-								'avatar_url': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg'
+								'first_name': 'John',
+								'last_name': 'Vilk',
+								'email': 'jvilk@umass.edu',
+								'display_name': 'VilkBot',
+								'password': 'catinthehat',
+								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
 							}
 						],
 						'description': 'Beat hilldawg',

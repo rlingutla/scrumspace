@@ -3,7 +3,7 @@ import { Modal, OverlayTrigger, Tooltip, Popover, Button, Input, ButtonInput, Ro
 import Ionicon from 'app/shared/components/Ionicon';
 import { connect } from 'react-redux';
 import TaskTypes from 'app/shared/constants/taskTypes';
-import TaskStatus from '../../../shared/TaskStatus';
+import TaskStatus from 'Project/shared/TaskStatus';
 import MultiSelect from 'app/shared/components/MultiSelect';
 
 const AssignedMember = (props) => {
