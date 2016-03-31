@@ -40,7 +40,7 @@ class StoryRow extends React.Component {
 						return <Task task_id={task._id} {...this.props} key={i} {...task} />;
 					})}
 				</TaskBin>
-				<TaskBin container="done-container" type={TaskTypes.DONE} story_id={this.props.story_id}>
+				<TaskBin container="done-container" type={TaskTypes.DONE} story_id={this.props.story_id} project_id={this.props.project_id}>
 					{this.getTaskArray(TaskTypes.DONE).map((task, i) => {
 						return <Task task_id={task._id} {...this.props} key={i} {...task} />;
 					})}

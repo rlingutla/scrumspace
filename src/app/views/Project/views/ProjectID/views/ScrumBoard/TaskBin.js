@@ -4,20 +4,30 @@ import TaskTypes from 'app/shared/constants/taskTypes';
 
 import { DropTarget } from 'react-dnd';
 import AssignUserModal from './AssignUserModal';
+import BlockedTaskModal from './BlockedTaskModal';
 
 const moveHandler = (item, target) => {
 	return new Promise((resolve, reject) => {
 		//moving from UNASSIGNED requires assigned users (moving to DONE is allowed)
-		if(item.status === TaskTypes.UNASSIGNED.title && (target.props.type !== TaskTypes.UNASSIGNED || target.props.type !== TaskTypes.DONE)){
+		if(item.status === TaskTypes.UNASSIGNED.title && target.props.type === TaskTypes.DOING){
 			if(item.assignedTo.length < 1){
 				target.setState({ 
 					assignUserModal: Object.assign({}, 
 						target.state.assignUserModal, 
 						{visible: true, task: item, target: target.props.type.title})
-				})
+				});
 				return resolve(false);
 			}
 		}
+		else if(target.props.type === TaskTypes.BLOCKED){
+			target.setState({ 
+				blockedTaskModal: Object.assign({}, 
+					target.state.blockedTaskModal, 
+					{visible: true, task: item, target: target.props.type.title})
+			});
+			return resolve(false);
+		}
+		else {}
 
 		return resolve(true);
     });	
@@ -70,28 +80,41 @@ function collect(connect, monitor) {
 class TaskBin extends React.Component {
 	constructor(props){
 		super(props);
+
 		this.state = {
 			assignUserModal: {
+				visible: false,
+				target: null
+			},
+			blockedTaskModal: {
 				visible: false,
 				target: null
 			}
 		};
 	}
 
-	toggleUserAssignModal(visible){
+	toggleModal(modalName, visible){
 		this.setState({
-			assignUserModal: Object.assign({}, this.state.assignUserModal, {visible: visible})
+			[modalName]: Object.assign({}, this.state.assignUserModal, {visible: visible})
 		});
 	}
 
 	assignUsersAndMove(users, target, task){
 		let updatedTask = Object.assign({}, task, {
-			assignedTo: users,
-			status: target
+			assignedTo: users, status: target
 		});
 
 		task.updateTask(task.project_id, task.story_id, updatedTask);
-		this.toggleUserAssignModal(false);
+		this.toggleModal('assignUserModal', false);
+	}
+
+	assignBlockedAndMove(blockingTasks, target, task){
+		let updatedTask = Object.assign({}, task, {
+			blockedBy: blockingTasks, status: target
+		});
+
+		task.updateTask(task.project_id, task.story_id, updatedTask);
+		this.toggleModal('blockedTaskModal', false);
 	}
 
 	render(){
@@ -107,10 +130,18 @@ class TaskBin extends React.Component {
 			<td id={this.props.id}>
 				<AssignUserModal 
 					isModalOpen={this.state.assignUserModal.visible} 
-					hideModal={() => this.toggleUserAssignModal(false)}
+					hideModal={() => this.toggleModal('assignUserModal',false)}
 					callback={(users,target,task) => this.assignUsersAndMove(users,target,task)}
 					target={this.state.assignUserModal.target}
 					task={this.state.assignUserModal.task}/>
+				<BlockedTaskModal 
+					isModalOpen={this.state.blockedTaskModal.visible} 
+					hideModal={() => this.toggleModal('blockedTaskModal',false)}
+					callback={(blockingTasks, target, task) => this.assignBlockedAndMove(blockingTasks, target, task)}
+					target={this.state.blockedTaskModal.target}
+					task={this.state.blockedTaskModal.task}
+					project_id={this.props.project_id}
+					story_id={this.props.story_id}/>
 				<div style={containerStyle}>
 					<div id="task-container" style={isOver ? {borderStyle: 'dashed', borderColor: '#A9A9A9'}:null}>
 						{this.props.children}
