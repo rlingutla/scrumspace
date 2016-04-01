@@ -32,8 +32,7 @@ const moveHandler = (item, target) => {
 		else if(item.status === TaskTypes.BLOCKED.title && target.props.type !== TaskTypes.BLOCKED){
 			let modifiedItem = Object.assign({}, item);
 			//moving out of blocked, remove blocking tasks
-			delete modifiedItem.blockedBy;
-			debugger;
+			modifiedItem.blockedBy = [];
 
 			return resolve({canMove: true, item: Object.assign({}, modifiedItem, { status: target.props.type.title })});
 		}
@@ -61,7 +60,6 @@ const taskTarget = {
 			if(handleRes.canMove){
 				// create new task object with updated status
 				let updatedTask = Object.assign({}, handleRes.item, {status: props.type.title});
-				debugger
 				//component.props.container has dropped target
 				updatedTask.updateTask(updatedTask.project_id, updatedTask.story_id, updatedTask);
 				return { moved: true };

@@ -73,7 +73,6 @@ class Task extends React.Component {
 				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
 				    <div className="body">
 				    	<p>{this.props.description}</p>
-				    	<p>{this.props.blockedBy ? JSON.stringify(this.props.blockedBy):null}</p>
 				    </div>
 
 				    <div className="footer" style={{padding: '5px 0'}}>
@@ -121,7 +120,6 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 const mapDispatchToProps = (dispatch) => {
   return {
   	updateTask: (project_id, story_id, task) => {
-  		debugger;
   		// dispatch(changeTaskState(project_id, story_id, task_id, toType));
   		dispatch(updateTask(project_id, story_id, task));
   	}
