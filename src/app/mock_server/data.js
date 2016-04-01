@@ -149,7 +149,7 @@ var initialData = {
 					},
 					{
 						'_id': 2,
-						'status': 'BLOCKED',
+						'status': 'DONE',
 						'assignedTo': [
 							{
 								'_id': 0,
