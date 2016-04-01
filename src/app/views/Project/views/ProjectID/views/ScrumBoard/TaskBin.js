@@ -8,28 +8,36 @@ import BlockedTaskModal from './BlockedTaskModal';
 
 const moveHandler = (item, target) => {
 	return new Promise((resolve, reject) => {
-		//moving from UNASSIGNED requires assigned users (moving to DONE is allowed)
-		if(item.status === TaskTypes.UNASSIGNED.title && target.props.type === TaskTypes.DOING){
+		//moving to DOING
+		if(target.props.type === TaskTypes.DOING){
 			if(item.assignedTo.length < 1){
 				target.setState({ 
 					assignUserModal: Object.assign({}, 
 						target.state.assignUserModal, 
 						{visible: true, task: item, target: target.props.type.title})
 				});
-				return resolve(false);
+				return resolve({canMove: false});
 			}
+			else return resolve({canMove: true, item: Object.assign({}, item, { status: target.props.type.title })});
 		}
-		else if(target.props.type === TaskTypes.BLOCKED){
+		else if(target.props.type === TaskTypes.BLOCKED && item.status !== TaskTypes.BLOCKED.title){
 			target.setState({ 
-				blockedTaskModal: Object.assign({}, 
+				blockedTaskModal: Object.assign({},
 					target.state.blockedTaskModal, 
 					{visible: true, task: item, target: target.props.type.title})
 			});
-			return resolve(false);
+			return resolve({canMove: false});
 		}
-		else {}
+		//moving from blocked (and not back to dropped)
+		else if(item.status === TaskTypes.BLOCKED.title && target.props.type !== TaskTypes.BLOCKED){
+			let modifiedItem = Object.assign({}, item);
+			//moving out of blocked, remove blocking tasks
+			delete modifiedItem.blockedBy;
+			debugger;
 
-		return resolve(true);
+			return resolve({canMove: true, item: Object.assign({}, modifiedItem, { status: target.props.type.title })});
+		}
+		else return resolve({canMove: true, item: Object.assign({}, item, { status: target.props.type.title })});
     });	
 }
 
@@ -47,15 +55,15 @@ const taskTarget = {
 		// if(component.props.story_id !== props.story_id) return false;
 
 		// Obtain the dragged item
-		const item = monitor.getItem();
+		const dragItem = monitor.getItem();
 
-		moveHandler(item, component).then((canDrop) => {
-			if(canDrop){
+		moveHandler(dragItem, component).then((handleRes) => {
+			if(handleRes.canMove){
 				// create new task object with updated status
-				let updatedTask = Object.assign({}, item, {status: props.type.title})
-
+				let updatedTask = Object.assign({}, handleRes.item, {status: props.type.title});
+				debugger
 				//component.props.container has dropped target
-				item.updateTask(item.project_id, item.story_id, updatedTask);
+				updatedTask.updateTask(updatedTask.project_id, updatedTask.story_id, updatedTask);
 				return { moved: true };
 			}
 			else return { moved: false };
