@@ -8,6 +8,7 @@ import { Link }  from 'react-router';
 
 
 const ProjectNav = (props) => {
+
 	let currentSprint = getCurrentSprint(props);
 	return (
 		<div id="project-detail" className="navbar navbar-fixed-top">
@@ -34,7 +35,7 @@ const ProjectNav = (props) => {
 					</div>
 				</div>
 			</Row>
-			<NavTabBar _id={props.id} active-tab={props['active-tab']} />
+			<NavTabBar _id={props._id} active-tab={props['active-tab']} />
 		</div>
 	);
 };

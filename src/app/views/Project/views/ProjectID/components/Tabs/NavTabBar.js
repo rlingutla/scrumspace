@@ -8,7 +8,6 @@ const tabs = [
 ];
 
 const NavTabBar = (props) => {
-
 	//construct tab components with data
 	var tabComponents = tabs.map(function(tab){
 		return (

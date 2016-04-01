@@ -2,7 +2,7 @@ import React from 'react';
 import MultiSelect from 'app/shared/components/MultiSelect';
 import { Modal, Button, Row, Col } from 'react-bootstrap';
 import Wrapper from 'app/shared/components/Wrapper';
-import Container from '../../components/containers';
+import Container from '../../containers';
 
 class Settings extends React.Component {
 	constructor(props){
@@ -24,8 +24,6 @@ class Settings extends React.Component {
 	}
 
 	render() {
-
-
 		return (
 			<div>
 				{/* Delete Project Modal */}
@@ -55,7 +53,7 @@ class Settings extends React.Component {
 											<Col md={6}>
 												<div className="form-group">
 													<label for="usr">Project Title</label>
-													<input type="text" className="form-control" id="usr" placeholder="Your Project Title"/>
+													<input type="text" className="form-control" id="usr" value={this.props.title} placeholder="Your Project Title"/>
 												</div>
 											</Col>
 											<Col md={6}>
