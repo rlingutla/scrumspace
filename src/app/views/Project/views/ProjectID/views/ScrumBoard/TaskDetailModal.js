@@ -16,7 +16,7 @@ class TaskDetailModal extends React.Component{
 
 	constructor(props) {
 		super(props);
-
+		
 		this.state = {
 			description: {
 				value: props.task.description,
@@ -117,6 +117,7 @@ class TaskDetailModal extends React.Component{
 					</Modal.Header>
 					<Modal.Body style={{ paddingTop: 0 }} className="select-support">
 						<TaskStatus status={this.props.task.status} />
+						{(true) ? <span>by ...</span>:null}
 						<br/>
 						<Row className="left-right-align">
 							<Col xs={8}>
