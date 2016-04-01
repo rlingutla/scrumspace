@@ -1,7 +1,6 @@
 import React from 'react';
 import Nav from './Nav';
 import Tab from './Tabs/Tab';
-import Container from './containers';
 
 /* Project details on a particular project*/
 class Project extends React.Component {
@@ -13,6 +12,7 @@ class Project extends React.Component {
 		if (Object.keys(this.props).length < 1){
 			return null;
 		}
+
 		return (
 			<div>
 				{/* Renders project detail view, passes project details down as props */}
@@ -25,4 +25,4 @@ class Project extends React.Component {
   	}
 }
 
-export default Container(Project);
+export default Project;
