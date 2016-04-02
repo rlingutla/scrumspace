@@ -18,21 +18,10 @@ var updated = false;
 var fs = require('fs'),
   path = require('path');
 
-/**
-* need to initialize data manually because of server side rendering
-*/
-export function initLocalStorage(){
-  try {
-    // ./database.json may be missing. The comment below prevents ESLint from
-    // complaining about it.
-    // Read more about configuration comments at the following URL:
-    // http://eslint.org/docs/user-guide/configuring#configuring-rules
-    /* eslint "node/no-missing-require": "off" */
-    data = require('./database.json');
-  } catch (e) {
-    // ./database.json is missing. Use the seed data defined above
-    data = JSONClone(initialData);
-  }
+try {
+  data = require('./database.json');
+} catch(e) {
+  data = JSONClone(initialData);
 }
 
 /**
@@ -55,11 +44,15 @@ function readDocument(collection, id) {
   if (!collectionObj) {
     throw new Error(`Object collection ${collection} does not exist in the database!`);
   }
-  var obj = collectionObj[id];
-  if (obj === undefined) {
-    throw new Error(`Object ${id} does not exist in object collection ${collection} in the database!`);
+  if(id){
+    var obj = collectionObj[id];
+    if (obj === undefined) {
+      throw new Error(`Object ${id} does not exist in object collection ${collection} in the database!`);
+    }
+    return JSONClone(data[collection][id]);
   }
-  return JSONClone(data[collection][id]);
+  else return JSONClone(collectionObj);
+  
 }
 module.exports.readDocument = readDocument;
 

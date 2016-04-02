@@ -10,6 +10,7 @@ import story from './schemas/story';
 console.log(story);
 
 var app = express();
+var bodyParser = require('body-parser');
 
 module.exports = function (app) {
 	// set node port
@@ -17,6 +18,9 @@ module.exports = function (app) {
 
 	//logger
 	app.use(morgan('dev'));
+
+	app.use(bodyParser.text());
+	app.use(bodyParser.json());
 
 	// serve static assets off of /static virtual path prefix
 	app.use('/static', express.static(__dirname + '/../../dist'));

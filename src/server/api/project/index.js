@@ -1,5 +1,6 @@
 'use-strict';
 
+var validate = require('express-jsonschema').validate;
 var express = require('express'),
 	router = express.Router();
 
