@@ -4,10 +4,14 @@ var express = require('express'),
 	router = express.Router();
 
 router.get('/', function (req, res) {
-    res.send('Welcome to the ScrumSpace API V1');
+    res.send('user API handler');
 });
 
-router.use('/project/', require('./project'));
-router.use('/user/', require('./user'));
+router.get('/:id', function(req,res){
+	res.send({
+		"_id": req.params.id,
+		"name": "dylan"
+	});
+});
 
 module.exports = router;
