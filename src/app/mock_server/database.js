@@ -87,7 +87,7 @@ export class ResetDatabase extends React.Component {
       <button style={{width: 50+'px', height: 50+'px', overflow: 'hidden', fontSize: 12+'px', padding: 0}} className="btn btn-default" type="button" onClick={() => {
         resetDatabase(); //THIS NEEDS TO BE REMOVED!
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/resetdb');
+        xhr.open('POST', '/api/resetdb');
         xhr.addEventListener('load', function() {
           window.alert("Database reset! Refreshing the page now...");
           document.location.reload(false);
