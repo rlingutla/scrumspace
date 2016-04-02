@@ -61,5 +61,4 @@ router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req
 	 // Send the update!
 	res.send(sprint);
 });
-
 module.exports = router;
