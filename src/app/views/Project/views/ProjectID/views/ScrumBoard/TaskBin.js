@@ -8,6 +8,14 @@ import BlockedTaskModal from './BlockedTaskModal';
 
 const moveHandler = (item, target) => {
 	return new Promise((resolve, reject) => {
+		if(item.status === TaskTypes.BLOCKED.title && target.props.type !== TaskTypes.BLOCKED){
+			let modifiedItem = Object.assign({}, item);
+			//moving out of blocked, remove blocking tasks
+			modifiedItem.blockedBy = [];
+			item = modifiedItem;
+
+			return resolve({canMove: true, item: Object.assign({}, modifiedItem, { status: target.props.type.title })});
+		}
 		//moving to DOING
 		if(target.props.type === TaskTypes.DOING){
 			if(item.assignedTo.length < 1){
