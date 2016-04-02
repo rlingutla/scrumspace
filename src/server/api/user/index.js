@@ -3,8 +3,27 @@
 var express = require('express'),
 	router = express.Router();
 
+var StandardError = require('../shared/StandardError');
+var search = require('../shared/search');
+
 router.get('/', function (req, res) {
     res.send('user API handler');
+});
+
+router.get('/search', function(req,res){
+	if(!req.query.searchStr){
+		return res.send(
+			{error: StandardError({
+				status: 400,
+				title: 'INVALID_ARGUMENTS',
+				detail: 'Missing searchStr parameter'
+			})}
+		);
+	}
+	else {
+		var searchResults = search(req.query.searchStr, 'users', req.query.key || null);
+		return res.send(searchResults);
+	}
 });
 
 router.get('/:id', function(req,res){
