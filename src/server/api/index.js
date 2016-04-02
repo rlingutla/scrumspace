@@ -9,6 +9,7 @@ router.get('/', function (req, res) {
 });
 
 router.use('/project/', require('./project'));
+router.use('/user/', require('./user'));
 
 // Reset database.
 router.post('/resetdb', function(req, res) {

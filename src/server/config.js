@@ -2,11 +2,17 @@
 'use strict';
 
 import express from 'express';
-import entry from './entry'
+import entry from './entry';
+import morgan from 'morgan';
+
+var app = express();
 
 module.exports = function (app) {
 	// set node port
 	app.set('port', process.env.PORT || 8080);
+
+	//logger
+	app.use(morgan('dev'));
 
 	// serve static assets off of /static virtual path prefix
 	app.use('/static', express.static(__dirname + '/../../dist'));

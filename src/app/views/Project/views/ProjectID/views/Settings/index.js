@@ -32,7 +32,7 @@ class Settings extends React.Component {
 						<Modal.Title>Delete Project?</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<p>Are you sure you want to delete </p>
+						<p>Are you sure you want to delete {this.props.title}?</p>
 					</Modal.Body>
 					<Modal.Footer>
 						<Button onClick={(e) => this.toggleModal(false)}>Close</Button>
