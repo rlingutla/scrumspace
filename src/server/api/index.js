@@ -1,4 +1,5 @@
 'use-strict';
+var database = require('../database');
 
 var express = require('express'),
 	router = express.Router();
@@ -12,7 +13,8 @@ router.use('/user/', require('./user'));
 
 // Reset database.
 router.post('/resetdb', function(req, res) {
-  console.log('Resetting database...');
+
+  console.log("Resetting database...");
   // This is a debug route, so don't do any validation.
   database.resetDatabase();
   // res.send() sends an empty response with status code 200
