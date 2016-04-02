@@ -11,19 +11,20 @@ router.get('/', function (req, res) {
 });
 
 router.get('/search', function(req,res){
-	if(!req.query.searchStr){
-		return res.send(
-			{error: StandardError({
-				status: 400,
-				title: 'INVALID_ARGUMENTS',
-				detail: 'Missing searchStr parameter'
-			})}
-		);
+	var searchResults = search(req.query.searchStr || '', 'users', req.query.key || null);
+	if(searchResults.data){
+		searchResults.data = searchResults.data.map((user) => {
+			return {
+				'_id': user._id,
+				'first_name': user.first_name,
+				'last_name': user.last_name,
+				'email': user.email,
+				'display_name': user.display_name,
+				'avatar_url': user.avatar_url
+			}
+		});
 	}
-	else {
-		var searchResults = search(req.query.searchStr, 'users', req.query.key || null);
-		return res.send(searchResults);
-	}
+	return res.send(searchResults);
 });
 
 router.get('/:id', function(req,res){
