@@ -259,4 +259,4 @@ var initialData = {
 	]
 };
 
-export default initialData;
+module.exports = initialData;
