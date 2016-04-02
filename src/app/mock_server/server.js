@@ -259,31 +259,7 @@ export function serverRemoveStory(project, story){
 	return emulateServerReturn(projects[project_i], false);
 }
 export function serverRemoveSprint(project, sprint){
-	var projects = readDocument('projects');
-	//The following is to get the value of the project and sprint to be added or edited.
-	var project_i, sprint_i;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].sprints.length; j++){
-				if(projects[i].sprints[j]._id === sprint){
-					sprint_i = j;
-					break;
-				}
-			}
-			break;
-		}
-	}
-	//set stories of to null to move them to the backlog
-	for(let i in projects[project_i].stories){
-		if(projects[project_i].stories[i].sprint_id === sprint)
-			projects[project_i].stories[i].sprint_id = null;
-	}
-	////////////////////////////////////////////////////
-	projects[project_i].sprints.splice(sprint_i, 1);
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+	sendXHR('DELETE', '/project/'+project+'/sprint/'+sprint)
 }
 
 export function serverMakeNewStory(project, title, description, tasks, story){
