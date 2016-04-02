@@ -36,8 +36,7 @@ class NewProjModal extends React.Component{
       timeFrame:['Mon','Tues', 'Wed', 'Thurs', 'Fri'],
       membersOnProj:[],
       gCommits:[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
-      color:'#'+Math.floor(Math.random()*16777215).toString(16),
-      mapInputs:['foo','bar']
+      color:'#'+Math.floor(Math.random()*16777215).toString(16)
     };
   }
 
