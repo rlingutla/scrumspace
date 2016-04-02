@@ -19,21 +19,10 @@ var updated = false;
 var fs = require('fs'),
   path = require('path');
 
-/**
-* need to initialize data manually because of server side rendering
-*/
-export function initLocalStorage(){
-  try {
-    // ./database.json may be missing. The comment below prevents ESLint from
-    // complaining about it.
-    // Read more about configuration comments at the following URL:
-    // http://eslint.org/docs/user-guide/configuring#configuring-rules
-    /* eslint "node/no-missing-require": "off" */
-    data = require('./database.json');
-  } catch (e) {
-    // ./database.json is missing. Use the seed data defined above
-    data = JSONClone(initialData);
-  }
+try {
+  data = require('./database.json');
+} catch(e) {
+  data = JSONClone(initialData);
 }
 
 /**
@@ -50,6 +39,7 @@ function JSONClone(obj) {
  * half of the course. :)
  */
 function readDocument(collection, id) {
+  console.log("data", data);
   // Clone the data. We do this to model a database, where you receive a
   // *copy* of an object and not the object itself.
   var collectionObj = data[collection];
