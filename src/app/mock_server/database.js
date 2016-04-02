@@ -85,10 +85,15 @@ export class ResetDatabase extends React.Component {
   render() {
     return (
       <button style={{width: 50+'px', height: 50+'px', overflow: 'hidden', fontSize: 12+'px', padding: 0}} className="btn btn-default" type="button" onClick={() => {
-        resetDatabase();
-        window.alert('Database reset! Refreshing the page now...');
-        document.location.reload(false);
-      }}>ResetDB</button>
+        resetDatabase(); //THIS NEEDS TO BE REMOVED!
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/resetdb');
+        xhr.addEventListener('load', function() {
+          window.alert("Database reset! Refreshing the page now...");
+          document.location.reload(false);
+        });
+        xhr.send();
+      }}>Reset Mock DB</button>
     );
   }
 }
