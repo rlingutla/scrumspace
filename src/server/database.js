@@ -1,5 +1,4 @@
-var mock_data = require('./data');
-var initialData = mock_data.initialData;
+var initialData = require('./data');
 
 // Modify with your startup's name!
 //var startupName = "scrumSpace";

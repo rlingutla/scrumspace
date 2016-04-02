@@ -105,6 +105,7 @@ var initialData = {
 					{
 						'_id': 0,
 						'status': 'UNASSIGNED',
+						'blockedBy': [],
 						'assignedTo': [
 							{
 								'_id': 0,
@@ -138,6 +139,7 @@ var initialData = {
 						'_id': 1,
 						'status': 'UNASSIGNED',
 						'assignedTo': [],
+						'blockedBy': [],
 						'description': 'Make Mexico pay for it',
 						'history': [{
 							fromStatus: null,
@@ -150,6 +152,7 @@ var initialData = {
 					{
 						'_id': 2,
 						'status': 'DONE',
+						'blockedBy': [],
 						'assignedTo': [
 							{
 								'_id': 0,
@@ -179,6 +182,7 @@ var initialData = {
 						'_id': 3,
 						'status': 'DONE',
 						'assignedTo': [],
+						'blockedBy': [],
 						'description': 'Replace Donald\'s Toupee',
 						'history': [{
 							fromStatus: 'DOING',
@@ -209,6 +213,7 @@ var initialData = {
 					{
 						'_id': 0,
 						'status': 'UNASSIGNED',
+						'blockedBy': [],
 						'assignedTo': [
 							{
 								'_id': 0,
@@ -259,4 +264,4 @@ var initialData = {
 	]
 };
 
-module.exports = initialData;
+export default initialData;
