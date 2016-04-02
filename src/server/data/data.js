@@ -1,4 +1,3 @@
-
 const xDaysAgoInUnixTime = (x) => {
 	return Date.now() - 1000* 60 * 60 * 24 * x;
 };
@@ -73,12 +72,12 @@ var initialData = {
 	projects: [
 	{
 		'_id': 0,
-		'title': 'Drumpf',
-		'description': 'Make America Great Again',
+		'title': 'Facebook',
+		'description': 'Build out web properties for minimally viable product',
 		'users': [0],
 		'status': 'sprint',
 		'current_sprint': 0,
-		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
+		'avatar': 'http://images.forbes.com/media/lists/companies/facebook_416x416.jpg',
 		'sprints': [
 			{
 				'_id': 0,
@@ -86,27 +85,20 @@ var initialData = {
 				'start_date': (new Date()).getTime(),
 				'duration': 14,
 				'scrum_time': '9:00 AM'
-			},
-			{
-				'_id': 1,
-				'name': 'V2 Release',
-				'duration': 7,
-				'start_date': null,
-				'scrum_time': '9:00 AM'
 			}
 		],
 		'stories': [{
 			'story_id': 'DT-S0',
-			'title': 'Buy Hats',
+			'title': '',
 			'description': 'Design Hats \nOrder Hats\nSell Hats',
 			'sprint_id': 0,
 			'tasks': [
 				{
 				  '_id': 3,
-				  'status': 'DONE',
+				  'status': 'UNASSIGNED',
 				  'assigned_to': [],
 				  'blocked_by': [],
-				  'description': 'Replace Donald\'s Toupee',
+				  'description': 'Build out React',
 				  'history': {
 				    'elements': [
 				      {
@@ -119,32 +111,8 @@ var initialData = {
 				  }
 				}
 		  ]
-		}],
-		'commits': [3,1,6,4,8],
-		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
-		'gCommits': [12,10,4,6,5,6],
-		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
-
-	},
-	{
-		'_id': 1,
-		'title': 'Feel the Bern',
-		'description': 'Fight the Power',
-		'users': [0],
-		'status': 'planning',
-		'current_sprint': null,
-		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
-		'sprints': [],
-		'stories': [],
-		'commits':[4,7,2,8,9],
-		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
-		'gCommits':[18,15,6,9,11,13],
-		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
-
-	}
-	]
+		}]
+	}]
 };
 
 export default initialData;
