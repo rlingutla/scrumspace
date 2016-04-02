@@ -22,7 +22,6 @@ router.get('/search', function(req,res){
 	}
 	else {
 		var searchResults = search(req.query.searchStr, 'users', req.query.key || null);
-		console.log(searchResults);
 		return res.send(searchResults);
 	}
 });

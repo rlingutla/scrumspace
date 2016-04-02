@@ -1,5 +1,6 @@
 var StandardError = require('./StandardError');
 var readDocument = require('../../database').readDocument;
+var _ = require('underscore');
 
 /*
 ** str: search string
@@ -9,7 +10,6 @@ var readDocument = require('../../database').readDocument;
 */
 module.exports = function(str, collection, key = '_id', limit=15){
 	let searchCollection = readDocument(collection);
-	console.log("col", searchCollection);
 	//if it's an object, map the values to an array
 	if (_.isObject(searchCollection)) searchCollection = _.values(searchCollection);
 	else if(!_.isArray(searchCollection)) return {

@@ -38,18 +38,21 @@ function JSONClone(obj) {
  * half of the course. :)
  */
 function readDocument(collection, id) {
-  console.log("data", data);
   // Clone the data. We do this to model a database, where you receive a
   // *copy* of an object and not the object itself.
   var collectionObj = data[collection];
   if (!collectionObj) {
     throw new Error(`Object collection ${collection} does not exist in the database!`);
   }
-  var obj = collectionObj[id];
-  if (obj === undefined) {
-    throw new Error(`Object ${id} does not exist in object collection ${collection} in the database!`);
+  if(id){
+    var obj = collectionObj[id];
+    if (obj === undefined) {
+      throw new Error(`Object ${id} does not exist in object collection ${collection} in the database!`);
+    }
+    return JSONClone(data[collection][id]);
   }
-  return JSONClone(data[collection][id]);
+  else return JSONClone(collectionObj);
+  
 }
 module.exports.readDocument = readDocument;
 
