@@ -184,7 +184,7 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 
 export function serverPostSprint(project, name, duration, time, sprint){
 	//sprint is not passed through if it is a new sprint hence the type is undefined
-	var projects = readDocument('project');
+	var projects = readDocument('projects');
 	//The following is to get the value of the project and sprint to be added or edited.
 	var project_i, sprint_i;
 	for(let i = 0; i < projects.length; i++){
@@ -209,13 +209,14 @@ export function serverPostSprint(project, name, duration, time, sprint){
 		'duration': duration,
 		'scrum_time': time
 	};
-	projects[project_i].sprints[sprint._id] = newSprint;
+	projects[project_i].sprints[sprint_i] = newSprint;
 	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 
 export function serverMoveStory(project, story, sprint){
-	var projects = readDocument('project');
+	var projects = readDocument('projects');
 	var project_i, story_i;
 	for(let i = 0; i < projects.length; i++){
 		if (projects[i]._id === project) {
@@ -228,17 +229,18 @@ export function serverMoveStory(project, story, sprint){
 			}
 		}
 	}
-	projects[project_i].story[story_i].sprint_id = sprint;
+	projects[project_i].stories[story_i].sprint_id = sprint;
 	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 export function serverRemoveStory(project, story){
-	var projects = readDocument('project');
+	var projects = readDocument('projects');
 	var project_i, story_i;
 	for(let i = 0; i < projects.length; i++){
 		if (projects[i]._id === project) {
 			project_i = i;
-			for(let j = 0; j < projects[i].sprints.length; j++){
+			for(let j = 0; j < projects[i].stories.length; j++){
 				if(projects[i].stories[j]._id === story){
 					story_i = j;
 					break;
@@ -247,12 +249,18 @@ export function serverRemoveStory(project, story){
 			break;
 		}
 	}
-	projects[project_i].stories.splice(story_i, 1);
+	if(projects[project_i].stories[story_i].sprint_id !== null){
+		projects[project_i].stories[story_i].sprint_id = null;
+	}
+	else{
+		projects[project_i].stories.splice(story_i, 1);
+	}
 	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 export function serverRemoveSprint(project, sprint){
-	var projects = readDocument('project');
+	var projects = readDocument('projects');
 	//The following is to get the value of the project and sprint to be added or edited.
 	var project_i, sprint_i;
 	for(let i = 0; i < projects.length; i++){
@@ -267,15 +275,21 @@ export function serverRemoveSprint(project, sprint){
 			break;
 		}
 	}
+	//set stories of to null to move them to the backlog
+	for(let i in projects[project_i].stories){
+		if(projects[project_i].stories[i].sprint_id === sprint)
+			projects[project_i].stories[i].sprint_id = null;
+	}
 	////////////////////////////////////////////////////
 	projects[project_i].sprints.splice(sprint_i, 1);
 	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 
 export function serverMakeNewStory(project, title, description, tasks, story){
 	//story does not need to be passed through
-	var projects = readDocument('project');
+	var projects = readDocument('projects');
 	var project_i, story_i, sprint_id;
 	for(let i = 0; i < projects.length; i++){
 		if (projects[i]._id === project) {
@@ -294,8 +308,15 @@ export function serverMakeNewStory(project, title, description, tasks, story){
 		story_i = projects[project_i].stories.length;
 		sprint_id = null;
 	}
-	var newTasks;
-	for(let i = 0; i < projects[project_i].stories.length; i++){
+	//remove any empty tasks
+	tasks = tasks.filter((e) => {
+		if(e.description === '')
+			return false;
+		else
+			return true;
+	});
+	var newTasks = [];
+	for(let i = 0; i < tasks.length; i++){
 		newTasks[i] = {
 			'_id': i,
 			'status': 'UNASSIGNED',
@@ -319,6 +340,7 @@ export function serverMakeNewStory(project, title, description, tasks, story){
 	};
 	projects[project_i].stories[story_i] = newStory;
 	writeDocument('projects', projects[project_i]);
+	serverLog('DB Updated', projects[project_i]);
 	return emulateServerReturn(projects[project_i], false);
 }
 

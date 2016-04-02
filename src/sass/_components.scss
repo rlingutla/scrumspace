@@ -71,41 +71,41 @@ button {
     	min-height:50px;
     }
 
+    .header {
+    	display: flex;
+    }
+    .avatar {
+    	width: 20px;
+    	height: 20px;
+    	display: inline-block;
+    	background: #F1F1F1;
+    	font-family: 'Glyphicons Halflings';
+    	color: gray;
+    	background-size: cover;
+    	background-position: center;
+    	border-radius: 2px;
+    	margin-left: 3px;
+    	margin-bottom: 3px;
+    }
+
 	.footer {
 		color: $blue-color;
 
 		.row {
 			margin:0;
 		}
-
-		.avatar {
-			width: 20px;
-			height: 20px;
-			display: inline-block;
-			background: #F1F1F1;
-			font-family: 'Glyphicons Halflings';
-			color: gray;
-			background-size: cover;
-			background-position: center;
-			border-radius: 2px;
-			margin-left: 3px;
-			margin-bottom: 3px;
-
-			// &:not(:last-child) {
-			// 	margin-right: 3px;
-			// }
-
-			// &:before {
-			// 	position: relative;
-			// 	top: 4px;
-			// 	left: -5px;
-			// 	content: "\e008";
-			// 	font-size: 12px;
-			// }
-		}
 	}
 	.body {
 		padding-bottom: 5px;
+		font-size:14px;
+	}
+	.task-info {
+		font-size: 14px;
+		color: #7C7C7C;
+
+		.blocking-task {
+
+		}
 	}
 }
 .task-status {

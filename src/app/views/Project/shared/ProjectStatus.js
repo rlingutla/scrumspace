@@ -1,18 +1,18 @@
 import React from 'react';
-import { daysDifference, getCurrentSprint } from '../../../shared/utils/utils';
-import ProjectStatuses from '../../../constants/projectStatuses';
+import { daysDifference, getCurrentSprint } from 'app/shared/utils/utils';
+import ProjectStatuses from 'app/shared/constants/projectStatuses';
 
 export function getProjectStatus(project){
-	if(project.current_sprint === null) return ProjectStatuses.PLANNING;
+	if (project.current_sprint === null) return ProjectStatuses.PLANNING;
 	else {
 		let currSprint = getCurrentSprint(project);
 		let diff = daysDifference(currSprint.start_date, (new Date()).getTime());
 		// exceeded sprint duration
-		if(diff.days < 0) return ProjectStatuses.REVIEW;
+		if (diff.days < 0) return ProjectStatuses.REVIEW;
 		// within sprint duration
 		else if(diff.days <= currSprint.duration) return ProjectStatuses.SPRINT;
 	}
-};
+}
 
 export const ProjectStatus = (props) => {
 	let status = getProjectStatus(props);

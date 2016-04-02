@@ -1,4 +1,4 @@
-import { project as projectModel } from '../constants/models';
+import { project as projectModel } from 'app/shared/constants/models';
 import _ from 'underscore';
 
 const task = (state, action) => {
@@ -49,7 +49,7 @@ const projects = (state = [], action) => {
 				if (project._id === action.project_id){
 					return Object.assign({}, project, { stories: project.stories.map((story) => {
 						if (story._id === action.story._id){
-							return Object.assign({}, action.story)
+							return Object.assign({}, action.story);
 						} else return story;
 					})});
 				} else return project;
@@ -77,71 +77,27 @@ const projects = (state = [], action) => {
 				...state,
 				project
 			];
-		case 'CREATE_NEW_SPRINT':
-			var p = state;
-			action.stories = action.stories.filter((e) =>{
-				if(e.title === null || e.title === '' || typeof e.title === 'undefined'){
-					return false;
-				}
-				else{
-					return true;
-				}
+		case 'REMOVE_STORY':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
 			});
-			let sprint = {
-				'_id': action.sid,
-				'name': action.name,
-				'start_date': action.start_date,
-				'end_date': action.end_date,
-				'scrum_time': action.scrum_time
-			};
-			p[action.pid].sprints[action.sid] = sprint;
-			var notInSp = p[action.pid].stories.filter(
-				function(value){
-					if(value.sprint_id !== action.sid){
-						return true;
-					}
-					else {
-						return false;
-					}
-				}
-			);
-			var nextID = (notInSp.length !== 0) ? notInSp[notInSp.length -1]._id + 1 : 0;
-			for(var i = 0; i < action.stories.length; i++){
-				let story = {
-					'_id': (nextID+i),
-					'title': action.stories[i].title,
-					'description': action.stories[i].description,
-					'sprint_id': action.sid,
-					'tasks': action.stories[i].tasks.map(
-						(e, i) => { let t = {
-								'_id': i,
-								'status': 'UNASSIGNED',
-								'assignedTo': null,
-								'description': e.description,
-								'history': [{
-									fromStatus: null,
-									toStatus: 'UNASSIGNED',
-									modifiedTime: Date.now(),
-									modifiedUser : 0
-								}],
-								'attachments': null
-							};
-							return t;
-						}
-					).filter((e) =>{
-						if(e.description === null || e.description === '' || typeof e.description === 'undefined'){
-							return false;
-						}
-						else{
-							return true;
-						}
-					})
-				};
-				action.stories[i] = story;
-			}
-			p[action.pid].stories = notInSp.concat(action.stories);
-			return p;
-		default: //just returning state for now
+		case 'NEW_STORY':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
+			});
+		case 'REMOVE_SPRINT':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
+			});
+		case 'MOVE_STORY':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
+			});
+		case 'NEW_SPRINT':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
+			});
+  	default: //just returning state for now
 			return state;
 	}
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs';
 import { doughnutOptions } from '../../constants/chartOptions';
-import taskTypes from '../../../../constants/taskTypes';
+import taskTypes from 'app/shared/constants/taskTypes';
 import Panel from '../shared/Panel';
 
 const capitalize = (s) => {

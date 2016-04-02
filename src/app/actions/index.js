@@ -1,4 +1,4 @@
-import { serverUpdateTask, serverPostNewProject, serverPostSprint, serverPutStory } from '../mock_server/server';
+import { serverUpdateTask, serverPostNewProject, serverPostSprint, serverPutStory, serverRemoveStory, serverRemoveSprint, serverMoveStory, serverMakeNewStory } from '../mock_server/server';
 
 export const updateTaskAction = (project_id, story_id, task) => {
 	return {
@@ -62,31 +62,38 @@ export function postAndCreateNewProject(	title, description,users,status,current
 		);
 	};
 }
-// export function
-export const createNewSprint = (pid, sid, name, start_date, end_date, scrum_time, stories) => {
-	return {
-		type: 'CREATE_NEW_SPRINT',
-		pid,
-		sid,
-		name,
-		start_date,
-		end_date,
-		scrum_time,
-		stories
+
+function postNewProjectPlan(signal, data){
+	switch (signal) {
+		case 'REMOVE_STORY':
+			return serverRemoveStory(data.project, data.story);
+		case 'NEW_STORY':
+			return serverMakeNewStory(data.project, data.title, data.description, data.tasks, data.story);
+		case 'REMOVE_SPRINT':
+			return serverRemoveSprint(data.project, data.sprint);
+		case 'NEW_SPRINT':
+			return serverPostSprint(data.project, data.name, data.duration, data.time, data.sprint);
+		case 'MOVE_STORY':
+			return serverMoveStory(data.project, data.story, data.sprint);
+		default:
+			console.log('And so here lies Ryan, a sad programmer');
+	}
+}
+
+export const projectPlan = (signal, data, project) => {
+	return{
+		type: signal,
+		data, project
 	};
 };
 
-function postNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
-	return serverPostSprint(pid, sid, name, start_date, end_date, scrum_time, stories);
-}
-
-export function postAndCreateNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories){
+export function postProjectPlan(signal, data){
 	return function(dispatch){
-		return postNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories).then(
-			sprint => {
-				dispatch(createNewSprint(pid, sid, name, start_date, end_date, scrum_time, stories));
+		return postNewProjectPlan(signal, data).then(
+			project =>{
+				dispatch(projectPlan(signal, data, project));
 			},
-			error => console.log('rip')
+			error => console.error('rip', error)
 		);
 	};
 }

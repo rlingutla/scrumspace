@@ -1,7 +1,7 @@
 import React from 'react';
-import taskSelector from '../../constants/taskSelector';
-import TopNav from '../../shared/components/TopNav';
-import Wrapper from '../../shared/components/Wrapper';
+import taskSelector from 'app/shared/constants/taskSelector';
+import TopNav from 'app/shared/components/TopNav';
+import Wrapper from 'app/shared/components/Wrapper';
 
 import {
 	ProjectWidget,

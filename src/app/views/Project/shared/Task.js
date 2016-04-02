@@ -1,10 +1,11 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button } from 'react-bootstrap';
-import TaskDetailModal from '../views/Detail/components/ScrumBoard/TaskDetailModal';
-import AssignUserModal from '../views/Detail/components/ScrumBoard/AssignUserModal';
+import TaskDetailModal from '../views/ProjectID/views/ScrumBoard/TaskDetailModal';
+import AssignUserModal from '../views/ProjectID/views/ScrumBoard/AssignUserModal';
+import BlockedTasks from '../views/ProjectID/views/ScrumBoard/BlockedTasks';
 
-import ItemTypes from '../../../constants/itemTypes';
-import TaskTypes from '../../../constants/taskTypes';
+import ItemTypes from 'app/shared/constants/itemTypes';
+import TaskTypes from 'app/shared/constants/taskTypes';
 
 import { connect } from 'react-redux';
 import _ from 'underscore';
@@ -52,7 +53,8 @@ class Task extends React.Component {
 	}
 
 	getTaskStyle(status){
-		return { borderColor: TaskTypes[status].color };
+		// return { borderColor: TaskTypes[status].color };
+		return {};
 	}
 
 	render() {
@@ -69,21 +71,26 @@ class Task extends React.Component {
 		let theTask = (
 			<div>
 				<AssignUserModal isModalOpen={this.state.assignUserModal} hideModal={(e) => this.hideUserAssignModal(e)}/>
-				<div className="task" onClick={(e) => this.changeModal(e)} style={this.getTaskStyle(this.props.status)}>
+				<div className="task" onClick={(e) => this.changeModal(e)} style={{borderTopColor: TaskTypes[this.props.status].color}}>
 				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
-				    <div className="body">{this.props.description}</div>
-				    <div className="footer" style={{padding: '5px 0'}}>
-				        <div className="row left-right-align">
-				            {/* <div style={{float:'left'}}><a>{this.props._id}</a></div> */}
-				            <div style={{float:'right'}}>
-				            	{this.props.assignedTo ? 
-				            		this.props.assignedTo.map((user, i) => 
-				            			<span key={i} className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}></span>
-				            		):null
-				            	}
-				            </div>
-				        </div>
+				    <div className="header" style={{borderColor: TaskTypes[this.props.status].color}}>
+				    	<div style={{flexGrow:1}}><a>{this.props._id}</a></div>
+				    	<div>
+				    		{(this.props.assignedTo.length > 0) ? 
+				    			this.props.assignedTo.map((user, i) => {
+				    				return <span key={i} className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}>yo</span>
+				    			}):null
+				    		}
+				    	</div>
 				    </div>
+				    <div className="body">
+				    	<p>{this.props.description}</p>
+				    </div>
+				    <div className="task-info">
+				    	{(this.props.blockedBy.length > 0) ? <BlockedTasks blockedBy={this.props.blockedBy} />:null}
+				    </div>
+
+				    <div className="footer"></div>
 				</div>
 			</div>
 		);
@@ -127,4 +134,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(DragSource(props => ItemTypes.TASK+"_"+props.story_id, taskSource, collect)(Task));
+)(DragSource(props => ItemTypes.TASK + '_' + props.story_id, taskSource, collect)(Task));
