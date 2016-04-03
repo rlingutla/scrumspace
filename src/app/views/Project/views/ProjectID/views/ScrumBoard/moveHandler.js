@@ -4,7 +4,7 @@ const mutateItem = (item, fromType, toType) => {
 	let modified = Object.assign({}, item);
 	//moving from blocked to another state
 	if(fromType === TaskTypes.BLOCKED, toType !== TaskTypes.BLOCKED){
-		modified.blockedBy = [];
+		modified.blocked_by = [];
 	}
 	return modified;
 }
@@ -15,7 +15,7 @@ const handleCase = (item, target, fromType, toType) => {
 	** if task has no assigned users, prompt before move
 	*/
 	if(toType === TaskTypes.DOING){
-		if(item.assignedTo.length < 1){
+		if(item.assigned_to.length < 1){
 			target.setState({ 
 				assignUserModal: Object.assign({}, 
 					target.state.assignUserModal, 

@@ -49,7 +49,7 @@ const processGraphData = (project) => {
 	const histories = getCurrentTasks(project)
 		.map((task) => task.history)
 		.reduce((a,b) => a.concat(b), [])
-		.sort((a,b) => a.modifiedTime > b.modifiedTime);
+		.sort((a,b) => a.modified_time > b.modified_time);
 
 	let today = moment().startOf('day');
 
@@ -61,9 +61,9 @@ const processGraphData = (project) => {
 		let currDay = moment(today).subtract(i, 'days');
 		histories.forEach((historyObj) => {
 			//is history entry within current day in DAY_RANGE
-			if(moment(historyObj.modifiedTime).isBetween(moment(currDay).startOf('day'), moment(currDay).endOf('day'))){
+			if(moment(historyObj.modified_time).isBetween(moment(currDay).startOf('day'), moment(currDay).endOf('day'))){
 				//increment counter
-				++datasets[historyObj.toStatus][DAY_RANGE - (i + 1)];
+				++datasets[historyObj.to_status][DAY_RANGE - (i + 1)];
 			}
 		});
 	}
