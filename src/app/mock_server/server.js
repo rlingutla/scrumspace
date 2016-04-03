@@ -260,8 +260,8 @@ export function serverRemoveStory(project, story){
 	return emulateServerReturn(projects[project_i], false);
 }
 export function serverRemoveSprint(project, sprint){
-	return sendXHRPromise('DELETE', 'api/project/'+project+'/sprint/'+sprint, undefined).then((response) => {
-		return response.data;
+	return sendXHRPromise('DELETE', '/api/project/'+project+'/sprint/'+sprint, undefined).then((response) => {
+		return response;
 	});
 }
 

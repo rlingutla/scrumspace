@@ -1,6 +1,7 @@
 var database = require('../../database');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
+
 function sprintMaker(project, name, duration, time, sprint){
 	//sprint is not passed through if it is a new sprint hence the type is undefined
 	var projects = readDocument('projects');
@@ -33,31 +34,40 @@ function sprintMaker(project, name, duration, time, sprint){
 	console.log('DB Updated', projects[project_i]);
 	return projects[project_i];
 }
-
-export function removeSprint(project, sprint){
+module.exports.sprintMaker = sprintMaker;
+function removeSprint(project, sprint){
+	console.log(project + ' ' + sprint);
 	var projects = readDocument('projects');
+	console.log(projects);
 	//The following is to get the value of the project and sprint to be added or edited.
 	var project_i, sprint_i;
 	for(let i = 0; i < projects.length; i++){
+		console.log(projects[i]._id +' say that you love me ' + i);
 		if (projects[i]._id === project) {
 			project_i = i;
+			console.log('sheryl ' + project_i);
 			for(let j = 0; j < projects[i].sprints.length; j++){
 				if(projects[i].sprints[j]._id === sprint){
 					sprint_i = j;
+					console.log('ryan ' + sprint_i);
 					break;
 				}
 			}
 			break;
 		}
 	}
+	console.log( project_i + ' ' + sprint_i);
 	//set stories of to null to move them to the backlog
 	for(let i in projects[project_i].stories){
 		if(projects[project_i].stories[i].sprint_id === sprint)
 			projects[project_i].stories[i].sprint_id = null;
 	}
+	console.log('made it');
 	////////////////////////////////////////////////////
 	projects[project_i].sprints.splice(sprint_i, 1);
+	console.log('hashtag');
 	writeDocument('projects', projects[project_i]);
 	console.log('DB Updated', projects[project_i]);
 	return projects[project_i];
 }
+module.exports.removeSprint = removeSprint;
