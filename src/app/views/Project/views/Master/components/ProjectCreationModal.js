@@ -92,7 +92,7 @@ class ProjectCreationModal extends React.Component{
           <Modal.Header closeButton>
             <Modal.Title>Create a new project</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className="select-support">
             <h4><b>Enter Project Details</b></h4>
             <form>
               <Input type="text" name="title" placeholder="Enter project title"  value={this.state.title} onChange={(e) => this.handleChange(e)} />
