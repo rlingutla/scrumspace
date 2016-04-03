@@ -2,14 +2,11 @@ export default {
   '$schema': 'http://json-schema.org/draft-04/schema#',
   'type': 'object',
   'properties': {
-    '_id': {
-      'type': 'integer'
-    },
     'name': {
       'type': 'string'
     },
-    'start_date': {
-      'type': 'integer'
+    'scrum_time': {
+      'type': 'string'
     },
     'duration': {
       'type': 'integer'
@@ -17,10 +14,8 @@ export default {
   },
   'additionalProperties': false,
   'required': [
-    '_id',
     'name',
-    'last_name',
-    'start_date',
+    'scrum_time',
     'duration'
   ]
 };
