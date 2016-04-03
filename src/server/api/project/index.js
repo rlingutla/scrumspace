@@ -72,6 +72,7 @@ router.post('/:project_id/story', function(req, res) {
 			'_id': i,
 			'status': 'UNASSIGNED',
 			'assigned_to': [],
+			'blocked_by': [],
 			'description': tasks[i].description,
 			'history': [{
 				from_status: null,
