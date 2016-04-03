@@ -68,7 +68,7 @@ gulp.task('copy_static', function(){
 
 gulp.task('watch', function() {
   livereload.listen();
-  gulp.watch(['src/**/*', '!src/server/database.json'], ['run-build']);
+  gulp.watch(['src/**/*', '!src/index.html','!src/server/database.json'], ['run-build']);
 
   livereload.listen()
 
