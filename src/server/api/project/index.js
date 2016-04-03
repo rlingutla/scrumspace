@@ -23,10 +23,36 @@ router.get('/:id', function(req,res){
 });
 
 
-router.use('/:project_id/story/:story_id', function(req,res){
-	res.send({'params': req.params});
-});
+router.put('/:project_id/story/:story_id', function (req, res) {
+	var projectId = parseInt(req.params.project_id, 10);
 
+	var sprintId = parseInt(req.body.sprintId, 10);
+	var projects = readDocument('projects');
+	var project_i, story_i;
+	
+	for(let i = 0; i < projects.length; i++){
+		if (projects[i]._id === projectId) {
+			project_i = i;
+			for(let j = 0; j < projects[i].stories.length; j++){
+				if(projects[i].stories[j]._id === req.params.story_id) {
+					story_i = j;
+					break;
+				}
+			}
+		}
+	}
+
+	if (projects[project_i].stories[story_i] !== null) {
+		projects[project_i].stories[story_i].sprint_id = sprintId;
+		writeDocument('projects', projects[project_i]);
+		res.send(projects[project_i]);
+	} else {
+		// TODO BETTER
+		res.status(400);
+		res.send({});
+	}
+
+});
 
 //Sprint Routes
 router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){

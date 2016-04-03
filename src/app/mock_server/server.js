@@ -197,24 +197,12 @@ export function serverPostSprint(project, name, duration, time, sprint){
 	}
 }
 
-export function serverMoveStory(project, story, sprint){
-	var projects = readDocument('projects');
-	var project_i, story_i;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].stories.length; j++){
-				if(projects[i].stories[j]._id === story){
-					story_i = j;
-					break;
-				}
-			}
-		}
-	}
-	projects[project_i].stories[story_i].sprint_id = sprint;
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+export function serverMoveStory(projectId, storyId, sprintId){
+	return sendXHRPromise("PUT", "/api/project/" + projectId  + "/story/" + storyId, {
+		sprintId: sprintId
+	}).then((response) => {
+		return response;
+	});
 }
 export function serverRemoveStory(project, story){
 	var projects = readDocument('projects');
