@@ -190,7 +190,7 @@ export function serverPostSprint(project, name, duration, time, sprint){
 		return sendXHRPromise('PUT', '/api/project/'+project+'/sprint/'+sprint, {
 			'name': name,
 			'scrum_time': time,
-			'duration': parseInt(duration, 10)
+			'duration': duration
 		}).then((response) => {
 			return response;
 		});

@@ -31,7 +31,7 @@ router.use('/:project_id/story/:story_id', function(req,res){
 //Sprint Routes
 router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
 	//going to have to eventually add user tokens...
-	var project = sprintMaker(parseInt(req.params.project, 10), req.body.name, req.body.duration, req.body.time, parseInt(req.body._id, 10));
+	var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.time, parseInt(req.params.sprintid, 10));
 	 // Send the update!
 	res.send(project);
 });
