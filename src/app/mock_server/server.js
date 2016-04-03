@@ -276,8 +276,7 @@ var token = 'eyJfaWQiOjB9'; // <-- Put your base64'd JSON token here
  * and other needed properties.
  */
 export function sendXHR(verb, resource, body, cb) {
-	console.log('Ello puppet');
-  var xhr = new XMLHttpRequest();
+	var xhr = new XMLHttpRequest();
   xhr.open(verb, resource);
   xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 
