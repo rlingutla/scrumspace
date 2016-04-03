@@ -177,36 +177,24 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 }
 
 export function serverPostSprint(project, name, duration, time, sprint){
-	//sprint is not passed through if it is a new sprint hence the type is undefined
-	var projects = readDocument('projects');
-	//The following is to get the value of the project and sprint to be added or edited.
-	var project_i, sprint_i;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].sprints.length && typeof sprint !== 'undefined'; j++){
-				if(projects[i].sprints[j]._id === sprint){
-					sprint_i = j;
-					break;
-				}
-			}
-			break;
-		}
+	if(typeof sprint === 'undefined' || sprint === null){ //TODO this means we have a new sprint
+		return sendXHRPromise('POST', '/api/project/'+project+'/sprint/', {
+			'name': name,
+			'scrum_time': time,
+			'duration': duration
+		}).then((response) => {
+			return response;
+		});
 	}
-	if(typeof sprint === 'undefined')
-		sprint_i = projects[project_i].sprints.length;
-	////////////////////////////////////////////////////
-	let newSprint ={
-		'_id': sprint_i,
-		'name': name,
-		'start_date': null,
-		'duration': duration,
-		'scrum_time': time
-	};
-	projects[project_i].sprints[sprint_i] = newSprint;
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+	else{ //this means that we have an edited sprint
+		return sendXHRPromise('PUT', '/api/project/'+project+'/sprint/'+sprint, {
+			'name': name,
+			'scrum_time': time,
+			'duration': parseInt(duration, 10)
+		}).then((response) => {
+			return response;
+		});
+	}
 }
 
 export function serverMoveStory(project, story, sprint){
