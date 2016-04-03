@@ -1,4 +1,5 @@
 import history from './history';
+import taskStatusEnum from './enums/taskStatuses';
 
 export default {
   '$schema': 'http://json-schema.org/draft-04/schema#',
@@ -8,7 +9,7 @@ export default {
       'type': 'integer'
     },
     'status': {
-      'type': ["UNASSIGNED", "DOING", "BLOCKED", "DONE"]
+      'type': taskStatusesEnum
     },
     'blocked_by': {
       'type': 'array',

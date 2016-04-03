@@ -19,13 +19,13 @@ export default {
 	      'items': 'integer'
 	    },
 	    'status': {
-	    	'type': ["SPRINT", "PLANNING", "REVIEW"]
+	    	'type': ['SPRINT', 'PLANNING', 'REVIEW']
 	    },
 	    'sprints': {
 	   		'types': 'array',
 	    	'items': sprint
 	    },
-	    "stories": {
+	    'stories': {
 	    	'types': 'array',
 	    	'items': story
 	    }

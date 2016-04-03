@@ -28,15 +28,9 @@ function serverLog(...msg){
 }
 
 export function stateTree(userId){
-	var userObj = readDocument('users', userId);
-	var projects = readDocument('projects');
-	delete userObj.password; // TODO: this is bad design
-	var stateTree = {
-		user: userObj[userId],
-		projects
-	};
-
-	return emulateServerReturn(stateTree);
+	return sendXHRPromise('get', '/api/init/', { _id: 0}).then((response) => {
+		return response;
+	});
 }
 
 export function serverPutSettings(newData, properties){

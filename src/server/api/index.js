@@ -10,6 +10,7 @@ router.get('/', function (req, res) {
 
 router.use('/project/', require('./project'));
 router.use('/user/', require('./user'));
+router.use('/init/', require('./init'));
 
 // Reset database.
 router.post('/resetdb', function(req, res) {
