@@ -38,7 +38,6 @@ router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), fun
 
 router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req, res){
 	//going to have to eventually add user tokens...
-	console.log('John cena', req.body);
 	var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
 	res.status(201);
 	res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);

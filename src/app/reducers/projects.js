@@ -94,7 +94,6 @@ const projects = (state = [], action) => {
 				return (project._id === action.project._id) ? action.project : project;
 			});
 		case 'NEW_SPRINT':
-			console.log('ha');
 			return state.map((project) => {
 				return (project._id === action.project._id) ? action.project : project;
 			});

@@ -183,14 +183,12 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 }
 
 export function serverPostSprint(project, name, duration, time, sprint){
-	console.log('They call me the logger', project,  sprint);
 	if(typeof sprint === 'undefined' || sprint === null){ //TODO this means we have a new sprint
 		return sendXHRPromise('POST', '/api/project/'+project+'/sprint/', {
 			'name': name,
 			'scrum_time': time,
 			'duration': duration
 		}).then((response) => {
-			console.log('put', response);
 			return response;
 		});
 	}

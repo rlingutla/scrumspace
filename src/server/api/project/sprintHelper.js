@@ -3,7 +3,6 @@ var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 
 function sprintMaker(project, name, duration, time, sprint){
-	console.log(project +' ' + name+' ' +duration+' ' +time+' ' +sprint);
 	//sprint is not passed through if it is a new sprint hence the type is undefined
 	var projects = readDocument('projects');
 	//The following is to get the value of the project and sprint to be added or edited.
@@ -22,7 +21,6 @@ function sprintMaker(project, name, duration, time, sprint){
 	}
 	if(typeof sprint === 'undefined')
 		sprint_i = projects[project_i].sprints.length;
-	console.log('sprint_i is ' + sprint_i);
 	////////////////////////////////////////////////////
 	let newSprint ={
 		'_id': sprint_i,
