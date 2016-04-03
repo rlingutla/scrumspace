@@ -37,7 +37,7 @@ class Task extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { 
+		this.state = {
 			isModalOpen: false,
 			assignUserModal: false
 		};
@@ -76,9 +76,9 @@ class Task extends React.Component {
 				    <div className="header" style={{borderColor: TaskTypes[this.props.status].color}}>
 				    	<div style={{flexGrow:1}}><a>{this.props._id}</a></div>
 				    	<div>
-				    		{(this.props.assigned_to.length > 0) ? 
+				    		{(this.props.assigned_to.length > 0) ?
 				    			this.props.assigned_to.map((user, i) => {
-				    				return <span key={i} className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}>yo</span>
+				    				return <span key={i} className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}></span>;
 				    			}):null
 				    		}
 				    	</div>
@@ -110,13 +110,13 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	.projects.find((proj) => proj._id === ownProps.project_id)
 	.stories.find((story) => story._id === ownProps.story_id)
 	.tasks.find((task) => task._id === ownProps.task_id);
-	return Object.assign(theTask, 
-		{ 
-			project_id: ownProps.project_id, 
-			story_id: ownProps.story_id, 
-			_id: ownProps.task_id, 
+	return Object.assign(theTask,
+		{
+			project_id: ownProps.project_id,
+			story_id: ownProps.story_id,
+			_id: ownProps.task_id,
 			users: ownProps.users  //TODO: can we take this out?
-		}, 
+		},
 		dispatchProps);
 }
 
