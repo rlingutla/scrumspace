@@ -75,7 +75,7 @@ var initialData = {
 		'_id': 0,
 		'title': 'Drumpf',
 		'description': 'Make America Great Again',
-		'users': [0],
+		'users': [0, 1],
 		'status': 'sprint',
 		'current_sprint': 0,
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',

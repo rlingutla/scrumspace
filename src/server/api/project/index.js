@@ -10,6 +10,10 @@ var writeDocument = database.writeDocument;
 var sprintHelper = require('./sprintHelper');
 var sprintMaker = sprintHelper.sprintMaker;
 var removeSprint = sprintHelper.removeSprint;
+//Auth Helpers
+var authentication = require('../shared/authentication');
+var getUserIdFromToken = authentication.getUserIdFromToken;
+var checkAuthFromProject = authentication.checkAuthFromProject;
 //Router
 var express = require('express'),
 	router = express.Router();
@@ -29,7 +33,7 @@ router.put('/:project_id/story/:story_id', function (req, res) {
 	var sprintId = parseInt(req.body.sprintId, 10);
 	var projects = readDocument('projects');
 	var project_i, story_i;
-	
+
 	for(let i = 0; i < projects.length; i++){
 		if (projects[i]._id === projectId) {
 			project_i = i;
@@ -56,24 +60,38 @@ router.put('/:project_id/story/:story_id', function (req, res) {
 
 //Sprint Routes
 router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
-	//going to have to eventually add user tokens...
-	var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.time, parseInt(req.params.sprintid, 10));
-	 // Send the update!
-	res.send(project);
+	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
+		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time, parseInt(req.params.sprintid, 10));
+		 // Send the update!
+		res.send(project);
+	} else{
+		// 401: Unauthorized.
+    res.status(401).end();
+	}
 });
 
 router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req, res){
 	//going to have to eventually add user tokens...
-	var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
-	res.status(201);
-	res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);
-	 // Send the update!
-	res.send(project);
+	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
+		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
+		res.status(201);
+		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);
+		 // Send the update!
+		res.send(project);
+	} else{
+		// 401: Unauthorized.
+    res.status(401).end();
+	}
 });
 //parseInt(userid, 10)
 router.delete('/:projectid/sprint/:sprintid', function(req, res){
-	var project = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
-	res.send(project);
+	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
+		var project = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
+		res.send(project);
+	} else{
+		// 401: Unauthorized.
+    res.status(401).end();
+	}
 });
 
 module.exports = router;
