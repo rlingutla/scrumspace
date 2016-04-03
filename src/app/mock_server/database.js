@@ -6,13 +6,6 @@ import initialData from './data';
 // Modify with your startup's name!
 var startupName = "scrumSpace";
 
-// DISABLED UNTIL ABHAY FIXES SERVER SIDE RENDERING :(
-// var data = JSON.parse(localStorage.getItem(startupName));
-// if (data === null) {
-//   data = JSONClone(initialData);
-// }
-// var data = JSONClone(initialData);
-
 var data;
 
 /**

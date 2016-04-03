@@ -1,14 +1,5 @@
 var initialData = require('./data');
 
-// Modify with your startup's name!
-//var startupName = "scrumSpace";
-
-// DISABLED UNTIL ABHAY FIXES SERVER SIDE RENDERING :(
-// var data = JSON.parse(localStorage.getItem(startupName));
-// if (data === null) {
-//   data = JSONClone(initialData);
-// }
-// var data = JSONClone(initialData);
 
 var data;
 // If 'true', the in-memory object representing the database has changed,

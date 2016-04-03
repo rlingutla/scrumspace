@@ -1,0 +1,1 @@
+export default ['UNASSIGNED', 'DOING', 'BLOCKED', 'DONE'];
