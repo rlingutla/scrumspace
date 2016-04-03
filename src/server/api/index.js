@@ -13,6 +13,7 @@ router.use('/user/', require('./user'));
 
 // Reset database.
 router.post('/resetdb', function(req, res) {
+
   console.log("Resetting database...");
   // This is a debug route, so don't do any validation.
   database.resetDatabase();

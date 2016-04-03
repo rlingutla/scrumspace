@@ -1,4 +1,3 @@
-
 const xDaysAgoInUnixTime = (x) => {
 	return Date.now() - 1000* 60 * 60 * 24 * x;
 };
@@ -73,12 +72,12 @@ var initialData = {
 	projects: [
 	{
 		'_id': 0,
-		'title': 'Drumpf',
-		'description': 'Make America Great Again',
+		'title': 'Facebook',
+		'description': 'Build out web properties for minimally viable product',
 		'users': [0],
 		'status': 'sprint',
 		'current_sprint': 0,
-		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
+		'avatar': 'http://images.forbes.com/media/lists/companies/facebook_416x416.jpg',
 		'sprints': [
 			{
 				'_id': 0,
@@ -86,182 +85,34 @@ var initialData = {
 				'start_date': (new Date()).getTime(),
 				'duration': 14,
 				'scrum_time': '9:00 AM'
-			},
-			{
-				'_id': 1,
-				'name': 'V2 Release',
-				'duration': 7,
-				'start_date': null,
-				'scrum_time': '9:00 AM'
 			}
 		],
-		'stories': [
-			{
-				'_id': 'DT-S0',
-				'title': 'Buy Hats',
-				'description': 'Design Hats \nOrder Hats\nSell Hats',
-				'sprint_id': 0,
-				'tasks': [
-					{
-						'_id': 0,
-						'status': 'UNASSIGNED',
-						'blockedBy': [],
-						'assignedTo': [
-							{
-								'_id': 0,
-								'first_name': 'John',
-								'last_name': 'Vilk',
-								'email': 'jvilk@umass.edu',
-								'display_name': 'VilkBot',
-								'password': 'catinthehat',
-								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
-							},
-							{
-								'_id': 1,
-								'first_name': 'Abhay',
-								'last_name': 'Vatsa',
-								'email': 'someemail',
-								'display_name': 'Abhay Vatsa',
-								'password': 'd4866854120e8bb207d6f8e11fce8b99',
-								'avatar_url': 'http://www.abhayvatsa.com/img/abhay.png'
-							}
-						],
-						'description': 'Find a Designer',
-						'history': [{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(2),
-							modifiedUser : 0
-						}],
-						'attachments': null
-					},
-					{
-						'_id': 1,
-						'status': 'UNASSIGNED',
-						'assignedTo': [],
-						'blockedBy': [],
-						'description': 'Make Mexico pay for it',
-						'history': [{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(4),
-							modifiedUser : 0
-						}],
-						'attachments': null
-					},
-					{
-						'_id': 2,
-						'status': 'DONE',
-						'blockedBy': [],
-						'assignedTo': [
-							{
-								'_id': 0,
-								'first_name': 'John',
-								'last_name': 'Vilk',
-								'email': 'jvilk@umass.edu',
-								'display_name': 'VilkBot',
-								'password': 'catinthehat',
-								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
-							}
-						],
-						'description': 'Make Donald Drumpf again',
-						'history': [{
-							fromStatus: 'UNASSIGNED',
-							toStatus: 'BLOCKED',
-							modifiedTime: xDaysAgoInUnixTime(2),
-							modifiedUser : 0
-						},{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(1),
-							modifiedUser : 0
-						}],
-						'attachments': null
-					},
-					{
-						'_id': 3,
-						'status': 'DONE',
-						'assignedTo': [],
-						'blockedBy': [],
-						'description': 'Replace Donald\'s Toupee',
-						'history': [{
-							fromStatus: 'DOING',
-							toStatus: 'DONE',
-							modifiedTime: xDaysAgoInUnixTime(1),
-							modifiedUser : 0
-						},{
-							fromStatus: 'UNASSIGNED',
-							toStatus: 'DOING',
-							modifiedTime: xDaysAgoInUnixTime(3),
-							modifiedUser : 0
-						},{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(5),
-							modifiedUser : 0
-						}],
-						'attachments': null
-					}
-				]
-			},
-			{
-				'_id': 'DT-S1',
-				'title': 'Win',
-				'description': 'Win Win Win\nNo matter what',
-				'sprint_id': 0,
-				'tasks': [
-					{
-						'_id': 0,
-						'status': 'UNASSIGNED',
-						'blockedBy': [],
-						'assignedTo': [
-							{
-								'_id': 0,
-								'first_name': 'John',
-								'last_name': 'Vilk',
-								'email': 'jvilk@umass.edu',
-								'display_name': 'VilkBot',
-								'password': 'catinthehat',
-								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
-							}
-						],
-						'description': 'Beat hilldawg',
-						'history': [{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(3),
-							modifiedUser : 0
-						}],
-						'attachments': null
-					}
-				]
-			}
-		],
-		'commits': [3,1,6,4,8],
-		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
-		'gCommits': [12,10,4,6,5,6],
-		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
-
-	},
-	{
-		'_id': 1,
-		'title': 'Feel the Bern',
-		'description': 'Fight the Power',
-		'users': [0],
-		'status': 'planning',
-		'current_sprint': null,
-		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
-		'sprints': [],
-		'stories': [],
-		'commits':[4,7,2,8,9],
-		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
-		'gCommits':[18,15,6,9,11,13],
-		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
-
-	}
-	]
+		'stories': [{
+			'story_id': 'DT-S0',
+			'title': '',
+			'description': 'Design Hats \nOrder Hats\nSell Hats',
+			'sprint_id': 0,
+			'tasks': [
+				{
+				  '_id': 3,
+				  'status': 'UNASSIGNED',
+				  'assigned_to': [],
+				  'blocked_by': [],
+				  'description': 'Build out React',
+				  'history': {
+				    'elements': [
+				      {
+				        'fromStatus': null,
+				        'toStatus': 'UNASSIGNED',
+				        'modifiedTime': 1,
+				        'modifiedUser': 0
+				      }
+				    ]
+				  }
+				}
+		  ]
+		}]
+	}]
 };
 
 export default initialData;

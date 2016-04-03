@@ -20,6 +20,8 @@ export default class ProjectMaster extends React.Component{
 	changeModal(){
     	this.setState({modalIsOpen : !this.state.modalIsOpen});
 			this.setState({users: this.emptyList});
+			this.setState({title: ''});
+			this.setState({description: ''});
 	}
 
 	render() {

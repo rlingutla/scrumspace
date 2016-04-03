@@ -5,10 +5,6 @@ import express from 'express';
 import entry from './entry';
 import morgan from 'morgan';
 
-import story from './schemas/story';
-
-console.log(story);
-
 var app = express();
 var bodyParser = require('body-parser');
 

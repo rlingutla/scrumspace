@@ -8,7 +8,7 @@ export default {
       'type': 'integer'
     },
     'status': {
-      'type': 'string'
+      'type': ["UNASSIGNED", "DOING", "BLOCKED", "DONE"]
     },
     'blocked_by': {
       'type': 'array',
