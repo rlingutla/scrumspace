@@ -235,61 +235,15 @@ export function serverRemoveSprint(project, sprint){
 	});
 }
 
-export function serverMakeNewStory(project, title, description, tasks, story){
-	//story does not need to be passed through
-	var projects = readDocument('projects');
-	var project_i, story_i, sprint_id;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].stories.length && typeof story !== 'undefined'; j++){
-				if(projects[i].stories[j]._id === story){
-					story_i = j;
-					sprint_id = projects[i].stories[j].sprint_id;
-					break;
-				}
-			}
-			break;
-		}
-	}
-	if(typeof story === 'undefined'){
-		story_i = projects[project_i].stories.length;
-		sprint_id = null;
-	}
-	//remove any empty tasks
-	tasks = tasks.filter((e) => {
-		if(e.description === '')
-			return false;
-		else
-			return true;
-	});
-	var newTasks = [];
-	for(let i = 0; i < tasks.length; i++){
-		newTasks[i] = {
-			'_id': i,
-			'status': 'UNASSIGNED',
-			'assigned_to': [],
-			'description': tasks[i].description,
-			'history': [{
-				from_status: null,
-				to_status: 'UNASSIGNED',
-				modified_time: Date.now(),
-				modified_user : 0
-			}],
-			'attachements': null
-		};
-	}
-	let newStory = {
-		'_id': 'DT-S' + story_i,
-		'title': title,
-		'description': description,
-		'sprint_id': sprint_id,
-		'tasks': newTasks
-	};
-	projects[project_i].stories[story_i] = newStory;
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+// todo make this post new story
+export function serverMakeNewStory(projectId, title, description, tasks, storyId){
+	return sendXHRPromise('POST', '/api/project/'+projectId+'/story/', {
+		title,
+		description,
+		tasks
+	}).then((response) => {
+		return response;
+	});	
 }
 
 /*
