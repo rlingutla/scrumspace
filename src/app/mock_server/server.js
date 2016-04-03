@@ -259,7 +259,9 @@ export function serverRemoveStory(project, story){
 	return emulateServerReturn(projects[project_i], false);
 }
 export function serverRemoveSprint(project, sprint){
-	sendXHR('DELETE', '/project/'+project+'/sprint/'+sprint)
+	return sendXHRPromise('DELETE', 'api/project/'+project+'/sprint/'+sprint, undefined).then((response) => {
+		return response.data;
+	});
 }
 
 export function serverMakeNewStory(project, title, description, tasks, story){
