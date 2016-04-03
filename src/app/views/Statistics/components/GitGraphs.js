@@ -13,10 +13,12 @@ const lineOptions = {
 
 
 const GitGraphs = (props) => {
+
 	const barData = {
 	    labels: props.timeFrame,
 	    datasets: [
 	        {
+	          strokeColor: props.color,
 	          fillColor: props.color,
             data: props.commits
 	        }

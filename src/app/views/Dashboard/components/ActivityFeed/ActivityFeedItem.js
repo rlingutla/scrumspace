@@ -16,19 +16,19 @@ const style = (borderColor) => {
 	};
 };
 
-const getStatusString = (fromStatus, toStatus) => {
-	if (!fromStatus) {
+const getStatusString = (from_status, to_status) => {
+	if (!from_status) {
 		return ' was created.';
 	} else {
-		return 'was moved from ' + fromStatus + ' to ' + toStatus + '.';
+		return 'was moved from ' + from_status + ' to ' + to_status + '.';
 	}
 };
 
 export default (props) => {
 	const history = props.activity;
 	return (
-		<div style={style(taskTypes[history.toStatus].color)}>
-			<span>{history.task.description} {getStatusString(history.fromStatus, history.toStatus)}</span>
+		<div style={style(taskTypes[history.to_status].color)}>
+			<span>{history.task.description} {getStatusString(history.from_status, history.to_status)}</span>
 		</div>
 	);
 };

@@ -68,7 +68,7 @@ export function serverUpdateTask(project_id, story_id, changedTask){
 				if(story._id === story_id){
 					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
 						if(task._id === changedTask._id){
-							let historyItem = { fromStatus: task.status, toStatus: changedTask.status, modifiedTime: Date.now(), modifiedUser: getCurrentUser()};
+							let historyItem = { from_status: task.status, to_status: changedTask.status, modified_time: Date.now(), modified_user: getCurrentUser()};
 
 							updatedTask = Object.assign({}, task, changedTask, {
 								history: [
@@ -104,7 +104,7 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 				if(story._id === story_id){
 					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
 						if(task._id === task_id){
-							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: Date.now(), modifiedUser: getCurrentUser()};
+							let historyItem = { from_status: task.status, to_status: toType, modified_time: Date.now(), modified_user: getCurrentUser()};
 
 							updatedTask = Object.assign({}, task, {
 								status: toType,
@@ -298,13 +298,13 @@ export function serverMakeNewStory(project, title, description, tasks, story){
 		newTasks[i] = {
 			'_id': i,
 			'status': 'UNASSIGNED',
-			'assignedTo': [],
+			'assigned_to': [],
 			'description': tasks[i].description,
 			'history': [{
-				fromStatus: null,
-				toStatus: 'UNASSIGNED',
-				modifiedTime: Date.now(),
-				modifiedUser : 0
+				from_status: null,
+				to_status: 'UNASSIGNED',
+				modified_time: Date.now(),
+				modified_user : 0
 			}],
 			'attachements': null
 		};

@@ -22,13 +22,13 @@ class TaskDetailModal extends React.Component{
 				value: props.task.description,
 				editing: false
 			},
-			assignedTo: []
+			assigned_to: []
 		};
 	}
 
-	setAssignedTo(members) {
+	setAssigned_to(members) {
 		this.setState({
-			assignedTo: members
+			assigned_to: members
 		});
 	}
 
@@ -70,21 +70,21 @@ class TaskDetailModal extends React.Component{
 	addMembers(){
 		let task = Object.assign({}, 
 			this.props.task, 
-			{assignedTo: [
-				...this.props.task.assignedTo,
-				...this.state.assignedTo
+			{assigned_to: [
+				...this.props.task.assigned_to,
+				...this.state.assigned_to
 			]}
 		);
 		// update the task
 		this.props.updateTask(task.project_id, task.story_id, task);
-		this.setState({assignedTo: []});
+		this.setState({assigned_to: []});
 	}
 
 	removeMember(user){
 		let task = Object.assign({}, 
 			this.props.task, 
-			//new assignedTo array with user removed
-			{assignedTo: this.props.task.assignedTo.filter((member) => member._id !== user._id)}
+			//new assigned_to array with user removed
+			{assigned_to: this.props.task.assigned_to.filter((member) => member._id !== user._id)}
 		);
 		// update the task
 		this.props.updateTask(task.project_id, task.story_id, task);
@@ -92,7 +92,7 @@ class TaskDetailModal extends React.Component{
 
 	//filter out already assigned users
 	filterAssignedList(option,filter){
-		let user = this.props.task.assignedTo.find((user) => (user._id === option._id));
+		let user = this.props.task.assigned_to.find((user) => (user._id === option._id));
 		return (user) ? false : true;
 	}
 
@@ -121,10 +121,10 @@ class TaskDetailModal extends React.Component{
 						<br/>
 						<Row className="left-right-align">
 							<Col xs={8}>
-								{(this.props.task.assignedTo.length > 0) ? 
+								{(this.props.task.assigned_to.length > 0) ? 
 									<div>
 										<h5>Assigned To:</h5>
-										{this.props.task.assignedTo.map((user,i) => {
+										{this.props.task.assigned_to.map((user,i) => {
 											return (
 												<ButtonGroup style={{paddingBottom: '10px', marginRight: '10px'}} key={i}>
 													<Button className="fake"><AssignedMember {...user} /></Button>
@@ -143,10 +143,10 @@ class TaskDetailModal extends React.Component{
 									collection="users"
 									labelKey="display_name" 
 									valueKey="_id" 
-									updateState={(members) => this.setAssignedTo(members)} 
+									updateState={(members) => this.setAssigned_to(members)} 
 									filterOption={this.filterAssignedList.bind(this)}/>
 								<Button 
-									disabled={this.state.assignedTo.length < 1}
+									disabled={this.state.assigned_to.length < 1}
 									style={{marginTop: '10px'}} 
 									bsStyle="primary" 
 									onClick={(e) => this.addMembers(e)}>

@@ -76,8 +76,8 @@ class Task extends React.Component {
 				    <div className="header" style={{borderColor: TaskTypes[this.props.status].color}}>
 				    	<div style={{flexGrow:1}}><a>{this.props._id}</a></div>
 				    	<div>
-				    		{(this.props.assignedTo.length > 0) ? 
-				    			this.props.assignedTo.map((user, i) => {
+				    		{(this.props.assigned_to.length > 0) ? 
+				    			this.props.assigned_to.map((user, i) => {
 				    				return <span key={i} className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}>yo</span>
 				    			}):null
 				    		}
@@ -87,7 +87,7 @@ class Task extends React.Component {
 				    	<p>{this.props.description}</p>
 				    </div>
 				    <div className="task-info">
-				    	{(this.props.blockedBy.length > 0) ? <BlockedTasks blockedBy={this.props.blockedBy} />:null}
+				    	{(this.props.blocked_by.length > 0) ? <BlockedTasks blockedBy={this.props.blocked_by} />:null}
 				    </div>
 
 				    <div className="footer"></div>

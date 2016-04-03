@@ -105,8 +105,8 @@ var initialData = {
 					{
 						'_id': 0,
 						'status': 'UNASSIGNED',
-						'blockedBy': [],
-						'assignedTo': [
+						'blocked_by': [],
+						'assigned_to': [
 							{
 								'_id': 0,
 								'first_name': 'John',
@@ -128,32 +128,32 @@ var initialData = {
 						],
 						'description': 'Find a Designer',
 						'history': [{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(2),
-							modifiedUser : 0
+							from_status: null,
+							to_status: 'UNASSIGNED',
+							modified_time: xDaysAgoInUnixTime(2),
+							modified_user : 0
 						}],
 						'attachments': null
 					},
 					{
 						'_id': 1,
 						'status': 'UNASSIGNED',
-						'assignedTo': [],
-						'blockedBy': [],
+						'assigned_to': [],
+						'blocked_by': [],
 						'description': 'Make Mexico pay for it',
 						'history': [{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(4),
-							modifiedUser : 0
+							from_status: null,
+							to_status: 'UNASSIGNED',
+							modified_time: xDaysAgoInUnixTime(4),
+							modified_user : 0
 						}],
 						'attachments': null
 					},
 					{
 						'_id': 2,
 						'status': 'DONE',
-						'blockedBy': [],
-						'assignedTo': [
+						'blocked_by': [],
+						'assigned_to': [
 							{
 								'_id': 0,
 								'first_name': 'John',
@@ -166,39 +166,39 @@ var initialData = {
 						],
 						'description': 'Make Donald Drumpf again',
 						'history': [{
-							fromStatus: 'UNASSIGNED',
-							toStatus: 'BLOCKED',
-							modifiedTime: xDaysAgoInUnixTime(2),
-							modifiedUser : 0
+							from_status: 'UNASSIGNED',
+							to_status: 'BLOCKED',
+							modified_time: xDaysAgoInUnixTime(2),
+							modified_user : 0
 						},{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(1),
-							modifiedUser : 0
+							from_status: null,
+							to_status: 'UNASSIGNED',
+							modified_time: xDaysAgoInUnixTime(1),
+							modified_user : 0
 						}],
 						'attachments': null
 					},
 					{
 						'_id': 3,
 						'status': 'DONE',
-						'assignedTo': [],
-						'blockedBy': [],
+						'assigned_to': [],
+						'blocked_by': [],
 						'description': 'Replace Donald\'s Toupee',
 						'history': [{
-							fromStatus: 'DOING',
-							toStatus: 'DONE',
-							modifiedTime: xDaysAgoInUnixTime(1),
-							modifiedUser : 0
+							from_status: 'DOING',
+							to_status: 'DONE',
+							modified_time: xDaysAgoInUnixTime(1),
+							modified_user : 0
 						},{
-							fromStatus: 'UNASSIGNED',
-							toStatus: 'DOING',
-							modifiedTime: xDaysAgoInUnixTime(3),
-							modifiedUser : 0
+							from_status: 'UNASSIGNED',
+							to_status: 'DOING',
+							modified_time: xDaysAgoInUnixTime(3),
+							modified_user : 0
 						},{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(5),
-							modifiedUser : 0
+							from_status: null,
+							to_status: 'UNASSIGNED',
+							modified_time: xDaysAgoInUnixTime(5),
+							modified_user : 0
 						}],
 						'attachments': null
 					}
@@ -213,8 +213,8 @@ var initialData = {
 					{
 						'_id': 0,
 						'status': 'UNASSIGNED',
-						'blockedBy': [],
-						'assignedTo': [
+						'blocked_by': [],
+						'assigned_to': [
 							{
 								'_id': 0,
 								'first_name': 'John',
@@ -227,10 +227,10 @@ var initialData = {
 						],
 						'description': 'Beat hilldawg',
 						'history': [{
-							fromStatus: null,
-							toStatus: 'UNASSIGNED',
-							modifiedTime: xDaysAgoInUnixTime(3),
-							modifiedUser : 0
+							from_status: null,
+							to_status: 'UNASSIGNED',
+							modified_time: xDaysAgoInUnixTime(3),
+							modified_user : 0
 						}],
 						'attachments': null
 					}
