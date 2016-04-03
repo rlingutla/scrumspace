@@ -21,7 +21,7 @@ router.get('/search', function(req,res){
 				'email': user.email,
 				'display_name': user.display_name,
 				'avatar_url': user.avatar_url
-			}
+			};
 		});
 	}
 	return res.send(searchResults);
@@ -29,8 +29,8 @@ router.get('/search', function(req,res){
 
 router.get('/:id', function(req,res){
 	res.send({
-		"_id": req.params.id,
-		"name": "dylan"
+		'_id': req.params.id,
+		'name': 'dylan'
 	});
 });
 
