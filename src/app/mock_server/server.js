@@ -126,28 +126,6 @@ export function serverPutTaskState(project_id, story_id, task_id, toType){
 	return emulateServerReturn(updatedTask, updatedTask === undefined);
 }
 
-export function serverPutStory(project_id, newStory){
-	let projects = readDocument('projects');
-	let updatedProject, updatedStory;
-	projects.map((project) => {
-		if(project._id == project_id){
-			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-				if(story._id === newStory._id){
-					updatedStory = Object.assign({}, newStory);
-					return updatedStory;
-				}
-				else return story;
-			})});
-			return updatedProject;
-		}
-		else return project;
-	});
-	//write updated project object to server
-	writeDocument('projects', updatedProject);
-	serverLog('DB Updated', updatedStory);
-	return emulateServerReturn(updatedStory, updatedStory === undefined);
-}
-
 export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
 stories,commits,timeFrame,membersOnProj,gCommits,color){
 	// read in all projects, access last project in the array, get it's ID and increment that value
@@ -197,21 +175,21 @@ export function serverPostSprint(project, name, duration, time, sprint){
 	}
 }
 
+// TODO, RENAME SERVER PUT STORY SPRINT ID
 export function serverMoveStory(projectId, storyId, sprintId){
-	return sendXHRPromise("PUT", "/api/project/" + projectId  + "/story/" + storyId, {
-		sprintId: sprintId
-	}).then((response) => {
+	return sendXHRPromise('PUT', '/api/project/' + projectId  + '/story/' + storyId + '/sprint_id/' + sprintId, 
+	{}).then((response) => {
 		return response;
 	});
 }
 export function serverRemoveStory(project, story){
 	var projects = readDocument('projects');
 	var project_i, story_i;
-	for(let i = 0; i < projects.length; i++){
+	for (let i = 0; i < projects.length; i++){
 		if (projects[i]._id === project) {
 			project_i = i;
-			for(let j = 0; j < projects[i].stories.length; j++){
-				if(projects[i].stories[j]._id === story){
+			for (let j = 0; j < projects[i].stories.length; j++){
+				if (projects[i].stories[j]._id === story){
 					story_i = j;
 					break;
 				}
@@ -236,14 +214,23 @@ export function serverRemoveSprint(project, sprint){
 }
 
 // todo make this post new story
-export function serverMakeNewStory(projectId, title, description, tasks, storyId){
-	return sendXHRPromise('POST', '/api/project/'+projectId+'/story/', {
-		title,
-		description,
-		tasks
-	}).then((response) => {
-		return response;
-	});	
+export function serverMakeNewStory(projectId, title, description, tasks, story){
+	console.log(tasks);	
+	if (story) { // if there is no story defined, this post a new story
+		return sendXHRPromise('POST', '/api/project/' + projectId + '/story/', {
+			title,
+			description,
+			tasks
+		}).then((response) => {
+			return response;
+		});			
+	} else {
+		return sendXHRPromise('PUT', '/api/project/' + project_id  + '/story/' + story._id, {
+			story
+		}).then((response) => {
+			return response;
+		});	
+	}
 }
 
 /*

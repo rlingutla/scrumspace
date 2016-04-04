@@ -22,6 +22,36 @@ router.get('/:id', function(req,res){
 	res.send({'_id': req.params.id});
 });
 
+// update a story
+router.put('/:project_id/story/:story_id', function(req, res) {
+	console.log('newstory');
+	var project_id = parseInt(req.params.project_id);
+	var title = req.body.title;
+	var description = req.body.description;
+	var tasks = req.body.tasks;
+	var story = req.body.story;
+	console.log(story);
+
+	let projects = readDocument('projects');
+	let updatedProject, updatedStory;
+	projects.map((project) => {
+		if(project._id === project_id){
+			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
+				if(story._id === story._id){
+					updatedStory = Object.assign({}, story);
+					return updatedStory;
+				}
+				else return story;
+			})});
+			return updatedProject;
+		}
+		else return project;
+	});
+	//write updated project object to server
+	writeDocument('projects', updatedProject);
+	res.send(updatedStory);
+});
+
 
 // Post a new story
 router.post('/:project_id/story', function(req, res) {
@@ -29,7 +59,7 @@ router.post('/:project_id/story', function(req, res) {
 	var title = req.body.title;
 	var description = req.body.description;
 	var tasks = req.body.tasks;
-	var storyId = req.body.storyId;
+	var storyId = (req.body.storyId === "null") ? null : req.body.storyId; // todo: noooo!
 
 	var projects = readDocument('projects');
 
@@ -92,11 +122,11 @@ router.post('/:project_id/story', function(req, res) {
 });
 
 
-// update story
-router.put('/:project_id/story/:story_id', function (req, res) {
+// update story.sprint_id
+router.put('/:project_id/story/:story_id/sprint_id/:sprint_id', function (req, res) {
 	var projectId = parseInt(req.params.project_id, 10);
 
-	var sprintId = parseInt(req.body.sprintId, 10);
+	var sprintId = parseInt(req.params.sprint_id, 10);
 	var projects = readDocument('projects');
 	var project_i, story_i;
 	
