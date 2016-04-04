@@ -5,6 +5,8 @@ var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 var StandardError = require('../api/shared/StandardError');
 
+var _ = require('underscore');
+
 //Task
 module.exports.update = function(args){
 	//TODO refactor to just grab the single project
@@ -77,11 +79,7 @@ module.exports.assignUser = function(args){
 							history: [
 								...task.history //TODO do history stuff
 							],
-							assigned_to: (task.assigned_to.indexOf(args.user_id) < 0) ? 
-							[
-								...task.assigned_to,
-								args.user_id
-							]:[...task.assigned_to]
+							assigned_to: _.union(task.assigned_to, args.users)
 						});
 						return updatedTask;
 					} else return task;
@@ -117,12 +115,7 @@ module.exports.assignBlocking = function(args){
 							history: [
 								...task.history //TODO do history stuff
 							],
-							//if task does not exist
-							blocked_by: (task.blocked_by.indexOf(args.blocked_task_id) < 0) ? 
-							[
-								...task.blocked_by,
-								args.blocked_task_id
-							]:[...task.blocked_by]
+							blocked_by: _.union(task.blocked_by, args.blocking_tasks)
 						});
 						return updatedTask;
 					} else return task;

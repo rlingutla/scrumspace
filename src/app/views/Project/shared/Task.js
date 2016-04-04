@@ -12,7 +12,7 @@ import _ from 'underscore';
 
 import { DragSource } from 'react-dnd';
 
-import { updateTask } from '../../../actions/';
+import { updateTask, assignUsersToTask, assignBlockingTasks } from '../../../actions/';
 
 const taskSource = {
 	beginDrag(props){
@@ -123,9 +123,15 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 //maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
   return {
-  	updateTask: (project_id, story_id, task) => {
+  	updateTask: (project_id, story_id, task_id, status, description) => {
   		// dispatch(changeTaskState(project_id, story_id, task_id, toType));
-  		dispatch(updateTask(project_id, story_id, task));
+  		dispatch(updateTask(project_id, story_id, task_id, status, description));
+  	},
+  	assignUsers: (project_id, story_id, task_id, users) => {
+  		dispatch(assignUsersToTask(project_id, story_id, task_id, users));
+  	},
+  	assignBlocking: (project_id, story_id, task_id, tasks) => {
+  		dispatch(assignBlockingTasks(project_id, story_id, task_id, tasks));
   	}
   };
 };

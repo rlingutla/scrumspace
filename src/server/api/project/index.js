@@ -170,6 +170,7 @@ router.delete('/:projectid/sprint/:sprintid', function(req, res){
 
 //Task Routes
 router.put('/:project_id/story/:story_id/task/:task_id', validate({ body: TaskSchema }), function(req,res){
+	console.log("hit update", req.body);
 	let user = getUserIdFromToken(req.get('Authorization'));
 	if(checkAuthFromProject(user, req.params.project_id)){
 		Task.update({
@@ -184,38 +185,46 @@ router.put('/:project_id/story/:story_id/task/:task_id', validate({ body: TaskSc
     	res.status(401).end();
 	}
 });
-router.put('/:project_id/story/:story_id/task/:task_id/assigned_to/:user_id', function(req,res){
+router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(req,res){
 	let user = getUserIdFromToken(req.get('Authorization'));
 	if(checkAuthFromProject(user, req.params.project_id)){
-		Task.assignUser({
-			project_id: parseInt(req.params.project_id, 10), 
-			story_id: parseInt(req.params.story_id, 10), 
-			task_id: parseInt(req.params.task_id, 10),
-			user_id: parseInt(req.params.user_id, 10)
-		}).then(
-			(task) => res.send({data: task}),  
-       		(err) => res.sendStatus(404)
-       	);
+		if(Array.isArray(req.body.users)){
+			Task.assignUser({
+				project_id: parseInt(req.params.project_id, 10), 
+				story_id: parseInt(req.params.story_id, 10), 
+				task_id: parseInt(req.params.task_id, 10),
+				users: req.body.users
+			}).then(
+				(task) => res.send({data: task}),  
+	       		(err) => res.sendStatus(404)
+	       	);
+		}
+		else res.sendStatus(400);
+		
 	} else{
 		// 401: Unauthorized.
-    	res.status(401).end();
+    	res.sendStatus(401);
 	}
 });
-router.put('/:project_id/story/:story_id/task/:task_id/blocked_by/:blocked_task_id', function(req,res){
+
+router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req,res){
 	let user = getUserIdFromToken(req.get('Authorization'));
 	if(checkAuthFromProject(user, req.params.project_id)){
-		Task.assignBlocking({
-			project_id: parseInt(req.params.project_id, 10), 
-			story_id: parseInt(req.params.story_id, 10), 
-			task_id: parseInt(req.params.task_id, 10),
-			blocked_task_id: parseInt(req.params.blocked_task_id, 10)
-		}).then(
-			(task) => res.send({data: task}),  
-       		(err) => res.sendStatus(404)
-       	);
+		if(Array.isArray(req.body.blocking)){
+			Task.assignBlocking({
+				project_id: parseInt(req.params.project_id, 10), 
+				story_id: parseInt(req.params.story_id, 10), 
+				task_id: parseInt(req.params.task_id, 10),
+				blocking_tasks: req.body.blocking
+			}).then(
+				(task) => res.send({data: task}),  
+	       		(err) => res.sendStatus(404)
+	       	);
+		}
+		else res.sendStatus(400);
 	} else{
 		// 401: Unauthorized.
-    	res.status(401).end();
+    	res.sendStatus(401);
 	}
 });
 
