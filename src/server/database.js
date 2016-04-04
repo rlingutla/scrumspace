@@ -35,15 +35,16 @@ function readDocument(collection, id) {
   if (!collectionObj) {
     throw new Error(`Object collection ${collection} does not exist in the database!`);
   }
-  if(id){
+  if(typeof id != 'undefined'){
     var obj = collectionObj[id];
     if (obj === undefined) {
       throw new Error(`Object ${id} does not exist in object collection ${collection} in the database!`);
     }
     return JSONClone(data[collection][id]);
   }
-  else return JSONClone(collectionObj);
-  
+  else{
+    return JSONClone(collectionObj);
+  }
 }
 module.exports.readDocument = readDocument;
 

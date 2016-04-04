@@ -97,7 +97,7 @@ var initialData = {
 		],
 		'stories': [
 			{
-				'_id': 'DT-S0',
+				'_id': 0,
 				'title': 'Buy Hats',
 				'description': 'Design Hats \nOrder Hats\nSell Hats',
 				'sprint_id': 0,
@@ -205,7 +205,7 @@ var initialData = {
 				]
 			},
 			{
-				'_id': 'DT-S1',
+				'_id': 1,
 				'title': 'Win',
 				'description': 'Win Win Win\nNo matter what',
 				'sprint_id': 0,

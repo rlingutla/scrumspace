@@ -1,0 +1,160 @@
+'use strict';
+
+var database = require('../database');
+var readDocument = database.readDocument;
+var writeDocument = database.writeDocument;
+var StandardError = require('../api/shared/StandardError');
+
+module.exports = {}
+
+//Task
+module.exports.update = function(args){
+	//TODO refactor to just grab the single project
+	let projects = readDocument('projects');
+	let updatedTask, updatedProject;
+
+	return new Promise((resolve, reject) => {
+
+		projects.map((project) => {
+			if(project._id === args.project_id){
+				updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
+					if(story._id === args.story_id){
+						return Object.assign({}, story, { tasks: story.tasks.map((task) => {
+							if(task._id === args.task_id){
+								//define a new history item if status is changed TODO: expand to more types of history objects
+								let historyItem = (args.status) ? { 
+									from_status: task.status, 
+									to_status: args.status, 
+									modified_time: Date.now(), 
+									modified_user: args.user}:{}
+
+								let updatedFields = {};
+								if(args.status){
+									updatedFields.status = args.status;
+								}
+								if(args.description){
+									updatedFields.description = args.description;
+								}
+
+								updatedTask = Object.assign({}, task, updatedFields, {
+									history: [
+										...task.history,
+										historyItem
+									]
+								});
+								return updatedTask;
+							} else return task;
+						})});
+					} else return story;
+				})});
+				return updatedProject;
+			} else return project;
+		});
+
+		if(typeof updatedTask === undefined) {
+			return reject(StandardError({
+				status: 404,
+				title: 'OBJECT_NOT_FOUND'
+			}));
+		}
+
+		//write updated project object to server
+		writeDocument('projects', updatedProject);
+		// console.log('DB Updated', updatedTask);
+		
+		//resolve promise
+		return resolve(updatedTask);
+	});
+}
+
+module.exports.assignUser = function(args){
+	let project = readDocument('projects', args.project_id);
+	let updatedTask, updatedProject;
+
+	return new Promise((resolve, reject) => {
+		updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
+			if(story._id === args.story_id){
+				return Object.assign({}, story, { tasks: story.tasks.map((task) => {
+					if(task._id === args.task_id){
+						updatedTask = Object.assign({}, task, {
+							history: [
+								...task.history //TODO do history stuff
+							],
+							assigned_to: (task.assigned_to.indexOf(args.user_id) < 0) ? 
+							[
+								...task.assigned_to,
+								args.user_id
+							]:[...task.assigned_to]
+						});
+						return updatedTask;
+					} else return task;
+				})});
+			} else return story;
+		})});
+
+		if(typeof updatedTask === undefined) {
+			return reject(StandardError({
+				status: 404,
+				title: 'OBJECT_NOT_FOUND'
+			}));
+		}
+
+		//write updated project object to server
+		writeDocument('projects', updatedProject);
+		// console.log('DB Updated', updatedTask);
+		
+		//resolve promise
+		return resolve(updatedTask);
+	});
+}
+
+
+module.exports.assignBlocking = function(args){
+	let project = readDocument('projects', args.project_id);
+	let updatedTask, updatedProject;
+
+	return new Promise((resolve, reject) => {
+		updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
+			if(story._id === args.story_id){
+				return Object.assign({}, story, { tasks: story.tasks.map((task) => {
+					if(task._id === args.task_id){
+						updatedTask = Object.assign({}, task, {
+							history: [
+								...task.history //TODO do history stuff
+							],
+							//if task does not exist
+							blocked_by: (task.blocked_by.indexOf(args.blocked_task_id) < 0) ? 
+							[
+								...task.blocked_by,
+								args.blocked_task_id
+							]:[...task.blocked_by]
+						});
+						return updatedTask;
+					} else return task;
+				})});
+			}
+			else return story;
+		})});
+
+		console.log("updatedProject", updatedProject);
+
+		if(typeof updatedTask === undefined) {
+			return reject(StandardError({
+				status: 404,
+				title: 'OBJECT_NOT_FOUND'
+			}));
+		}
+
+		//write updated project object to server
+		writeDocument('projects', updatedProject);
+		// console.log('DB Updated', updatedTask);
+		
+		//resolve promise
+		return resolve(updatedTask);
+	});
+}
+	
+// module.exports = {
+// 	update: update,
+// 	assignUser
+// }
