@@ -66,14 +66,16 @@ class TaskBin extends React.Component {
 	}
 
 	assignUsersAndMove(users, target, task){
-		task.assignUsers(task.project_id, task.story_id, task._id, users);
+		let userIDs = users.map((user) => user._id);
+		task.assignUsers(task.project_id, task.story_id, task._id, userIDs);
 		task.updateTask(task.project_id, task.story_id, task._id, target.title);
 
 		this.toggleModal('assignUserModal', false);
 	}
 
 	assignBlockedAndMove(blockingTasks, target, task){
-		task.assignBlocking(task.project_id, task.story_id, task._id, blockingTasks);
+		let taskIDs = blockingTasks.map((task) => task._id);
+		task.assignBlocking(task.project_id, task.story_id, task._id, taskIDs);
 		task.updateTask(task.project_id, task.story_id, task._id, target.title);
 
 		this.toggleModal('blockedTaskModal', false);

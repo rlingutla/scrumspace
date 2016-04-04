@@ -32,7 +32,9 @@ class TaskDetailModal extends React.Component{
 		this.setState({
 			assigned_to: members
 		});
-		this.props.task.assignUsers(this.props.task.project_id, this.props.task.story_id, this.props.task._id, members);
+
+		let memberIDs = members.map((member) => member._id);
+		this.props.task.assignUsers(this.props.task.project_id, this.props.task.story_id, this.props.task._id, memberIDs);
 	}
 
 	toggleEdit(target, value){
@@ -74,7 +76,8 @@ class TaskDetailModal extends React.Component{
 		this.setState({
 			blocked_by: tasks
 		});
-		this.props.task.assignBlocking(this.props.task.project_id, this.props.task.story_id, this.props.task._id, tasks);
+		let taskIDs = tasks.map((task) => task._id);
+		this.props.task.assignBlocking(this.props.task.project_id, this.props.task.story_id, this.props.task._id, taskIDs);
 	}
 
 	//filter out already assigned users
