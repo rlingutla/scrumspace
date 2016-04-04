@@ -112,7 +112,7 @@ router.put('/:project_id/story/:story_id', function (req, res) {
 		if (projects[i]._id === projectId) {
 			project_i = i;
 			for(let j = 0; j < projects[i].stories.length; j++){
-				if(projects[i].stories[j]._id === req.params.story_id) {
+				if(projects[i].stories[j]._id === parseInt(req.params.story_id, 10)) {
 					story_i = j;
 					break;
 				}
