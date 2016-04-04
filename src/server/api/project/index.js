@@ -17,6 +17,9 @@ var removeSprint = sprintHelper.removeSprint;
 var authentication = require('../shared/authentication');
 var getUserIdFromToken = authentication.getUserIdFromToken;
 var checkAuthFromProject = authentication.checkAuthFromProject;
+//Utils
+var embedUsers = require('../shared/embedUsers');
+
 //Router
 var express = require('express'),
 	router = express.Router();
