@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { populateProjectEntities } from 'app/shared/utils/utils';
 
 //redux
 const mapStateToProps = (state) => {
@@ -12,7 +13,9 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	let project = projects.find((proj) => {
 		return proj._id === parseInt(ownProps.params.id, 10);
 	});
-	return Object.assign({...project}, {...ownProps});
+
+	let populatedProject = populateProjectEntities(project);
+	return Object.assign({...populatedProject}, {...ownProps});
 }
 
 //maps any actions this component dispatches to component props

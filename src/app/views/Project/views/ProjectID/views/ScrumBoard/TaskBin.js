@@ -93,6 +93,7 @@ class TaskBin extends React.Component {
 		return connectDropTarget(
 			<td id={this.props.id}>
 				<AssignUserModal 
+					users={this.props.users}
 					isModalOpen={this.state.assignUserModal.visible} 
 					hideModal={() => this.toggleModal('assignUserModal',false)}
 					callback={(users,target,task) => this.assignUsersAndMove(users,target,task)}

@@ -10,7 +10,6 @@ import { Link } from 'react-router';
 // import { getCurrentSprint } from '../../../../../shared/utils/utils'; //TODO: deprecate
 
 const BoardView = (props) => {
-
 	if (!props.status) {
 		return <div>Loading...</div>; // TODO: this checks for project data, maybe goes in below function?
 	}

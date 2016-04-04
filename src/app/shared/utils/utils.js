@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { search } from '../../mock_server/server';
 
 //Projects
 /*
@@ -45,8 +44,28 @@ export function daysDifference(startDate, endDate){
 	};
 }
 
-// FOR SERVER SIDE SEARCHING LATER
-// export function search(str, collection, key, limit){
-// 	//TODO
-// 	return search(str, collection, key, limit);
-// }
+export function populateProjectEntities(project){
+	//TODO see if we can do this more efficiently
+	let users = project.users, tasks = {};
+
+	//build references
+	project.stories.forEach((story) => {
+		tasks[story._id] = {};
+		story.tasks.forEach((task) => {
+			tasks[task._id] = task;
+		});
+	});
+
+	let stories = project.stories.map((story) => {
+		return Object.assign({}, story, { tasks: story.tasks.map((task) => {
+			let assigned = task.assigned_to.map((userID) => users[userID]);
+			let blocked = task.blocked_by.map((taskID) => tasks[taskID]);
+			return Object.assign({}, task, {
+				assigned_to: assigned,
+				blocked_by: blocked
+			});
+		})});
+	});
+
+	return Object.assign({}, project, {stories});
+};

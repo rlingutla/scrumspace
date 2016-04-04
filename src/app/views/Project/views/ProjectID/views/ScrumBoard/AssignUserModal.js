@@ -34,7 +34,7 @@ export default class AssignUserModal extends React.Component{
 					<Modal.Title>Assign a User</Modal.Title>
 				</Modal.Header>
 				<Modal.Body className="select-support">
-					<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(users) => this.setUsers(users)}/>
+					<MultiSelect users={this.props.users} labelKey="display_name" valueKey="_id" updateState={(users) => this.setUsers(users)}/>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button onClick={(e) => this.props.hideModal(e)}>Cancel</Button>

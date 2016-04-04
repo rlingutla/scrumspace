@@ -20,11 +20,11 @@ class TaskDetailModal extends React.Component{
 
 		this.state = {
 			description: {
-				value: props.task.description,
+				value: props.description,
 				editing: false
 			},
-			assigned_to: this.props.task.assigned_to || [],
-			blocked_by: this.props.task.blocked_by || []
+			assigned_to: this.props.assigned_to || [],
+			blocked_by: this.props.blocked_by || []
 		};
 	}
 
@@ -34,7 +34,7 @@ class TaskDetailModal extends React.Component{
 		});
 
 		let memberIDs = members.map((member) => member._id);
-		this.props.task.assignUsers(this.props.task.project_id, this.props.task.story_id, this.props.task._id, memberIDs);
+		this.props.assignUsers(this.props.project_id, this.props.story_id, this.props._id, memberIDs);
 	}
 
 	toggleEdit(target, value){
@@ -49,7 +49,7 @@ class TaskDetailModal extends React.Component{
 			this.toggleEdit(target, false);
 			let task = Object.assign({}, this.props.task, {description: e.target.value.trim()});
 			// update the task
-			this.props.task.updateTask(task.project_id, task.story_id, task._id, null, e.target.value.trim());
+			this.props.updateTask(task.project_id, task.story_id, task._id, null, e.target.value.trim());
 		}
 
 	}
@@ -77,22 +77,22 @@ class TaskDetailModal extends React.Component{
 			blocked_by: tasks
 		});
 		let taskIDs = tasks.map((task) => task._id);
-		this.props.task.assignBlocking(this.props.task.project_id, this.props.task.story_id, this.props.task._id, taskIDs);
+		this.props.assignBlocking(this.props.project_id, this.props.story_id, this.props._id, taskIDs);
 	}
 
 	//filter out already assigned users
 	filterAssignedList(option,filter){
-		let user = this.props.task.assigned_to.find((user) => (user._id === option._id));
+		let user = this.props.assigned_to.find((user) => (user._id === option._id));
 		return (user) ? false : true;
 	}
 
 	render(){
 		return (
 			<div className={'task-detail ' + this.props.status}>
-				<Modal show={this.props.isModalOpen} onHide={(e) => this.props.changeModal(e)} className={'task-detail ' + this.props.task.status}>
+				<Modal show={this.props.isModalOpen} onHide={(e) => this.props.changeModal(e)} className={'task-detail ' + this.props.status}>
 					<Modal.Header closeButton>
 						<Modal.Title>
-							{/*<span className="task_id">{this.props.task._id} </span>*/}
+							{/*<span className="task_id">{this.props._id} </span>*/}
 							{(this.state.description.editing) ?
 								<input className="form-control" autoFocus
 									onChange={(e) => this.handleChange('description', e)}
@@ -100,17 +100,17 @@ class TaskDetailModal extends React.Component{
 									onBlur={(e) => this.handleBlur('description', e)}
 									onKeyDown={(e) => this.handleKeyDown('description', e)}
 									style={{width: 'auto'}}/>
-								:<span className="editable" onClick={(e) => this.toggleEdit('description', true)}>{this.props.task.description}</span>
+								:<span className="editable" onClick={(e) => this.toggleEdit('description', true)}>{this.props.description}</span>
 							}
-							<span className="task-story">, from story {this.props.task.story_id}</span>
+							<span className="task-story">, from story {this.props.story_id}</span>
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body style={{ paddingTop: 0 }} className="select-support">
-						<TaskStatus status={this.props.task.status} />
+						<TaskStatus status={this.props.status} />
 						<br/>
 						<Row className="left-right-align">
 							<Col xs={8}>
-								{(this.props.task.status === 'BLOCKED') ? (
+								{(this.props.status === 'BLOCKED') ? (
 									<div>
 										<h5>Blocked By:</h5>
 										<Select multi
@@ -125,9 +125,10 @@ class TaskDetailModal extends React.Component{
 								<hr />
 								<h5>Assigned To:</h5>
 								<MultiSelect className="form-control" 
-									collection="users"
+									users={this.props.users}
 									labelKey="display_name" 
 									valueKey="_id" 
+									projectID={this.props.project_id}
 									updateState={(members) => this.setAssigned_to(members)} 
 									filterOption={this.filterAssignedList.bind(this)}
 									initialState={this.state.assigned_to}/>
@@ -157,14 +158,21 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	.stories.find((story) => story._id === ownProps.story_id)
 	.tasks;
 
-	let theTask = stateProps
-	.projects.find((proj) => proj._id === ownProps.project_id)
-	.stories.find((story) => story._id === ownProps.story_id)
-	.tasks.find((task) => task._id === ownProps._id);
+	// let theTask = stateProps
+	// .projects.find((proj) => proj._id === ownProps.project_id)
+	// .stories.find((story) => story._id === ownProps.story_id)
+	// .tasks.find((task) => task._id === ownProps._id);
+
+	let theTask = ownProps.task;
+
+	// return Object.assign(
+	// 	{ isModalOpen: ownProps.isModalOpen, changeModal: ownProps.changeModal, updateTask: ownProps.updateTask }, 
+	// 	{ task: theTask }, 
+	// 	{ tasks },
+	// 	dispatchProps
+	// );
 	return Object.assign(
-		{ isModalOpen: ownProps.isModalOpen, changeModal: ownProps.changeModal, updateTask: ownProps.updateTask }, 
-		{ task: theTask }, 
-		{ tasks },
+		ownProps,
 		dispatchProps
 	);
 }
