@@ -59,7 +59,7 @@ class Settings extends React.Component {
 											<Col md={6}>
 												<div className="form-group">
 													<label for="usr">Users</label>
-													<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>
+													<MultiSelect users={this.props.users} labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>
 												</div>
 											</Col>
 										</Row>

@@ -52,6 +52,7 @@ export function serverPutSettings(newData, properties){
 	return emulateServerReturn(oldSettings, false) ;
 }
 
+//TODO deprecated
 export function serverUpdateTask(project_id, story_id, changedTask){
 	let projects = readDocument('projects');
 	let updatedTask, updatedProject;
@@ -88,42 +89,33 @@ export function serverUpdateTask(project_id, story_id, changedTask){
 	return emulateServerReturn(updatedTask, updatedTask === undefined);
 }
 
-export function serverPutTaskState(project_id, story_id, task_id, toType){
-	let projects = readDocument('projects');
-	let updatedTask, updatedProject;
-
-	projects.map((project) => {
-		if(project._id === project_id){
-			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-				if(story._id === story_id){
-					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
-						if(task._id === task_id){
-							let historyItem = { from_status: task.status, to_status: toType, modified_time: Date.now(), modified_user: getCurrentUser()};
-
-							updatedTask = Object.assign({}, task, {
-								status: toType,
-								history: [
-									...task.history,
-									historyItem
-								]
-							});
-
-							return updatedTask;
-						} else return task;
-					})});
-				} else return story;
-			})});
-			return updatedProject;
-		} else return project;
+export function serverAssignUsersToTask(project_id, story_id, task_id, users){
+	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}/assigned_to/`, {
+		users,
+		replace: true
+	}).then((response) => {
+		return response.data;
 	});
+}
+export function serverAssignBlockingTasks(project_id, story_id, task_id, blocking){
+	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}/blocked_by/`, {
+		blocking,
+		replace: true
+	}).then((response) => {
+		return response.data;
+	});
+}
 
+export function serverUpdateTask(project_id, story_id, task_id, status, description){
+	let updates = {};
+	if(status) updates.status = status;
+	if(description) updates.description = description;
 
-	//write updated project object to server
-	writeDocument('projects', updatedProject);
-
-	serverLog('DB Updated', updatedTask);
-
-	return emulateServerReturn(updatedTask, updatedTask === undefined);
+	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}`, 
+		updates
+	).then((response) => {
+		return response.data;
+	});
 }
 
 export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,

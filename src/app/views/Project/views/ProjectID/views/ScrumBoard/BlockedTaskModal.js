@@ -19,10 +19,6 @@ class BlockedTaskModal extends React.Component{
 		};
 	}
 
-	setUsers(users){
-		this.setState({users});
-	}
-
 	assignHandler(value){
 		if (this.state.blockingTasks.length > 0) {
 			//TODO: blockingTasks has objects, needs IDs

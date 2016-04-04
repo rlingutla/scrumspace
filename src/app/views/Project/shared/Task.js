@@ -12,7 +12,7 @@ import _ from 'underscore';
 
 import { DragSource } from 'react-dnd';
 
-import { updateTask } from '../../../actions/';
+import { updateTask, assignUsersToTask, assignBlockingTasks } from '../../../actions/';
 
 const taskSource = {
 	beginDrag(props){
@@ -70,7 +70,7 @@ class Task extends React.Component {
 
 		let theTask = (
 			<div>
-				<AssignUserModal isModalOpen={this.state.assignUserModal} hideModal={(e) => this.hideUserAssignModal(e)}/>
+				{/*<AssignUserModal users={this.props.users} isModalOpen={this.state.assignUserModal} hideModal={(e) => this.hideUserAssignModal(e)}/>*/}
 				<div className="task" onClick={(e) => this.changeModal(e)} style={{borderTopColor: TaskTypes[this.props.status].color}}>
 				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
 				    <div className="header" style={{borderColor: TaskTypes[this.props.status].color}}>
@@ -105,27 +105,31 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	//do our nasty search
-	let theTask = stateProps
-	.projects.find((proj) => proj._id === ownProps.project_id)
-	.stories.find((story) => story._id === ownProps.story_id)
-	.tasks.find((task) => task._id === ownProps.task_id);
+	let theTask = ownProps.story.tasks[ownProps.task_id];
+	let users = stateProps.projects[ownProps.project_id].users;
+
 	return Object.assign(theTask,
 		{
 			project_id: ownProps.project_id,
 			story_id: ownProps.story_id,
 			_id: ownProps.task_id,
-			users: ownProps.users  //TODO: can we take this out?
 		},
+		{ users: stateProps.projects[ownProps.project_id].users },
 		dispatchProps);
 }
 
 //maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
   return {
-  	updateTask: (project_id, story_id, task) => {
+  	updateTask: (project_id, story_id, task_id, status, description) => {
   		// dispatch(changeTaskState(project_id, story_id, task_id, toType));
-  		dispatch(updateTask(project_id, story_id, task));
+  		dispatch(updateTask(project_id, story_id, task_id, status, description));
+  	},
+  	assignUsers: (project_id, story_id, task_id, users) => {
+  		dispatch(assignUsersToTask(project_id, story_id, task_id, users));
+  	},
+  	assignBlocking: (project_id, story_id, task_id, tasks) => {
+  		dispatch(assignBlockingTasks(project_id, story_id, task_id, tasks));
   	}
   };
 };

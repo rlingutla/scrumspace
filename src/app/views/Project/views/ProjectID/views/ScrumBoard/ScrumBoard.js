@@ -28,7 +28,7 @@ class ScrumBoard extends React.Component {
 			            	<ScrumBoardHeader />
 			                <tbody>
 			                	{this.getSprintStories().map((story, i) => {
-			                		return (<StoryRow users={this.props.users} key={i} project_id={this.props._id} story_id={story._id}/>);
+			                		return (<StoryRow users={this.props.users} key={i} project_id={this.props._id} story_id={story._id} story={story}/>);
 			                	})}
 			                </tbody>
 			            </table>
