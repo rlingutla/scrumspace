@@ -72,7 +72,7 @@ module.exports.update = function(args){
 	});
 }
 
-module.exports.assignUsers = function(args, remove){
+module.exports.assignUsers = function(args){
 	let project = readDocument('projects', args.project_id);
 	let updatedTask, updatedProject;
 
@@ -85,7 +85,7 @@ module.exports.assignUsers = function(args, remove){
 							history: [
 								...task.history //TODO do history stuff
 							],
-							assigned_to: (remove === true) ? _.difference(task.assigned_to, args.users):_.union(task.assigned_to, args.users)
+							assigned_to: (args.replace === true) ? args.users:_.union(task.assigned_to, args.users)
 						});
 						return updatedTask;
 					} else return task;
@@ -108,7 +108,7 @@ module.exports.assignUsers = function(args, remove){
 }
 
 
-module.exports.assignBlocking = function(args, remove){
+module.exports.assignBlocking = function(args){
 	let project = readDocument('projects', args.project_id);
 	let updatedTask, updatedProject;
 
@@ -121,7 +121,7 @@ module.exports.assignBlocking = function(args, remove){
 							history: [
 								...task.history //TODO do history stuff
 							],
-							blocked_by: (remove === true) ? _.difference(task.blocked_by, args.users):_.union(task.blocked_by, args.users)
+							blocked_by: (args.replace === true) ? args.blocking_tasks:_.union(task.blocked_by, args.blocking_tasks)
 						});
 						return updatedTask;
 					} else return task;

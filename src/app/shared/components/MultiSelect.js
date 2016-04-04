@@ -6,7 +6,9 @@ import Select from 'react-select';
 export default class MultiSelect extends React.Component {
 	constructor(props){
 		super(props);
-		this.state = { value: [] }
+		this.state = { 
+			values: this.props.initialState || [] 
+		}
 	}
 	getSelectOptions(input: ''){
 		return sendXHRPromise('GET', `/api/user/search?searchStr=${input}&key=${this.props.labelKey}`, undefined).then((response) => {
