@@ -31,6 +31,12 @@ module.exports.update = function(args){
 								let updatedFields = {};
 								if(args.status){
 									updatedFields.status = args.status;
+
+									//movement logic TODO: move out if logic grows
+									//moving from blocking
+									if(task.status === 'BLOCKED' && args.status !== 'BLOCKED'){
+										updatedFields.blocked_by = [];
+									}
 								}
 								if(args.description){
 									updatedFields.description = args.description;
@@ -66,7 +72,7 @@ module.exports.update = function(args){
 	});
 }
 
-module.exports.assignUser = function(args){
+module.exports.assignUsers = function(args, remove){
 	let project = readDocument('projects', args.project_id);
 	let updatedTask, updatedProject;
 
@@ -79,7 +85,7 @@ module.exports.assignUser = function(args){
 							history: [
 								...task.history //TODO do history stuff
 							],
-							assigned_to: _.union(task.assigned_to, args.users)
+							assigned_to: (remove === true) ? _.difference(task.assigned_to, args.users):_.union(task.assigned_to, args.users)
 						});
 						return updatedTask;
 					} else return task;
@@ -102,7 +108,7 @@ module.exports.assignUser = function(args){
 }
 
 
-module.exports.assignBlocking = function(args){
+module.exports.assignBlocking = function(args, remove){
 	let project = readDocument('projects', args.project_id);
 	let updatedTask, updatedProject;
 
@@ -115,7 +121,7 @@ module.exports.assignBlocking = function(args){
 							history: [
 								...task.history //TODO do history stuff
 							],
-							blocked_by: _.union(task.blocked_by, args.blocking_tasks)
+							blocked_by: (remove === true) ? _.difference(task.blocked_by, args.users):_.union(task.blocked_by, args.users)
 						});
 						return updatedTask;
 					} else return task;
