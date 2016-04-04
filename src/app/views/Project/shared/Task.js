@@ -87,7 +87,7 @@ class Task extends React.Component {
 				    	<p>{this.props.description}</p>
 				    </div>
 				    <div className="task-info">
-				    	{(this.props.blocked_by.length > 0) ? <BlockedTasks blockedBy={this.props.blocked_by} />:null}
+				    	{(this.props.blocked_by.length > 0) ? <BlockedTasks blocked_by={this.props.blocked_by} />:null}
 				    </div>
 
 				    <div className="footer"></div>

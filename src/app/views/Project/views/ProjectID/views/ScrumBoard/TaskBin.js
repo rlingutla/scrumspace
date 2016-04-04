@@ -67,7 +67,7 @@ class TaskBin extends React.Component {
 
 	assignUsersAndMove(users, target, task){
 		let updatedTask = Object.assign({}, task, {
-			assignedTo: users, status: target.title
+			assigned_to: users, status: target.title
 		});
 
 		task.updateTask(task.project_id, task.story_id, updatedTask);
@@ -76,7 +76,7 @@ class TaskBin extends React.Component {
 
 	assignBlockedAndMove(blockingTasks, target, task){
 		let updatedTask = Object.assign({}, task, {
-			blockedBy: blockingTasks, status: target.title
+			blocked_by: blockingTasks, status: target.title
 		});
 
 		task.updateTask(task.project_id, task.story_id, updatedTask);
