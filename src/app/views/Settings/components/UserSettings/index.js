@@ -9,13 +9,13 @@ export default (props) => {
 					<div className="col-md-6">
 						<div className="form-group">
 							<label>First Name:</label>
-							<input className="form-control" text="text" onChange={(e) => props.updateState(e, 'first_name')} value={props.first_name} placeholder="John"/>
+							<input className="form-control" text="text" onChange={(e) => props.updateState(e, 'first_name')} value={props.first_name}/>
 						</div>
 					</div>
 					<div className="col-md-6">
 						<div className="form-group">
 							<label>Last Name:</label>
-							<input className="form-control" text="text" onChange={(e) => props.updateState(e, 'last_name')} value={props.last_name} placeholder="Smith"/>
+							<input className="form-control" text="text" onChange={(e) => props.updateState(e, 'last_name')} value={props.last_name}/>
 						</div>
 					</div>
 				</div>
