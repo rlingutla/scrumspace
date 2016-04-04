@@ -106,26 +106,7 @@ var initialData = {
 						'_id': 0,
 						'status': 'UNASSIGNED',
 						'blocked_by': [],
-						'assigned_to': [
-							{
-								'_id': 0,
-								'first_name': 'John',
-								'last_name': 'Vilk',
-								'email': 'jvilk@umass.edu',
-								'display_name': 'VilkBot',
-								'password': 'catinthehat',
-								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
-							},
-							{
-								'_id': 1,
-								'first_name': 'Abhay',
-								'last_name': 'Vatsa',
-								'email': 'someemail',
-								'display_name': 'Abhay Vatsa',
-								'password': 'd4866854120e8bb207d6f8e11fce8b99',
-								'avatar_url': 'http://www.abhayvatsa.com/img/abhay.png'
-							}
-						],
+						'assigned_to': [0,1],
 						'description': 'Find a Designer',
 						'history': [{
 							from_status: null,
@@ -153,17 +134,7 @@ var initialData = {
 						'_id': 2,
 						'status': 'DONE',
 						'blocked_by': [],
-						'assigned_to': [
-							{
-								'_id': 0,
-								'first_name': 'John',
-								'last_name': 'Vilk',
-								'email': 'jvilk@umass.edu',
-								'display_name': 'VilkBot',
-								'password': 'catinthehat',
-								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
-							}
-						],
+						'assigned_to': [0],
 						'description': 'Make Donald Drumpf again',
 						'history': [{
 							from_status: 'UNASSIGNED',
@@ -214,17 +185,7 @@ var initialData = {
 						'_id': 0,
 						'status': 'UNASSIGNED',
 						'blocked_by': [],
-						'assigned_to': [
-							{
-								'_id': 0,
-								'first_name': 'John',
-								'last_name': 'Vilk',
-								'email': 'jvilk@umass.edu',
-								'display_name': 'VilkBot',
-								'password': 'catinthehat',
-								'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
-							}
-						],
+						'assigned_to': [0],
 						'description': 'Beat hilldawg',
 						'history': [{
 							from_status: null,
