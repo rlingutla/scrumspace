@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import TaskTypes from 'app/shared/constants/taskTypes';
 import TaskStatus from 'Project/shared/TaskStatus';
 import MultiSelect from 'app/shared/components/MultiSelect';
+import Select from 'react-select';
 
 const AssignedMember = (props) => {
 	return(
@@ -16,13 +17,14 @@ class TaskDetailModal extends React.Component{
 
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			description: {
 				value: props.task.description,
 				editing: false
 			},
-			assigned_to: []
+			assigned_to: this.props.task.assigned_to || [],
+			blocked_by: this.props.task.blocked_by || []
 		};
 	}
 
@@ -68,27 +70,11 @@ class TaskDetailModal extends React.Component{
 		}
 	}
 
-	addMembers(){
-		let task = Object.assign({}, 
-			this.props.task, 
-			{assigned_to: [
-				...this.props.task.assigned_to,
-				...this.state.assigned_to
-			]}
-		);
-		// update the task
-		this.props.updateTask(task.project_id, task.story_id, task);
-		this.setState({assigned_to: []});
-	}
-
-	removeMember(user){
-		let task = Object.assign({}, 
-			this.props.task, 
-			//new assigned_to array with user removed
-			{assigned_to: this.props.task.assigned_to.filter((member) => member._id !== user._id)}
-		);
-		// update the task
-		this.props.updateTask(task.project_id, task.story_id, task);
+	handleBlockedChange(tasks){
+		this.setState({
+			blocked_by: tasks
+		});
+		this.props.task.assignBlocking(this.props.task.project_id, this.props.task.story_id, this.props.task._id, tasks);
 	}
 
 	//filter out already assigned users
@@ -118,10 +104,21 @@ class TaskDetailModal extends React.Component{
 					</Modal.Header>
 					<Modal.Body style={{ paddingTop: 0 }} className="select-support">
 						<TaskStatus status={this.props.task.status} />
-						{(true) ? <span>by ...</span>:null}
 						<br/>
 						<Row className="left-right-align">
 							<Col xs={8}>
+								{(this.props.task.status === 'BLOCKED') ? (
+									<div>
+										<h5>Blocked By:</h5>
+										<Select multi
+										    name="blockingTasks"
+										    value={this.state.blocked_by}
+										    options={this.props.tasks}
+										    labelKey="description"
+										    valueKey="_id"
+										    onChange={this.handleBlockedChange.bind(this)}/>
+									</div>
+								):null}
 								<hr />
 								<h5>Assigned To:</h5>
 								<MultiSelect className="form-control" 
@@ -130,7 +127,7 @@ class TaskDetailModal extends React.Component{
 									valueKey="_id" 
 									updateState={(members) => this.setAssigned_to(members)} 
 									filterOption={this.filterAssignedList.bind(this)}
-									initialState={this.props.task.assigned_to}/>
+									initialState={this.state.assigned_to}/>
 							</Col>
 							<Col xs={4} style={{textAlign:'right'}}>
 								<ButtonGroup vertical>
@@ -152,7 +149,11 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	//do our nasty search
+	let tasks = stateProps
+	.projects.find((proj) => proj._id === ownProps.project_id)
+	.stories.find((story) => story._id === ownProps.story_id)
+	.tasks;
+
 	let theTask = stateProps
 	.projects.find((proj) => proj._id === ownProps.project_id)
 	.stories.find((story) => story._id === ownProps.story_id)
@@ -160,6 +161,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	return Object.assign(
 		{ isModalOpen: ownProps.isModalOpen, changeModal: ownProps.changeModal, updateTask: ownProps.updateTask }, 
 		{ task: theTask }, 
+		{ tasks },
 		dispatchProps
 	);
 }
