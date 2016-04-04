@@ -5,8 +5,6 @@ var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 var StandardError = require('../api/shared/StandardError');
 
-module.exports = {}
-
 //Task
 module.exports.update = function(args){
 	//TODO refactor to just grab the single project
@@ -60,7 +58,6 @@ module.exports.update = function(args){
 
 		//write updated project object to server
 		writeDocument('projects', updatedProject);
-		// console.log('DB Updated', updatedTask);
 		
 		//resolve promise
 		return resolve(updatedTask);
@@ -101,8 +98,6 @@ module.exports.assignUser = function(args){
 
 		//write updated project object to server
 		writeDocument('projects', updatedProject);
-		// console.log('DB Updated', updatedTask);
-		
 		//resolve promise
 		return resolve(updatedTask);
 	});
@@ -147,14 +142,8 @@ module.exports.assignBlocking = function(args){
 
 		//write updated project object to server
 		writeDocument('projects', updatedProject);
-		// console.log('DB Updated', updatedTask);
 		
 		//resolve promise
 		return resolve(updatedTask);
 	});
 }
-	
-// module.exports = {
-// 	update: update,
-// 	assignUser
-// }
