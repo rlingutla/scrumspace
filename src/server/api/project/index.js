@@ -129,7 +129,7 @@ router.post('/:project_id/story', function(req, res) {
 
 	projects[project_i].stories[story_i] = newStory;
 	writeDocument('projects', projects[project_i]);
-	res.send((projects[project_i]));
+	res.send(embedUsers(projects[project_i]));
 });
 
 
@@ -156,7 +156,7 @@ router.put('/:project_id/story/:story_id/sprint_id/:sprint_id', function (req, r
 	if (projects[project_i].stories[story_i] !== null) {
 		projects[project_i].stories[story_i].sprint_id = sprintId;
 		writeDocument('projects', projects[project_i]);
-		res.send(projects[project_i]);
+		res.send(embedUsers(projects[project_i]));
 	} else {
 		// TODO BETTER
 		res.status(400);
@@ -170,7 +170,7 @@ router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), fun
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
 		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time, parseInt(req.params.sprintid, 10));
 		 // Send the update!
-		res.send(project);
+		res.send(embedUsers(project));
 	} else{
 		// 401: Unauthorized.
     res.status(401).end();
@@ -184,7 +184,7 @@ router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req
 		res.status(201);
 		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);
 		 // Send the update!
-		res.send(project);
+		res.send(embedUsers(project));
 	} else{
 		// 401: Unauthorized.
     res.status(401).end();
@@ -194,7 +194,7 @@ router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req
 router.delete('/:projectid/sprint/:sprintid', function(req, res){
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
 		var project = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
-		res.send(project);
+		res.send(embedUsers(project));
 	} else{
 		// 401: Unauthorized.
     	res.status(401).end();
@@ -240,28 +240,6 @@ router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(re
     	res.sendStatus(401);
 	}
 });
-// router.delete('/:project_id/story/:story_id/task/:task_id/assigned_to', function(req,res){
-// 	let user = getUserIdFromToken(req.get('Authorization'));
-// 	if(checkAuthFromProject(user, req.params.project_id)){
-// 		if(Array.isArray(req.body.users)){
-// 			Task.assignUsers({
-// 				project_id: parseInt(req.params.project_id, 10), 
-// 				story_id: parseInt(req.params.story_id, 10), 
-// 				task_id: parseInt(req.params.task_id, 10),
-// 				users: req.body.users,
-// 				replace: req.body.replace
-// 			}, true).then(
-// 				(task) => res.send({data: task}),  
-// 	       		(err) => res.sendStatus(404)
-// 	       	);
-// 		}
-// 		else res.sendStatus(400);
-		
-// 	} else{
-// 		// 401: Unauthorized.
-//     	res.sendStatus(401);
-// 	}
-// });
 
 router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req,res){
 	let user = getUserIdFromToken(req.get('Authorization'));
@@ -284,28 +262,5 @@ router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req
     	res.sendStatus(401);
 	}
 });
-// router.delete('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req,res){
-// 	let user = getUserIdFromToken(req.get('Authorization'));
-// 	if(checkAuthFromProject(user, req.params.project_id)){
-// 		if(Array.isArray(req.body.blocking)){
-// 			Task.assignBlocking({
-// 				project_id: parseInt(req.params.project_id, 10), 
-// 				story_id: parseInt(req.params.story_id, 10), 
-// 				task_id: parseInt(req.params.task_id, 10),
-// 				blocking_tasks: req.body.blocking,
-// 				replace: req.body.replace
-// 			}, true).then(
-// 				(task) => res.send({data: task}),  
-// 	       		(err) => res.sendStatus(404)
-// 	       	);
-// 		}
-// 		else res.sendStatus(400);
-// 	} else{
-// 		// 401: Unauthorized.
-//     	res.sendStatus(401);
-// 	}
-// });
-
-
 
 module.exports = router;
