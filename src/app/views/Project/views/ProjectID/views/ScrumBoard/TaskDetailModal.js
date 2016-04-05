@@ -47,9 +47,8 @@ class TaskDetailModal extends React.Component{
 	handleBlur(target, e){
 		if(e.target.value){
 			this.toggleEdit(target, false);
-			let task = Object.assign({}, this.props.task, {description: e.target.value.trim()});
 			// update the task
-			this.props.updateTask(task.project_id, task.story_id, task._id, null, e.target.value.trim());
+			this.props.updateTask(this.props.project_id, this.props.story_id, this.props._id, null, e.target.value.trim());
 		}
 
 	}

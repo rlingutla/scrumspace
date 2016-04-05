@@ -118,28 +118,6 @@ export function serverUpdateTask(project_id, story_id, task_id, status, descript
 	});
 }
 
-export function serverPutStory(project_id, newStory){
-	let projects = readDocument('projects');
-	let updatedProject, updatedStory;
-	projects.map((project) => {
-		if(project._id == project_id){
-			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-				if(story._id === newStory._id){
-					updatedStory = Object.assign({}, newStory);
-					return updatedStory;
-				}
-				else return story;
-			})});
-			return updatedProject;
-		}
-		else return project;
-	});
-	//write updated project object to server
-	writeDocument('projects', updatedProject);
-	serverLog('DB Updated', updatedStory);
-	return emulateServerReturn(updatedStory, updatedStory === undefined);
-}
-
 export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
 stories,commits,timeFrame,membersOnProj,gCommits,color){
 	// read in all projects, access last project in the array, get it's ID and increment that value
@@ -199,37 +177,17 @@ export function serverStartSprint(project_id, sprint_id){
 	});
 }
 
+// TODO, RENAME SERVER PUT STORY SPRINT ID
 export function serverMoveStory(projectId, storyId, sprintId){
-	return sendXHRPromise("PUT", "/api/project/" + projectId  + "/story/" + storyId, {
-		sprintId: sprintId
-	}).then((response) => {
+	return sendXHRPromise('PUT', '/api/project/' + projectId  + '/story/' + storyId + '/sprint_id/' + sprintId, 
+	{}).then((response) => {
 		return response;
 	});
 }
-export function serverRemoveStory(project, story){
-	var projects = readDocument('projects');
-	var project_i, story_i;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].stories.length; j++){
-				if(projects[i].stories[j]._id === story){
-					story_i = j;
-					break;
-				}
-			}
-			break;
-		}
-	}
-	if(projects[project_i].stories[story_i].sprint_id !== null){
-		projects[project_i].stories[story_i].sprint_id = null;
-	}
-	else{
-		projects[project_i].stories.splice(story_i, 1);
-	}
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+export function serverRemoveStory(project_id, story_id){
+	return sendXHRPromise('DELETE', '/api/project/'+project_id+'/story/'+story_id, undefined).then((response) => {
+		return response;
+	});	
 }
 export function serverRemoveSprint(project, sprint){
 	return sendXHRPromise('DELETE', '/api/project/'+project+'/sprint/'+sprint, undefined).then((response) => {
@@ -238,14 +196,24 @@ export function serverRemoveSprint(project, sprint){
 }
 
 // todo make this post new story
-export function serverMakeNewStory(projectId, title, description, tasks, storyId){
-	return sendXHRPromise('POST', '/api/project/'+projectId+'/story/', {
-		title,
-		description,
-		tasks
-	}).then((response) => {
-		return response;
-	});	
+export function serverMakeNewStory(project_id, title, description, tasks, story_id){
+	if (typeof story_id === 'undefined') { // if there is no story defined, this post a new story
+		return sendXHRPromise('POST', '/api/project/' + project_id + '/story/', {
+			title,
+			description,
+			tasks
+		}).then((response) => {
+			return response;
+		});			
+	} else {
+		return sendXHRPromise('PUT', '/api/project/' + project_id  + '/story/' + story_id, {
+			title,
+			description,
+			tasks
+		}).then((response) => {
+			return response;
+		});	
+	}
 }
 
 /*

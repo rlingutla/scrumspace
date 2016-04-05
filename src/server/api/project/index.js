@@ -20,6 +20,8 @@ var checkAuthFromProject = authentication.checkAuthFromProject;
 //Utils
 var embedUsers = require('../shared/embedUsers');
 var StandardError = require('../shared/StandardError');
+import StorySchema from '../../schemas/story';
+var validate = require('express-jsonschema').validate;
 
 //Router
 var express = require('express'),
@@ -33,14 +35,71 @@ router.get('/:id', function(req,res){
 	res.send({'_id': req.params.id});
 });
 
+// update a story
+router.put('/:project_id/story/:story_id',function(req, res) {
+	// get variables
+	var project_id = parseInt(req.params.project_id, 10);
+	var story_id = parseInt(req.params.story_id, 10);
+	var title = req.body.title;
+	var description = req.body.description;
+	var tasks = req.body.tasks;
+
+	// database call (this is simulated)
+	let projects = readDocument('projects');
+
+	var projectToUpdate = projects
+	.find((project) => project._id === project_id);
+
+	var storyToUpdate = projectToUpdate.stories
+	.find((story) => story._id === story_id);
+
+	if (storyToUpdate) {
+		storyToUpdate = Object.assign(storyToUpdate, {
+			title,
+			description,
+			tasks
+		});
+
+		//write updated project object to server
+		writeDocument('projects', projectToUpdate);
+		res.send(projectToUpdate);
+	} else {
+		res.status(404);
+		res.send();
+	}
+});
+
+// delete a story
+router.delete('/:project_id/story/:story_id', function(req, res) {
+	// get variables
+	var project_id = parseInt(req.params.project_id, 10);
+	var story_id = parseInt(req.params.story_id, 10);
+
+	// database call (this is simulated)
+	let projects = readDocument('projects');
+
+	var projectToUpdate = projects
+	.find((project) => project._id === project_id);
+
+	// remove this story
+	for (var i = 0; i < projectToUpdate.stories.length; i++) {
+		if (projectToUpdate.stories[i]._id === story_id) {
+			projectToUpdate.stories.splice(i, 1);
+		}
+	}
+
+	writeDocument('projects', projectToUpdate);	//write updated project to database
+	res.send(projectToUpdate);
+});
 
 // Post a new story
-router.post('/:project_id/story', function(req, res) {
+
+router.post('/:project_id/story', validate({ body: StorySchema }), function(req, res) {
 	var project_id = parseInt(req.params.project_id);
 	var title = req.body.title;
 	var description = req.body.description;
 	var tasks = req.body.tasks;
-	var storyId = req.body.storyId;
+	var storyId = (req.body.storyId === 'null') ? null : req.body.storyId; // todo: noooo!
 
 	var projects = readDocument('projects');
 
@@ -91,7 +150,7 @@ router.post('/:project_id/story', function(req, res) {
 		};
 	}
 	let newStory = {
-		'_id': 'DT-S' + story_i,
+		'_id': parseInt(story_i, 10),
 		'title': title,
 		'description': description,
 		'sprint_id': sprint_id,
@@ -104,11 +163,11 @@ router.post('/:project_id/story', function(req, res) {
 });
 
 
-// update story
-router.put('/:project_id/story/:story_id', function (req, res) {
+// update story.sprint_id
+router.put('/:project_id/story/:story_id/sprint_id/:sprint_id', function (req, res) {
 	var projectId = parseInt(req.params.project_id, 10);
 
-	var sprintId = parseInt(req.body.sprintId, 10);
+	var sprintId = parseInt(req.params.sprint_id, 10);
 	var projects = readDocument('projects');
 	var project_i, story_i;
 
@@ -223,6 +282,7 @@ router.put('/:project_id/story/:story_id/task/:task_id', validate({ body: TaskSc
 	}
 });
 router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(req,res){
+	console.log(req.body);
 	let user = getUserIdFromToken(req.get('Authorization'));
 	if(checkAuthFromProject(user, req.params.project_id)){
 		if(Array.isArray(req.body.users)){
