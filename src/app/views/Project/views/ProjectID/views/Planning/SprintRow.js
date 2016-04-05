@@ -65,7 +65,7 @@ class SprintRow extends React.Component {
 				</div>
 				<div className="panel-footer">
 					<div style={{textAlign: 'right'}}>
-					    {(this.props.current_sprint === null) ? <Button className="save" bsStyle="success" onClick={(e) => this.props.startSprint(this.props.project_id, this.props.data._id)}>Start Sprint</Button>:null}
+					    {(this.props.current_sprint === null && this.props.stories.length > 0) ? <Button className="save" bsStyle="success" onClick={(e) => this.props.startSprint(this.props.project_id, this.props.data._id)}>Start Sprint</Button>:null}
 					    <Button className="save" bsStyle="warning" onClick={e => this.props.handleEdit('sprint', this.props.data)}>Edit Sprint</Button>
 					</div>
 				</div>
