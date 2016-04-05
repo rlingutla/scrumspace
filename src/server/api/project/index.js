@@ -9,6 +9,7 @@ var Task = require('../../models/Task');
 var database = require('../../database');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
+var deleteDocument = database.deleteDocument;
 //Sprint Helper function
 var sprintHelper = require('./sprintHelper');
 var sprintMaker = sprintHelper.sprintMaker;
@@ -157,7 +158,8 @@ router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req
     res.status(401).end();
 	}
 });
-//parseInt(userid, 10)
+
+//Delete Sprint
 router.delete('/:projectid/sprint/:sprintid', function(req, res){
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
 		var project = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
@@ -177,7 +179,7 @@ router.put('/:project_id/story/:story_id/task/:task_id', validate({ body: TaskSc
 			project_id: parseInt(req.params.project_id, 10), story_id: parseInt(req.params.story_id, 10), task_id: parseInt(req.params.task_id, 10),
 			description: req.body.description, status: req.body.status, user: user
 		}).then(
-			(task) => res.send({data: task}),  
+			(task) => res.send({data: task}),
        		(err) => res.sendStatus(404)
        	);
 	} else{
@@ -190,40 +192,62 @@ router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(re
 	if(checkAuthFromProject(user, req.params.project_id)){
 		if(Array.isArray(req.body.users)){
 			Task.assignUsers({
-				project_id: parseInt(req.params.project_id, 10), 
-				story_id: parseInt(req.params.story_id, 10), 
+				project_id: parseInt(req.params.project_id, 10),
+				story_id: parseInt(req.params.story_id, 10),
 				task_id: parseInt(req.params.task_id, 10),
 				users: req.body.users,
 				replace: req.body.replace
 			}).then(
-				(task) => res.send({data: task}),  
+				(task) => res.send({data: task}),
 	       		(err) => res.sendStatus(404)
 	       	);
 		}
 		else res.sendStatus(400);
-		
+
 	} else{
 		// 401: Unauthorized.
     	res.sendStatus(401);
 	}
 });
+
+//Delete Task
+router.delete('/:project_id/story/:story_id/task/:task_id', function(req, res){
+	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
+		var projectId = (parseInt(req.params.projectid, 10));
+		var storyId = (parseInt(req.params.storyid, 10));
+		var taskId = (parseInt(req.params.taskid, 10));
+		var project = readDocument('projects', projectId);
+		var story = readDocument('stories', project.storyId);
+		var task = readDocument('tasks', story.taskId);
+		deleteDocument('tasks',story.taskId);
+		res.send();
+	} else{
+		// 401: Unauthorized.
+    	res.status(401).end();
+	}
+});
+
+//Make New Task
+router.post('/:project_id/story/:story_id/task/:task_id', function(req, res){
+
+
 // router.delete('/:project_id/story/:story_id/task/:task_id/assigned_to', function(req,res){
 // 	let user = getUserIdFromToken(req.get('Authorization'));
 // 	if(checkAuthFromProject(user, req.params.project_id)){
 // 		if(Array.isArray(req.body.users)){
 // 			Task.assignUsers({
-// 				project_id: parseInt(req.params.project_id, 10), 
-// 				story_id: parseInt(req.params.story_id, 10), 
+// 				project_id: parseInt(req.params.project_id, 10),
+// 				story_id: parseInt(req.params.story_id, 10),
 // 				task_id: parseInt(req.params.task_id, 10),
 // 				users: req.body.users,
 // 				replace: req.body.replace
 // 			}, true).then(
-// 				(task) => res.send({data: task}),  
+// 				(task) => res.send({data: task}),
 // 	       		(err) => res.sendStatus(404)
 // 	       	);
 // 		}
 // 		else res.sendStatus(400);
-		
+
 // 	} else{
 // 		// 401: Unauthorized.
 //     	res.sendStatus(401);
@@ -235,13 +259,13 @@ router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req
 	if(checkAuthFromProject(user, req.params.project_id)){
 		if(Array.isArray(req.body.blocking)){
 			Task.assignBlocking({
-				project_id: parseInt(req.params.project_id, 10), 
-				story_id: parseInt(req.params.story_id, 10), 
+				project_id: parseInt(req.params.project_id, 10),
+				story_id: parseInt(req.params.story_id, 10),
 				task_id: parseInt(req.params.task_id, 10),
 				blocking_tasks: req.body.blocking,
 				replace: req.body.replace
 			}).then(
-				(task) => res.send({data: task}),  
+				(task) => res.send({data: task}),
 	       		(err) => res.sendStatus(404)
 	       	);
 		}
@@ -256,13 +280,13 @@ router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req
 // 	if(checkAuthFromProject(user, req.params.project_id)){
 // 		if(Array.isArray(req.body.blocking)){
 // 			Task.assignBlocking({
-// 				project_id: parseInt(req.params.project_id, 10), 
-// 				story_id: parseInt(req.params.story_id, 10), 
+// 				project_id: parseInt(req.params.project_id, 10),
+// 				story_id: parseInt(req.params.story_id, 10),
 // 				task_id: parseInt(req.params.task_id, 10),
 // 				blocking_tasks: req.body.blocking,
 // 				replace: req.body.replace
 // 			}, true).then(
-// 				(task) => res.send({data: task}),  
+// 				(task) => res.send({data: task}),
 // 	       		(err) => res.sendStatus(404)
 // 	       	);
 // 		}

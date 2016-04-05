@@ -86,6 +86,12 @@ class TaskDetailModal extends React.Component{
 		return (user) ? false : true;
 	}
 
+	export function deleteTask(taskId, cb) {
+	  sendXHR('DELETE', projectId + '/story/' + storyId + '/task'+ taskId, undefined, () => {
+	    cb();
+	  });
+	}
+
 	render(){
 		return (
 			<div className={'task-detail ' + this.props.status}>
@@ -124,19 +130,19 @@ class TaskDetailModal extends React.Component{
 								):null}
 								<hr />
 								<h5>Assigned To:</h5>
-								<MultiSelect className="form-control" 
+								<MultiSelect className="form-control"
 									users={this.props.users}
-									labelKey="display_name" 
-									valueKey="_id" 
+									labelKey="display_name"
+									valueKey="_id"
 									projectID={this.props.project_id}
-									updateState={(members) => this.setAssigned_to(members)} 
+									updateState={(members) => this.setAssigned_to(members)}
 									filterOption={this.filterAssignedList.bind(this)}
 									initialState={this.state.assigned_to}/>
 							</Col>
 							<Col xs={4} style={{textAlign:'right'}}>
 								<ButtonGroup vertical>
-									<Button disabled>Take Task</Button>
-									<Button disabled bsStyle="danger">Delete Task</Button>
+									<Button >Take Task</Button>
+									<Button bsStyle="danger">Delete Task</Button>
 								</ButtonGroup>
 							</Col>
 						</Row>
@@ -166,8 +172,8 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	let theTask = ownProps.task;
 
 	// return Object.assign(
-	// 	{ isModalOpen: ownProps.isModalOpen, changeModal: ownProps.changeModal, updateTask: ownProps.updateTask }, 
-	// 	{ task: theTask }, 
+	// 	{ isModalOpen: ownProps.isModalOpen, changeModal: ownProps.changeModal, updateTask: ownProps.updateTask },
+	// 	{ task: theTask },
 	// 	{ tasks },
 	// 	dispatchProps
 	// );
