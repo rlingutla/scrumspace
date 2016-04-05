@@ -206,10 +206,10 @@ export function serverRemoveSprint(project, sprint){
 }
 
 // todo make this post new story
-export function serverMakeNewStory(projectId, title, description, tasks, story){
+export function serverMakeNewStory(project_id, title, description, tasks, story){
 	console.log(tasks);	
-	if (story) { // if there is no story defined, this post a new story
-		return sendXHRPromise('POST', '/api/project/' + projectId + '/story/', {
+	if (story === undefined) { // if there is no story defined, this post a new story
+		return sendXHRPromise('POST', '/api/project/' + project_id + '/story/', {
 			title,
 			description,
 			tasks
