@@ -85,14 +85,14 @@ var initialData = {
 				'name': 'V1 Release',
 				'start_date':null,
 				'duration': 14,
-				'scrum_time': '9:00 AM'
+				'scrum_time': '09:00'
 			},
 			{
 				'_id': 1,
 				'name': 'V2 Release',
 				'duration': 7,
 				'start_date': null,
-				'scrum_time': '9:00 AM'
+				'scrum_time': '09:00'
 			}
 		],
 		'stories': [

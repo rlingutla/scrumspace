@@ -52,13 +52,13 @@ class SprintRow extends React.Component {
 				</div>
 				<div className="panel-body" style={isOver ? {background: '#E8E8E8',borderWidth: '1px', borderStyle: 'dashed', borderColor: '#A9A9A9', minHeight: '120px'}:{minHeight: '120px'}}>
 					<div className="row">
-						{
+						{(this.props.stories.length > 0) ?
 							this.props.stories.map( (e, i, array) =>{
 								return(
 									<Story key={i} index={i} data={e} last={i === array.length -1} handleRemove={this.props.handleRemove} isOnly= {array.length === 1}
 									updateState={this.props.updateState} handleEdit={this.props.handleEdit}/>
 								);
-							})
+							}):<div style={{textAlign: 'center', padding: '30px 15px 15px 15px'}}>Sprint is empty. Add stories by dragging them from your Backlog.</div>
 						}
 					</div>
 				</div>
