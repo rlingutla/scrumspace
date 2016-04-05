@@ -19,6 +19,8 @@ var getUserIdFromToken = authentication.getUserIdFromToken;
 var checkAuthFromProject = authentication.checkAuthFromProject;
 //Utils
 var embedUsers = require('../shared/embedUsers');
+import StorySchema from '../../schemas/story';
+var validate = require('express-jsonschema').validate;
 
 //Router
 var express = require('express'),
@@ -33,7 +35,7 @@ router.get('/:id', function(req,res){
 });
 
 // update a story
-router.put('/:project_id/story/:story_id', function(req, res) {
+router.put('/:project_id/story/:story_id',function(req, res) {
 	// get variables
 	var project_id = parseInt(req.params.project_id, 10);
 	var story_id = parseInt(req.params.story_id, 10);
@@ -90,12 +92,13 @@ router.delete('/:project_id/story/:story_id', function(req, res) {
 });
 
 // Post a new story
-router.post('/:project_id/story', function(req, res) {
+
+router.post('/:project_id/story', validate({ body: StorySchema }), function(req, res) {
 	var project_id = parseInt(req.params.project_id);
 	var title = req.body.title;
 	var description = req.body.description;
 	var tasks = req.body.tasks;
-	var storyId = (req.body.storyId === "null") ? null : req.body.storyId; // todo: noooo!
+	var storyId = (req.body.storyId === 'null') ? null : req.body.storyId; // todo: noooo!
 
 	var projects = readDocument('projects');
 
