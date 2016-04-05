@@ -1,5 +1,6 @@
 import React from 'react';
 import Story from './Story';
+import { ButtonGroup, Button } from 'react-bootstrap';
 //DnD
 import ItemTypes from 'app/shared/constants/itemTypes';
 
@@ -41,26 +42,33 @@ class SprintRow extends React.Component {
 		const { isOver, canDrop, connectDropTarget } = this.props;
 
 		return connectDropTarget(
-      <div className="panel panel-primary">
-        <div className="panel-heading">
+			<div className="panel panel-primary">
+				<div className="panel-heading">
 					{
-						(this.props.isCurrentSprint) ? null : <button type="button" className="close" onClick={(e) => this.props.handleRemove('sprint', this.props.data)}>&times;</button>
+					(this.props.data._id === this.props.current_sprint) ? null:
+					<button type="button" className="close" onClick={(e) => this.props.handleRemove('sprint', this.props.data)}>&times;</button>
 					}
-
-          <h4 style={{cursor: 'pointer'}} onClick={e => this.props.handleEdit('sprint', this.props.data)}>{this.props.data.name}</h4> </div>
-        <div className="panel-body" style={isOver ? {background: '#E8E8E8',borderWidth: '1px', borderStyle: 'dashed', borderColor: '#A9A9A9', minHeight: '120px'}:{minHeight: '120px'}}>
-          <div className="row">
+					<h4 style={{display: 'inline-block'}}>{this.props.data.name}</h4> 
+				</div>
+				<div className="panel-body" style={isOver ? {background: '#E8E8E8',borderWidth: '1px', borderStyle: 'dashed', borderColor: '#A9A9A9', minHeight: '120px'}:{minHeight: '120px'}}>
+					<div className="row">
 						{
 							this.props.stories.map( (e, i, array) =>{
 								return(
 									<Story key={i} index={i} data={e} last={i === array.length -1} handleRemove={this.props.handleRemove} isOnly= {array.length === 1}
-										updateState={this.props.updateState} handleEdit={this.props.handleEdit}/>
+									updateState={this.props.updateState} handleEdit={this.props.handleEdit}/>
 								);
 							})
 						}
-          </div>
-        </div>
-      </div>
+					</div>
+				</div>
+				<div className="panel-footer">
+					<div style={{textAlign: 'right'}}>
+					    {(this.props.current_sprint === null) ? <Button className="save" bsStyle="success">Start Sprint</Button>:null}
+					    <Button className="save" bsStyle="warning" onClick={e => this.props.handleEdit('sprint', this.props.data)}>Edit Sprint</Button>
+					</div>
+				</div>
+			</div>
     );
   }
 }
