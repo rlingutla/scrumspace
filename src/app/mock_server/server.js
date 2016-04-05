@@ -243,7 +243,7 @@ export function serverMakeNewStory(projectId, title, description, tasks, storyId
 		tasks
 	}).then((response) => {
 		return response;
-	});	
+	});
 }
 
 /*
@@ -394,5 +394,11 @@ export function sendXHRPromise(verb, resource, body) {
   	  default:
   	    throw new Error('Unknown body type: ' + typeof(body));
   	}
+  });
+}
+
+export function saveMethod(userId, cb) {
+  sendXHR('PUT', '/user/' + userId , (xhr) => {
+    cb(JSON.parse(xhr.responseText));
   });
 }
