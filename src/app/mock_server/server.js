@@ -206,9 +206,8 @@ export function serverRemoveSprint(project, sprint){
 }
 
 // todo make this post new story
-export function serverMakeNewStory(project_id, title, description, tasks, story){
-	console.log(tasks);	
-	if (story === undefined) { // if there is no story defined, this post a new story
+export function serverMakeNewStory(project_id, title, description, tasks, story_id){
+	if (typeof story_id === "undefined") { // if there is no story defined, this post a new story
 		return sendXHRPromise('POST', '/api/project/' + project_id + '/story/', {
 			title,
 			description,
@@ -217,9 +216,12 @@ export function serverMakeNewStory(project_id, title, description, tasks, story)
 			return response;
 		});			
 	} else {
-		return sendXHRPromise('PUT', '/api/project/' + project_id  + '/story/' + story._id, {
-			story
+		return sendXHRPromise('PUT', '/api/project/' + project_id  + '/story/' + story_id, {
+			title,
+			description,
+			tasks
 		}).then((response) => {
+			debugger;
 			return response;
 		});	
 	}
