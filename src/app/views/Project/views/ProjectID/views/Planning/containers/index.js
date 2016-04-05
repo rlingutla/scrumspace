@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { postProjectPlan } from '../../../../../../../actions/';
+import { postProjectPlan, putStartSprint } from '../../../../../../../actions/';
 
 //redux
 const mapStateToProps = (state) => {
@@ -21,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		saveThis: (signal, data) => {
 			dispatch(postProjectPlan(signal, data));
+		},
+		startSprint: (project_id, sprint_id) => {
+			dispatch(putStartSprint(project_id, sprint_id));
 		}
 	};
 };

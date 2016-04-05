@@ -189,6 +189,16 @@ export function serverPostSprint(project, name, duration, time, sprint){
 	}
 }
 
+export function serverStartSprint(project_id, sprint_id){
+	return sendXHRPromise('PUT', `/api/project/${project_id}/sprint/${sprint_id}/start`)
+	.then((response) => {
+		return response;
+	},
+	(error) => {
+		console.error(error);
+	});
+}
+
 export function serverMoveStory(projectId, storyId, sprintId){
 	return sendXHRPromise("PUT", "/api/project/" + projectId  + "/story/" + storyId, {
 		sprintId: sprintId
@@ -350,6 +360,7 @@ export function sendXHRPromise(verb, resource, body) {
   	    // The server may have included some response text with details concerning
   	    // the error.
   	    var responseText = xhr.responseText;
+  	    reject(JSON.parse(responseText));
   	    console.log('Could not ' + verb + " " + resource + ": Received " + statusCode + " " + statusText + ": " + responseText);
   	  }
   	});

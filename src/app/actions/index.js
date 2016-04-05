@@ -9,7 +9,8 @@ import {
 	serverMoveStory, 
 	serverMakeNewStory,
 	serverAssignUsersToTask,
-	serverAssignBlockingTasks
+	serverAssignBlockingTasks,
+	serverStartSprint
 } from '../mock_server/server';
 
 // TASK 
@@ -131,4 +132,21 @@ export function postProjectPlan(signal, data){
 			error => console.error('rip', error)
 		);
 	};
+}
+
+export const startSprintAction = (project) => {
+	return {
+		type: 'START_SPRINT', project
+	};
+};
+
+export function putStartSprint(project_id, sprint_id){
+	return function(dispatch){
+		return serverStartSprint(project_id, sprint_id).then(
+			project => {
+				dispatch(startSprintAction(project));
+			},
+			error => console.error('rip', error)
+		);
+	}
 }

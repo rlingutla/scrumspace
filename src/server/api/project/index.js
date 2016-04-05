@@ -19,6 +19,7 @@ var getUserIdFromToken = authentication.getUserIdFromToken;
 var checkAuthFromProject = authentication.checkAuthFromProject;
 //Utils
 var embedUsers = require('../shared/embedUsers');
+var StandardError = require('../shared/StandardError');
 
 //Router
 var express = require('express'),
@@ -143,7 +144,40 @@ router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), fun
 		res.send(embedUsers(project));
 	} else{
 		// 401: Unauthorized.
-    res.status(401).end();
+    	res.status(401).end();
+	}
+});
+
+router.put('/:projectid/sprint/:sprintid/start', function(req,res){
+	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
+		let project = readDocument('projects').find((project) => project._id === parseInt(req.params.projectid, 10));
+		let sprint = (project) ? project.sprints.find((sprint) => sprint._id === parseInt(req.params.sprintid, 10)):undefined;
+
+		if(typeof project === 'undefined' || typeof sprint === 'undefined'){
+			res.status(400); 
+			return res.send({error: StandardError({
+				status: 400,
+				title: 'OBJECT_NOT_FOUND'
+			})});
+		}
+
+		if(project.current_sprint !== null){
+			res.status(400); 
+			return res.send({error: StandardError({
+				status: 400,
+				title: 'INVALID_ACTION',
+				detail: 'Project is already in a sprint'
+			})});
+		}
+		//start the sprint 
+		project.current_sprint = parseInt(req.params.sprintid, 10);
+		project.sprints[sprint._id].start_date = Date.now();
+
+		writeDocument('projects', project);
+		return res.send(embedUsers(project));
+	} else{
+		// 401: Unauthorized.
+    	res.status(401).end();
 	}
 });
 
