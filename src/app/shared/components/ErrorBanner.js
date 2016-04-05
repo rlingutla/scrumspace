@@ -23,7 +23,8 @@ export default class ErrorBanner extends React.Component {
     return (
       <div className={"error-overlay " + active}>
         <div className={"error-banner alert alert-danger"} role="alert">
-          ScrumSpace was unable to complete a recent request: {this.state.error}<br />
+          <h4>ScrumSpace was unable to complete a recent request</h4> 
+          {this.state.error}<br />
           Please <a style={{cursor:'pointer'}} onClick={() => window.location.reload()}>refresh the web page</a> and try again.
         </div>
       </div>

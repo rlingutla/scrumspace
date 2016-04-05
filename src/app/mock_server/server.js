@@ -95,7 +95,8 @@ export function serverAssignUsersToTask(project_id, story_id, task_id, users){
 		replace: true
 	}).then((response) => {
 		return response.data;
-	});
+	},
+	(error) => ErrorBanner(error));
 }
 export function serverAssignBlockingTasks(project_id, story_id, task_id, blocking){
 	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}/blocked_by/`, {
@@ -103,7 +104,8 @@ export function serverAssignBlockingTasks(project_id, story_id, task_id, blockin
 		replace: true
 	}).then((response) => {
 		return response.data;
-	});
+	},
+	(error) => ErrorBanner(error));
 }
 
 export function serverUpdateTask(project_id, story_id, task_id, status, description){
@@ -111,10 +113,13 @@ export function serverUpdateTask(project_id, story_id, task_id, status, descript
 	if(status) updates.status = status;
 	if(description) updates.description = description;
 
-	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}`, 
+	return sendXHRPromise('PUT', `/api/project/${project_id}{/story/${story_id}/task/${task_id}`, 
 		updates
 	).then((response) => {
 		return response.data;
+	},
+	(error) => {
+		ErrorBanner(error)
 	});
 }
 
@@ -328,8 +333,10 @@ export function sendXHRPromise(verb, resource, body) {
   	    // The server may have included some response text with details concerning
   	    // the error.
   	    var responseText = xhr.responseText;
-  	    reject(JSON.parse(responseText));
-  	    console.log('Could not ' + verb + " " + resource + ": Received " + statusCode + " " + statusText + ": " + responseText);
+  	    let error = `Could not ${verb} ${resource}: Received ${statusCode} ${statusText}: ${responseText}`;
+
+  	    reject(error);
+  	   
   	  }
   	});
 
@@ -338,12 +345,16 @@ export function sendXHRPromise(verb, resource, body) {
 
   	// Network failure: Could not connect to server.
   	xhr.addEventListener('error', function() {
-  	  console.log('Could not ' + verb + " " + resource + ": Could not connect to the server.");
+  		let error = `Could not ${verb} ${resource}: Could not connect to the server.`;
+		console.log(error);
+		reject(error);
   	});
 
   	// Network failure: request took too long to complete.
   	xhr.addEventListener('timeout', function() {
-  	  console.log('Could not ' + verb + " " + resource + ": Request timed out.");
+  		let error = `Could not ${verb} ${resource}: Request timed out.`;
+		console.log(error);
+		reject(error);
   	});
 
   	switch (typeof(body)) {
