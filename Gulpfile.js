@@ -58,6 +58,7 @@ gulp.task('js', function(){
     }))
     .pipe(gulp.dest('dist/js/'));
     // .pipe(livereload());
+    livereload.reload()
 });
 
 // copy static files
@@ -86,6 +87,12 @@ gulp.task('watch', function() {
     })
 });
 
+gulp.task('client_watch', function(){
+  livereload.listen();
+  gulp.watch(['src/**/*', '!src/index.html','!src/server/database.json'], ['run-build']);
+});
+
 gulp.task('default', ['run-build'], function() {});
 gulp.task('build', ['default'], function() {});
 gulp.task('dev', ['run-build', 'watch'], function() {});
+gulp.task('client_dev', ['run-build', 'client_watch'], function(){});
