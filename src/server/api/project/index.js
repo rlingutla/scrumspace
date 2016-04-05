@@ -34,38 +34,60 @@ router.get('/:id', function(req,res){
 
 // update a story
 router.put('/:project_id/story/:story_id', function(req, res) {
-		// get variables
-		var project_id = parseInt(req.params.project_id);
-		var story_id = parseInt(req.params.story_id);
-		var title = req.body.title;
-		var description = req.body.description;
-		var tasks = req.body.tasks;
+	// get variables
+	var project_id = parseInt(req.params.project_id, 10);
+	var story_id = parseInt(req.params.story_id, 10);
+	var title = req.body.title;
+	var description = req.body.description;
+	var tasks = req.body.tasks;
 
-		// database call (this is simulated)
-		let projects = readDocument('projects');
+	// database call (this is simulated)
+	let projects = readDocument('projects');
 
-		var projectToUpdate = projects
-		.find((project) => project._id === project_id);
+	var projectToUpdate = projects
+	.find((project) => project._id === project_id);
 
-		var storyToUpdate = projectToUpdate.stories
-		.find((story) => story._id === story_id);
+	var storyToUpdate = projectToUpdate.stories
+	.find((story) => story._id === story_id);
 
-		if (storyToUpdate) {
-			storyToUpdate = Object.assign(storyToUpdate, {
-				title,
-				description,
-				tasks
-			});
+	if (storyToUpdate) {
+		storyToUpdate = Object.assign(storyToUpdate, {
+			title,
+			description,
+			tasks
+		});
 
-			//write updated project object to server
-			writeDocument('projects', projectToUpdate);
-			res.send(projectToUpdate);
-		} else {
-			res.status(404);
-			res.send();
-		}
+		//write updated project object to server
+		writeDocument('projects', projectToUpdate);
+		res.send(projectToUpdate);
+	} else {
+		res.status(404);
+		res.send();
+	}
 });
 
+// delete a story
+router.delete('/:project_id/story/:story_id', function(req, res) {
+	// get variables
+	var project_id = parseInt(req.params.project_id, 10);
+	var story_id = parseInt(req.params.story_id, 10);
+
+	// database call (this is simulated)
+	let projects = readDocument('projects');
+
+	var projectToUpdate = projects
+	.find((project) => project._id === project_id);
+
+	// remove this story
+	for (var i = 0; i < projectToUpdate.stories.length; i++) {
+		if (projectToUpdate.stories[i]._id === story_id) {
+			projectToUpdate.stories.splice(i, 1);
+		}
+	}
+
+	writeDocument('projects', projectToUpdate);	//write updated project to database
+	res.send(projectToUpdate);
+});
 
 // Post a new story
 router.post('/:project_id/story', function(req, res) {
@@ -124,7 +146,7 @@ router.post('/:project_id/story', function(req, res) {
 		};
 	}
 	let newStory = {
-		'_id': parseInt(story_i),
+		'_id': parseInt(story_i, 10),
 		'title': title,
 		'description': description,
 		'sprint_id': sprint_id,

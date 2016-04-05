@@ -174,30 +174,10 @@ export function serverMoveStory(projectId, storyId, sprintId){
 		return response;
 	});
 }
-export function serverRemoveStory(project, story){
-	var projects = readDocument('projects');
-	var project_i, story_i;
-	for (let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for (let j = 0; j < projects[i].stories.length; j++){
-				if (projects[i].stories[j]._id === story){
-					story_i = j;
-					break;
-				}
-			}
-			break;
-		}
-	}
-	if(projects[project_i].stories[story_i].sprint_id !== null){
-		projects[project_i].stories[story_i].sprint_id = null;
-	}
-	else{
-		projects[project_i].stories.splice(story_i, 1);
-	}
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+export function serverRemoveStory(project_id, story_id){
+	return sendXHRPromise('DELETE', '/api/project/'+project_id+'/story/'+story_id, undefined).then((response) => {
+		return response;
+	});	
 }
 export function serverRemoveSprint(project, sprint){
 	return sendXHRPromise('DELETE', '/api/project/'+project+'/sprint/'+sprint, undefined).then((response) => {
@@ -207,7 +187,7 @@ export function serverRemoveSprint(project, sprint){
 
 // todo make this post new story
 export function serverMakeNewStory(project_id, title, description, tasks, story_id){
-	if (typeof story_id === "undefined") { // if there is no story defined, this post a new story
+	if (typeof story_id === 'undefined') { // if there is no story defined, this post a new story
 		return sendXHRPromise('POST', '/api/project/' + project_id + '/story/', {
 			title,
 			description,
@@ -221,7 +201,6 @@ export function serverMakeNewStory(project_id, title, description, tasks, story_
 			description,
 			tasks
 		}).then((response) => {
-			debugger;
 			return response;
 		});	
 	}
