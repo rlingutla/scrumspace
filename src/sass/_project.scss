@@ -383,4 +383,30 @@
 			transform: rotateZ(2deg);
 		}
 	}
+	.panel {
+		@include sprintPlanning();
+
+		&.planning {
+			& > .panel-heading {
+				@include sprintPlanning();
+			}
+		}
+		&.active {
+			& > .panel-heading {
+				@include sprintSprinting();
+			}
+		}
+		&.review {
+			& > .panel-heading {
+				@include sprintReview();
+			}
+		}
+		&.planning, &.sprinting, &.review {
+			& > .panel-heading {
+				border-top: none;
+				border-left: none;
+				border-right: none;
+			}
+		}
+	}
 }

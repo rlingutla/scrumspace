@@ -284,24 +284,16 @@ button {
 
 .project-status {
 	padding:2px 10px;
-	background: lighten($border-color, 12%);
-	border: 1px solid $border-color;
 	display:inline-block;
-	color: darken($border-color, 30%);
 	margin-top:8px;
 	border-radius: $border-radius;
+	@include sprintPlanning();
 
-	&.planning {
-
-	}
+	&.planning {}
 	&.sprint {
-		background: $green-color;
-		border: 1px solid darken($green-color, 20%);
-		color: darken($green-color, 40%);
+		@include sprintSprinting();
 	}
 	&.review {
-		background: $yellow-color;
-		border: 1px solid darken($yellow-color, 20%);
-		color: darken($yellow-color, 50%);
+		@include sprintReview();
 	}
 }
