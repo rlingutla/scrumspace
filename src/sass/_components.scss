@@ -21,7 +21,10 @@ button {
 }
 
 .editable {
-	cursor: pointer;
+	&:hover {
+		cursor: pointer;
+		text-decoration:underline;
+	}
 }
 
 // utils

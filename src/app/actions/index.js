@@ -12,6 +12,7 @@ import {
 	serverAssignBlockingTasks,
 	serverStartSprint
 } from '../mock_server/server';
+import { browserHistory } from 'react-router'
 
 // TASK 
 export const updateTaskAction = (project_id, story_id, task) => {
@@ -28,6 +29,7 @@ export function updateTask(project_id, story_id, task_id, status, description){
 		return serverUpdateTask(project_id, story_id, task_id, status, description).then(
 			task => {
 				dispatch(updateTaskAction(project_id, story_id, task));
+
 			},
 			error => console.error('got an error', error)
 		)
@@ -145,6 +147,7 @@ export function putStartSprint(project_id, sprint_id){
 		return serverStartSprint(project_id, sprint_id).then(
 			project => {
 				dispatch(startSprintAction(project));
+				browserHistory.push(`/project/${project_id}/scrumboard`)
 			},
 			error => console.error('rip', error)
 		);
