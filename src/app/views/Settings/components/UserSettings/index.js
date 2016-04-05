@@ -1,6 +1,13 @@
 import React from 'react';
 import Panel from '../Panel';
 
+// redux stuff, please see save method
+export function saveMethod(userId, cb) {
+  sendXHR('PUT', '/user/' + userId , (xhr) => {
+    cb(JSON.parse(xhr.responseText));
+  });
+}
+
 export default (props) => {
 	return (
 		<Panel heading="User Settings" glyphicon="user" saveMethod={props.saveMethod}>
