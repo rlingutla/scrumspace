@@ -2,6 +2,7 @@ import React from 'react';
 import Panel from '../Panel';
 
 // redux stuff, please see save method
+// was not sure where to put this method
 export function saveMethod(userId, cb) {
   sendXHR('PUT', '/user/' + userId , (xhr) => {
     cb(JSON.parse(xhr.responseText));
