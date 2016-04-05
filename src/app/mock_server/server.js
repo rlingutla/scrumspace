@@ -33,6 +33,41 @@ export function stateTree(userId){
 	});
 }
 
+// Project Stuff
+/**
+ * Adds a new project to the database.
+ */
+export function serverPostNewProject(title, description,users,status,sprints,stories,cb) {
+  return sendXHRPromise('POST', '/api/project/',{
+    'title':title,
+    'description' : description,
+		'users':users,
+		'status': status,
+		'sprints': sprints,
+		'stories': stories
+  }).then((response) => {
+    // Return the new status update.
+    return response;
+  });
+}
+
+export function serverUpdateProject(project_id,title,members){
+	debugger;
+
+	return sendXHRPromise('PUT', '/api/project/' + project_id, {
+		'project_id': project_id,
+		'title': title,
+		'users': members
+	}).then((response) => {
+		return response;
+	});
+}
+export function serverRemoveProject(project_id){
+	return sendXHRPromise('DELETE', '/api/project/' + project_id, undefined).then((response) => {
+		return response;
+	});
+}
+
 export function serverPutSettings(newData, properties){
 	var oldSettings = readDocument('users', newData._id.toString());
 

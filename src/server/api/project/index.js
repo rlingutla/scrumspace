@@ -2,6 +2,7 @@
 //Schemas
 var SprintSchema = require('../../schemas/sprint');
 var TaskSchema = require('../../schemas/task');
+var NewProjSchema = require('../../schemas/project');
 var validate = require('express-jsonschema').validate;
 //Models
 var Task = require('../../models/Task');
@@ -13,6 +14,10 @@ var writeDocument = database.writeDocument;
 var sprintHelper = require('./sprintHelper');
 var sprintMaker = sprintHelper.sprintMaker;
 var removeSprint = sprintHelper.removeSprint;
+//New Proejct Helper functions
+var newProjHelper = require('./newProj');
+var newProjCreation = newProjHelper.newProjCreation;
+var projUpdate = newProjHelper.projUpdate;
 //Auth Helpers
 var authentication = require('../shared/authentication');
 var getUserIdFromToken = authentication.getUserIdFromToken;
@@ -33,6 +38,26 @@ router.get('/', function (req, res) {
 
 router.get('/:id', function(req,res){
 	res.send({'_id': req.params.id});
+});
+
+//New Project Routes
+//add new project
+router.post('/', validate({ body: NewProjSchema }), function(req,res){
+	//going to have to eventually add user tokens...
+	var projects = readDocument('projects');
+	var project = newProjCreation(req.body.title, req.body.description, req.body.users,null);
+	//TODO: WRITE NEW PROJECT TO DATABASE 
+	res.status(201);
+	res.set('Location', '/project/' + projects[projects.length-1]._id);
+	res.send(embedUsers(project));
+	 // Send the update!
+});
+
+//update project
+router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
+	var project = projUpdate(parseInt(req.params.projectid, 10), req.body.title, req.body.users);
+	 // Send the update!
+	res.send(embedUsers(project));
 });
 
 // update a story

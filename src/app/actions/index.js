@@ -2,6 +2,7 @@
 import { 
 	serverUpdateTask, 
 	serverPostNewProject, 
+	serverUpdateProject,
 	serverPostSprint, 
 	serverPutStory, 
 	serverRemoveStory, 
@@ -13,6 +14,51 @@ import {
 	serverStartSprint
 } from '../mock_server/server';
 import { browserHistory } from 'react-router'
+
+// Project
+function postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
+	return serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color);
+}
+
+// new project
+export const createNewProject = (	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color) => {
+	return {
+		type: 'CREATE_NEW_PROJECT',
+		title, description,users,status,current_sprint,avatar,sprints,
+		stories,commits,timeFrame,membersOnProj,gCommits,color
+	};
+};
+
+export function postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
+	return function(dispatch){
+		return postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color).then(
+			project => {
+				dispatch(createNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color));
+			},
+			error => console.error('got an error', error)
+		);
+	};
+}
+
+export const updateProjectAction = (project_id, title,members) => {
+	return {
+		type: 'UPDATE_PROJECT',
+		project_id,
+		title,
+		members
+	};
+};
+//update fields in the project
+export function putProjectUpdates(project_id, title, members){
+	return function (dispatch){
+		return serverUpdateProject(project_id, title, members).then(
+			project => {
+				dispatch(updateProjectAction(project_id, title, members));
+			},
+			error => console.error('Cant update project', error)
+		)
+	}
+}
 
 // TASK 
 export const updateTaskAction = (project_id, story_id, task) => {
@@ -75,30 +121,6 @@ export function putStory(project_id, story){
 			error => console.error('got an error', error)
 		);
 	}
-}
-
-function postNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
-	return serverPostNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color);
-}
-
-// new project
-export const createNewProject = (	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color) => {
-	return {
-		type: 'CREATE_NEW_PROJECT',
-		title, description,users,status,current_sprint,avatar,sprints,
-		stories,commits,timeFrame,membersOnProj,gCommits,color
-	};
-};
-
-export function postAndCreateNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
-	return function(dispatch){
-		return postNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color).then(
-			project => {
-				dispatch(createNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color));
-			},
-			error => console.error('got an error', error)
-		);
-	};
 }
 
 function postNewProjectPlan(signal, data){
