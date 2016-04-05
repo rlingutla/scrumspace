@@ -11,12 +11,40 @@ var search = require('../shared/search');
 
 router.get('/', function (req, res) {
 	var userId = 0;
-	var userObj = readDocument('users', userId);
+	var users = readDocument('users');
+
 	var projects = readDocument('projects');
-	delete userObj.password; // TODO: this is bad design
+	var populatedProjects = projects.map((project) => {
+		return Object.assign({}, 
+			project, 
+			{
+				//map userIDs to user objects
+				users: project.users.map((id) => {
+					var obj = {
+						'_id': users[id]._id,
+						'first_name': users[id].first_name,
+						'last_name': users[id].last_name,
+						'email': users[id].email,
+						'display_name': users[id].display_name,
+						'avatar_url': users[id].avatar_url
+					}
+					return obj;
+				})
+			}
+		);
+	});
+
+	var user = users[userId];
 	var stateTree = {
-		user: userObj[userId],
-		projects
+		user: {
+				'_id': user._id,
+				'first_name': user.first_name,
+				'last_name': user.last_name,
+				'email': user.email,
+				'display_name': user.display_name,
+				'avatar_url': user.avatar_url
+		},
+		projects: populatedProjects
 	};
 	res.send(stateTree);
 });

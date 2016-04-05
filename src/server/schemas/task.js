@@ -9,7 +9,7 @@ export default {
       'type': 'integer'
     },
     'status': {
-      'type': taskStatusesEnum
+      'type': taskStatusEnum
     },
     'blocked_by': {
       'type': 'array',
@@ -35,10 +35,7 @@ export default {
   },
   'additionalProperties': false,
   'required': [
-    '_id',
     'status',
-    'blocked_by',
-    'assigned_to',
-    'history'
+    'description'
   ]
 };

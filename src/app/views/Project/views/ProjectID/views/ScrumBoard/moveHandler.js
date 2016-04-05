@@ -1,13 +1,13 @@
 import TaskTypes from 'app/shared/constants/taskTypes';
 
-const mutateItem = (item, fromType, toType) => {
-	let modified = Object.assign({}, item);
-	//moving from blocked to another state
-	if(fromType === TaskTypes.BLOCKED, toType !== TaskTypes.BLOCKED){
-		modified.blocked_by = [];
-	}
-	return modified;
-}
+// const mutateItem = (item, fromType, toType) => {
+// 	let modified = Object.assign({}, item);
+// 	//moving from blocked to another state
+// 	if(fromType === TaskTypes.BLOCKED, toType !== TaskTypes.BLOCKED){
+// 		modified.blocked_by = [];
+// 	}
+// 	return modified;
+// }
 
 const handleCase = (item, target, fromType, toType) => {
 	/* 
@@ -46,7 +46,6 @@ export default (item, target) => {
 
 	return new Promise((resolve, reject) => {
 		//perform any mutations for relevant moves
-		let mutatedItem = mutateItem(item, fromType, toType);
-		return resolve(handleCase(mutatedItem, target, fromType, toType));
+		return resolve(handleCase(item, target, fromType, toType));
 	});
 };

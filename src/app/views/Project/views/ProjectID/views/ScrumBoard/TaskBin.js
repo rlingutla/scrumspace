@@ -21,7 +21,7 @@ const taskTarget = {
 			if(handleRes.canMove){
 				// create new task object with updated status
 				let updatedTask = Object.assign({}, handleRes.task, {status: handleRes.target.title});
-				updatedTask.updateTask(updatedTask.project_id, updatedTask.story_id, updatedTask);
+				updatedTask.updateTask(updatedTask.project_id, updatedTask.story_id, updatedTask._id, updatedTask.status);
 				return { moved: true };
 			}
 			else return { moved: false };
@@ -66,20 +66,18 @@ class TaskBin extends React.Component {
 	}
 
 	assignUsersAndMove(users, target, task){
-		let updatedTask = Object.assign({}, task, {
-			assigned_to: users, status: target.title
-		});
+		let userIDs = users.map((user) => user._id);
+		task.assignUsers(task.project_id, task.story_id, task._id, userIDs);
+		task.updateTask(task.project_id, task.story_id, task._id, target.title);
 
-		task.updateTask(task.project_id, task.story_id, updatedTask);
 		this.toggleModal('assignUserModal', false);
 	}
 
 	assignBlockedAndMove(blockingTasks, target, task){
-		let updatedTask = Object.assign({}, task, {
-			blocked_by: blockingTasks, status: target.title
-		});
+		let taskIDs = blockingTasks.map((task) => task._id);
+		task.assignBlocking(task.project_id, task.story_id, task._id, taskIDs);
+		task.updateTask(task.project_id, task.story_id, task._id, target.title);
 
-		task.updateTask(task.project_id, task.story_id, updatedTask);
 		this.toggleModal('blockedTaskModal', false);
 	}
 
@@ -95,6 +93,7 @@ class TaskBin extends React.Component {
 		return connectDropTarget(
 			<td id={this.props.id}>
 				<AssignUserModal 
+					users={this.props.users}
 					isModalOpen={this.state.assignUserModal.visible} 
 					hideModal={() => this.toggleModal('assignUserModal',false)}
 					callback={(users,target,task) => this.assignUsersAndMove(users,target,task)}

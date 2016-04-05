@@ -1,5 +1,18 @@
-import { serverUpdateTask, serverPostNewProject, serverPostSprint, serverPutStory, serverRemoveStory, serverRemoveSprint, serverMoveStory, serverMakeNewStory } from '../mock_server/server';
+//TODO: this thing is monolithic :O, need to organize
+import { 
+	serverUpdateTask, 
+	serverPostNewProject, 
+	serverPostSprint, 
+	serverPutStory, 
+	serverRemoveStory, 
+	serverRemoveSprint, 
+	serverMoveStory, 
+	serverMakeNewStory,
+	serverAssignUsersToTask,
+	serverAssignBlockingTasks
+} from '../mock_server/server';
 
+// TASK 
 export const updateTaskAction = (project_id, story_id, task) => {
 	return {
 		type: 'UPDATE_TASK',
@@ -9,12 +22,34 @@ export const updateTaskAction = (project_id, story_id, task) => {
 	};
 };
 
-export function updateTask(project_id, story_id, task){
+export function updateTask(project_id, story_id, task_id, status, description){
 	return function (dispatch){
-		return serverUpdateTask(project_id, story_id, task).then(
+		return serverUpdateTask(project_id, story_id, task_id, status, description).then(
 			task => {
 				dispatch(updateTaskAction(project_id, story_id, task));
 			},
+			error => console.error('got an error', error)
+		)
+	}
+}
+
+export function assignUsersToTask(project_id, story_id, task_id, users){
+	return function (dispatch){
+		return serverAssignUsersToTask(project_id, story_id, task_id, users).then(
+			task => {
+				dispatch(updateTaskAction(project_id, story_id, task));
+			},	
+			error => console.error('got an error', error)
+		)
+	}
+}
+
+export function assignBlockingTasks(project_id, story_id, task_id, blocking){
+	return function (dispatch){
+		return serverAssignBlockingTasks(project_id, story_id, task_id, blocking).then(
+			task => {
+				dispatch(updateTaskAction(project_id, story_id, task));
+			},	
 			error => console.error('got an error', error)
 		)
 	}
