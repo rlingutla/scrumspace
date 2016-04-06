@@ -1,13 +1,14 @@
 //TODO: this thing is monolithic :O, need to organize
-import { 
-	serverUpdateTask, 
-	serverPostNewProject, 
+import {
+	serverUpdateTask,
+	serverPostNewProject,
 	serverUpdateProject,
-	serverPostSprint, 
-	serverPutStory, 
-	serverRemoveStory, 
-	serverRemoveSprint, 
-	serverMoveStory, 
+	serverRemoveProject,
+	serverPostSprint,
+	serverPutStory,
+	serverRemoveStory,
+	serverRemoveSprint,
+	serverMoveStory,
 	serverMakeNewStory,
 	serverAssignUsersToTask,
 	serverAssignBlockingTasks,
@@ -60,7 +61,26 @@ export function putProjectUpdates(project_id, title, members){
 	}
 }
 
-// TASK 
+//remove a project
+export const removeProjectAction = (project_id) => {
+	return {
+		type: 'REMOVE_PROJECT',
+		project_id
+	};
+};
+//helps with removing a project
+export function removeProject(project_id){
+	return function (dispatch){
+		return serverRemoveProject(project_id).then(
+			project => {
+				dispatch(removeProjectAction(project_id));
+			},
+			error => console.error('Cant remove project', error)
+		)
+	}
+}
+
+// TASK
 export const updateTaskAction = (project_id, story_id, task) => {
 	return {
 		type: 'UPDATE_TASK',
@@ -75,7 +95,6 @@ export function updateTask(project_id, story_id, task_id, status, description){
 		return serverUpdateTask(project_id, story_id, task_id, status, description).then(
 			task => {
 				dispatch(updateTaskAction(project_id, story_id, task));
-
 			},
 			error => console.error('got an error', error)
 		)
@@ -87,7 +106,7 @@ export function assignUsersToTask(project_id, story_id, task_id, users){
 		return serverAssignUsersToTask(project_id, story_id, task_id, users).then(
 			task => {
 				dispatch(updateTaskAction(project_id, story_id, task));
-			},	
+			},
 			error => console.error('got an error', error)
 		)
 	}
@@ -98,7 +117,7 @@ export function assignBlockingTasks(project_id, story_id, task_id, blocking){
 		return serverAssignBlockingTasks(project_id, story_id, task_id, blocking).then(
 			task => {
 				dispatch(updateTaskAction(project_id, story_id, task));
-			},	
+			},
 			error => console.error('got an error', error)
 		)
 	}

@@ -18,6 +18,7 @@ var removeSprint = sprintHelper.removeSprint;
 var newProjHelper = require('./newProj');
 var newProjCreation = newProjHelper.newProjCreation;
 var projUpdate = newProjHelper.projUpdate;
+var projRemoval = newProjHelper.projRemoval;
 //Auth Helpers
 var authentication = require('../shared/authentication');
 var getUserIdFromToken = authentication.getUserIdFromToken;
@@ -46,7 +47,7 @@ router.post('/', validate({ body: NewProjSchema }), function(req,res){
 	//going to have to eventually add user tokens...
 	var projects = readDocument('projects');
 	var project = newProjCreation(req.body.title, req.body.description, req.body.users,null);
-	//TODO: WRITE NEW PROJECT TO DATABASE 
+	//TODO: WRITE NEW PROJECT TO DATABASE
 	res.status(201);
 	res.set('Location', '/project/' + projects[projects.length-1]._id);
 	res.send(embedUsers(project));
@@ -58,6 +59,19 @@ router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
 	var project = projUpdate(parseInt(req.params.projectid, 10), req.body.title, req.body.users);
 	 // Send the update!
 	res.send(embedUsers(project));
+});
+
+
+//remove a project
+router.delete('/:projectid', function(req, res){
+  debugger;
+		var projects = projRemoval(parseInt(req.params.projectid, 10));
+		res.set('Location', '/project/');
+    debugger;
+		res.send(projects.map((project) => {
+      debugger;
+			return embedUsers(project);
+		}));
 });
 
 // update a story
@@ -238,7 +252,7 @@ router.put('/:projectid/sprint/:sprintid/start', function(req,res){
 		let sprint = (project) ? project.sprints.find((sprint) => sprint._id === parseInt(req.params.sprintid, 10)):undefined;
 
 		if(typeof project === 'undefined' || typeof sprint === 'undefined'){
-			res.status(400); 
+			res.status(400);
 			return res.send({error: StandardError({
 				status: 400,
 				title: 'OBJECT_NOT_FOUND'
@@ -246,14 +260,14 @@ router.put('/:projectid/sprint/:sprintid/start', function(req,res){
 		}
 
 		if(project.current_sprint !== null){
-			res.status(400); 
+			res.status(400);
 			return res.send({error: StandardError({
 				status: 400,
 				title: 'INVALID_ACTION',
 				detail: 'Project is already in a sprint'
 			})});
 		}
-		//start the sprint 
+		//start the sprint
 		project.current_sprint = parseInt(req.params.sprintid, 10);
 		project.sprints[sprint._id].start_date = Date.now();
 
@@ -298,7 +312,7 @@ router.put('/:project_id/story/:story_id/task/:task_id', validate({ body: TaskSc
 			project_id: parseInt(req.params.project_id, 10), story_id: parseInt(req.params.story_id, 10), task_id: parseInt(req.params.task_id, 10),
 			description: req.body.description, status: req.body.status, user: user
 		}).then(
-			(task) => res.send({data: task}),  
+			(task) => res.send({data: task}),
        		(err) => res.sendStatus(404)
        	);
 	} else{
@@ -312,18 +326,18 @@ router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(re
 	if(checkAuthFromProject(user, req.params.project_id)){
 		if(Array.isArray(req.body.users)){
 			Task.assignUsers({
-				project_id: parseInt(req.params.project_id, 10), 
-				story_id: parseInt(req.params.story_id, 10), 
+				project_id: parseInt(req.params.project_id, 10),
+				story_id: parseInt(req.params.story_id, 10),
 				task_id: parseInt(req.params.task_id, 10),
 				users: req.body.users,
 				replace: req.body.replace
 			}).then(
-				(task) => res.send({data: task}),  
+				(task) => res.send({data: task}),
 	       		(err) => res.sendStatus(404)
 	       	);
 		}
 		else res.sendStatus(400);
-		
+
 	} else{
 		// 401: Unauthorized.
     	res.sendStatus(401);
@@ -335,13 +349,13 @@ router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req
 	if(checkAuthFromProject(user, req.params.project_id)){
 		if(Array.isArray(req.body.blocking)){
 			Task.assignBlocking({
-				project_id: parseInt(req.params.project_id, 10), 
-				story_id: parseInt(req.params.story_id, 10), 
+				project_id: parseInt(req.params.project_id, 10),
+				story_id: parseInt(req.params.story_id, 10),
 				task_id: parseInt(req.params.task_id, 10),
 				blocking_tasks: req.body.blocking,
 				replace: req.body.replace
 			}).then(
-				(task) => res.send({data: task}),  
+				(task) => res.send({data: task}),
 	       		(err) => res.sendStatus(404)
 	       	);
 		}

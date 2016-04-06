@@ -1,6 +1,7 @@
 var database = require('../../database');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
+var deleteDocument = database.deleteDocument;
 
 function newProjCreation(title, description, users, status, current_sprint, avatar, sprints,
 	stories, commits, timeFrame, membersOnProj, gCommits, color) {
@@ -51,3 +52,22 @@ function projUpdate(project_id, title, users) {
 	return projects[project_i];
 }
 module.exports.projUpdate = projUpdate;
+
+function projRemoval(project_id) {
+	//sprint is not passed through if it is a new sprint hence the type is undefined
+	var projects = readDocument('projects');
+	//The following is to get the value of the project and sprint to be added or edited.
+	var project_i;
+	console.log(project_id);
+	for (let i = 0; i < projects.length; i++) {
+		if (projects[i]._id === project_id) {
+			project_i = i;
+			break;
+		}
+	}
+
+
+	deleteDocument('projects', project_i);
+	return projects;
+}
+module.exports.projRemoval = projRemoval;

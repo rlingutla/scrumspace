@@ -1,7 +1,7 @@
 import React from 'react';
 import MultiSelect from 'app/shared/components/MultiSelect';
 import { Modal, Button, Row, Col, Input } from 'react-bootstrap';
-import { putProjectUpdates } from '../../../../../../actions/';
+import { putProjectUpdates, removeProject } from '../../../../../../actions/';
 import Wrapper from 'app/shared/components/Wrapper';
 import Container from '../../containers';
 import { connect } from 'react-redux';
@@ -34,6 +34,7 @@ class Settings extends React.Component {
 
 	deleteProj(){
 		this.toggleDModal(false);
+		this.props.removeProjectAct(this.state.project_id);
 	}
 
 	saveChanges(){
@@ -98,7 +99,7 @@ class Settings extends React.Component {
 						<div className="panel-group">
 							<div className="panel panel-primary">
 								<div className="panel-heading">
-									<h4>Project Settings</h4> 
+									<h4>Project Settings</h4>
 								</div>
 								<div className="panel-body">
 									<form>
@@ -157,10 +158,13 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    updateProject: (project_id,title, users) => {
-      dispatch(putProjectUpdates(project_id,title,users));
-    }
+	return {
+		updateProject: (project_id,title, users) => {
+			dispatch(putProjectUpdates(project_id,title,users));
+		},
+  	removeProjectAct: (project_id) => {
+  		dispatch(removeProject(project_id));
+  	}
   };
 };
 
