@@ -54,7 +54,7 @@ export function putProjectUpdates(project_id, title, members){
 	return function (dispatch){
 		return serverUpdateProject(project_id, title, members).then(
 			project => {
-				dispatch(updateProjectAction(project_id, title, members));
+				dispatch(updateProjectAction(project._id, project.title, project.users));
 			},
 			error => console.error('Cant update project', error)
 		)
@@ -71,7 +71,6 @@ export const removeProjectAction = (project_id) => {
 //helps with removing a project
 export function removeProject(project_id){
 	return function (dispatch){
-		debugger;
 		return serverRemoveProject(project_id).then(
 			project => {
 				dispatch(removeProjectAction(project_id));
