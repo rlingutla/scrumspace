@@ -3,14 +3,14 @@ var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 var deleteDocument = database.deleteDocument;
 
-function newProjCreation(title, description, users, status, current_sprint, avatar, sprints,
+function newProjCreation(id,title, description, users, status, current_sprint, avatar, sprints,
 	stories, commits, timeFrame, membersOnProj, gCommits, color) {
 	// read in all projects, access last project in the array, get it's ID and increment that value
 	var projects = readDocument('projects');
 	var prevId = projects[projects.length - 1]._id;
 
 	let project = {
-		'_id': prevId + 1,
+		'_id': id,
 		'title': title,
 		'description': description,
 		'users': users,
@@ -67,7 +67,6 @@ function projRemoval(project_id) {
 	}
   //deleteDocument('projects', project_i);
 	projects.splice(project_i,1);
-	console.log('projects');
 	writeDocument('projects', projects);
 	return projects;
 }

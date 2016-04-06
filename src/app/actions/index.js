@@ -17,24 +17,24 @@ import {
 import { browserHistory } from 'react-router'
 
 // Project
-function postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
-	return serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color);
+function postNewProject(id,title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
+	return serverPostNewProject(id,title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color);
 }
 
 // new project
-export const createNewProject = (	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color) => {
+export const createNewProject = (id,title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color) => {
 	return {
 		type: 'CREATE_NEW_PROJECT',
-		title, description,users,status,current_sprint,avatar,sprints,
+		id,title, description,users,status,current_sprint,avatar,sprints,
 		stories,commits,timeFrame,membersOnProj,gCommits,color
 	};
 };
 
-export function postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
+export function postAndCreateNewProject(id,title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
 	return function(dispatch){
-		return postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color).then(
+		return postNewProject(id,title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color).then(
 			project => {
-				dispatch(createNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color));
+				dispatch(createNewProject(id,title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color));
 			},
 			error => console.error('got an error', error)
 		);

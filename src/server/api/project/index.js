@@ -65,7 +65,7 @@ router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
 //remove a project
 router.delete('/:projectid', function(req, res){
 		var projects = projectRemoval(parseInt(req.params.projectid, 10));
-		res.set('Location', '/project/');
+		res.set('Location', '/project');
 		res.send(projects.map((project) => {
 			return project._id;
 		}));

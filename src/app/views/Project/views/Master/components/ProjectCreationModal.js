@@ -11,9 +11,9 @@ import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewProject: (title, description,users,status,current_sprint,avatar,sprints,
+    createNewProject: (id,title, description,users,status,current_sprint,avatar,sprints,
     stories,commits,timeFrame,membersOnProj,gCommits,color) => {
-      dispatch(postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,
+      dispatch(postAndCreateNewProject(id,title, description,users,status,current_sprint,avatar,sprints,
       stories,commits,timeFrame,membersOnProj,gCommits,color));
     }
 
@@ -26,6 +26,7 @@ class ProjectCreationModal extends React.Component{
     super(props);
     // TODO: members can't be mapped like this.
     this.state = {
+      id: props._id + 1,
       title: '',
       description: '',
       users: [],
@@ -47,7 +48,7 @@ class ProjectCreationModal extends React.Component{
 
 
     this.emptyList = [];
-    this.props.createNewProject(this.state.title, this.state.description, this.state.users,
+    this.props.createNewProject(this.state._id,this.state.title, this.state.description, this.state.users,
       this.state.status, this.state.current_sprint, this.state.avatar, this.state.sprints,
       this.state.stories, this.state.commits, this.state.timeFrame,this.state.membersOnProj,this.state.gCommits,this.state.color);
 
