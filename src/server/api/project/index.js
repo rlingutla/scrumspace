@@ -1,10 +1,13 @@
 'use-strict';
-//Schemas
-var SprintSchema = require('../../schemas/sprint');
-var TaskSchema = require('../../schemas/task');
-var NewProjSchema = require('../../schemas/project');
+// Schemas
 var validate = require('express-jsonschema').validate;
-//Models
+
+import SprintSchema from '../../schemas/sprint';
+import TaskSchema from '../../schemas/task';
+import NewProjSchema from '../../schemas/project';
+import StorySchema from '../../schemas/story';
+
+// Models
 var Task = require('../../models/Task');
 //Database Functions
 var database = require('../../database');
@@ -28,8 +31,6 @@ var checkAuthFromProject = authentication.checkAuthFromProject;
 //Utils
 var embedUsers = require('../shared/embedUsers');
 var StandardError = require('../shared/StandardError');
-import StorySchema from '../../schemas/story';
-
 //Router
 var express = require('express'),
 	router = express.Router();
@@ -111,7 +112,23 @@ router.put('/:project_id/story/:story_id',function(req, res) {
 				storyToUpdate.title = title;
 			}
 			if (tasks) {
-				storyToUpdate.tasks = tasks;
+				storyToUpdate.tasks = tasks.map((task, i) =>  {
+					// TODO: model
+					return Object.assign({
+						'_id': i,
+						'status': 'UNASSIGNED',
+						'assigned_to': [],
+						'blocked_by': [],
+						'description': task.description,
+						'history': [{
+							from_status: null,
+							to_status: 'UNASSIGNED',
+							modified_time: Date.now(),
+							modified_user : 0
+						}],
+						'attachments': null
+					}, storyToUpdate.tasks[i], task);
+				});
 			}
 			if (description) {
 				storyToUpdate.description = description;
@@ -149,9 +166,9 @@ router.delete('/:project_id/story/:story_id', function(req, res) {
 				projectToUpdate.stories.splice(i, 1);
 			}
 		}
-
 		writeDocument('projects', projectToUpdate);	//write updated project to database
-		res.send(projectToUpdate);
+
+		res.send(embedUsers(projectToUpdate));
 	} else{
 		// 401: Unauthorized.
     	res.status(401).end();
@@ -313,6 +330,7 @@ router.put('/:projectid/sprint/:sprintid/start', function(req,res){
 router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req, res){
 	//going to have to eventually add user tokens...
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
+		console.log('yooyoyoyo');
 		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
 		res.status(201);
 		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);
@@ -335,8 +353,7 @@ router.delete('/:projectid/sprint/:sprintid', function(req, res){
 });
 
 //Task Routes
-router.put('/:project_id/story/:story_id/task/:task_id', validate({ body: TaskSchema }), function(req,res){
-	console.log("hit update", req.body);
+router.put('/:project_id/story/:story_id/task/:task_id', function(req,res){
 	let user = getUserIdFromToken(req.get('Authorization'));
 	if(checkAuthFromProject(user, req.params.project_id)){
 		Task.update({
