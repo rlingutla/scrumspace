@@ -67,7 +67,7 @@ class Settings extends React.Component {
 		return (
 			<div>
 				{/* Delete Project Modal */}
-				<Modal show={this.state.deleteModal} onHide={(e) => this.toggleModal(false)}>
+				<Modal show={this.state.deleteModal} onHide={(e) => this.toggleDModal(false)}>
 					<Modal.Header closeButton>
 						<Modal.Title>Delete Project?</Modal.Title>
 					</Modal.Header>
