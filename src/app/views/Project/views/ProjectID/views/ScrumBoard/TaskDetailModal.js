@@ -86,12 +86,6 @@ class TaskDetailModal extends React.Component{
 		return (user) ? false : true;
 	}
 
-	export function deleteTask(taskId, cb) {
-	  sendXHR('DELETE', projectId + '/story/' + storyId + '/task'+ taskId, undefined, () => {
-	    cb();
-	  });
-	}
-
 	render(){
 		return (
 			<div className={'task-detail ' + this.props.status}>
