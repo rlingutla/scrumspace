@@ -4,6 +4,8 @@ import ProjectItem from './ProjectItem';
 import { postAndCreateNewProject } from '../../../../../actions/';
 import { ToggleDisplay } from 'react-toggle-display';
 import MultiSelect from 'app/shared/components/MultiSelect';
+import { sendXHRPromise } from '../../../../../mock_server/server';
+import { Async as AsyncSelect } from 'react-select';
 
 import { connect } from 'react-redux';
 
@@ -68,6 +70,13 @@ class ProjectCreationModal extends React.Component{
 
   }
 
+  getSelectOptions(input: ''){
+    return sendXHRPromise('GET', `/api/user/search?searchStr=${input}&key=display_name`, undefined).then((response) => {
+     return {options: response.data};
+    });
+  }
+
+
   setMembers(members) {
     if(members.length >= 1){
       this.setState({
@@ -100,7 +109,16 @@ class ProjectCreationModal extends React.Component{
             </form>
             <h4><b>Enter Members</b></h4>
             <form>
-              <MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>
+              {/*<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>*/}
+              <AsyncSelect
+                multi
+                  name="form-field-name"
+                  loadOptions={this.getSelectOptions.bind(this)}
+                  labelKey="display_name"
+                  valueKey="_id"
+                  onChange={this.setMembers.bind(this)}
+                  value={this.state.users}
+              />
             </form>
           </Modal.Body>
           <Modal.Footer>
