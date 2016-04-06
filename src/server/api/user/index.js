@@ -10,7 +10,6 @@ var authentication = require('../shared/authentication');
 var getUserIdFromToken = authentication.getUserIdFromToken;
 var checkAuthFromProject = authentication.checkAuthFromProject;
 
-
 var express = require('express'),
 	router = express.Router();
 
@@ -55,8 +54,8 @@ router.put('/users/:user_id/', validate({ body: UserSchema }), function(req, res
 	let userId = getUserIdFromToken(req.get('Authorization'));
 	userId=0;
 	var user = readDocument('users',userId);
-	console.log(req.body);
-	console.log(user);
+	//console.log(req.body);
+	//console.log(user);
 	if(typeof req.body.first_name!=='undefined')
 	{ console.log('true');
 	user.first_name = req.body.first_name;}
