@@ -50,15 +50,17 @@ router.get('/:id', function(req,res){
 // client side
 
 router.put('/users/:user_id/', validate({ body: UserSchema }), function(req, res) {
-	//use authorization
-	let userId = getUserIdFromToken(req.get('Authorization'));
-	userId=0;
+	 //needs authorization, please see
+	var userId = req.params.user_id;
+  console.log(userId);
+
 	var user = readDocument('users',userId);
 	//console.log(req.body);
 	//console.log(user);
 	if(typeof req.body.first_name!=='undefined')
-	{ console.log('true');
+	{ //console.log('true');
 	user.first_name = req.body.first_name;}
+
 	if(typeof req.body.last_name!=='undefined') user.last_name = req.body.last_name;
 	if(typeof req.body.display_name!=='undefined') user.display_name = req.body.display_name;
 	if(typeof req.body.email!=='undefined') user.email = req.body.email;
@@ -70,17 +72,17 @@ router.put('/users/:user_id/', validate({ body: UserSchema }), function(req, res
 
 router.put('/:settings/users/:user_id/password', function(req, res) {
 	//use authorization
-	let userId = getUserIdFromToken(req.get('Authorization'));
-	userId=0;
+	let userId = parseInt(getUserIdFromToken(req.get('Authorization')));
+//	userId=0;
 	var user = readDocument('users',userId);
 	// change if
 	if(user.password === req.body.old_password){
 		user.password = req.body.new_password;
 	}
-	console.log(req.body);
-	console.log(user);
+	//console.log(req.body);
+	//console.log(user);
 	writeDocument('users', user);
-	console.log(user);
+	//console.log(user);
 	res.send(user);
 });
 
