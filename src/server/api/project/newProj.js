@@ -61,5 +61,6 @@ function projRemoval(project_id) {
 	overwriteCollection('projects', projects);
 	console.log('DB Updated', readDocument('projects'));
 	return removed;
+
 }
 module.exports.projRemoval = projRemoval;
