@@ -2,6 +2,7 @@ var database = require('../../database');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 var deleteDocument = database.deleteDocument;
+var overwriteCollection = database.overwriteCollection;
 
 function newProjCreation(title, description, users, status, current_sprint, avatar, sprints,
 	stories, commits, timeFrame, membersOnProj, gCommits, color) {
@@ -39,7 +40,6 @@ function projUpdate(project_id, title, users) {
 	console.log(project_id, title, users);
 	for (let i = 0; i < projects.length; i++) {
 		if (projects[i]._id === project_id) {
-			console.log("yo");
 			project_i = i;
 			break;
 		}
@@ -58,15 +58,15 @@ function projRemoval(project_id) {
 	var projects = readDocument('projects');
 	//The following is to get the value of the project and sprint to be added or edited.
 	var project_i;
-	console.log(project_id);
 	for (let i = 0; i < projects.length; i++) {
 		if (projects[i]._id === project_id) {
 			project_i = i;
 			break;
 		}
 	}
-  //deleteDocument('projects', project_i);
-	projects.splice(project_i,1);
-	return projects;
+	var removed = projects.splice(project_i,1);
+	overwriteCollection('projects', projects);
+	console.log('DB Updated', readDocument('projects'));
+	return removed;
 }
 module.exports.projRemoval = projRemoval;
