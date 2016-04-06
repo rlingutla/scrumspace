@@ -33,6 +33,41 @@ export function stateTree(userId){
 	});
 }
 
+// Project Stuff
+/**
+ * Adds a new project to the database.
+ */
+export function serverPostNewProject(title, description,users,status,sprints,stories,cb) {
+  return sendXHRPromise('POST', '/api/project/',{
+    'title':title,
+    'description' : description,
+		'users':users,
+		'status': status,
+		'sprints': sprints,
+		'stories': stories
+  }).then((response) => {
+    // Return the new status update.
+    return response;
+  });
+}
+
+export function serverUpdateProject(project_id,title,members){
+	return sendXHRPromise('PUT', '/api/project/' + project_id, {
+		'project_id': project_id,
+		'title': title,
+		'users': members
+	}).then((response) => {
+		return response;
+	});
+}
+
+export function serverRemoveProject(project_id){
+
+	return sendXHRPromise('DELETE', '/api/project/' + project_id).then((response) => {
+		return response;
+	});
+}
+
 export function serverPutSettings(newData, properties){
 	var oldSettings = readDocument('users', newData._id.toString());
 
@@ -113,7 +148,7 @@ export function serverUpdateTask(project_id, story_id, task_id, status, descript
 	if(status) updates.status = status;
 	if(description) updates.description = description;
 
-	return sendXHRPromise('PUT', `/api/project/${project_id}{/story/${story_id}/task/${task_id}`, 
+	return sendXHRPromise('PUT', `/api/project/${project_id}{/story/${story_id}/task/${task_id}`,
 		updates
 	).then((response) => {
 		return response.data;
@@ -123,7 +158,7 @@ export function serverUpdateTask(project_id, story_id, task_id, status, descript
 	});
 }
 
-export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
+/*export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
 stories,commits,timeFrame,membersOnProj,gCommits,color){
 	// read in all projects, access last project in the array, get it's ID and increment that value
   var projects = readDocument('projects');
@@ -149,7 +184,7 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 
 	return emulateServerReturn(project, false);
 
-}
+}*/
 
 export function serverPostSprint(project, name, duration, time, sprint){
 	if(typeof sprint === 'undefined' || sprint === null){ //TODO this means we have a new sprint
@@ -194,7 +229,7 @@ export function serverPutStory(projectId, storyId, title, description){
 }
 
 export function serverMoveStory(projectId, storyId, sprintId){
-	return sendXHRPromise('PUT', '/api/project/' + projectId  + '/story/' + storyId + '/sprint_id/' + sprintId, 
+	return sendXHRPromise('PUT', '/api/project/' + projectId  + '/story/' + storyId + '/sprint_id/' + sprintId,
 	{}).then((response) => {
 		return response;
 	});
@@ -202,7 +237,7 @@ export function serverMoveStory(projectId, storyId, sprintId){
 export function serverRemoveStory(project_id, story_id){
 	return sendXHRPromise('DELETE', '/api/project/'+project_id+'/story/'+story_id, undefined).then((response) => {
 		return response;
-	});	
+	});
 }
 export function serverRemoveSprint(project, sprint){
 	return sendXHRPromise('DELETE', '/api/project/'+project+'/sprint/'+sprint, undefined).then((response) => {
@@ -219,7 +254,7 @@ export function serverMakeNewStory(project_id, title, description, tasks, story_
 			tasks
 		}).then((response) => {
 			return response;
-		});			
+		});
 	} else {
 		return sendXHRPromise('PUT', '/api/project/' + project_id  + '/story/' + story_id, {
 			title,
@@ -227,7 +262,7 @@ export function serverMakeNewStory(project_id, title, description, tasks, story_
 			tasks
 		}).then((response) => {
 			return response;
-		});	
+		});
 	}
 }
 
@@ -346,7 +381,7 @@ export function sendXHRPromise(verb, resource, body) {
   	    let error = `Could not ${verb} ${resource}: Received ${statusCode} ${statusText}: ${responseText}`;
 
   	    reject(error);
-  	   
+
   	  }
   	});
 

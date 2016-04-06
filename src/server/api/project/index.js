@@ -2,6 +2,7 @@
 //Schemas
 var SprintSchema = require('../../schemas/sprint');
 var TaskSchema = require('../../schemas/task');
+var NewProjSchema = require('../../schemas/project');
 var validate = require('express-jsonschema').validate;
 //Models
 var Task = require('../../models/Task');
@@ -13,6 +14,11 @@ var writeDocument = database.writeDocument;
 var sprintHelper = require('./sprintHelper');
 var sprintMaker = sprintHelper.sprintMaker;
 var removeSprint = sprintHelper.removeSprint;
+//New Proejct Helper functions
+var newProjHelper = require('./newProj');
+var newProjCreation = newProjHelper.newProjCreation;
+var projUpdate = newProjHelper.projUpdate;
+var projectRemoval = newProjHelper.projRemoval;
 //Auth Helpers
 var authentication = require('../shared/authentication');
 var getUserIdFromToken = authentication.getUserIdFromToken;
@@ -21,7 +27,6 @@ var checkAuthFromProject = authentication.checkAuthFromProject;
 var embedUsers = require('../shared/embedUsers');
 var StandardError = require('../shared/StandardError');
 import StorySchema from '../../schemas/story';
-var validate = require('express-jsonschema').validate;
 
 //Router
 var express = require('express'),
@@ -33,6 +38,35 @@ router.get('/', function (req, res) {
 
 router.get('/:id', function(req,res){
 	res.send({'_id': req.params.id});
+});
+
+//New Project Routes
+//add new project
+router.post('/', validate({ body: NewProjSchema }), function(req,res){
+	var projects = readDocument('projects');
+	console.log(req.body.users);
+	var project = newProjCreation(req.body.title, req.body.description, req.body.users);
+	res.status(201);
+	res.set('Location', '/project' + projects[projects.length-1]._id);
+	res.send(project);
+});
+
+//update project
+router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
+	var project = projUpdate(parseInt(req.params.projectid, 10), req.body.title, req.body.users);
+	 // Send the update!
+	res.send(embedUsers(project));
+});
+
+
+//remove a project
+router.delete('/:projectid', function(req, res){
+
+		var project = projectRemoval(parseInt(req.params.projectid, 10));
+		console.log('ok');
+		res.set('Location', '/project');
+		res.send(project); //returns removed project_id
+		console.log('call me doge');
 });
 
 // update a story
@@ -235,7 +269,7 @@ router.put('/:projectid/sprint/:sprintid/start', function(req,res){
 		let sprint = (project) ? project.sprints.find((sprint) => sprint._id === parseInt(req.params.sprintid, 10)):undefined;
 
 		if(typeof project === 'undefined' || typeof sprint === 'undefined'){
-			res.status(400); 
+			res.status(400);
 			return res.send({error: StandardError({
 				status: 400,
 				title: 'OBJECT_NOT_FOUND'
@@ -243,14 +277,14 @@ router.put('/:projectid/sprint/:sprintid/start', function(req,res){
 		}
 
 		if(project.current_sprint !== null){
-			res.status(400); 
+			res.status(400);
 			return res.send({error: StandardError({
 				status: 400,
 				title: 'INVALID_ACTION',
 				detail: 'Project is already in a sprint'
 			})});
 		}
-		//start the sprint 
+		//start the sprint
 		project.current_sprint = parseInt(req.params.sprintid, 10);
 		project.sprints[sprint._id].start_date = Date.now();
 
@@ -295,7 +329,7 @@ router.put('/:project_id/story/:story_id/task/:task_id', validate({ body: TaskSc
 			project_id: parseInt(req.params.project_id, 10), story_id: parseInt(req.params.story_id, 10), task_id: parseInt(req.params.task_id, 10),
 			description: req.body.description, status: req.body.status, user: user
 		}).then(
-			(task) => res.send({data: task}),  
+			(task) => res.send({data: task}),
        		(err) => res.sendStatus(404)
        	);
 	} else{
@@ -309,18 +343,18 @@ router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(re
 	if(checkAuthFromProject(user, req.params.project_id)){
 		if(Array.isArray(req.body.users)){
 			Task.assignUsers({
-				project_id: parseInt(req.params.project_id, 10), 
-				story_id: parseInt(req.params.story_id, 10), 
+				project_id: parseInt(req.params.project_id, 10),
+				story_id: parseInt(req.params.story_id, 10),
 				task_id: parseInt(req.params.task_id, 10),
 				users: req.body.users,
 				replace: req.body.replace
 			}).then(
-				(task) => res.send({data: task}),  
+				(task) => res.send({data: task}),
 	       		(err) => res.sendStatus(404)
 	       	);
 		}
 		else res.sendStatus(400);
-		
+
 	} else{
 		// 401: Unauthorized.
     	res.sendStatus(401);
@@ -332,13 +366,13 @@ router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req
 	if(checkAuthFromProject(user, req.params.project_id)){
 		if(Array.isArray(req.body.blocking)){
 			Task.assignBlocking({
-				project_id: parseInt(req.params.project_id, 10), 
-				story_id: parseInt(req.params.story_id, 10), 
+				project_id: parseInt(req.params.project_id, 10),
+				story_id: parseInt(req.params.story_id, 10),
 				task_id: parseInt(req.params.task_id, 10),
 				blocking_tasks: req.body.blocking,
 				replace: req.body.replace
 			}).then(
-				(task) => res.send({data: task}),  
+				(task) => res.send({data: task}),
 	       		(err) => res.sendStatus(404)
 	       	);
 		}
