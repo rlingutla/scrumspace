@@ -5,7 +5,7 @@ export default {
 	'type': 'object',
 	'properties': {
 	    '_id': {
-	      'type': 'string'
+	      'type': 'integer'
 	    },
 	    'title': {
 	      'type': 'string'
@@ -18,9 +18,5 @@ export default {
 	      'items': task
 	    }
     }, 
-    'required': [
-    'title',
-    'description',
-    'tasks'
-  ]
+    'additionalProperties': false
 };
