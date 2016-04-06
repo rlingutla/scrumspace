@@ -62,7 +62,8 @@ export function serverUpdateProject(project_id,title,members){
 }
 
 export function serverRemoveProject(project_id){
-	return sendXHRPromise('DELETE', '/api/project/' + project_id, undefined).then((response) => {
+	debugger;
+	return sendXHRPromise('DELETE', '/api/project/' + project_id).then((response) => {
 		return response;
 	});
 }
