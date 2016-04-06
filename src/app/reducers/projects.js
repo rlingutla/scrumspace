@@ -53,7 +53,7 @@ const projects = (state = [], action) => {
 						} else return story;
 					})});
 				} else return project;
-			});
+			}); 
 		case 'CREATE_NEW_PROJECT':
 			//find right project
 			let project = _.defaults({
@@ -72,6 +72,7 @@ const projects = (state = [], action) => {
 				color: action.color,
 				gCommits: action.gCommits
 			}, projectModel());
+
 
 			return [
 				...state,

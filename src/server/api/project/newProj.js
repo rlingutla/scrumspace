@@ -7,7 +7,8 @@ var overwriteCollection = database.overwriteCollection;
 
 function newProjCreation(title, description, users, status) {
 	var projects = readDocument('projects');
-	var prevId = projects.length - 1;
+
+	var prevId = projects.length -1 ;
 	let project = {
 		'_id': prevId + 1,
 		'title': title,
