@@ -129,8 +129,7 @@ export function serverAssignUsersToTask(project_id, story_id, task_id, users){
 		replace: true
 	}).then((response) => {
 		return response.data;
-	},
-	(error) => ErrorBanner(error));
+	});
 }
 export function serverAssignBlockingTasks(project_id, story_id, task_id, blocking){
 	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}/blocked_by/`, {
@@ -138,8 +137,7 @@ export function serverAssignBlockingTasks(project_id, story_id, task_id, blockin
 		replace: true
 	}).then((response) => {
 		return response.data;
-	},
-	(error) => ErrorBanner(error));
+	});
 }
 
 export function serverUpdateTask(project_id, story_id, task_id, status, description){
@@ -151,9 +149,6 @@ export function serverUpdateTask(project_id, story_id, task_id, status, descript
 		updates
 	).then((response) => {
 		return response.data;
-	},
-	(error) => {
-		ErrorBanner(error)
 	});
 }
 
@@ -189,6 +184,18 @@ export function serverStartSprint(project_id, sprint_id){
 }
 
 // TODO, RENAME SERVER PUT STORY SPRINT ID
+<<<<<<< HEAD
+=======
+export function serverPutStory(projectId, storyId, title, description){
+	return sendXHRPromise('PUT', `/api/project/${projectId}/story/${storyId}`, {
+		title, description
+	}).then((response) => {
+		let story = response.stories.find((story) => story._id === storyId);
+		return story;
+	});
+}
+
+>>>>>>> fc5e7db734e0a184cd86b318fe960d4250329e99
 export function serverMoveStory(projectId, storyId, sprintId){
 	return sendXHRPromise('PUT', '/api/project/' + projectId  + '/story/' + storyId + '/sprint_id/' + sprintId,
 	{}).then((response) => {
@@ -287,6 +294,7 @@ export function sendXHR(verb, resource, body, cb) {
 
   // Network failure: Could not connect to server.
   xhr.addEventListener('error', function() {
+	ErrorBanner(error); // This is in the global namespace.
     console.log('Could not ' + verb + " " + resource + ": Could not connect to the server.");
   });
 
@@ -352,6 +360,7 @@ export function sendXHRPromise(verb, resource, body) {
   	// Network failure: Could not connect to server.
   	xhr.addEventListener('error', function() {
   		let error = `Could not ${verb} ${resource}: Could not connect to the server.`;
+		ErrorBanner(error); // This is in the global namespace.
 		console.log(error);
 		reject(error);
   	});
