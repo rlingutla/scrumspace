@@ -1,6 +1,5 @@
 'use-strict';
 //Schemas
-var SprintSchema = require('../../schemas/sprint');
 var TaskSchema = require('../../schemas/task');
 var NewProjSchema = require('../../schemas/project');
 var validate = require('express-jsonschema').validate;
@@ -27,7 +26,7 @@ var checkAuthFromProject = authentication.checkAuthFromProject;
 var embedUsers = require('../shared/embedUsers');
 var StandardError = require('../shared/StandardError');
 import StorySchema from '../../schemas/story';
-
+import SprintSchema from '../../schemas/sprint';
 //Router
 var express = require('express'),
 	router = express.Router();
@@ -299,6 +298,7 @@ router.put('/:projectid/sprint/:sprintid/start', function(req,res){
 router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req, res){
 	//going to have to eventually add user tokens...
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
+		console.log('yooyoyoyo');
 		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
 		res.status(201);
 		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);

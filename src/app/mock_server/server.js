@@ -62,7 +62,6 @@ export function serverUpdateProject(project_id,title,members){
 }
 
 export function serverRemoveProject(project_id){
-
 	return sendXHRPromise('DELETE', '/api/project/' + project_id).then((response) => {
 		return response;
 	});
@@ -158,49 +157,21 @@ export function serverUpdateTask(project_id, story_id, task_id, status, descript
 	});
 }
 
-/*export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
-stories,commits,timeFrame,membersOnProj,gCommits,color){
-	// read in all projects, access last project in the array, get it's ID and increment that value
-  var projects = readDocument('projects');
-	var prevId = projects[projects.length - 1]._id;
-
-	let project = {
-		'_id': prevId + 1,
-		'title': title,
-		'description': description,
-		'users': users,
-		'status': 'planning',
-		'current_sprint': null,
-		'avatar': '',
-		'sprints': [],
-		'stories': [],
-		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
-    'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj': membersOnProj,
-		'gCommits':[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
-		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
-	};
-	writeDocument('projects', project);
-
-	return emulateServerReturn(project, false);
-
-}*/
-
 export function serverPostSprint(project, name, duration, time, sprint){
 	if(typeof sprint === 'undefined' || sprint === null){ //TODO this means we have a new sprint
 		return sendXHRPromise('POST', '/api/project/'+project+'/sprint/', {
-			'name': name,
-			'scrum_time': time,
-			'duration': duration
+			'name': name.toString(),
+			'scrum_time': time.toString(),
+			'duration': parseInt(duration, 10)
 		}).then((response) => {
 			return response;
 		});
 	}
 	else{ //this means that we have an edited sprint
 		return sendXHRPromise('PUT', '/api/project/'+project+'/sprint/'+sprint, {
-			'name': name,
-			'scrum_time': time,
-			'duration': duration
+			'name': name.toString(),
+			'scrum_time': time.toString(),
+			'duration': parseInt(duration, 10)
 		}).then((response) => {
 			return response;
 		});
@@ -218,16 +189,6 @@ export function serverStartSprint(project_id, sprint_id){
 }
 
 // TODO, RENAME SERVER PUT STORY SPRINT ID
-export function serverPutStory(projectId, storyId, title, description){
-	return sendXHRPromise('PUT', `/api/project/${projectId}/story/${storyId}`, {
-		title, description
-	}).then((response) => {
-		let story = response.stories.find((story) => story._id === storyId);
-		return story;
-	}, 
-	(error) => ErrorBanner(error));
-}
-
 export function serverMoveStory(projectId, storyId, sprintId){
 	return sendXHRPromise('PUT', '/api/project/' + projectId  + '/story/' + storyId + '/sprint_id/' + sprintId,
 	{}).then((response) => {
