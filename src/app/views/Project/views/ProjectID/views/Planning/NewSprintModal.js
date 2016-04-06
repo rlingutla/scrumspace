@@ -28,7 +28,7 @@ export default class NewSprintModal extends Component {
 							<div className="col-md-4">
 								<div className="left-date-input">
 									<label>Scrum Time</label>
-									<input type="text" className="form-control strech-input" placeholder="Time of Scrum"
+									<input type="time" className="form-control strech-input" placeholder="Time of Scrum"
 									value={this.props.data.scrum_time} onChange={(e) => this.props.updateState('sprintModal', 'scrum_time', e)}
 									/>
 								</div>
@@ -36,7 +36,7 @@ export default class NewSprintModal extends Component {
 							<div className="col-md-4">
 								<div className="left-date-input">
 									<label>Duration</label>
-									<input type="text" className="form-control strech-input" placeholder="Enter Duration"
+									<input type="number" className="form-control strech-input" placeholder="Enter Duration"
 									value={this.props.data.duration} onChange={(e) => this.props.updateState('sprintModal', 'duration', e)}
 									/>
 								</div>

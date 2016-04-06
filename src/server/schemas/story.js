@@ -4,7 +4,7 @@ export default {
 	'$schema': 'http://json-schema.org/draft-04/schema#',
 	'type': 'object',
 	'properties': {
-	    'story_id': {
+	    '_id': {
 	      'type': 'string'
 	    },
 	    'title': {
@@ -17,5 +17,10 @@ export default {
 	      'types': 'array',
 	      'items': task
 	    }
-    }
+    }, 
+    'required': [
+    'title',
+    'description',
+    'tasks'
+  ]
 };

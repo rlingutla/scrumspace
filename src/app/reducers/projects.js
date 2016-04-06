@@ -97,6 +97,10 @@ const projects = (state = [], action) => {
 			return state.map((project) => {
 				return (project._id === action.project._id) ? action.project : project;
 			});
+		case 'START_SPRINT':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project:project;
+			});
   	default: //just returning state for now
 			return state;
 	}

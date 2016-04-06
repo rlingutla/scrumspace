@@ -55,7 +55,9 @@ const processGraphData = (project) => {
 
 	//init dataset object with each taskType
 	let datasets = {};
-	for(let taskType in taskTypes) datasets[taskType] = Array(DAY_RANGE).fill(0);	
+	for(let taskType in taskTypes) {
+		datasets[taskType] = Array(DAY_RANGE).fill(0);	
+	}
 
 	for(let i = 0; i < DAY_RANGE; ++i){
 		let currDay = moment(today).subtract(i, 'days');
@@ -63,7 +65,9 @@ const processGraphData = (project) => {
 			//is history entry within current day in DAY_RANGE
 			if(moment(historyObj.modified_time).isBetween(moment(currDay).startOf('day'), moment(currDay).endOf('day'))){
 				//increment counter
-				++datasets[historyObj.to_status][DAY_RANGE - (i + 1)];
+				if(historyObj.to_status){
+					++datasets[historyObj.to_status][DAY_RANGE - (i + 1)];
+				}
 			}
 		});
 	}

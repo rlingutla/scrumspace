@@ -1,6 +1,7 @@
 const errorTypes = {
 	INVALID_KEY: 'Supplied object key was invalid',
 	INVALID_ARGUMENTS: "Arguments are either missing or incorrect",
+	INVALID_ACTION: "Action is invalid/not allowed",
 	OBJECT_NOT_FOUND: 'Supplied object or collection referenced a nonexisting entity',
 	IDK: 'We\'re not really sure what happened'
 }

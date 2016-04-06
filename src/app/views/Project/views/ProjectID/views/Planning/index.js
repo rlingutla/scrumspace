@@ -31,6 +31,7 @@ const StoryFactory = () => {
 class PlanView extends Component {
 	constructor(props){
 		super(props);
+
 		this.state ={
 			storyModal: [false, StoryFactory()], //the object at the ladder end of this array is what gets written to the server.
 			sprintModal: [false, SprintFactory()] //the object at the ladder end of this array is what gets written to the server.
@@ -202,7 +203,8 @@ class PlanView extends Component {
 						return (
 							<SprintRow key={i} data={e} updateState={this.updateState.bind(this)} save={this.save.bind(this)}
 								handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
-								stories={this.props.stories.filter((value) => value.sprint_id === e._id)} isCurrentSprint={e._id === this.props.current_sprint}
+								stories={this.props.stories.filter((value) => value.sprint_id === e._id)} current_sprint={this.props.current_sprint}
+								startSprint={this.props.startSprint} project_id={this.props._id}
 							/>
 						);
 					})

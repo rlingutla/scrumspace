@@ -49,3 +49,20 @@
 	    	outline: 0;
 	    }
 }
+
+//sprint state styling
+@mixin sprintPlanning(){
+	background: lighten($border-color, 12%);
+	border: 1px solid $border-color;
+	color: darken($border-color, 30%);
+}
+@mixin sprintSprinting(){
+	background: $green-color;
+	border: 1px solid darken($green-color, 20%);
+	color: darken($green-color, 40%);
+}
+@mixin sprintReview(){
+	background: $yellow-color;
+	border: 1px solid darken($yellow-color, 20%);
+	color: darken($yellow-color, 50%);
+}

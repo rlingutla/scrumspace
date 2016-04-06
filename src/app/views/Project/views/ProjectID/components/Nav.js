@@ -5,9 +5,11 @@ import { daysDifference, verboseServerTime, getCurrentSprint } from 'app/shared/
 import Ionicon from 'app/shared/components/Ionicon';
 import { Row, Col, Glyphicon, Button } from 'react-bootstrap';
 import { Link }  from 'react-router';
+import { getProjectStatus, ProjectStatus } from '../../../shared/ProjectStatus';
 
 
 const ProjectNav = (props) => {
+	let projectStatusObj = getProjectStatus(props);
 
 	let currentSprint = getCurrentSprint(props);
 	return (
@@ -24,14 +26,19 @@ const ProjectNav = (props) => {
 					<div className="detail-text">
 						<h1>
 							{props.title}
-							{currentSprint ? <span name="project-state">, {currentSprint.name}</span>:null}
+							{currentSprint ? 
+								<span>
+									<span name="project-state">, {currentSprint.name}</span>
+								</span>:null
+							}
 						</h1>
 						{currentSprint ? 
 							<h4>
 								<span name="sprint-start-date">{verboseServerTime(currentSprint.start_date)}</span> - 
-								<span name="sprint-end-date">{verboseServerTime(currentSprint.end_date)}</span>
+								<span name="sprint-end-date">{verboseServerTime(projectStatusObj.end_date)}</span>
 							</h4>
 						:null}
+						<div style={{fontSize: '14px', marginTop: '8px'}}><ProjectStatus style={{fontSize: '14px'}} {...props} /></div>
 					</div>
 				</div>
 			</Row>

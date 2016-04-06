@@ -9,8 +9,10 @@ import {
 	serverMoveStory, 
 	serverMakeNewStory,
 	serverAssignUsersToTask,
-	serverAssignBlockingTasks
+	serverAssignBlockingTasks,
+	serverStartSprint
 } from '../mock_server/server';
+import { browserHistory } from 'react-router'
 
 // TASK 
 export const updateTaskAction = (project_id, story_id, task) => {
@@ -27,6 +29,7 @@ export function updateTask(project_id, story_id, task_id, status, description){
 		return serverUpdateTask(project_id, story_id, task_id, status, description).then(
 			task => {
 				dispatch(updateTaskAction(project_id, story_id, task));
+
 			},
 			error => console.error('got an error', error)
 		)
@@ -131,4 +134,22 @@ export function postProjectPlan(signal, data){
 			error => console.error('rip', error)
 		);
 	};
+}
+
+export const startSprintAction = (project) => {
+	return {
+		type: 'START_SPRINT', project
+	};
+};
+
+export function putStartSprint(project_id, sprint_id){
+	return function(dispatch){
+		return serverStartSprint(project_id, sprint_id).then(
+			project => {
+				dispatch(startSprintAction(project));
+				browserHistory.push(`/project/${project_id}/scrumboard`)
+			},
+			error => console.error('rip', error)
+		);
+	}
 }

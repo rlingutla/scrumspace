@@ -41,7 +41,7 @@ class Backlog extends React.Component {
 		const { isOver, canDrop, connectDropTarget } = this.props;
 
 		return connectDropTarget(
-			<div className="panel panel-primary">
+			<div className="panel panel-primary planning">
 				<div className="panel-heading">
 					<h4>Backlog </h4>
 				</div>

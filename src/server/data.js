@@ -77,22 +77,22 @@ var initialData = {
 		'description': 'Make America Great Again',
 		'users': [0, 1],
 		'status': 'sprint',
-		'current_sprint': 0,
+		'current_sprint': null,
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
 		'sprints': [
 			{
 				'_id': 0,
 				'name': 'V1 Release',
-				'start_date': (new Date()).getTime(),
+				'start_date':null,
 				'duration': 14,
-				'scrum_time': '9:00 AM'
+				'scrum_time': '09:00'
 			},
 			{
 				'_id': 1,
 				'name': 'V2 Release',
 				'duration': 7,
 				'start_date': null,
-				'scrum_time': '9:00 AM'
+				'scrum_time': '09:00'
 			}
 		],
 		'stories': [
@@ -132,7 +132,7 @@ var initialData = {
 					},
 					{
 						'_id': 2,
-						'status': 'DONE',
+						'status': 'UNASSIGNED',
 						'blocked_by': [],
 						'assigned_to': [0],
 						'description': 'Make Donald Drumpf again',
@@ -151,7 +151,7 @@ var initialData = {
 					},
 					{
 						'_id': 3,
-						'status': 'DONE',
+						'status': 'UNASSIGNED',
 						'blocked_by': [],
 						'assigned_to': [],
 						'description': 'Replace Donald\'s Toupee',
