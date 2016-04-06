@@ -184,8 +184,6 @@ export function serverStartSprint(project_id, sprint_id){
 }
 
 // TODO, RENAME SERVER PUT STORY SPRINT ID
-<<<<<<< HEAD
-=======
 export function serverPutStory(projectId, storyId, title, description){
 	return sendXHRPromise('PUT', `/api/project/${projectId}/story/${storyId}`, {
 		title, description
@@ -194,8 +192,6 @@ export function serverPutStory(projectId, storyId, title, description){
 		return story;
 	});
 }
-
->>>>>>> fc5e7db734e0a184cd86b318fe960d4250329e99
 export function serverMoveStory(projectId, storyId, sprintId){
 	return sendXHRPromise('PUT', '/api/project/' + projectId  + '/story/' + storyId + '/sprint_id/' + sprintId,
 	{}).then((response) => {
