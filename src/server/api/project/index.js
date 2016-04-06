@@ -27,7 +27,6 @@ var checkAuthFromProject = authentication.checkAuthFromProject;
 var embedUsers = require('../shared/embedUsers');
 var StandardError = require('../shared/StandardError');
 import StorySchema from '../../schemas/story';
-var validate = require('express-jsonschema').validate;
 
 //Router
 var express = require('express'),
@@ -44,14 +43,12 @@ router.get('/:id', function(req,res){
 //New Project Routes
 //add new project
 router.post('/', validate({ body: NewProjSchema }), function(req,res){
-	//going to have to eventually add user tokens...
 	var projects = readDocument('projects');
-	var project = newProjCreation(req.body.title, req.body.description, req.body.users,null);
-	//TODO: WRITE NEW PROJECT TO DATABASE
+	console.log(req.body.users);
+	var project = newProjCreation(req.body.title, req.body.description, req.body.users);
 	res.status(201);
 	res.set('Location', '/project/' + projects[projects.length-1]._id);
-	res.send(embedUsers(project));
-	 // Send the update!
+	res.send(project);
 });
 
 //update project
@@ -64,11 +61,12 @@ router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
 
 //remove a project
 router.delete('/:projectid', function(req, res){
-		var projects = projectRemoval(parseInt(req.params.projectid, 10));
+
+		var project = projectRemoval(parseInt(req.params.projectid, 10));
+		console.log('ok');
 		res.set('Location', '/project');
-		res.send(projects.map((project) => {
-			return project._id;
-		}));
+		res.send(project); //returns removed project_id
+		console.log('call me doge');
 });
 
 // update a story

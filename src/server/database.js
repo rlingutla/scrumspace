@@ -104,6 +104,18 @@ function getCollection(collectionName) {
 }
 module.exports.getCollection = getCollection;
 
+function overwriteCollection(collectionName, changedDocument) {
+  // Store a copy of the object into the database. Models a database's behavior.
+	var collectionObj = data[collectionName];
+	if (!collectionObj) {
+		throw new Error(`Object collection ${collectionName} does not exist in the database!`);
+	}
+  data[collectionName] = JSONClone(changedDocument);
+  // Update our 'database'.
+  updated = true;
+}
+module.exports.overwriteCollection = overwriteCollection;
+
 
  /**
   * Reset the database.
