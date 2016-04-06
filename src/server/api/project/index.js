@@ -10,6 +10,7 @@ var database = require('../../database');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 var deleteDocument = database.deleteDocument;
+var addDocument = database.addDocument;
 //Sprint Helper function
 var sprintHelper = require('./sprintHelper');
 var sprintMaker = sprintHelper.sprintMaker;
@@ -345,7 +346,6 @@ router.post('/:project_id/story/:story_id/task/', validate({ body: TaskSchema })
 		var storyId = (parseInt(req.params.story_id, 10));
 		var taskId = (req.body.task_id === 'null') ? null : req.body.task_id;
 		var project = readDocument('projects', projectId);
-
 		var project_i, story_i, task_i;
 		for(let j = 0; j < project.stories.length; j++){
 			if(project.stories[j]._id === storyId){
@@ -365,7 +365,7 @@ router.post('/:project_id/story/:story_id/task/', validate({ body: TaskSchema })
 		}
 
 		let newTask = {
-			'_id': taskId,
+			'_id': parseInt(task_i, 10),
 			'status': req.body.status,
 			'assigned_to': [],
 			'blocked_by': [],
@@ -378,8 +378,9 @@ router.post('/:project_id/story/:story_id/task/', validate({ body: TaskSchema })
 			}],
 			'attachments': null
 		};
-		res.status(201);
-		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);
+
+		project.stories[story_i].tasks[task_i] = newTask;
+		writeDocument('projects', project.stories[story_i].tasks[task_i]);
 		// Send the update!
 		res.send(embedUsers(project));
 	} else{
