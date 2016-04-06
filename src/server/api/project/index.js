@@ -135,9 +135,9 @@ router.delete('/:project_id/story/:story_id', function(req, res) {
 				projectToUpdate.stories.splice(i, 1);
 			}
 		}
-
 		writeDocument('projects', projectToUpdate);	//write updated project to database
-		res.send(projectToUpdate);
+
+		res.send(embedUsers(projectToUpdate));
 	} else{
 		// 401: Unauthorized.
     	res.status(401).end();
