@@ -47,7 +47,7 @@ router.post('/', validate({ body: NewProjSchema }), function(req,res){
 	console.log(req.body.users);
 	var project = newProjCreation(req.body.title, req.body.description, req.body.users);
 	res.status(201);
-	res.set('Location', '/project/' + projects[projects.length-1]._id);
+	res.set('Location', '/project' + projects[projects.length-1]._id);
 	res.send(project);
 });
 
