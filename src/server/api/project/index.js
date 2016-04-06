@@ -2,6 +2,7 @@
 //Schemas
 var SprintSchema = require('../../schemas/sprint');
 var TaskSchema = require('../../schemas/task');
+var UserSchema = require('../../schemas/user');
 var validate = require('express-jsonschema').validate;
 //Models
 var Task = require('../../models/Task');
@@ -291,27 +292,5 @@ router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req
 // });
 
 
-// why is user id -1?
-// why is returning undefined
-// why is returing 404 when route is /settings/users/user_id
-
-router.put('/:project_id/users/:user_id/', function(req, res) {
-	//use authorization
-	let userId = getUserIdFromToken(req.get('Authorization'));
-	userId=0;
-	var user = readDocument('users',userId);
-	console.log(req.body);
-	console.log(user);
-	if(typeof req.body.first_name!=='undefined')
-	{ console.log('yolo');
-		user.first_name = req.body.first_name;}
-	if(typeof req.body.last_name!=='undefined') user.last_name = req.body.last_name;
-	if(typeof req.body.display_name!=='undefined') user.display_name = req.body.display_name;
-	if(typeof req.body.email!=='undefined') user.email = req.body.email;
-
-	writeDocument('users', user);
-console.log(user);
-	res.send(user);
-});
 
 module.exports = router;

@@ -6,7 +6,7 @@ import Panel from '../Panel';
 // put in client.js server method
 
 
-
+//save function
 export default (props) => {
 	return (
 		<Panel heading="User Settings" glyphicon="user" saveMethod={props.saveMethod}>

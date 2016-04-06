@@ -34,6 +34,12 @@ export function stateTree(userId){
 }
 
 export function serverPutSettings(newData, properties){
+
+	sendXHR('PUT', '/users/' + userId , (xhr) => {
+		cb(JSON.parse(xhr.responseText));
+	});
+
+
 	var oldSettings = readDocument('users', newData._id.toString());
 
 	// check if password (TODO: fix this design AV)
@@ -394,11 +400,5 @@ export function sendXHRPromise(verb, resource, body) {
   	  default:
   	    throw new Error('Unknown body type: ' + typeof(body));
   	}
-  });
-}
-
-export function saveMethod(userId, cb) {
-  sendXHR('PUT', '/users/' + userId , (xhr) => {
-    cb(JSON.parse(xhr.responseText));
   });
 }

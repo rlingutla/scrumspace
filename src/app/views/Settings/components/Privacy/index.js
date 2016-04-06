@@ -1,6 +1,7 @@
 import React from 'react';
 import Panel from '../Panel';
 
+//save button
 export default (props) => {
 	return (
 		<Panel heading="Privacy" glyphicon="lock" saveMethod={props.saveMethod}>
