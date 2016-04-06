@@ -31,7 +31,6 @@ export const createNewProject = (title, description,users,status,current_sprint,
 };
 
 export function postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
- 	debugger;
 	return function(dispatch){
 		return postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color).then(
 			project => {

@@ -8,11 +8,9 @@ const mapStateToProps = (state) => {
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	// todo get rid of this:
 	var projects = stateProps.projects || [];
-
 	let project = projects.find((proj) => {
-		return proj._id === parseInt(ownProps.params.id);
+		return proj._id === parseInt(ownProps.params.id,10);
 	});
-
 	return Object.assign({...project}, {...ownProps});
 }
 
