@@ -65,8 +65,8 @@ function projRemoval(project_id) {
 			break;
 		}
 	}
-  deleteDocument('projects', project_i);
-	//projects.splice(project_i,1);
+  //deleteDocument('projects', project_i);
+	projects.splice(project_i,1);
 	return projects;
 }
 module.exports.projRemoval = projRemoval;
