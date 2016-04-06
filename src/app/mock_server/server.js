@@ -130,8 +130,7 @@ export function serverAssignUsersToTask(project_id, story_id, task_id, users){
 		replace: true
 	}).then((response) => {
 		return response.data;
-	},
-	(error) => ErrorBanner(error));
+	});
 }
 export function serverAssignBlockingTasks(project_id, story_id, task_id, blocking){
 	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}/blocked_by/`, {
@@ -139,8 +138,7 @@ export function serverAssignBlockingTasks(project_id, story_id, task_id, blockin
 		replace: true
 	}).then((response) => {
 		return response.data;
-	},
-	(error) => ErrorBanner(error));
+	});
 }
 
 export function serverUpdateTask(project_id, story_id, task_id, status, description){
@@ -152,9 +150,6 @@ export function serverUpdateTask(project_id, story_id, task_id, status, descript
 		updates
 	).then((response) => {
 		return response.data;
-	},
-	(error) => {
-		ErrorBanner(error)
 	});
 }
 
@@ -224,8 +219,7 @@ export function serverPutStory(projectId, storyId, title, description){
 	}).then((response) => {
 		let story = response.stories.find((story) => story._id === storyId);
 		return story;
-	}, 
-	(error) => ErrorBanner(error));
+	});
 }
 
 export function serverMoveStory(projectId, storyId, sprintId){
@@ -326,6 +320,7 @@ export function sendXHR(verb, resource, body, cb) {
 
   // Network failure: Could not connect to server.
   xhr.addEventListener('error', function() {
+	ErrorBanner(error); // This is in the global namespace.
     console.log('Could not ' + verb + " " + resource + ": Could not connect to the server.");
   });
 
@@ -391,6 +386,7 @@ export function sendXHRPromise(verb, resource, body) {
   	// Network failure: Could not connect to server.
   	xhr.addEventListener('error', function() {
   		let error = `Could not ${verb} ${resource}: Could not connect to the server.`;
+		ErrorBanner(error); // This is in the global namespace.
 		console.log(error);
 		reject(error);
   	});

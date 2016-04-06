@@ -1,10 +1,14 @@
 'use-strict';
-//Schemas
-var SprintSchema = require('../../schemas/sprint');
-var TaskSchema = require('../../schemas/task');
-var NewProjSchema = require('../../schemas/project');
+// Schemas
+
 var validate = require('express-jsonschema').validate;
-//Models
+
+import SprintSchema from '../../schemas/sprint';
+import TaskSchema from '../../schemas/task';
+import NewProjSchema from '../../schemas/project';
+import StorySchema from '../../schemas/story';
+
+// Models
 var Task = require('../../models/Task');
 //Database Functions
 var database = require('../../database');
@@ -26,7 +30,6 @@ var checkAuthFromProject = authentication.checkAuthFromProject;
 //Utils
 var embedUsers = require('../shared/embedUsers');
 var StandardError = require('../shared/StandardError');
-import StorySchema from '../../schemas/story';
 
 //Router
 var express = require('express'),
