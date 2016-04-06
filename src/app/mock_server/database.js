@@ -6,13 +6,6 @@ import initialData from './data';
 // Modify with your startup's name!
 var startupName = "scrumSpace";
 
-// DISABLED UNTIL ABHAY FIXES SERVER SIDE RENDERING :(
-// var data = JSON.parse(localStorage.getItem(startupName));
-// if (data === null) {
-//   data = JSONClone(initialData);
-// }
-// var data = JSONClone(initialData);
-
 var data;
 
 /**
@@ -85,10 +78,15 @@ export class ResetDatabase extends React.Component {
   render() {
     return (
       <button style={{width: 50+'px', height: 50+'px', overflow: 'hidden', fontSize: 12+'px', padding: 0}} className="btn btn-default" type="button" onClick={() => {
-        resetDatabase();
-        window.alert('Database reset! Refreshing the page now...');
-        document.location.reload(false);
-      }}>ResetDB</button>
+        resetDatabase(); //THIS NEEDS TO BE REMOVED!
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/resetdb');
+        xhr.addEventListener('load', function() {
+          window.alert("Database reset! Refreshing the page now...");
+          document.location.reload(false);
+        });
+        xhr.send();
+      }}>Reset Mock DB</button>
     );
   }
 }

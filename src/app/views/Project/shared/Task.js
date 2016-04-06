@@ -1,7 +1,8 @@
 import React from 'react';
 import { Modal, OverlayTrigger, Tooltip, Popover, Button } from 'react-bootstrap';
-import TaskDetailModal from '../views/views/ScrumBoard/TaskDetailModal';
-import AssignUserModal from '../views/views/ScrumBoard/AssignUserModal';
+import TaskDetailModal from '../views/ProjectID/views/ScrumBoard/TaskDetailModal';
+import AssignUserModal from '../views/ProjectID/views/ScrumBoard/AssignUserModal';
+import BlockedTasks from '../views/ProjectID/views/ScrumBoard/BlockedTasks';
 
 import ItemTypes from 'app/shared/constants/itemTypes';
 import TaskTypes from 'app/shared/constants/taskTypes';
@@ -11,7 +12,7 @@ import _ from 'underscore';
 
 import { DragSource } from 'react-dnd';
 
-import { updateTask } from '../../../actions/';
+import { updateTask, assignUsersToTask, assignBlockingTasks } from '../../../actions/';
 
 const taskSource = {
 	beginDrag(props){
@@ -36,7 +37,7 @@ class Task extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { 
+		this.state = {
 			isModalOpen: false,
 			assignUserModal: false
 		};
@@ -52,7 +53,8 @@ class Task extends React.Component {
 	}
 
 	getTaskStyle(status){
-		return { borderColor: TaskTypes[status].color };
+		// return { borderColor: TaskTypes[status].color };
+		return {};
 	}
 
 	render() {
@@ -68,22 +70,27 @@ class Task extends React.Component {
 
 		let theTask = (
 			<div>
-				<AssignUserModal isModalOpen={this.state.assignUserModal} hideModal={(e) => this.hideUserAssignModal(e)}/>
-				<div className="task" onClick={(e) => this.changeModal(e)} style={this.getTaskStyle(this.props.status)}>
+				{/*<AssignUserModal users={this.props.users} isModalOpen={this.state.assignUserModal} hideModal={(e) => this.hideUserAssignModal(e)}/>*/}
+				<div className="task" onClick={(e) => this.changeModal(e)} style={{borderTopColor: TaskTypes[this.props.status].color}}>
 				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
-				    <div className="body">{this.props.description}</div>
-				    <div className="footer" style={{padding: '5px 0'}}>
-				        <div className="row left-right-align">
-				            {/* <div style={{float:'left'}}><a>{this.props._id}</a></div> */}
-				            <div style={{float:'right'}}>
-				            	{this.props.assignedTo ? 
-				            		this.props.assignedTo.map((user, i) => 
-				            			<span key={i} className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}></span>
-				            		):null
-				            	}
-				            </div>
-				        </div>
+				    <div className="header" style={{borderColor: TaskTypes[this.props.status].color}}>
+				    	<div style={{flexGrow:1}}><a>{this.props._id}</a></div>
+				    	<div>
+				    		{(this.props.assigned_to.length > 0) ?
+				    			this.props.assigned_to.map((user, i) => {
+				    				return <span key={i} className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}></span>;
+				    			}):null
+				    		}
+				    	</div>
 				    </div>
+				    <div className="body">
+				    	<p>{this.props.description}</p>
+				    </div>
+				    <div className="task-info">
+				    	{(this.props.blocked_by.length > 0) ? <BlockedTasks blocked_by={this.props.blocked_by} />:null}
+				    </div>
+
+				    <div className="footer"></div>
 				</div>
 			</div>
 		);
@@ -98,27 +105,31 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	//do our nasty search
-	let theTask = stateProps
-	.projects.find((proj) => proj._id === ownProps.project_id)
-	.stories.find((story) => story._id === ownProps.story_id)
-	.tasks.find((task) => task._id === ownProps.task_id);
-	return Object.assign(theTask, 
-		{ 
-			project_id: ownProps.project_id, 
-			story_id: ownProps.story_id, 
-			_id: ownProps.task_id, 
-			users: ownProps.users  //TODO: can we take this out?
-		}, 
+	let theTask = ownProps.story.tasks[ownProps.task_id];
+	let users = stateProps.projects[ownProps.project_id].users;
+
+	return Object.assign(theTask,
+		{
+			project_id: ownProps.project_id,
+			story_id: ownProps.story_id,
+			_id: ownProps.task_id,
+		},
+		{ users: stateProps.projects[ownProps.project_id].users },
 		dispatchProps);
 }
 
 //maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
   return {
-  	updateTask: (project_id, story_id, task) => {
+  	updateTask: (project_id, story_id, task_id, status, description) => {
   		// dispatch(changeTaskState(project_id, story_id, task_id, toType));
-  		dispatch(updateTask(project_id, story_id, task));
+  		dispatch(updateTask(project_id, story_id, task_id, status, description));
+  	},
+  	assignUsers: (project_id, story_id, task_id, users) => {
+  		dispatch(assignUsersToTask(project_id, story_id, task_id, users));
+  	},
+  	assignBlocking: (project_id, story_id, task_id, tasks) => {
+  		dispatch(assignBlockingTasks(project_id, story_id, task_id, tasks));
   	}
   };
 };

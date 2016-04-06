@@ -1,11 +1,13 @@
 import React from 'react';
-import { verboseServerTime, getCurrentTasks } from 'app/shared/utils/utils';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { ProjectStatus } from '../../../shared/ProjectStatus';
 import { Link }  from 'react-router';
 import { Line } from 'react-chartjs';
-import taskTypes from 'app/shared/constants/taskTypes';
 import moment from 'moment';
+
+import { verboseServerTime, getCurrentTasks } from 'app/shared/utils/utils';
+import taskTypes from 'app/shared/constants/taskTypes';
+
+import { ProjectStatus } from 'Project/shared/ProjectStatus';
 
 const lineOptions = {
     scaleShowGridLines : false,
@@ -47,21 +49,25 @@ const processGraphData = (project) => {
 	const histories = getCurrentTasks(project)
 		.map((task) => task.history)
 		.reduce((a,b) => a.concat(b), [])
-		.sort((a,b) => a.modifiedTime > b.modifiedTime);
+		.sort((a,b) => a.modified_time > b.modified_time);
 
 	let today = moment().startOf('day');
 
 	//init dataset object with each taskType
 	let datasets = {};
-	for(let taskType in taskTypes) datasets[taskType] = Array(DAY_RANGE).fill(0);	
+	for(let taskType in taskTypes) {
+		datasets[taskType] = Array(DAY_RANGE).fill(0);	
+	}
 
 	for(let i = 0; i < DAY_RANGE; ++i){
 		let currDay = moment(today).subtract(i, 'days');
 		histories.forEach((historyObj) => {
 			//is history entry within current day in DAY_RANGE
-			if(moment(historyObj.modifiedTime).isBetween(moment(currDay).startOf('day'), moment(currDay).endOf('day'))){
+			if(moment(historyObj.modified_time).isBetween(moment(currDay).startOf('day'), moment(currDay).endOf('day'))){
 				//increment counter
-				++datasets[historyObj.toStatus][DAY_RANGE - (i + 1)];
+				if(historyObj.to_status){
+					++datasets[historyObj.to_status][DAY_RANGE - (i + 1)];
+				}
 			}
 		});
 	}

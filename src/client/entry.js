@@ -20,7 +20,7 @@ import { initDatabase, stateTree } from '../app/mock_server/server';
 var mountNode = document.getElementById('app');
 
 //initialize mock datastore
-initDatabase();
+initDatabase(); // TODO, THIS HAS GOT TO GO
 
 stateTree(0).then((stateTree) => {
 	match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {

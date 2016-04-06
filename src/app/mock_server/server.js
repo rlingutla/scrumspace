@@ -28,15 +28,9 @@ function serverLog(...msg){
 }
 
 export function stateTree(userId){
-	var userObj = readDocument('users', userId);
-	var projects = readDocument('projects');
-	delete userObj.password; // TODO: this is bad design
-	var stateTree = {
-		user: userObj[userId],
-		projects
-	};
-
-	return emulateServerReturn(stateTree);
+	return sendXHRPromise('get', '/api/init/', { _id: 0}).then((response) => {
+		return response;
+	});
 }
 
 export function serverPutSettings(newData, properties){
@@ -58,6 +52,7 @@ export function serverPutSettings(newData, properties){
 	return emulateServerReturn(oldSettings, false) ;
 }
 
+//TODO deprecated
 export function serverUpdateTask(project_id, story_id, changedTask){
 	let projects = readDocument('projects');
 	let updatedTask, updatedProject;
@@ -68,7 +63,7 @@ export function serverUpdateTask(project_id, story_id, changedTask){
 				if(story._id === story_id){
 					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
 						if(task._id === changedTask._id){
-							let historyItem = { fromStatus: task.status, toStatus: changedTask.status, modifiedTime: Date.now(), modifiedUser: getCurrentUser()};
+							let historyItem = { from_status: task.status, to_status: changedTask.status, modified_time: Date.now(), modified_user: getCurrentUser()};
 
 							updatedTask = Object.assign({}, task, changedTask, {
 								history: [
@@ -94,64 +89,38 @@ export function serverUpdateTask(project_id, story_id, changedTask){
 	return emulateServerReturn(updatedTask, updatedTask === undefined);
 }
 
-export function serverPutTaskState(project_id, story_id, task_id, toType){
-	let projects = readDocument('projects');
-	let updatedTask, updatedProject;
-
-	projects.map((project) => {
-		if(project._id === project_id){
-			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-				if(story._id === story_id){
-					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
-						if(task._id === task_id){
-							let historyItem = { fromStatus: task.status, toStatus: toType, modifiedTime: Date.now(), modifiedUser: getCurrentUser()};
-
-							updatedTask = Object.assign({}, task, {
-								status: toType,
-								history: [
-									...task.history,
-									historyItem
-								]
-							});
-
-							return updatedTask;
-						} else return task;
-					})});
-				} else return story;
-			})});
-			return updatedProject;
-		} else return project;
-	});
-
-
-	//write updated project object to server
-	writeDocument('projects', updatedProject);
-
-	serverLog('DB Updated', updatedTask);
-
-	return emulateServerReturn(updatedTask, updatedTask === undefined);
+export function serverAssignUsersToTask(project_id, story_id, task_id, users){
+	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}/assigned_to/`, {
+		users,
+		replace: true
+	}).then((response) => {
+		return response.data;
+	},
+	(error) => ErrorBanner(error));
+}
+export function serverAssignBlockingTasks(project_id, story_id, task_id, blocking){
+	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}/blocked_by/`, {
+		blocking,
+		replace: true
+	}).then((response) => {
+		return response.data;
+	},
+	(error) => ErrorBanner(error));
 }
 
-export function serverPutStory(project_id, newStory){
-	let projects = readDocument('projects');
-	let updatedProject, updatedStory;
-	projects.map((project) => {
-		if(project._id == project_id){
-			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-				if(story._id === newStory._id){
-					updatedStory = Object.assign({}, newStory);
-					return updatedStory;
-				}
-				else return story;
-			})});
-			return updatedProject;
-		}
-		else return project;
+export function serverUpdateTask(project_id, story_id, task_id, status, description){
+	let updates = {};
+	if(status) updates.status = status;
+	if(description) updates.description = description;
+
+	return sendXHRPromise('PUT', `/api/project/${project_id}{/story/${story_id}/task/${task_id}`, 
+		updates
+	).then((response) => {
+		return response.data;
+	},
+	(error) => {
+		ErrorBanner(error)
 	});
-	//write updated project object to server
-	writeDocument('projects', updatedProject);
-	serverLog('DB Updated', updatedStory);
-	return emulateServerReturn(updatedStory, updatedStory === undefined);
 }
 
 export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
@@ -167,12 +136,13 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 		'users': users,
 		'status': 'planning',
 		'current_sprint': null,
+		'avatar': '',
 		'sprints': [],
 		'stories': [],
 		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
     'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
-		'gCommits':[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
+		'membersOnProj': membersOnProj,
+		'gCommits':[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 	};
 	writeDocument('projects', project);
@@ -182,165 +152,73 @@ stories,commits,timeFrame,membersOnProj,gCommits,color){
 }
 
 export function serverPostSprint(project, name, duration, time, sprint){
-	//sprint is not passed through if it is a new sprint hence the type is undefined
-	var projects = readDocument('projects');
-	//The following is to get the value of the project and sprint to be added or edited.
-	var project_i, sprint_i;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].sprints.length && typeof sprint !== 'undefined'; j++){
-				if(projects[i].sprints[j]._id === sprint){
-					sprint_i = j;
-					break;
-				}
-			}
-			break;
-		}
+	if(typeof sprint === 'undefined' || sprint === null){ //TODO this means we have a new sprint
+		return sendXHRPromise('POST', '/api/project/'+project+'/sprint/', {
+			'name': name,
+			'scrum_time': time,
+			'duration': duration
+		}).then((response) => {
+			return response;
+		});
 	}
-	if(typeof sprint === 'undefined')
-		sprint_i = projects[project_i].sprints.length;
-	////////////////////////////////////////////////////
-	let newSprint ={
-		'_id': sprint_i,
-		'name': name,
-		'start_date': null,
-		'duration': duration,
-		'scrum_time': time
-	};
-	projects[project_i].sprints[sprint_i] = newSprint;
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+	else{ //this means that we have an edited sprint
+		return sendXHRPromise('PUT', '/api/project/'+project+'/sprint/'+sprint, {
+			'name': name,
+			'scrum_time': time,
+			'duration': duration
+		}).then((response) => {
+			return response;
+		});
+	}
 }
 
-export function serverMoveStory(project, story, sprint){
-	var projects = readDocument('projects');
-	var project_i, story_i;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].stories.length; j++){
-				if(projects[i].stories[j]._id === story){
-					story_i = j;
-					break;
-				}
-			}
-		}
-	}
-	projects[project_i].story[story_i].sprint_id = sprint;
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+export function serverStartSprint(project_id, sprint_id){
+	return sendXHRPromise('PUT', `/api/project/${project_id}/sprint/${sprint_id}/start`)
+	.then((response) => {
+		return response;
+	},
+	(error) => {
+		console.error(error);
+	});
 }
-export function serverRemoveStory(project, story){
-	var projects = readDocument('projects');
-	var project_i, story_i;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].stories.length; j++){
-				if(projects[i].stories[j]._id === story){
-					story_i = j;
-					break;
-				}
-			}
-			break;
-		}
-	}
-	if(projects[project_i].stories[story_i].sprint_id !== null){
-		projects[project_i].stories[story_i].sprint_id = null;
-	}
-	else{
-		projects[project_i].stories.splice(story_i, 1);
-	}
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+
+// TODO, RENAME SERVER PUT STORY SPRINT ID
+export function serverMoveStory(projectId, storyId, sprintId){
+	return sendXHRPromise('PUT', '/api/project/' + projectId  + '/story/' + storyId + '/sprint_id/' + sprintId, 
+	{}).then((response) => {
+		return response;
+	});
+}
+export function serverRemoveStory(project_id, story_id){
+	return sendXHRPromise('DELETE', '/api/project/'+project_id+'/story/'+story_id, undefined).then((response) => {
+		return response;
+	});	
 }
 export function serverRemoveSprint(project, sprint){
-	var projects = readDocument('projects');
-	//The following is to get the value of the project and sprint to be added or edited.
-	var project_i, sprint_i;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].sprints.length; j++){
-				if(projects[i].sprints[j]._id === sprint){
-					sprint_i = j;
-					break;
-				}
-			}
-			break;
-		}
-	}
-	//set stories of to null to move them to the backlog
-	for(let i in projects[project_i].stories){
-		if(projects[project_i].stories[i].sprint_id === sprint)
-			projects[project_i].stories[i].sprint_id = null;
-	}
-	////////////////////////////////////////////////////
-	projects[project_i].sprints.splice(sprint_i, 1);
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+	return sendXHRPromise('DELETE', '/api/project/'+project+'/sprint/'+sprint, undefined).then((response) => {
+		return response;
+	});
 }
 
-export function serverMakeNewStory(project, title, description, tasks, story){
-	//story does not need to be passed through
-	var projects = readDocument('projects');
-	var project_i, story_i, sprint_id;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].stories.length && typeof story !== 'undefined'; j++){
-				if(projects[i].stories[j]._id === story){
-					story_i = j;
-					sprint_id = projects[i].stories[j].sprint_id;
-					break;
-				}
-			}
-			break;
-		}
+// todo make this post new story
+export function serverMakeNewStory(project_id, title, description, tasks, story_id){
+	if (typeof story_id === 'undefined') { // if there is no story defined, this post a new story
+		return sendXHRPromise('POST', '/api/project/' + project_id + '/story/', {
+			title,
+			description,
+			tasks
+		}).then((response) => {
+			return response;
+		});			
+	} else {
+		return sendXHRPromise('PUT', '/api/project/' + project_id  + '/story/' + story_id, {
+			title,
+			description,
+			tasks
+		}).then((response) => {
+			return response;
+		});	
 	}
-	if(typeof story === 'undefined'){
-		story_i = projects[project_i].stories.length;
-		sprint_id = null;
-	}
-	//remove any empty tasks
-	tasks = tasks.filter((e) => {
-		if(e.description === '')
-			return false;
-		else
-			return true;
-	});
-	var newTasks = [];
-	for(let i = 0; i < tasks.length; i++){
-		newTasks[i] = {
-			'_id': i,
-			'status': 'UNASSIGNED',
-			'assignedTo': [],
-			'description': tasks[i].description,
-			'history': [{
-				fromStatus: null,
-				toStatus: 'UNASSIGNED',
-				modifiedTime: Date.now(),
-				modifiedUser : 0
-			}],
-			'attachements': null
-		};
-	}
-	let newStory = {
-		'_id': 'DT-S' + story_i,
-		'title': title,
-		'description': description,
-		'sprint_id': sprint_id,
-		'tasks': newTasks
-	};
-	projects[project_i].stories[story_i] = newStory;
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
 }
 
 /*
@@ -365,4 +243,138 @@ export function search(str, collection, key = '_id', limit=15){
 	});
 
 	return emulateServerReturn(filtered.slice(0, limit), false);
+}
+
+var token = 'eyJfaWQiOjB9'; // <-- Put your base64'd JSON token here
+/**
+ * Properly configure+send an XMLHttpRequest with error handling, authorization token,
+ * and other needed properties.
+ */
+export function sendXHR(verb, resource, body, cb) {
+  var xhr = new XMLHttpRequest();
+  xhr.open(verb, resource);
+  xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+
+  // The below comment tells ESLint that FacebookError is a global.
+  // Otherwise, ESLint would complain about it! (See what happens in Atom if
+  // you remove the comment...)
+
+  // Response received from server. It could be a failure, though!
+  xhr.addEventListener('load', function() {
+    var statusCode = xhr.status;
+    var statusText = xhr.statusText;
+    if (statusCode >= 200 && statusCode < 300) {
+      // Success: Status code is in the [200, 300) range.
+      // Call the callback with the final XHR object.
+      cb(xhr);
+    } else {
+      // Client or server error.
+      // The server may have included some response text with details concerning
+      // the error.
+      var responseText = xhr.responseText;
+      console.log('Could not ' + verb + " " + resource + ": Received " + statusCode + " " + statusText + ": " + responseText);
+    }
+  });
+
+  // Time out the request if it takes longer than 10,000 milliseconds (10 seconds)
+  xhr.timeout = 10000;
+
+  // Network failure: Could not connect to server.
+  xhr.addEventListener('error', function() {
+    console.log('Could not ' + verb + " " + resource + ": Could not connect to the server.");
+  });
+
+  // Network failure: request took too long to complete.
+  xhr.addEventListener('timeout', function() {
+    console.log('Could not ' + verb + " " + resource + ": Request timed out.");
+  });
+
+  switch (typeof(body)) {
+    case 'undefined':
+      // No body to send.
+      xhr.send();
+      break;
+    case 'string':
+      // Tell the server we are sending text.
+      xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+      xhr.send(body);
+      break;
+    case 'object':
+      // Tell the server we are sending JSON.
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      // Convert body into a JSON string.
+      xhr.send(JSON.stringify(body));
+      break;
+    default:
+      throw new Error('Unknown body type: ' + typeof(body));
+  }
+}
+
+export function sendXHRPromise(verb, resource, body) {
+  return new Promise((resolve, reject) => {
+  	var xhr = new XMLHttpRequest();
+  	xhr.open(verb, resource);
+  	xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+
+  	// The below comment tells ESLint that FacebookError is a global.
+  	// Otherwise, ESLint would complain about it! (See what happens in Atom if
+  	// you remove the comment...)
+
+  	// Response received from server. It could be a failure, though!
+  	xhr.addEventListener('load', function() {
+  	  var statusCode = xhr.status;
+  	  var statusText = xhr.statusText;
+  	  if (statusCode >= 200 && statusCode < 300) {
+  	    // Success: Status code is in the [200, 300) range.
+  	    // Call the callback with the final XHR object.
+  	    resolve(JSON.parse(xhr.responseText));
+  	  } else {
+  	    // Client or server error.
+  	    // The server may have included some response text with details concerning
+  	    // the error.
+  	    var responseText = xhr.responseText;
+  	    let error = `Could not ${verb} ${resource}: Received ${statusCode} ${statusText}: ${responseText}`;
+
+  	    reject(error);
+  	   
+  	  }
+  	});
+
+  	// Time out the request if it takes longer than 10,000 milliseconds (10 seconds)
+  	xhr.timeout = 10000;
+
+  	// Network failure: Could not connect to server.
+  	xhr.addEventListener('error', function() {
+  		let error = `Could not ${verb} ${resource}: Could not connect to the server.`;
+		console.log(error);
+		reject(error);
+  	});
+
+  	// Network failure: request took too long to complete.
+  	xhr.addEventListener('timeout', function() {
+  		let error = `Could not ${verb} ${resource}: Request timed out.`;
+		console.log(error);
+		reject(error);
+  	});
+
+  	switch (typeof(body)) {
+  	  case 'undefined':
+  	    // No body to send.
+  	    xhr.send();
+  	    break;
+  	  case 'string':
+  	    // Tell the server we are sending text.
+  	    xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+  	    xhr.send(body);
+  	    break;
+  	  case 'object':
+  	    // Tell the server we are sending JSON.
+  	    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  	    // Convert body into a JSON string.
+  	    xhr.send(JSON.stringify(body));
+  	    break;
+  	  default:
+  	    throw new Error('Unknown body type: ' + typeof(body));
+  	}
+  });
 }

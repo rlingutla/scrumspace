@@ -40,7 +40,7 @@ export default (props) => {
 	const histories = props.data
 	.map((task) => task.history)
 	.reduce((a, b) => a.concat(b))
-	.sort((a, b) => a.modifiedTime > b.modifiedTime);
+	.sort((a, b) => a.modified_time > b.modified_time);
 
 	const oneDay = 1000 * 60 * 60 * 24;
 	var timeMax = d.getTime();
@@ -55,9 +55,9 @@ export default (props) => {
 			}
 			// TODO: maybe use underscore?
 			histories.filter((history) => {
-				var hasMovedFromStatus = (history.fromStatus === type);
-				var hasMovedToStatus = (history.toStatus === type);
-				var isInTimeInterval = (history.modifiedTime > timeMin && history.modifiedTime < timeMax);
+				var hasMovedFromStatus = (history.from_status === type);
+				var hasMovedToStatus = (history.to_status === type);
+				var isInTimeInterval = (history.modified_time > timeMin && history.modified_time < timeMax);
 				if (isInTimeInterval && hasMovedToStatus) {
 					lineData.datasets[index].data[i] += 1;
 				} else if (isInTimeInterval && hasMovedFromStatus) {

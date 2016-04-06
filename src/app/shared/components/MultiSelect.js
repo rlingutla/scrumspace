@@ -1,16 +1,26 @@
 import React from 'react';
-import { search } from '../../mock_server/server';
+import { sendXHRPromise } from '../../mock_server/server';
 import { Async as AsyncSelect } from 'react-select';
 import Select from 'react-select';
 
 export default class MultiSelect extends React.Component {
 	constructor(props){
 		super(props);
-		this.state = { value: [] }
+		
+		this.state = { 
+			values: this.props.initialState || [] 
+		}
 	}
-	getSelectOptions(input){
-		return search(input, this.props.collection, this.props.labelKey).then((options) => {
-			return { options: options };
+	getSelectOptions(input: ''){
+		// return sendXHRPromise('GET', `/api/user/search?searchStr=${input}&key=${this.props.labelKey}`, undefined).then((response) => {
+		// 	return {options: response.data};
+		// });
+		let searchExpr = new RegExp(input.split('').join('\\w*').replace(/\W/, ''), 'i');
+		
+
+		return Promise.resolve({options: this.props.users.filter((user) => {
+				return (user.display_name.match(searchExpr));
+			})
 		});
 	}
 

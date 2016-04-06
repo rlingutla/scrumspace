@@ -59,7 +59,18 @@ const projects = (state = [], action) => {
 			let project = _.defaults({
 				_id: state.length,
 				title: action.title,
-				description: action.description
+				description: action.description,
+				users: action.users,
+			  status: action.status,
+				current_sprint: action.current_sprint,
+				avatar: action.avatar,
+				sprints: action.sprints,
+				stories: action.stories,
+				commits: action.commits,
+				timeFrame: action.timeFrame,
+				membersOnProj:action.membersOnProj,
+				color: action.color,
+				gCommits: action.gCommits
 			}, projectModel());
 
 			return [
@@ -78,26 +89,19 @@ const projects = (state = [], action) => {
 			return state.map((project) => {
 				return (project._id === action.project._id) ? action.project : project;
 			});
-		case 'NEW_SPRINT':
-			var hello = state.map((project) => {
-				if (project._id === action.project._id) {
-					var newSprint = Object.assign({
-						duration: action.data.duration,
-						scrum_time: action.data.time,
-						name: action.data.name,
-						start_date: null,
-						_id: project.sprints.length
-					});
-					return Object.assign({
-						...project
-					}, {
-						sprints: project.sprints.concat(newSprint)
-					});
-				}
-				return project;
+		case 'MOVE_STORY':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
 			});
-			return hello;
-  		default: //just returning state for now
+		case 'NEW_SPRINT':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project : project;
+			});
+		case 'START_SPRINT':
+			return state.map((project) => {
+				return (project._id === action.project._id) ? action.project:project;
+			});
+  	default: //just returning state for now
 			return state;
 	}
 };

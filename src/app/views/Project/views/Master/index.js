@@ -1,11 +1,12 @@
 import React from 'react';
 import TopNav from 'app/shared/components/TopNav';
+import { Button, Glyphicon } from 'react-bootstrap';
+
 import ProjectList from './components/ProjectList';
-import {Button,Glyphicon} from 'react-bootstrap';
-import NewProjModal from './components/NewProjModal';
+import ProjectCreationModal from './components/ProjectCreationModal';
 
 /* Master for all user projects */
-export default class Project extends React.Component{
+export default class ProjectMaster extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = { modalIsOpen: false};
@@ -19,18 +20,19 @@ export default class Project extends React.Component{
 	changeModal(){
     	this.setState({modalIsOpen : !this.state.modalIsOpen});
 			this.setState({users: this.emptyList});
+			this.setState({title: ''});
+			this.setState({description: ''});
 	}
 
-	render(){
+	render() {
 		return (
 			<div id="content">
 				<TopNav view="Projects">
 					<Button onClick={(e) => this.handleClick(e)}>Create Project <Glyphicon glyph="plus" /></Button>
 				</TopNav>
-				<NewProjModal show={this.state.modalIsOpen} changeModal={(e) => this.changeModal()} />
+				<ProjectCreationModal show={this.state.modalIsOpen} changeModal={(e) => this.changeModal()} />
 				<ProjectList />
 			</div>
 		);
 	}
-
 }

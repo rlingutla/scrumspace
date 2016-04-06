@@ -48,7 +48,7 @@ gulp.task('js', function(){
 
   return gulp.src('src/client/entry.js')
     .pipe(webpack(require('./webpack.config.js'), null, function(err, stats){
-      gutil.log("[webpack]", stats.toString({ 
+      gutil.log("[webpack]", stats.toString({
         colors: true, hash: false, timings: false, chunks: false, chunkModules: false, modules: false, children: true, version: true, cached: false, cachedAssets: false, reasons: false, source: false, errorDetails: false
       }));
 
@@ -58,6 +58,7 @@ gulp.task('js', function(){
     }))
     .pipe(gulp.dest('dist/js/'));
     // .pipe(livereload());
+    livereload.reload()
 });
 
 // copy static files
@@ -68,7 +69,7 @@ gulp.task('copy_static', function(){
 
 gulp.task('watch', function() {
   livereload.listen();
-  gulp.watch('src/**/*', ['run-build']);
+  gulp.watch(['src/**/*', '!src/index.html','!src/server/database.json'], ['run-build']);
 
   livereload.listen()
 
@@ -86,6 +87,12 @@ gulp.task('watch', function() {
     })
 });
 
+gulp.task('client_watch', function(){
+  livereload.listen();
+  gulp.watch(['src/**/*', '!src/index.html','!src/server/database.json'], ['run-build']);
+});
+
 gulp.task('default', ['run-build'], function() {});
 gulp.task('build', ['default'], function() {});
 gulp.task('dev', ['run-build', 'watch'], function() {});
+gulp.task('client_dev', ['run-build', 'client_watch'], function(){});
