@@ -67,6 +67,7 @@ function projRemoval(project_id) {
 	}
   //deleteDocument('projects', project_i);
 	projects.splice(project_i,1);
+	console.log('projects');
 	writeDocument('projects', projects);
 	return projects;
 }
