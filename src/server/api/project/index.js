@@ -200,11 +200,11 @@ router.put('/:project_id/story/:story_id/sprint_id/:sprint_id', function (req, r
 router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
 		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time, parseInt(req.params.sprintid, 10));
-		 // Send the update!
+		// Send the update!
 		res.send(embedUsers(project));
 	} else{
 		// 401: Unauthorized.
-    	res.status(401).end();
+		res.status(401).end();
 	}
 });
 
@@ -237,7 +237,7 @@ router.put('/:projectid/sprint/:sprintid/start', function(req,res){
 		return res.send(embedUsers(project));
 	} else{
 		// 401: Unauthorized.
-    	res.status(401).end();
+		res.status(401).end();
 	}
 });
 
@@ -247,7 +247,7 @@ router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req
 		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
 		res.status(201);
 		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);
-		 // Send the update!
+		// Send the update!
 		res.send(embedUsers(project));
 	} else{
 		// 401: Unauthorized.
@@ -283,6 +283,7 @@ router.put('/:project_id/story/:story_id/task/:task_id', validate({ body: TaskSc
 		res.status(401).end();
 	}
 });
+
 router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(req,res){
 	console.log(req.body);
 	let user = getUserIdFromToken(req.get('Authorization'));
@@ -315,24 +316,74 @@ router.delete('/:project_id/story/:story_id/task/:task_id', function(req, res){
 		var taskId = (parseInt(req.params.task_id, 10));
 		var project = readDocument('projects', projectId);
 		var project_i, story_i, task_i;
-				for(let j = 0; j < project.stories.length; j++){
-					if(project.stories[j]._id === storyId){
-						story_i = j;
-						for(let k = 0; k < project.stories[j].tasks.length; k++){
-							if(project.stories[j].tasks[k]._id === taskId){
-								task_i = k;
-								break;
-							}
-						}
+		for(let j = 0; j < project.stories.length; j++){
+			if(project.stories[j]._id === storyId){
+				story_i = j;
+				for(let k = 0; k < project.stories[j].tasks.length; k++){
+					if(project.stories[j].tasks[k]._id === taskId){
+						task_i = k;
 						break;
 					}
 				}
+				break;
+			}
+		}
 		project.stories[story_i].tasks.splice(task_i, 1);
 		writeDocument('projects', project);
 		console.log('DB Updated', project);
 		res.send(project);
 	} else{
 		//401: Unauthorized.
+		res.status(401).end();
+	}
+});
+
+//Post Task
+router.post('/:project_id/story/:story_id/task/', validate({ body: TaskSchema }), function(req, res){
+	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.project_id)){
+		var projectId = (parseInt(req.params.project_id, 10));
+		var storyId = (parseInt(req.params.story_id, 10));
+		var taskId = (req.body.task_id === 'null') ? null : req.body.task_id;
+		var project = readDocument('projects', projectId);
+
+		var project_i, story_i, task_i;
+		for(let j = 0; j < project.stories.length; j++){
+			if(project.stories[j]._id === storyId){
+				story_i = j;
+				for(let k = 0; k < project.stories[j].tasks.length && typeof task !== 'undefined'; k++){
+					if(project.stories[j].tasks[k]._id === taskId){
+						task_i = k;
+						break;
+					}
+				}
+				break;
+			}
+		}
+
+		if (typeof task === 'undefined'){
+			task_i = project.stories[story_i].tasks.length;
+		}
+
+		let newTask = {
+			'_id': taskId,
+			'status': req.body.status,
+			'assigned_to': [],
+			'blocked_by': [],
+			'description': req.body.description,
+			'history': [{
+				from_status: null,
+				to_status: req.body.status,
+				modified_time: Date.now(),
+				modified_user : 0
+			}],
+			'attachments': null
+		};
+		res.status(201);
+		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);
+		// Send the update!
+		res.send(embedUsers(project));
+	} else{
+		// 401: Unauthorized.
 		res.status(401).end();
 	}
 });
