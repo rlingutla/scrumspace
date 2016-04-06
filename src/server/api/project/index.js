@@ -73,129 +73,151 @@ router.delete('/:projectid', function(req, res){
 
 // update a story
 router.put('/:project_id/story/:story_id',function(req, res) {
-	// get variables
-	var project_id = parseInt(req.params.project_id, 10);
-	var story_id = parseInt(req.params.story_id, 10);
-	var title = req.body.title;
-	var description = req.body.description;
-	var tasks = req.body.tasks;
+	if (checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.project_id)) {
+		// get variables
+		var project_id = parseInt(req.params.project_id, 10);
+		var story_id = parseInt(req.params.story_id, 10);
+		var title = req.body.title;
+		var description = req.body.description;
+		var tasks = req.body.tasks;
 
-	// database call (this is simulated)
-	let projects = readDocument('projects');
+		// database call (this is simulated)
+		let projects = readDocument('projects');
 
-	var projectToUpdate = projects
-	.find((project) => project._id === project_id);
+		var projectToUpdate = projects
+		.find((project) => project._id === project_id);
 
-	var storyToUpdate = projectToUpdate.stories
-	.find((story) => story._id === story_id);
-
-	if (storyToUpdate) {
-		storyToUpdate = Object.assign(storyToUpdate, {
-			title,
-			description,
-			tasks
+		var storyToUpdate = projectToUpdate
+		.stories
+		.find((story) => {
+			return story._id === story_id;
 		});
 
-		//write updated project object to server
-		writeDocument('projects', projectToUpdate);
-		res.send(projectToUpdate);
+		if (storyToUpdate) {
+			if (title) {
+				storyToUpdate.title = title;
+			}
+			if (tasks) {
+				storyToUpdate.tasks = tasks;
+			}
+			if (description) {
+				storyToUpdate.description = description;
+			}
+			//write updated project object to server
+			writeDocument('projects', projectToUpdate);
+			res.send(projectToUpdate);
+		} else {
+			res.status(404);
+			res.send();
+		}
 	} else {
-		res.status(404);
-		res.send();
+		// 401: Unauthorized.
+    	res.status(401).end();
 	}
 });
 
 // delete a story
 router.delete('/:project_id/story/:story_id', function(req, res) {
 	// get variables
-	var project_id = parseInt(req.params.project_id, 10);
-	var story_id = parseInt(req.params.story_id, 10);
+	if (checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.project_id)) {
 
-	// database call (this is simulated)
-	let projects = readDocument('projects');
+		var project_id = parseInt(req.params.project_id, 10);
+		var story_id = parseInt(req.params.story_id, 10);
 
-	var projectToUpdate = projects
-	.find((project) => project._id === project_id);
+		// database call (this is simulated)
+		let projects = readDocument('projects');
 
-	// remove this story
-	for (var i = 0; i < projectToUpdate.stories.length; i++) {
-		if (projectToUpdate.stories[i]._id === story_id) {
-			projectToUpdate.stories.splice(i, 1);
+		var projectToUpdate = projects
+		.find((project) => project._id === project_id);
+
+		// remove this story
+		for (var i = 0; i < projectToUpdate.stories.length; i++) {
+			if (projectToUpdate.stories[i]._id === story_id) {
+				projectToUpdate.stories.splice(i, 1);
+			}
 		}
-	}
 
-	writeDocument('projects', projectToUpdate);	//write updated project to database
-	res.send(projectToUpdate);
+		writeDocument('projects', projectToUpdate);	//write updated project to database
+		res.send(projectToUpdate);
+	} else{
+		// 401: Unauthorized.
+    	res.status(401).end();
+	}
 });
 
 // Post a new story
 
 router.post('/:project_id/story', validate({ body: StorySchema }), function(req, res) {
-	var project_id = parseInt(req.params.project_id);
-	var title = req.body.title;
-	var description = req.body.description;
-	var tasks = req.body.tasks;
-	var storyId = (req.body.storyId === 'null') ? null : req.body.storyId; // todo: noooo!
+	if (checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.project_id)) {
+		var project_id = parseInt(req.params.project_id, 10);
+		var title = req.body.title;
+		var description = req.body.description;
+		var tasks = req.body.tasks;
+		var storyId = (req.body.storyId === 'null') ? null : req.body.storyId; // todo: noooo!
 
-	var projects = readDocument('projects');
+		var projects = readDocument('projects');
 
-	var project_i, story_i, sprint_id;
-	for (let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project_id) {
-			project_i = i;
-			for (let j = 0; j < projects[i].stories.length && typeof story !== 'undefined'; j++){
-				if (projects[i].stories[j]._id === storyId){
-					story_i = j;
-					sprint_id = projects[i].stories[j].sprint_id;
-					break;
+		var project_i, story_i, sprint_id;
+		for (let i = 0; i < projects.length; i++){
+			if (projects[i]._id === project_id) {
+				project_i = i;
+				for (let j = 0; j < projects[i].stories.length && typeof story !== 'undefined'; j++){
+					if (projects[i].stories[j]._id === storyId){
+						story_i = j;
+						sprint_id = projects[i].stories[j].sprint_id;
+						break;
+					}
 				}
+				break;
 			}
-			break;
 		}
-	}
 
-	if (typeof story === 'undefined'){
-		story_i = projects[project_i].stories.length;
-		sprint_id = null;
-	}
+		if (typeof story === 'undefined'){
+			story_i = projects[project_i].stories.length;
+			sprint_id = null;
+		}
 
-	//remove any empty tasks
-	tasks = tasks.filter((e) => {
-		if (e.description === '')
-			return false;
-		else
-			return true;
-	});
+		//remove any empty tasks
+		tasks = tasks.filter((e) => {
+			if (e.description === '')
+				return false;
+			else
+				return true;
+		});
 
 
-	var newTasks = [];
-	for (let i = 0; i < tasks.length; i++) {
-		newTasks[i] = {
-			'_id': i,
-			'status': 'UNASSIGNED',
-			'assigned_to': [],
-			'blocked_by': [],
-			'description': tasks[i].description,
-			'history': [{
-				from_status: null,
-				to_status: 'UNASSIGNED',
-				modified_time: Date.now(),
-				modified_user : 0
-			}],
-			'attachments': null
+		var newTasks = [];
+		for (let i = 0; i < tasks.length; i++) {
+			newTasks[i] = {
+				'_id': i,
+				'status': 'UNASSIGNED',
+				'assigned_to': [],
+				'blocked_by': [],
+				'description': tasks[i].description,
+				'history': [{
+					from_status: null,
+					to_status: 'UNASSIGNED',
+					modified_time: Date.now(),
+					modified_user : 0
+				}],
+				'attachments': null
+			};
+		}
+		let newStory = {
+			'_id': parseInt(story_i, 10),
+			'title': title,
+			'description': description,
+			'sprint_id': sprint_id,
+			'tasks': newTasks
 		};
-	}
-	let newStory = {
-		'_id': parseInt(story_i, 10),
-		'title': title,
-		'description': description,
-		'sprint_id': sprint_id,
-		'tasks': newTasks
-	};
 
-	projects[project_i].stories[story_i] = newStory;
-	writeDocument('projects', projects[project_i]);
-	res.send(embedUsers(projects[project_i]));
+		projects[project_i].stories[story_i] = newStory;
+		writeDocument('projects', projects[project_i]);
+		res.send(embedUsers(projects[project_i]));
+	} else {
+		// 401: Unauthorized.
+    	res.status(401).end();
+	}
 });
 
 
