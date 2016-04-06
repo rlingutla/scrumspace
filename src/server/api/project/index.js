@@ -18,7 +18,7 @@ var removeSprint = sprintHelper.removeSprint;
 var newProjHelper = require('./newProj');
 var newProjCreation = newProjHelper.newProjCreation;
 var projUpdate = newProjHelper.projUpdate;
-var projRemoval = newProjHelper.projRemoval;
+var projectRemoval = newProjHelper.projRemoval;
 //Auth Helpers
 var authentication = require('../shared/authentication');
 var getUserIdFromToken = authentication.getUserIdFromToken;
@@ -64,12 +64,9 @@ router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
 
 //remove a project
 router.delete('/:projectid', function(req, res){
-  debugger;
-		var projects = projRemoval(parseInt(req.params.projectid, 10));
+		var projects = projectRemoval(parseInt(req.params.projectid, 10));
 		res.set('Location', '/project/');
-    debugger;
 		res.send(projects.map((project) => {
-      debugger;
 			return embedUsers(project);
 		}));
 });

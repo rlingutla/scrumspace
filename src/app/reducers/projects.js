@@ -81,6 +81,11 @@ const projects = (state = [], action) => {
 			return state.map((project) => {
 				return (project._id === action.project._id) ? action.project : project;
 			});
+			case 'REMOVE_PROJECT':
+				return state.map((project) => {
+					debugger;
+					return (project._id === action.project._id) ? action.project : project;
+				});
 		case 'NEW_STORY':
 			return state.map((project) => {
 				return (project._id === action.project._id) ? action.project : project;

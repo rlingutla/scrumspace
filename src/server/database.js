@@ -89,10 +89,9 @@ function deleteDocument(collectionName, id) {
   if (!collection[id]) {
     throw new Error(`Collection ${collectionName} lacks an item with id ${id}!`);
   }
-  if(collectionName === 'projects'){
-    data.splice(collectionName,1);
-  }
-  delete collection[id];
+
+    delete collection[id];
+
   updated = true;
 }
 module.exports.deleteDocument = deleteDocument;

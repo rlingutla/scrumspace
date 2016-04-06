@@ -71,6 +71,7 @@ export const removeProjectAction = (project_id) => {
 //helps with removing a project
 export function removeProject(project_id){
 	return function (dispatch){
+		debugger;
 		return serverRemoveProject(project_id).then(
 			project => {
 				dispatch(removeProjectAction(project_id));
