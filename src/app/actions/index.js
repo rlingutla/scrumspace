@@ -131,9 +131,9 @@ export const changeStoryState = (project_id, story) => {
 	}
 }
 
-export function putStory(project_id, story){
+export function putStory(project_id, story_id, title, description){
 	return function(dispatch){
-		return serverPutStory(project_id, story).then(
+		return serverPutStory(project_id, story_id, title, description).then(
 			updStory => {
 				dispatch(changeStoryState(project_id, updStory));
 			},
