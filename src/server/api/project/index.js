@@ -19,10 +19,10 @@ var getUserIdFromToken = authentication.getUserIdFromToken;
 var checkAuthFromProject = authentication.checkAuthFromProject;
 //Router
 var express = require('express'),
-	router = express.Router();
+router = express.Router();
 
 router.get('/', function (req, res) {
-    res.send('project API handler');
+	res.send('project API handler');
 });
 
 router.get('/:id', function(req,res){
@@ -63,9 +63,9 @@ router.post('/:project_id/story', function(req, res) {
 	//remove any empty tasks
 	tasks = tasks.filter((e) => {
 		if (e.description === '')
-			return false;
+		return false;
 		else
-			return true;
+		return true;
 	});
 
 
@@ -136,11 +136,11 @@ router.put('/:project_id/story/:story_id', function (req, res) {
 router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
 		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time, parseInt(req.params.sprintid, 10));
-		 // Send the update!
+		// Send the update!
 		res.send(project);
 	} else{
 		// 401: Unauthorized.
-    res.status(401).end();
+		res.status(401).end();
 	}
 });
 
@@ -150,11 +150,11 @@ router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req
 		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
 		res.status(201);
 		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);
-		 // Send the update!
+		// Send the update!
 		res.send(project);
 	} else{
 		// 401: Unauthorized.
-    res.status(401).end();
+		res.status(401).end();
 	}
 });
 //parseInt(userid, 10)
@@ -164,7 +164,7 @@ router.delete('/:projectid/sprint/:sprintid', function(req, res){
 		res.send(project);
 	} else{
 		// 401: Unauthorized.
-    	res.status(401).end();
+		res.status(401).end();
 	}
 });
 
@@ -177,12 +177,12 @@ router.put('/:project_id/story/:story_id/task/:task_id', validate({ body: TaskSc
 			project_id: parseInt(req.params.project_id, 10), story_id: parseInt(req.params.story_id, 10), task_id: parseInt(req.params.task_id, 10),
 			description: req.body.description, status: req.body.status, user: user
 		}).then(
-			(task) => res.send({data: task}),  
-       		(err) => res.sendStatus(404)
-       	);
+			(task) => res.send({data: task}),
+			(err) => res.sendStatus(404)
+		);
 	} else{
 		// 401: Unauthorized.
-    	res.status(401).end();
+		res.status(401).end();
 	}
 });
 router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(req,res){
@@ -190,21 +190,21 @@ router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(re
 	if(checkAuthFromProject(user, req.params.project_id)){
 		if(Array.isArray(req.body.users)){
 			Task.assignUsers({
-				project_id: parseInt(req.params.project_id, 10), 
-				story_id: parseInt(req.params.story_id, 10), 
+				project_id: parseInt(req.params.project_id, 10),
+				story_id: parseInt(req.params.story_id, 10),
 				task_id: parseInt(req.params.task_id, 10),
 				users: req.body.users,
 				replace: req.body.replace
 			}).then(
-				(task) => res.send({data: task}),  
-	       		(err) => res.sendStatus(404)
-	       	);
+				(task) => res.send({data: task}),
+				(err) => res.sendStatus(404)
+			);
 		}
 		else res.sendStatus(400);
-		
+
 	} else{
 		// 401: Unauthorized.
-    	res.sendStatus(401);
+		res.sendStatus(401);
 	}
 });
 // router.delete('/:project_id/story/:story_id/task/:task_id/assigned_to', function(req,res){
@@ -212,57 +212,74 @@ router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(re
 // 	if(checkAuthFromProject(user, req.params.project_id)){
 // 		if(Array.isArray(req.body.users)){
 // 			Task.assignUsers({
-// 				project_id: parseInt(req.params.project_id, 10), 
-// 				story_id: parseInt(req.params.story_id, 10), 
+// 				project_id: parseInt(req.params.project_id, 10),
+// 				story_id: parseInt(req.params.story_id, 10),
 // 				task_id: parseInt(req.params.task_id, 10),
 // 				users: req.body.users,
 // 				replace: req.body.replace
 // 			}, true).then(
-// 				(task) => res.send({data: task}),  
+// 				(task) => res.send({data: task}),
 // 	       		(err) => res.sendStatus(404)
 // 	       	);
 // 		}
 // 		else res.sendStatus(400);
-		
+
 // 	} else{
 // 		// 401: Unauthorized.
 //     	res.sendStatus(401);
 // 	}
 // });
+
+
+//
 
 router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req,res){
 	let user = getUserIdFromToken(req.get('Authorization'));
 	if(checkAuthFromProject(user, req.params.project_id)){
 		if(Array.isArray(req.body.blocking)){
 			Task.assignBlocking({
-				project_id: parseInt(req.params.project_id, 10), 
-				story_id: parseInt(req.params.story_id, 10), 
+				project_id: parseInt(req.params.project_id, 10),
+				story_id: parseInt(req.params.story_id, 10),
 				task_id: parseInt(req.params.task_id, 10),
 				blocking_tasks: req.body.blocking,
 				replace: req.body.replace
 			}).then(
-				(task) => res.send({data: task}),  
-	       		(err) => res.sendStatus(404)
-	       	);
+				(task) => res.send({data: task}),
+				(err) => res.sendStatus(404)
+			);
 		}
 		else res.sendStatus(400);
 	} else{
 		// 401: Unauthorized.
-    	res.sendStatus(401);
+		res.sendStatus(401);
 	}
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // router.delete('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req,res){
 // 	let user = getUserIdFromToken(req.get('Authorization'));
 // 	if(checkAuthFromProject(user, req.params.project_id)){
 // 		if(Array.isArray(req.body.blocking)){
 // 			Task.assignBlocking({
-// 				project_id: parseInt(req.params.project_id, 10), 
-// 				story_id: parseInt(req.params.story_id, 10), 
+// 				project_id: parseInt(req.params.project_id, 10),
+// 				story_id: parseInt(req.params.story_id, 10),
 // 				task_id: parseInt(req.params.task_id, 10),
 // 				blocking_tasks: req.body.blocking,
 // 				replace: req.body.replace
 // 			}, true).then(
-// 				(task) => res.send({data: task}),  
+// 				(task) => res.send({data: task}),
 // 	       		(err) => res.sendStatus(404)
 // 	       	);
 // 		}
@@ -274,5 +291,27 @@ router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req
 // });
 
 
+// why is user id -1?
+// why is returning undefined
+// why is returing 404 when route is /settings/users/user_id
+
+router.put('/:project_id/users/:user_id/', function(req, res) {
+	//use authorization
+	let userId = getUserIdFromToken(req.get('Authorization'));
+	userId=0;
+	var user = readDocument('users',userId);
+	console.log(req.body);
+	console.log(user);
+	if(typeof req.body.first_name!=='undefined')
+	{ console.log('yolo');
+		user.first_name = req.body.first_name;}
+	if(typeof req.body.last_name!=='undefined') user.last_name = req.body.last_name;
+	if(typeof req.body.display_name!=='undefined') user.display_name = req.body.display_name;
+	if(typeof req.body.email!=='undefined') user.email = req.body.email;
+
+	writeDocument('users', user);
+console.log(user);
+	res.send(user);
+});
 
 module.exports = router;
