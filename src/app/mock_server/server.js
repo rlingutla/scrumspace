@@ -104,7 +104,6 @@ export function serverAssignBlockingTasks(project_id, story_id, task_id, blockin
 }
 
 export function serverUpdateTask(project_id, story_id, task_id, status, description){
-	debugger;
 	let updates = {};
 	if(status) updates.status = status;
 	if(description) updates.description = description;

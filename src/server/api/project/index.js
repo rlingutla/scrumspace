@@ -324,7 +324,6 @@ router.delete('/:projectid/sprint/:sprintid', function(req, res){
 
 //Task Routes
 router.put('/:project_id/story/:story_id/task/:task_id', function(req,res){
-	console.log("hit update", req.body);
 	let user = getUserIdFromToken(req.get('Authorization'));
 	if(checkAuthFromProject(user, req.params.project_id)){
 		Task.update({
