@@ -43,15 +43,12 @@ router.get('/:id', function(req,res){
 //New Project Routes
 //add new project
 router.post('/', validate({ body: NewProjSchema }), function(req,res){
-	//going to have to eventually add user tokens...
 	var projects = readDocument('projects');
 	console.log(req.body.users);
 	var project = newProjCreation(req.body.title, req.body.description, req.body.users);
-	//TODO: WRITE NEW PROJECT TO DATABASE
 	res.status(201);
 	res.set('Location', '/project/' + projects[projects.length-1]._id);
 	res.send(project);
-	 // Send the update!
 });
 
 //update project
@@ -64,9 +61,9 @@ router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
 
 //remove a project
 router.delete('/:projectid', function(req, res){
-		var projects = projectRemoval(parseInt(req.params.projectid, 10));
+		var project = projectRemoval(parseInt(req.params.projectid, 10));
 		console.log('ok');
-		res.send(parseInt(req.params.projectid, 10)); //returns removed project_id
+		res.send(project); //returns removed project_id
 		console.log('call me doge');
 });
 
