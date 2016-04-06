@@ -10,6 +10,8 @@ var Task = require('../../models/Task');
 var database = require('../../database');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
+var deleteDocument = database.deleteDocument;
+var getCollection = database.getCollection;
 //Sprint Helper function
 var sprintHelper = require('./sprintHelper');
 var sprintMaker = sprintHelper.sprintMaker;
@@ -60,11 +62,24 @@ router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
 
 
 //remove a project
-router.delete('/:projectid', function(req, res){
+router.delete('/:project_id', function(req, res){
+	  // var projectId = parseInt(req.params.project_id, 10);
+		// var projects = getCollection('projects');
+		// var project_i;
+		// for(let i=0; i < projects.length; i++){
+		// 	if(projects[i]._id === projectId){
+		// 		project_i = i;
+		// 		break;
+		// 	}
+		// }
+    // var project = readDocument('projects',project_i);
+		// deleteDocument('projects', project_i);
+    // //var project = projectRemoval(projectId);
+		// res.send(project); //returns removed project_id
 
-		var project = projectRemoval(parseInt(req.params.projectid, 10));
+		var project = projectRemoval(parseInt(req.params.project_id, 10));
 		console.log('ok');
-		res.set('Location', '/project');
+		//res.set('Location', '/project/');
 		res.send(project); //returns removed project_id
 		console.log('call me doge');
 });
@@ -222,7 +237,6 @@ router.post('/:project_id/story', validate({ body: StorySchema }), function(req,
 // update story.sprint_id
 router.put('/:project_id/story/:story_id/sprint_id/:sprint_id', function (req, res) {
 	var projectId = parseInt(req.params.project_id, 10);
-
 	var sprintId = parseInt(req.params.sprint_id, 10);
 	var projects = readDocument('projects');
 	var project_i, story_i;
