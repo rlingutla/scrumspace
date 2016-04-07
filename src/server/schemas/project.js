@@ -11,9 +11,11 @@ export default {
 	    'description': {
 	      'type': 'string'
 	    },
-	    'users': {
-	      'types': 'array',
-	      'items': 'integer'
-	    }
-    }
+			'users':{
+				'type': 'array',
+				'items': {'type':'integer'}
+			}
+    },
+    'additionalProperties': true
+
 };

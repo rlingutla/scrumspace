@@ -46,12 +46,19 @@ router.get('/:id', function(req,res){
 //New Project Routes
 //add new project
 router.post('/', validate({ body: NewProjSchema }), function(req,res){
-	var projects = readDocument('projects');
-	console.log(req.body.users);
-	var project = newProjCreation(req.body.title, req.body.description, req.body.users, req.body.membersOnProj);
-	res.status(201);
-	//res.set('Location', '/project' + projects[projects.length-1]._id);
-	res.send(project);
+  	var fromUser = getUserIdFromToken(req.get('Authorization'));
+		//console.log(req.body.users);
+	//	if (checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.userId)){
+			var projects = readDocument('projects');
+			console.log(req.body.users);
+			var project = newProjCreation(req.body.title, req.body.description, req.body.users,req.body.membersOnProj);
+			res.status(201);
+			//res.set('Location', '/project' + projects[projects.length-1]._id);
+			res.send(project);
+	//	} else {
+			// 401: Unauthorized.
+		//	res.status(401).end();
+	//	}
 });
 
 //update project

@@ -17,23 +17,23 @@ import {
 import { browserHistory } from 'react-router'
 
 // Project
-function postNewProject(title, description,users){
-	return serverPostNewProject(title, description,users);
+function postNewProject(title, description,users,membersOnProj){
+	return serverPostNewProject(title, description,users,membersOnProj);
 }
 
 // new project
-export const createNewProject = (title, description,users) => {
+export const createNewProject = (title, description,users, membersOnProj) => {
 	return {
 		type: 'CREATE_NEW_PROJECT',
-		title, description,users
+		title, description,users,membersOnProj
 	};
 };
 
-export function postAndCreateNewProject(title, description,users){
+export function postAndCreateNewProject(title, description,users,membersOnProj){
 	return function(dispatch){
-		return postNewProject(title, description,users).then(
+		return postNewProject(title, description,users,membersOnProj).then(
 			project => {
-				dispatch(createNewProject(title, description,users));
+				dispatch(createNewProject(title, description,users,membersOnProj));
 			},
 			error => console.error('got an error', error)
 		);

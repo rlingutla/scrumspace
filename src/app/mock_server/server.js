@@ -38,12 +38,13 @@ export function stateTree(userId){
 /**
  * Adds a new project to the database.
  */
-export function serverPostNewProject(title, description,users,cb) {
-  debugger;
+export function serverPostNewProject(title, description,users,membersOnProj,cb) {
+	debugger;
   return sendXHRPromise('POST', '/api/project/',{
     'title':title,
     'description' : description,
-		'users':users
+		'users':users,
+		'membersOnProj': membersOnProj
   }).then((response) => {
     // Return the new status update.
     return response;

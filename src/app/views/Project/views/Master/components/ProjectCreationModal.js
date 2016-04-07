@@ -11,8 +11,8 @@ import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewProject: (title, description,users) => {
-      dispatch(postAndCreateNewProject(title, description,users));
+    createNewProject: (title, description,users,membersOnProj) => {
+      dispatch(postAndCreateNewProject(title, description,users,membersOnProj));
     }
 
   };
@@ -26,7 +26,8 @@ class ProjectCreationModal extends React.Component{
     this.state = {
       title: '',
       description: '',
-      users: []
+      users: [],
+      userIds: []
     };
   }
 
@@ -35,9 +36,10 @@ class ProjectCreationModal extends React.Component{
 
 
     this.emptyList = [];
-    this.userIds = [];
-    usersIds: this.state.users.map((member) => member._id);
-    this.props.createNewProject(this.state.title, this.state.description, this.userIds);
+    // this.userIds = [];
+    // usersIds: this.state.users.map((member) => member._id);
+    debugger;
+    this.props.createNewProject(this.state.title, this.state.description, this.state.userIds,this.state.membersOnProj);
 
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();
@@ -70,7 +72,8 @@ class ProjectCreationModal extends React.Component{
       this.setState({
         // users: members.map((member) => member._id) //TODO: need to push only user ID (full object in for now to support mock server)
         users: members,
-        membersOnProj: members.map((member) => member.first_name)
+        membersOnProj: members.map((member) => member.first_name),
+        userIds: members.map((member) => member._id)
       });
     }
   }
@@ -122,5 +125,13 @@ class ProjectCreationModal extends React.Component{
 const mapStateToProps = (state, props) => {
   return state;
 };
+
+// pulls out current project from projects object, pushes to props
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	// todo get rid of this:
+
+	return Object.assign({}, ownProps, { user: stateProps.user });
+}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCreationModal);

@@ -5,13 +5,13 @@ var deleteDocument = database.deleteDocument;
 var overwriteCollection = database.overwriteCollection;
 
 
-function newProjCreation(title, description, users) {
+function newProjCreation(title, description, users,membersOnProj) {
 	var projects = readDocument('projects');
 	// var userNames = readDocument('users');
 	// var user_i;
-	// var userFNames[users.length];
+	// var userFNames : [];
 	// for (let i = 0; i < users.length; i++) {
-	// 	userNames[i] === users[i].first_name;
+	// 	userFNames[i] === userNames.first_name;
 	// }
 	//
 	// this.userIds = [];
@@ -30,7 +30,7 @@ function newProjCreation(title, description, users) {
 		'stories': [],
 		'commits': [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)],
 		'timeFrame': ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri'],
-		'membersOnProj':  users.map((e) =>{ return e;}),
+		'membersOnProj':  membersOnProj,
 		'gCommits': [10 + Math.floor(Math.random() * 10), 6 + Math.floor(Math.random() * 10), 4 + Math.floor(Math.random() * 10), 8 + Math.floor(Math.random() * 10), 5 + Math.floor(Math.random() * 10), 7 + Math.floor(Math.random() * 10), 7 + Math.floor(Math.random() * 10)],
 		'color': '#' + Math.floor(Math.random() * 16777215).toString(16)
 	};
