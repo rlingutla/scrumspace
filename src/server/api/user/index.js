@@ -76,14 +76,12 @@ var email = users[userId].email;
 
 // this prints what is in the entire console body console.log(req.body);
 
-console.log(req.body);
-console.log(req.body._first_name);
-// console.log(req.body.first_name);
-// console.log(req.body.last_name);
-// console.log(req.body.email);
-// console.log(req.body.display_name);
-// console.log(req.body.password);
-// console.log(req.body.avatar_url);
+//console.log(req.body);
+ console.log(req.body.first_name);
+ console.log(req.body.last_name);
+ console.log(req.body.email);
+ console.log(req.body.display_name);
+
 
 
 
