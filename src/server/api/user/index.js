@@ -66,6 +66,23 @@ var displayName = users[userId].display_name;
 // get email
 var email = users[userId].email;
 
+console.log(firstName);
+console.log(lastName);
+console.log(displayName);
+console.log(email);
+
+if(typeof req.body.first_name!=='undefined') firstName= req.body.first_name;
+if(typeof req.body.last_name!=='undefined') lastName= req.body.last_name;
+if(typeof req.body.display_name!=='undefined') displayName= req.body.display_name;
+if(typeof req.body.email!=='undefined') email= req.body.email;
+
+console.log(firstName);
+console.log(lastName);
+console.log(displayName);
+console.log(email);
+
+
+
 // // prints 0  console.log(userId);
 // // prints all of the user contents console.log(users);
 // console.log(firstName);
@@ -77,11 +94,9 @@ var email = users[userId].email;
 // this prints what is in the entire console body console.log(req.body);
 
 //console.log(req.body);
- console.log(req.body.first_name);
- console.log(req.body.last_name);
- console.log(req.body.email);
- console.log(req.body.display_name);
-
+// console.log(bfirstName);
+// console.log(req.body.email);
+// console.log(req.body.display_name);
 
 
 
