@@ -432,7 +432,7 @@ router.delete('/:project_id/story/:story_id/task/:task_id', function(req, res){
 });
 
 //Post Task
-router.post('/:project_id/story/:story_id/task/', validate({ body: TaskSchema }), function(req, res){
+router.post('/:project_id/story/:story_id/task', validate({ body: TaskSchema }), function(req, res){
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.project_id)){
 		var projectId = (parseInt(req.params.project_id, 10));
 		var storyId = (parseInt(req.params.story_id, 10));
