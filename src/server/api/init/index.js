@@ -17,7 +17,7 @@ router.get('/', function (req, res) {
 	var projects = readDocument('projects');
 	var populatedProjects = projects.map((project) => {
 		return embedUsers(project);
-	});
+	}); 
 
 	var user = users[userId];
 	var stateTree = {

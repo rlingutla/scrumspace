@@ -38,7 +38,7 @@ class Story extends React.Component {
 
 			let story = Object.assign({}, this.props, {[target]: value});
 			//update the story
-			this.props.updateStory(this.props.project_id, story);
+			this.props.updateStory(this.props.project_id, story._id, story.title, story.description);
 		}
 		
 	}
@@ -112,8 +112,8 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 //maps any actions this component dispatches to component props
 const mapDispatchToProps = (dispatch) => {
 	return {
-		updateStory: (project_id, updatedStory) => {
-			dispatch(putStory(project_id, updatedStory));
+		updateStory: (project_id, story_id, title, description) => {
+			dispatch(putStory(project_id, story_id, title, description));
 		}
 	};
 };

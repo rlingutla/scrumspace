@@ -16,6 +16,12 @@ const task = (state, action) => {
 
 const projects = (state = [], action) => {
 	switch (action.type){
+		case 'UPDATE_PROJECT':
+			return state.map((project) => {
+				if(project._id === action.project_id){
+					return Object.assign({}, project, { title: action.title, users: action.members })
+				} else return project;
+			});
 		case 'UPDATE_TASK':
 			return state.map((project) => {
 				if (project._id === action.project_id){
@@ -81,6 +87,10 @@ const projects = (state = [], action) => {
 			return state.map((project) => {
 				return (project._id === action.project._id) ? action.project : project;
 			});
+	   case 'REMOVE_PROJECT':
+ 			return state.map((project) => {
+ 				return (project._id === action.project_id) ? action.project : project;
+ 			});
 		case 'NEW_STORY':
 			return state.map((project) => {
 				return (project._id === action.project._id) ? action.project : project;

@@ -4,6 +4,7 @@ import SprintRow from './SprintRow';
 import NewSprintModal from './NewSprintModal';
 import NewStoryModal from './NewProjectModal/NewStoryModal';
 import Container from './containers';
+import _ from 'underscore-contrib';
 //DnD stuff
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -87,9 +88,9 @@ class PlanView extends Component {
 	handleEdit(value, item){ //these will have an ID...
 		//modify to search for item from list of sprints by id.
 		if (value === 'sprint'){
-			this.updateState('sprintModal', [true, this.getSprintByID(item._id)]);
+			this.updateState('sprintModal', [true, _.snapshot(this.getSprintByID(item._id))]);
 		} else if (value === 'story') {
-			this.updateState('storyModal', [true, this.getStoryByID(item._id)]);
+			this.updateState('storyModal', [true, _.snapshot(this.getStoryByID(item._id))]);
 		}
 	}
 
@@ -170,12 +171,12 @@ class PlanView extends Component {
 	}
 
 	changeSprintModal(){
-    	this.state.sprintModal = [!this.state.sprintModal[0], this.state.sprintModal[1]];
+    this.state.sprintModal = [!this.state.sprintModal[0], this.state.sprintModal[1]];
 		this.setState(this.state);
 	}
 
 	changeStoryModal(){
-    	this.state.storyModal = [!this.state.storyModal[0], this.state.storyModal[1]];
+    this.state.storyModal = [!this.state.storyModal[0], this.state.storyModal[1]];
 		this.setState(this.state);
 	}
 

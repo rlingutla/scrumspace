@@ -28,6 +28,25 @@ export default {
 	    'stories': {
 	    	'types': 'array',
 	    	'items': story
+	    },
+	    'commits' : {
+		    'types': 'array',
+		    'items': 'integer'
+	    },
+	    'timeFrame' : {
+		    'types': 'array',
+		    'items': 'string'
+	    },
+	    'membersOnProj' : {
+		    'types': 'array',
+		    'items': 'string'
+	    },
+	    'gCommits' : {
+		    'types': 'array',
+		    'items': 'integer'
+	    },
+	    'color' : {
+	    	'type': 'integer'
 	    }
     }
 };
