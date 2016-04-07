@@ -52,35 +52,37 @@ router.get('/:id', function(req,res){
 
 router.put('/:user_id', function(req, res) {
 
-// first get all the inputs based on the user id given
-// gets users id from user
-var userId = parseInt(req.params.user_id,10);
-// gets users, and reads it
+// // first get all the inputs based on the user id given
+// // gets users id from user
+ var userId = parseInt(req.params.user_id,10);
+// // gets users, and reads it
 var users =  readDocument ('users');
-// get first name
-var firstName = users[userId].first_name;
-// get last name
-var lastName  = users[userId].last_name;
-// get display name
-var displayName = users[userId].display_name;
-// get email
-var email = users[userId].email;
+// // get first name
+// var firstName = users[userId].first_name;
+// // get last name
+// var lastName  = users[userId].last_name;
+// // get display name
+// var displayName = users[userId].display_name;
+// // get email
+// var email = users[userId].email;
 
-console.log(firstName);
-console.log(lastName);
-console.log(displayName);
-console.log(email);
+console.log(users[userId].first_name);
+console.log(users[userId].last_name);
+console.log( users[userId].display_name);
+console.log(users[userId].email);
 
-if(typeof req.body.first_name!=='undefined') firstName= req.body.first_name;
-if(typeof req.body.last_name!=='undefined') lastName= req.body.last_name;
-if(typeof req.body.display_name!=='undefined') displayName= req.body.display_name;
-if(typeof req.body.email!=='undefined') email= req.body.email;
+if(typeof req.body.first_name!=='undefined') users[userId].first_name = req.body.first_name;
+if(typeof req.body.last_name!=='undefined') users[userId].last_name = req.body.last_name;
+if(typeof req.body.display_name!=='undefined') users[userId].display_name = req.body.display_name;
+if(typeof req.body.email!=='undefined') users[userId].email= req.body.email;
 
-console.log(firstName);
-console.log(lastName);
-console.log(displayName);
-console.log(email);
+console.log(users[userId].first_name);
+console.log(users[userId].last_name);
+console.log( users[userId].display_name);
+console.log(users[userId].email);
 
+ writeDocument('users', user);
+ res.send(user);
 
 
 // // prints 0  console.log(userId);
