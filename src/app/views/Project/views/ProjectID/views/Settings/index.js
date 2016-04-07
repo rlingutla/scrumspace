@@ -40,6 +40,7 @@ class Settings extends React.Component {
 	saveChanges(){
 		this.toggleCModal(false);
 		let members = this.state.users.map((user) => user._id);
+		debugger;
 		this.props.updateProject(this.state.project_id,this.state.title, members);
 	}
 

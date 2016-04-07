@@ -48,21 +48,38 @@ router.get('/:id', function(req,res){
 router.post('/', validate({ body: NewProjSchema }), function(req,res){
   	var fromUser = getUserIdFromToken(req.get('Authorization'));
 		//console.log(req.body.users);
-	//	if (checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.userId)){
+	  //	if (checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.userId)){
+		if(typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
+			res.status(400);
+			return res.send({error: StandardError({
+				status: 400,
+				title: 'BAD_INFO'
+			})});
+		}
+
 			var projects = readDocument('projects');
 			console.log(req.body.users);
 			var project = newProjCreation(req.body.title, req.body.description, req.body.users,req.body.membersOnProj);
 			res.status(201);
 			//res.set('Location', '/project' + projects[projects.length-1]._id);
 			res.send(project);
-	//	} else {
-			// 401: Unauthorized.
-		//	res.status(401).end();
-	//	}
+
+		// else {
+		// 	//401: Unauthorized
+		// 	res.status(401).end();
+		// }
 });
 
 //update project
 router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
+	console.log(req.body.title.length);
+	if((req.body.title.length === 0 ) &&  (req.body.users.length === 0)){
+		res.status(400);
+		return res.send({error: StandardError({
+			status: 400,
+			title: 'BAD_INFO'
+		})});
+	}
 	var project = projUpdate(parseInt(req.params.projectid, 10), req.body.title, req.body.users);
 	 // Send the update!
 	res.send(embedUsers(project));
@@ -71,19 +88,6 @@ router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
 
 //remove a project
 router.delete('/:project_id', function(req, res){
-	  // var projectId = parseInt(req.params.project_id, 10);
-		// var projects = getCollection('projects');
-		// var project_i;
-		// for(let i=0; i < projects.length; i++){
-		// 	if(projects[i]._id === projectId){
-		// 		project_i = i;
-		// 		break;
-		// 	}
-		// }
-    // var project = readDocument('projects',project_i);
-		// deleteDocument('projects', project_i);
-    // //var project = projectRemoval(projectId);
-		// res.send(project); //returns removed project_id
 
 		var project = projectRemoval(parseInt(req.params.project_id, 10));
 		console.log('ok');
