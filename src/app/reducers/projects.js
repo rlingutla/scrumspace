@@ -85,7 +85,7 @@ const projects = (state = [], action) => {
 			];
 		case 'REMOVE_STORY':
 			return state.map((project) => {
-				return (project._id === action.project_id) ? action.project : project;
+				return (project._id === action.project._id) ? action.project : project;
 			});
 	   case 'REMOVE_PROJECT':
  			return state.map((project) => {

@@ -97,7 +97,23 @@ router.put('/:project_id/story/:story_id',function(req, res) {
 				storyToUpdate.title = title;
 			}
 			if (tasks) {
-				storyToUpdate.tasks = tasks;
+				storyToUpdate.tasks = tasks.map((task, i) =>  {
+					// TODO: model
+					return Object.assign({
+						'_id': i,
+						'status': 'UNASSIGNED',
+						'assigned_to': [],
+						'blocked_by': [],
+						'description': task.description,
+						'history': [{
+							from_status: null,
+							to_status: 'UNASSIGNED',
+							modified_time: Date.now(),
+							modified_user : 0
+						}],
+						'attachments': null
+					}, storyToUpdate.tasks[i], task);
+				});
 			}
 			if (description) {
 				storyToUpdate.description = description;
@@ -135,9 +151,9 @@ router.delete('/:project_id/story/:story_id', function(req, res) {
 				projectToUpdate.stories.splice(i, 1);
 			}
 		}
-
 		writeDocument('projects', projectToUpdate);	//write updated project to database
-		res.send(projectToUpdate);
+
+		res.send(embedUsers(projectToUpdate));
 	} else{
 		// 401: Unauthorized.
     	res.status(401).end();
