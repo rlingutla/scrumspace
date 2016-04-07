@@ -50,7 +50,7 @@ router.get('/:id', function(req,res){
 // why is returing 404 when route is /settings/users/user_id
 // client side
 
-router.put('/:user_id',  function(req, res) {
+router.put('/:user_id', validate({ body:UserSchema }), function(req, res) {
 // // first get all the inputs based on the user id given
 // // gets users id from user
  var userId = parseInt(req.params.user_id,10);
