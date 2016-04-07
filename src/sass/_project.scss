@@ -21,7 +21,7 @@
 		// padding: 15px 0;
 
 		& > * {
-			vertical-align: middle;	
+			vertical-align: middle;
 		}
 	}
 
@@ -127,7 +127,7 @@
 
 				// & > div {
 				// 	margin-right: 15px;
-				// 	display: inline-block; 
+				// 	display: inline-block;
 				// 	height: 100%;
 				// 	width: 90%;
 				// }
@@ -371,14 +371,15 @@
 		}
 	}
 }
-//planning 
+//planning
 #project-planning {
 	.planning-story {
 		@include hoverAction();
 		opacity:1 !important;
 		cursor: 'move';
 		@include transition();
-
+		padding-top: 5px;
+		padding-bottom: 5px;
 		&:active {
 			transform: rotateZ(2deg);
 		}
