@@ -67,7 +67,7 @@ class Settings extends React.Component {
 		return (
 			<div>
 				{/* Delete Project Modal */}
-				<Modal show={this.state.deleteModal} onHide={(e) => this.toggleModal(false)}>
+				<Modal show={this.state.deleteModal} onHide={(e) => this.toggleDModal(false)}>
 					<Modal.Header closeButton>
 						<Modal.Title>Delete Project?</Modal.Title>
 					</Modal.Header>
@@ -112,7 +112,7 @@ class Settings extends React.Component {
 											</Col>
 											<Col md={6}>
 												<div className="form-group">
-													<label for="usr">Users</label>
+													<label for="usr">Users (only <b>add</b> new users)</label>
 													{/*<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>*/}
 													<AsyncSelect
 														multi
@@ -151,7 +151,8 @@ const mapStateToProps = (state, props) => {
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	// todo get rid of this:
 	var projects = stateProps.projects || [];
-	let project = projects.find((proj) => {
+	var project;
+	project = projects.find((proj) => {
 		return proj._id === parseInt(ownProps.params.id, 10);
 	});
 	return Object.assign({...project}, {...ownProps}, {...dispatchProps});

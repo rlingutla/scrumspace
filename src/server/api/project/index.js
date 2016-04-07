@@ -13,6 +13,8 @@ var Task = require('../../models/Task');
 var database = require('../../database');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
+var deleteDocument = database.deleteDocument;
+var getCollection = database.getCollection;
 //Sprint Helper function
 var sprintHelper = require('./sprintHelper');
 var sprintMaker = sprintHelper.sprintMaker;
@@ -44,16 +46,34 @@ router.get('/:id', function(req,res){
 //New Project Routes
 //add new project
 router.post('/', validate({ body: NewProjSchema }), function(req,res){
-	var projects = readDocument('projects');
-	console.log(req.body.users);
-	var project = newProjCreation(req.body.title, req.body.description, req.body.users);
-	res.status(201);
-	res.set('Location', '/project' + projects[projects.length-1]._id);
-	res.send(project);
+  	var fromUser = getUserIdFromToken(req.get('Authorization'));
+		console.log('From user: '+fromUser);
+		if(typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
+			res.status(400);
+			return res.send({error: StandardError({
+				status: 400,
+				title: 'BAD_INFO'
+			})});
+		}
+
+			var projects = readDocument('projects');
+			console.log(req.body.users);
+			var project = newProjCreation(req.body.title, req.body.description, req.body.users,req.body.membersOnProj);
+			res.status(201);
+			//res.set('Location', '/project' + projects[projects.length-1]._id);
+			res.send(project);
 });
 
 //update project
 router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
+	console.log(req.body.title.length);
+	if((req.body.title.length === 0 ) &&  (req.body.users.length === 0)){
+		res.status(400);
+		return res.send({error: StandardError({
+			status: 400,
+			title: 'BAD_INFO'
+		})});
+	}
 	var project = projUpdate(parseInt(req.params.projectid, 10), req.body.title, req.body.users);
 	 // Send the update!
 	res.send(embedUsers(project));
@@ -61,13 +81,14 @@ router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
 
 
 //remove a project
-router.delete('/:projectid', function(req, res){
+router.delete('/:project_id', function(req, res){
 
-		var project = projectRemoval(parseInt(req.params.projectid, 10));
+		var project = projectRemoval(parseInt(req.params.project_id, 10));
 		console.log('ok');
-		res.set('Location', '/project');
+		//res.set('Location', '/project/');
 		res.send(project); //returns removed project_id
 		console.log('call me doge');
+
 });
 
 // update a story
@@ -242,7 +263,6 @@ router.post('/:project_id/story', validate({ body: StorySchema }), function(req,
 // update story.sprint_id
 router.put('/:project_id/story/:story_id/sprint_id/:sprint_id', function (req, res) {
 	var projectId = parseInt(req.params.project_id, 10);
-
 	var sprintId = parseInt(req.params.sprint_id, 10);
 	var projects = readDocument('projects');
 	var project_i, story_i;

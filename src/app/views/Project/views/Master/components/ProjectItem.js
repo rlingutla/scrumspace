@@ -29,7 +29,7 @@ const getLineDataObj = (range, datasets) => {
 		genDataSets.push({
 			label: dataset,
 			fillColor: "transparent",
-			strokeColor: taskTypes[dataset].color, 
+			strokeColor: taskTypes[dataset].color,
 			data: datasets[dataset]
 		});
 	}
@@ -56,7 +56,7 @@ const processGraphData = (project) => {
 	//init dataset object with each taskType
 	let datasets = {};
 	for(let taskType in taskTypes) {
-		datasets[taskType] = Array(DAY_RANGE).fill(0);	
+		datasets[taskType] = Array(DAY_RANGE).fill(0);
 	}
 
 	for(let i = 0; i < DAY_RANGE; ++i){
