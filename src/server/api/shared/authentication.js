@@ -35,9 +35,15 @@ function checkAuthFromProject(fromUser, projectId){
 	var project = readDocument('projects').find((e) => {
 		return parseInt(e._id, 10) === parseInt(projectId, 10);
 	});
-	if(project.users.filter((e) => { return parseInt(e, 10) === parseInt(fromUser, 10); }).length > 0)
-		return true;
-	else
+	if(typeof project !== 'undefined'){
+		if(project.users.filter((e) => { return parseInt(e, 10) === parseInt(fromUser, 10); }).length > 0)
+			return true;
+		else
+			return false;
+	}
+	else {
+		console.log('Project not found');
 		return false;
+	}
 }
 module.exports.checkAuthFromProject = checkAuthFromProject;
