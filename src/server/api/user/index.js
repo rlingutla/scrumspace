@@ -68,11 +68,13 @@ var users =  readDocument ('users');
  console.log(users[userId].password);
   console.log(req.body.new_password);
 
-/// see this **
+//check passwords
 if(typeof req.body.old_password!=='undefined'){
 	if(req.body.old_password === users[userId].password){
 		users[userId].password  = req.body.new_password;
 	}
+	//  Unauthorized
+	else 	res.status(401).end();
 }
 
  console.log(users[userId].password);
