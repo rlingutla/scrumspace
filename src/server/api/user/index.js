@@ -50,7 +50,7 @@ router.get('/:id', function(req,res){
 // why is returing 404 when route is /settings/users/user_id
 // client side
 
-router.put('/:user_id', function(req, res) {
+router.put('/:user_id',  function(req, res) {
 
 // // first get all the inputs based on the user id given
 // // gets users id from user
@@ -81,8 +81,8 @@ console.log(users[userId].last_name);
 console.log( users[userId].display_name);
 console.log(users[userId].email);
 
- writeDocument('users', user);
- res.send(user);
+
+ res.send();
 
 
 // // prints 0  console.log(userId);
