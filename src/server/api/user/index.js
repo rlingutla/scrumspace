@@ -5,6 +5,7 @@ var validate = require('express-jsonschema').validate;
 var database = require('../../database');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
+var getCollection = database.writeDocument;
 
 var authentication = require('../shared/authentication');
 var getUserIdFromToken = authentication.getUserIdFromToken;
@@ -49,25 +50,39 @@ router.get('/:id', function(req,res){
 // why is returing 404 when route is /settings/users/user_id
 // client side
 
-router.put('/users/:user_id/', validate({ body: UserSchema }), function(req, res) {
+router.put('/:user_id', function(req, res) {
+
 	 //needs authorization, please see
-	var userId = req.params.user_id;
-  console.log(userId);
+	// request the user 0
+	var userId = parseInt(req.params.user_id,10);
+	var users = getCollection('users');
+	var user_i;
 
-	var user = readDocument('users',userId);
-	//console.log(req.body);
-	//console.log(user);
-	if(typeof req.body.first_name!=='undefined')
-	{ //console.log('true');
-	user.first_name = req.body.first_name;}
+  	for (let i = 0; i < users.length; i++){
+			  if(users[i]._id === userId){
+					user_i = i;
+				}
+		}
 
-	if(typeof req.body.last_name!=='undefined') user.last_name = req.body.last_name;
-	if(typeof req.body.display_name!=='undefined') user.display_name = req.body.display_name;
-	if(typeof req.body.email!=='undefined') user.email = req.body.email;
+	console.log('userId:'+users[user_i]._id);
+	console.log('user' + users[user_i]);
+	console.log('user first name' + users[user_i].first_name);
+	// console.log('user id first  name' + userId.first_name);
 
-	writeDocument('users', user);
-	console.log(user);
-	res.send(user);
+
+
+	// //console.log(req.body);
+	// //console.log(user);
+	// if(typeof req.body.first_name!=='undefined')
+	// { //console.log('true');
+	// user.first_name = req.body.first_name;}
+	//
+	// if(typeof req.body.last_name!=='undefined') user.last_name = req.body.last_name;
+	// if(typeof req.body.display_name!=='undefined') user.display_name = req.body.display_name;
+	// if(typeof req.body.email!=='undefined') user.email = req.body.email;
+	//
+	// writeDocument('users', user);
+	// res.send(user);
 });
 
 router.put('/:settings/users/:user_id/password', function(req, res) {
