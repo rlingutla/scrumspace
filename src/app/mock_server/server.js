@@ -68,22 +68,12 @@ export function serverRemoveProject(project_id){
 }
 
 export function serverPutSettings(newData, properties){
-	var oldSettings = readDocument('users', newData._id.toString());
 
-	// check if password (TODO: fix this design AV)
-	if (newData.oldPassword === oldSettings.password) {
-		oldSettings.password = newData.newPassword;
-	} else {
-		for (let prop in newData) {
-			oldSettings[prop] = newData[prop];
-		}
-	}
+	return sendXHRPromise('PUT', `/api/user/user_id`, {
 
-	//write updated project object to server
-	writeDocument('users', oldSettings);
-
-	serverLog('DB Updated', oldSettings);
-	return emulateServerReturn(oldSettings, false) ;
+	}).then((response) => {
+		return response.data;
+	});
 }
 
 export function serverAssignUsersToTask(project_id, story_id, task_id, users){
