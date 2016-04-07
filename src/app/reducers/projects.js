@@ -1,4 +1,5 @@
 import { project as projectModel } from 'app/shared/constants/models';
+import { browserHistory } from 'react-router';
 import _ from 'underscore';
 
 const task = (state, action) => {
@@ -16,6 +17,12 @@ const task = (state, action) => {
 
 const projects = (state = [], action) => {
 	switch (action.type){
+		case 'UPDATE_PROJECT':
+			return state.map((project) => {
+				if(project._id === action.project_id){
+					return Object.assign({}, project, { title: action.title, users: action.members })
+				} else return project;
+			});
 		case 'UPDATE_TASK':
 			return state.map((project) => {
 				if (project._id === action.project_id){
@@ -69,9 +76,9 @@ const projects = (state = [], action) => {
 				commits: action.commits,
 				timeFrame: action.timeFrame,
 				membersOnProj:action.membersOnProj,
-				color: action.color,
 				gCommits: action.gCommits
 			}, projectModel());
+
 
 			return [
 				...state,
@@ -81,6 +88,22 @@ const projects = (state = [], action) => {
 			return state.map((project) => {
 				return (project._id === action.project._id) ? action.project : project;
 			});
+	   case 'REMOVE_PROJECT':
+	   		var index;
+	   		state.find((project,i)=> {
+	   			if (project._id === action.project_id) {
+	   				index = i;
+	   				return true;
+	   			} else {
+	   				return false;
+	   			}
+	   		});
+	   		var newState = state.slice(); // mutation is discouraged in redux! (TODO: CLEAN THIS)
+	   		if (index > 0) {
+		   		newState.splice(index, 1);
+				browserHistory.push('/project/');
+	   		}
+ 			return newState;
 		case 'NEW_STORY':
 			return state.map((project) => {
 				return (project._id === action.project._id) ? action.project : project;

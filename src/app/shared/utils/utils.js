@@ -46,7 +46,9 @@ export function daysDifference(startDate, endDate){
 
 export function populateProjectEntities(project){
 	//TODO see if we can do this more efficiently
-	let users = project.users, tasks = {};
+	let users ={}, tasks = {};
+
+	project.users.forEach((user) => users[user._id] = user)
 
 	//build references
 	project.stories.forEach((story) => {

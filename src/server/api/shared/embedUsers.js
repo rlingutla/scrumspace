@@ -7,6 +7,7 @@ module.exports = function(project){
 
 	return Object.assign({}, project, {
 		//map userIDs to user objects
+
 		users: project.users.map((id) => {
 			var obj = {
 				'_id': users[id]._id,

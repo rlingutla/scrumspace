@@ -59,6 +59,7 @@ button {
     opacity: 1;
     border: 1px solid $border-color;
     border-top: 5px solid #E8E8E8;
+    overflow: hidden;
 
     @include transition();
     @include disableSelect();

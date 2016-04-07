@@ -15,6 +15,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	});
 
 	let populatedProject = populateProjectEntities(project);
+
 	return Object.assign({...populatedProject}, {...ownProps});
 }
 

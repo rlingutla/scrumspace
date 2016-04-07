@@ -1,6 +1,7 @@
 import React from 'react';
 import Panel from '../Panel';
 
+//save button
 export default (props) => {
 	return (
 		<Panel heading="Privacy" glyphicon="lock" saveMethod={props.saveMethod}>
@@ -8,13 +9,15 @@ export default (props) => {
 				<div className="col-md-6">
 					<div className="form-group">
 						<label>Old Password:</label>
-						<input className="form-control" type="password" value={props.oldPassword} onChange={(e) => props.updateState(e, 'oldPassword')} placeholder="Old Password" />
+
+					<input className="form-control" type="text" value={props.password}
+						onChange={(e) => props.updateState(e, 'oldPassword')}/>
 					</div>
 				</div>
 				<div className="col-md-6">
 					<div className="form-group">
 						<label>New Password:</label>
-						<input className="form-control" type="password" value={props.newPassword} onChange={(e) => props.updateState(e, 'newPassword')} placeholder="New Password"/>
+						<input className="form-control" type="text" value={props.password} onChange={(e) => props.updateState(e, 'newPassword')} />
 					</div>
 				</div>
 			</div>

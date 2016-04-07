@@ -80,5 +80,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps,
-					 mapDispatchToProps,
-					 mergeProps)(ProjectProgressBar);
+	mapDispatchToProps,
+	mergeProps)(ProjectProgressBar);

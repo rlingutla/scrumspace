@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link }  from 'react-router';  
-import { ResetDatabase } from '../mock_server/database';
+import { Link }  from 'react-router';
+import { ResetDatabase } from '../mock_server/server';
 import Ionicon from '../shared/components/Ionicon';
 
 export default () => {
@@ -13,7 +13,7 @@ export default () => {
 					</li>
 					<li>
 						<Link activeClassName="selected" to="/project/"><Ionicon icon="ion-easel"/></Link>
-					</li>					
+					</li>
 					<li>
 						<Link activeClassName="selected" to="/settings"><Ionicon icon="ion-ios-gear"/></Link>
 					</li>

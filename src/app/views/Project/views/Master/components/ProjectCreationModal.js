@@ -11,10 +11,8 @@ import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewProject: (title, description,users,status,current_sprint,avatar,sprints,
-    stories,commits,timeFrame,membersOnProj,gCommits,color) => {
-      dispatch(postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,
-      stories,commits,timeFrame,membersOnProj,gCommits,color));
+    createNewProject: (title, description,users,membersOnProj) => {
+      dispatch(postAndCreateNewProject(title, description,users,membersOnProj));
     }
 
   };
@@ -29,16 +27,7 @@ class ProjectCreationModal extends React.Component{
       title: '',
       description: '',
       users: [],
-      status: 'planning',
-      current_sprint: null,
-      avatar: '',
-      sprints: [],
-      stories: [],
-      commits:[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
-      timeFrame:['Mon','Tues', 'Wed', 'Thurs', 'Fri'],
-      membersOnProj:[],
-      gCommits:[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
-      color:'#'+Math.floor(Math.random()*16777215).toString(16)
+      userIds: []
     };
   }
 
@@ -47,9 +36,9 @@ class ProjectCreationModal extends React.Component{
 
 
     this.emptyList = [];
-    this.props.createNewProject(this.state.title, this.state.description, this.state.users,
-      this.state.status, this.state.current_sprint, this.state.avatar, this.state.sprints,
-      this.state.stories, this.state.commits, this.state.timeFrame,this.state.membersOnProj,this.state.gCommits,this.state.color);
+    // this.userIds = [];
+    // usersIds: this.state.users.map((member) => member._id);
+    this.props.createNewProject(this.state.title, this.state.description, this.state.userIds,this.state.membersOnProj);
 
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();
@@ -82,7 +71,8 @@ class ProjectCreationModal extends React.Component{
       this.setState({
         // users: members.map((member) => member._id) //TODO: need to push only user ID (full object in for now to support mock server)
         users: members,
-        membersOnProj: members.map((member) => member.first_name)
+        membersOnProj: members.map((member) => member.first_name),
+        userIds: members.map((member) => member._id)
       });
     }
   }
@@ -134,5 +124,13 @@ class ProjectCreationModal extends React.Component{
 const mapStateToProps = (state, props) => {
   return state;
 };
+
+// pulls out current project from projects object, pushes to props
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	// todo get rid of this:
+
+	return Object.assign({}, ownProps, { user: stateProps.user });
+}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCreationModal);
