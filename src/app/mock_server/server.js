@@ -33,22 +33,24 @@ export function stateTree(userId){
 	});
 }
 
+
 // Project Stuff
 /**
  * Adds a new project to the database.
  */
-export function serverPostNewProject(title, description,users,status,sprints,stories,cb) {
+export function serverPostNewProject(title, description,users,membersOnProj,cb) {
+
   return sendXHRPromise('POST', '/api/project/',{
     'title':title,
     'description' : description,
 		'users':users,
-		'status': status,
-		'sprints': sprints,
-		'stories': stories
+		'membersOnProj': membersOnProj
   }).then((response) => {
     // Return the new status update.
     return response;
-  });
+  },(error) => {
+		ErrorBanner('Could not create new project');
+	});
 }
 
 export function serverUpdateProject(project_id,title,members){
@@ -58,32 +60,26 @@ export function serverUpdateProject(project_id,title,members){
 		'users': members
 	}).then((response) => {
 		return response;
+	},(error) => {
+		ErrorBanner('Could not update project, must have at least 1 field filled in');
 	});
 }
 
 export function serverRemoveProject(project_id){
 	return sendXHRPromise('DELETE', '/api/project/' + project_id).then((response) => {
 		return response;
+	},(error) => {
+		ErrorBanner('Could not delete project');
 	});
 }
 
 export function serverPutSettings(newData, properties){
-	var oldSettings = readDocument('users', newData._id.toString());
 
-	// check if password (TODO: fix this design AV)
-	if (newData.oldPassword === oldSettings.password) {
-		oldSettings.password = newData.newPassword;
-	} else {
-		for (let prop in newData) {
-			oldSettings[prop] = newData[prop];
-		}
-	}
+	return sendXHRPromise('PUT', `/api/user/user_id`, {
 
-	//write updated project object to server
-	writeDocument('users', oldSettings);
-
-	serverLog('DB Updated', oldSettings);
-	return emulateServerReturn(oldSettings, false) ;
+	}).then((response) => {
+		return response.data;
+	});
 }
 
 export function serverAssignUsersToTask(project_id, story_id, task_id, users){

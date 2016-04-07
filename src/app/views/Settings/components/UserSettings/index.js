@@ -1,6 +1,12 @@
 import React from 'react';
 import Panel from '../Panel';
 
+// redux stuff, please see save method
+// was not sure where to put this method
+// put in client.js server method
+
+
+//save function
 export default (props) => {
 	return (
 		<Panel heading="User Settings" glyphicon="user" saveMethod={props.saveMethod}>
@@ -9,13 +15,13 @@ export default (props) => {
 					<div className="col-md-6">
 						<div className="form-group">
 							<label>First Name:</label>
-							<input className="form-control" text="text" onChange={(e) => props.updateState(e, 'first_name')} value={props.first_name} placeholder="John"/>
+							<input className="form-control" text="text" onChange={(e) => props.updateState(e, 'first_name')} value={props.first_name}/>
 						</div>
 					</div>
 					<div className="col-md-6">
 						<div className="form-group">
 							<label>Last Name:</label>
-							<input className="form-control" text="text" onChange={(e) => props.updateState(e, 'last_name')} value={props.last_name} placeholder="Smith"/>
+							<input className="form-control" text="text" onChange={(e) => props.updateState(e, 'last_name')} value={props.last_name}/>
 						</div>
 					</div>
 				</div>

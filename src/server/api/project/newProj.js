@@ -1,13 +1,17 @@
 var database = require('../../database');
+var _ = require('underscore');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 var deleteDocument = database.deleteDocument;
 var overwriteCollection = database.overwriteCollection;
 
 
-function newProjCreation(title, description, users, status) {
+
+function newProjCreation(title, description, users,membersOnProj) {
 	var projects = readDocument('projects');
-	var prevId = projects.length - 1;
+
+
+	var prevId = projects[projects.length-1]._id;
 	let project = {
 		'_id': prevId + 1,
 		'title': title,
@@ -20,7 +24,7 @@ function newProjCreation(title, description, users, status) {
 		'stories': [],
 		'commits': [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)],
 		'timeFrame': ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri'],
-		'membersOnProj': users.map((e) =>{ return e.first_name;}),
+		'membersOnProj':  membersOnProj,
 		'gCommits': [10 + Math.floor(Math.random() * 10), 6 + Math.floor(Math.random() * 10), 4 + Math.floor(Math.random() * 10), 8 + Math.floor(Math.random() * 10), 5 + Math.floor(Math.random() * 10), 7 + Math.floor(Math.random() * 10), 7 + Math.floor(Math.random() * 10)],
 		'color': '#' + Math.floor(Math.random() * 16777215).toString(16)
 	};
@@ -42,6 +46,11 @@ function projUpdate(project_id, title, users) {
 	}
 	projects[project_i].title = title;
 	projects[project_i].users = users || projects[project_i].users;
+
+/*  var tasks = projects[project_i].tasks;
+  var intersection = _.intersection(tasks,projects[project_i].users );
+	console.log(intersection);*/
+
 
 	writeDocument('projects', projects[project_i]);
 	console.log('DB Updated', projects[project_i]);

@@ -17,24 +17,23 @@ import {
 import { browserHistory } from 'react-router'
 
 // Project
-function postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
-	return serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color);
+function postNewProject(title, description,users,membersOnProj){
+	return serverPostNewProject(title, description,users,membersOnProj);
 }
 
 // new project
-export const createNewProject = (title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color) => {
+export const createNewProject = (title, description,users, membersOnProj) => {
 	return {
 		type: 'CREATE_NEW_PROJECT',
-		title, description,users,status,current_sprint,avatar,sprints,
-		stories,commits,timeFrame,membersOnProj,gCommits,color
+		title, description,users,membersOnProj
 	};
 };
 
-export function postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
+export function postAndCreateNewProject(title, description,users,membersOnProj){
 	return function(dispatch){
-		return postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color).then(
+		return postNewProject(title, description,users,membersOnProj).then(
 			project => {
-				dispatch(createNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color));
+				dispatch(createNewProject(title, description,users,membersOnProj));
 			},
 			error => console.error('got an error', error)
 		);
@@ -51,6 +50,7 @@ export const updateProjectAction = (project_id, title,members) => {
 };
 //update fields in the project
 export function putProjectUpdates(project_id, title, members){
+
 	return function (dispatch){
 		return serverUpdateProject(project_id, title, members).then(
 			project => {
@@ -74,6 +74,7 @@ export function removeProject(project_id){
 		return serverRemoveProject(project_id).then(
 			project => {
 				dispatch(removeProjectAction(project_id));
+				browserHistory.push('/project/');
 			},
 			error => console.error('Cant remove project', error)
 		)

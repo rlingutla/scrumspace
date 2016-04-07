@@ -10,7 +10,7 @@ export default class StoryWrapper extends React.Component {
 	render() {
 		return (
         <div className="row">
-        	{(this.props.stories.length > 0) ? 
+        	{(this.props.stories.length > 0) ?
         		this.props.stories.map( (e, i, array) =>{
         				return(
         					<Story key={i} index={i} data={e} last={i === array.length -1} handleRemove={this.props.handleRemove}
