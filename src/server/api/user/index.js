@@ -82,7 +82,7 @@ console.log( users[userId].display_name);
 console.log(users[userId].email);
 
 
- res.send();
+ res.send(users[userId].first_name  +  users[userId].last_name + users[userId].display_name + users[userId].email);
 
 
 // // prints 0  console.log(userId);
