@@ -38,7 +38,6 @@ class ProjectCreationModal extends React.Component{
     this.emptyList = [];
     // this.userIds = [];
     // usersIds: this.state.users.map((member) => member._id);
-    debugger;
     this.props.createNewProject(this.state.title, this.state.description, this.state.userIds,this.state.membersOnProj);
 
     // TODO: set this asynchronously, needs work!
