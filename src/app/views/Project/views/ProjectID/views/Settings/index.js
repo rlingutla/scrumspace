@@ -1,16 +1,52 @@
 import React from 'react';
 import MultiSelect from 'app/shared/components/MultiSelect';
-import { Modal, Button, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Row, Col, Input } from 'react-bootstrap';
+import { putProjectUpdates, removeProject } from '../../../../../../actions/';
 import Wrapper from 'app/shared/components/Wrapper';
 import Container from '../../containers';
+import { connect } from 'react-redux';
+import { sendXHRPromise } from '../../../../../../mock_server/server';
+import { Async as AsyncSelect } from 'react-select';
 
 class Settings extends React.Component {
 	constructor(props){
 		super(props);
 
 		this.state = {
-			deleteModal: false
+			deleteModal: false,
+			changeModal: false,
+			title: props.title,
+			project_id: props._id,
+			users: props.users
 		};
+	}
+
+	handleChange(e){
+		e.preventDefault();
+
+		let value = e.target.value;
+		let field = e.target.attributes.name.nodeValue;
+
+		let updObj = {};
+		updObj[field] = value;
+		this.setState(updObj);
+	}
+
+	deleteProj(){
+		this.toggleDModal(false);
+		this.props.removeProjectAct(this.state.project_id);
+	}
+
+	saveChanges(){
+		this.toggleCModal(false);
+		let members = this.state.users.map((user) => user._id);
+		this.props.updateProject(this.state.project_id,this.state.title, members);
+	}
+
+	getUserOptions(input){
+		return sendXHRPromise('GET', `/api/user/search?searchStr=${input}&key=display_name`, undefined).then((response) => {
+			return {options: response.data};
+		});
 	}
 
 	setMembers(members) {
@@ -19,8 +55,12 @@ class Settings extends React.Component {
 		});
 	}
 
-	toggleModal(state){
+	toggleDModal(state){
 		this.setState({deleteModal: state});
+	}
+
+	toggleCModal(state){
+		this.setState({changeModal: state});
 	}
 
 	render() {
@@ -35,8 +75,22 @@ class Settings extends React.Component {
 						<p>Are you sure you want to delete {this.props.title}?</p>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button onClick={(e) => this.toggleModal(false)}>Close</Button>
-						<Button bsStyle="danger">Delete</Button>
+						<Button bsStyle="danger" onClick={(e) => this.deleteProj(e)}>Delete</Button>
+						<Button onClick={(e) => this.toggleDModal(false)}>Close</Button>
+					</Modal.Footer>
+				</Modal>
+
+				{/* Save Project Changes Modal */}
+				<Modal show={this.state.changeModal} onHide={(e) => this.toggleCModal(false)}>
+					<Modal.Header closeButton>
+						<Modal.Title>Save Changes</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<p>Are you sure you want to save these changes?</p>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button bsStyle="success" onClick={(e) => this.saveChanges(e)}>Save Changes</Button>
+						<Button onClick={(e) => this.toggleCModal(false)}>Close</Button>
 					</Modal.Footer>
 				</Modal>
 
@@ -45,7 +99,7 @@ class Settings extends React.Component {
 						<div className="panel-group">
 							<div className="panel panel-primary">
 								<div className="panel-heading">
-									<h4>Project Settings</h4> 
+									<h4>Project Settings</h4>
 								</div>
 								<div className="panel-body">
 									<form>
@@ -53,20 +107,30 @@ class Settings extends React.Component {
 											<Col md={6}>
 												<div className="form-group">
 													<label for="usr">Project Title</label>
-													<input type="text" className="form-control" id="usr" value={this.props.title} placeholder="Your Project Title"/>
+													<Input type="text" className="form-control" name="title" id="usr" value={this.state.title} placeholder="Enter new project title" onChange={(e) => this.handleChange(e)}/>
 												</div>
 											</Col>
 											<Col md={6}>
 												<div className="form-group">
 													<label for="usr">Users</label>
-													<MultiSelect users={this.props.users} labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>
+													{/*<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>*/}
+													<AsyncSelect
+														multi
+													    name="form-field-name"
+													    loadOptions={this.getUserOptions.bind(this)}
+													    labelKey="display_name"
+													    valueKey="_id"
+													    onChange={(members) => this.setMembers(members)}
+													    value={this.state.users}
+													/>
 												</div>
 											</Col>
 										</Row>
 									</form>
 								</div>
 								<div className="panel-footer settings-foot">
-									<Button type="button" bsStyle="danger" className="pull-right" onClick={(e) => this.toggleModal(true)}>Delete Project</Button>
+									<Button type="button" bsStyle="danger" className="pull-right" onClick={(e) => this.toggleDModal(true)}>Delete Project</Button>
+									<Button type="button" bsStyle="success" className="pull-right" onClick={(e) => this.toggleCModal(true)}>Save Changes</Button>
 								</div>
 							</div>
 						</div>
@@ -77,4 +141,31 @@ class Settings extends React.Component {
 	}
 }
 
-export default Container(Settings);
+
+// TODO FIGURE OUT WHAT TO DO HERE.
+const mapStateToProps = (state, props) => {
+  return state;
+};
+
+// pulls out current project from projects object, pushes to props
+function mergeProps(stateProps, dispatchProps, ownProps) {
+	// todo get rid of this:
+	var projects = stateProps.projects || [];
+	let project = projects.find((proj) => {
+		return proj._id === parseInt(ownProps.params.id, 10);
+	});
+	return Object.assign({...project}, {...ownProps}, {...dispatchProps});
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		updateProject: (project_id,title, users) => {
+			dispatch(putProjectUpdates(project_id,title,users));
+		},
+  	removeProjectAct: (project_id) => {
+  		dispatch(removeProject(project_id));
+  	}
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps,mergeProps)(Settings);

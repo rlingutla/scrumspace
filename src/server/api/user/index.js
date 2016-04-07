@@ -14,6 +14,8 @@ var checkAuthFromProject = authentication.checkAuthFromProject;
 var express = require('express'),
 	router = express.Router();
 
+var database = require('../../database');
+var readDocument = database.readDocument;
 var StandardError = require('../shared/StandardError');
 var search = require('../shared/search');
 
@@ -39,9 +41,15 @@ router.get('/search', function(req,res){
 });
 
 router.get('/:id', function(req,res){
+	let user = readDocument("users", req.params.id);
+
 	res.send({
-		'_id': req.params.id,
-		'name': 'dylan'
+		_id: user._id, 
+		first_name: user.first_name,
+		last_name: user.last_name,
+		email: user.email,
+		display_name: user.display_name,
+		avatar_url: user.avatar_url
 	});
 });
 

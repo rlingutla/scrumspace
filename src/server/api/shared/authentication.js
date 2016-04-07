@@ -30,6 +30,7 @@ function getUserIdFromToken(authorizationLine) {
 module.exports.getUserIdFromToken = getUserIdFromToken;
 
 function checkAuthFromProject(fromUser, projectId){
+  // console.log("fromUser", fromUser, "projectId", projectId);
 	//fromUser is getUserIdFromToken(req.get('Authorization'))
 	var project = readDocument('projects').find((e) => {
 		return parseInt(e._id, 10) === parseInt(projectId, 10);

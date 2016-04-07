@@ -8,6 +8,7 @@ var express = require('express'),
 
 var StandardError = require('../shared/StandardError');
 var search = require('../shared/search');
+var embedUsers = require('../shared/embedUsers');
 
 router.get('/', function (req, res) {
 	var userId = 0;
@@ -15,24 +16,8 @@ router.get('/', function (req, res) {
 
 	var projects = readDocument('projects');
 	var populatedProjects = projects.map((project) => {
-		return Object.assign({}, 
-			project, 
-			{
-				//map userIDs to user objects
-				users: project.users.map((id) => {
-					var obj = {
-						'_id': users[id]._id,
-						'first_name': users[id].first_name,
-						'last_name': users[id].last_name,
-						'email': users[id].email,
-						'display_name': users[id].display_name,
-						'avatar_url': users[id].avatar_url
-					}
-					return obj;
-				})
-			}
-		);
-	});
+		return embedUsers(project);
+	}); 
 
 	var user = users[userId];
 	var stateTree = {

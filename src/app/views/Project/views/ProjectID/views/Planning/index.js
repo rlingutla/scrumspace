@@ -4,6 +4,7 @@ import SprintRow from './SprintRow';
 import NewSprintModal from './NewSprintModal';
 import NewStoryModal from './NewProjectModal/NewStoryModal';
 import Container from './containers';
+import _ from 'underscore-contrib';
 //DnD stuff
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -31,6 +32,7 @@ const StoryFactory = () => {
 class PlanView extends Component {
 	constructor(props){
 		super(props);
+
 		this.state ={
 			storyModal: [false, StoryFactory()], //the object at the ladder end of this array is what gets written to the server.
 			sprintModal: [false, SprintFactory()] //the object at the ladder end of this array is what gets written to the server.
@@ -86,9 +88,9 @@ class PlanView extends Component {
 	handleEdit(value, item){ //these will have an ID...
 		//modify to search for item from list of sprints by id.
 		if (value === 'sprint'){
-			this.updateState('sprintModal', [true, this.getSprintByID(item._id)]);
+			this.updateState('sprintModal', [true, _.snapshot(this.getSprintByID(item._id))]);
 		} else if (value === 'story') {
-			this.updateState('storyModal', [true, this.getStoryByID(item._id)]);
+			this.updateState('storyModal', [true, _.snapshot(this.getStoryByID(item._id))]);
 		}
 	}
 
@@ -169,12 +171,12 @@ class PlanView extends Component {
 	}
 
 	changeSprintModal(){
-    	this.state.sprintModal = [!this.state.sprintModal[0], this.state.sprintModal[1]];
+    this.state.sprintModal = [!this.state.sprintModal[0], this.state.sprintModal[1]];
 		this.setState(this.state);
 	}
 
 	changeStoryModal(){
-    	this.state.storyModal = [!this.state.storyModal[0], this.state.storyModal[1]];
+    this.state.storyModal = [!this.state.storyModal[0], this.state.storyModal[1]];
 		this.setState(this.state);
 	}
 
@@ -202,7 +204,8 @@ class PlanView extends Component {
 						return (
 							<SprintRow key={i} data={e} updateState={this.updateState.bind(this)} save={this.save.bind(this)}
 								handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
-								stories={this.props.stories.filter((value) => value.sprint_id === e._id)} isCurrentSprint={e._id === this.props.current_sprint}
+								stories={this.props.stories.filter((value) => value.sprint_id === e._id)} current_sprint={this.props.current_sprint}
+								startSprint={this.props.startSprint} project_id={this.props._id}
 							/>
 						);
 					})

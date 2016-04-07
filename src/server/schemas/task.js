@@ -33,9 +33,8 @@ export default {
       'items': history
     }
   },
-  'additionalProperties': false,
+  'additionalProperties': true,
   'required': [
-    'status',
     'description'
   ]
 };

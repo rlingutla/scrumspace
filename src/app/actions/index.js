@@ -1,18 +1,86 @@
 //TODO: this thing is monolithic :O, need to organize
-import { 
-	serverUpdateTask, 
-	serverPostNewProject, 
-	serverPostSprint, 
-	serverPutStory, 
-	serverRemoveStory, 
-	serverRemoveSprint, 
-	serverMoveStory, 
+import {
+	serverUpdateTask,
+	serverPostNewProject,
+	serverUpdateProject,
+	serverRemoveProject,
+	serverPostSprint,
+	serverPutStory,
+	serverRemoveStory,
+	serverRemoveSprint,
+	serverMoveStory,
 	serverMakeNewStory,
 	serverAssignUsersToTask,
-	serverAssignBlockingTasks
+	serverAssignBlockingTasks,
+	serverStartSprint
 } from '../mock_server/server';
+import { browserHistory } from 'react-router'
 
-// TASK 
+// Project
+function postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
+	return serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color);
+}
+
+// new project
+export const createNewProject = (title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color) => {
+	return {
+		type: 'CREATE_NEW_PROJECT',
+		title, description,users,status,current_sprint,avatar,sprints,
+		stories,commits,timeFrame,membersOnProj,gCommits,color
+	};
+};
+
+export function postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
+	return function(dispatch){
+		return postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color).then(
+			project => {
+				dispatch(createNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color));
+			},
+			error => console.error('got an error', error)
+		);
+	};
+}
+
+export const updateProjectAction = (project_id, title,members) => {
+	return {
+		type: 'UPDATE_PROJECT',
+		project_id,
+		title,
+		members
+	};
+};
+//update fields in the project
+export function putProjectUpdates(project_id, title, members){
+	return function (dispatch){
+		return serverUpdateProject(project_id, title, members).then(
+			project => {
+				dispatch(updateProjectAction(project._id, project.title, project.users));
+			},
+			error => console.error('Cant update project', error)
+		)
+	}
+}
+
+//remove a project
+export const removeProjectAction = (project_id) => {
+	return {
+		type: 'REMOVE_PROJECT',
+		project_id
+	};
+};
+//helps with removing a project
+export function removeProject(project_id){
+	return function (dispatch){
+		return serverRemoveProject(project_id).then(
+			project => {
+				dispatch(removeProjectAction(project_id));
+			},
+			error => console.error('Cant remove project', error)
+		)
+	}
+}
+
+// TASK
 export const updateTaskAction = (project_id, story_id, task) => {
 	return {
 		type: 'UPDATE_TASK',
@@ -38,7 +106,7 @@ export function assignUsersToTask(project_id, story_id, task_id, users){
 		return serverAssignUsersToTask(project_id, story_id, task_id, users).then(
 			task => {
 				dispatch(updateTaskAction(project_id, story_id, task));
-			},	
+			},
 			error => console.error('got an error', error)
 		)
 	}
@@ -49,7 +117,7 @@ export function assignBlockingTasks(project_id, story_id, task_id, blocking){
 		return serverAssignBlockingTasks(project_id, story_id, task_id, blocking).then(
 			task => {
 				dispatch(updateTaskAction(project_id, story_id, task));
-			},	
+			},
 			error => console.error('got an error', error)
 		)
 	}
@@ -63,39 +131,15 @@ export const changeStoryState = (project_id, story) => {
 	}
 }
 
-export function putStory(project_id, story){
+export function putStory(project_id, story_id, title, description){
 	return function(dispatch){
-		return serverPutStory(project_id, story).then(
+		return serverPutStory(project_id, story_id, title, description).then(
 			updStory => {
 				dispatch(changeStoryState(project_id, updStory));
 			},
 			error => console.error('got an error', error)
 		);
 	}
-}
-
-function postNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
-	return serverPostNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color);
-}
-
-// new project
-export const createNewProject = (	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color) => {
-	return {
-		type: 'CREATE_NEW_PROJECT',
-		title, description,users,status,current_sprint,avatar,sprints,
-		stories,commits,timeFrame,membersOnProj,gCommits,color
-	};
-};
-
-export function postAndCreateNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
-	return function(dispatch){
-		return postNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color).then(
-			project => {
-				dispatch(createNewProject(	title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color));
-			},
-			error => console.error('got an error', error)
-		);
-	};
 }
 
 function postNewProjectPlan(signal, data){
@@ -131,4 +175,22 @@ export function postProjectPlan(signal, data){
 			error => console.error('rip', error)
 		);
 	};
+}
+
+export const startSprintAction = (project) => {
+	return {
+		type: 'START_SPRINT', project
+	};
+};
+
+export function putStartSprint(project_id, sprint_id){
+	return function(dispatch){
+		return serverStartSprint(project_id, sprint_id).then(
+			project => {
+				dispatch(startSprintAction(project));
+				browserHistory.push(`/project/${project_id}/scrumboard`)
+			},
+			error => console.error('rip', error)
+		);
+	}
 }

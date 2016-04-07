@@ -23,7 +23,7 @@ export default class StoryRow extends React.Component {
 		return (
 			<tr>
 				<td id="story-container">
-					<Story {...this.props.story} />
+					<Story {...this.props.story} project_id={this.props.project_id} />
 				</td>
 				<TaskBin users={this.props.users} container="task-container" type={TaskTypes.UNASSIGNED} story_id={this.props.story_id} project_id={this.props.project_id}>
 					{this.getTaskArray(TaskTypes.UNASSIGNED).map((task, i) => {

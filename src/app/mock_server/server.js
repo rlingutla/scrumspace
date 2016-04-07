@@ -33,13 +33,41 @@ export function stateTree(userId){
 	});
 }
 
-export function serverPutSettings(newData, properties){
+// Project Stuff
+/**
+ * Adds a new project to the database.
+ */
+export function serverPostNewProject(title, description,users,status,sprints,stories,cb) {
+  return sendXHRPromise('POST', '/api/project/',{
+    'title':title,
+    'description' : description,
+		'users':users,
+		'status': status,
+		'sprints': sprints,
+		'stories': stories
+  }).then((response) => {
+    // Return the new status update.
+    return response;
+  });
+}
 
-	sendXHR('PUT', '/users/' + userId , (xhr) => {
-		cb(JSON.parse(xhr.responseText));
+export function serverUpdateProject(project_id,title,members){
+	return sendXHRPromise('PUT', '/api/project/' + project_id, {
+		'project_id': project_id,
+		'title': title,
+		'users': members
+	}).then((response) => {
+		return response;
 	});
+}
 
+export function serverRemoveProject(project_id){
+	return sendXHRPromise('DELETE', '/api/project/' + project_id).then((response) => {
+		return response;
+	});
+}
 
+export function serverPutSettings(newData, properties){
 	var oldSettings = readDocument('users', newData._id.toString());
 
 	// check if password (TODO: fix this design AV)
@@ -58,182 +86,85 @@ export function serverPutSettings(newData, properties){
 	return emulateServerReturn(oldSettings, false) ;
 }
 
-export function serverUpdateTask(project_id, story_id, changedTask){
-	let projects = readDocument('projects');
-	let updatedTask, updatedProject;
-
-	projects.map((project) => {
-		if(project._id === project_id){
-			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-				if(story._id === story_id){
-					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
-						if(task._id === changedTask._id){
-							let historyItem = { from_status: task.status, to_status: changedTask.status, modified_time: Date.now(), modified_user: getCurrentUser()};
-
-							updatedTask = Object.assign({}, task, changedTask, {
-								history: [
-									...task.history,
-									historyItem
-								]
-							});
-							return updatedTask;
-						} else return task;
-					})});
-				} else return story;
-			})});
-			return updatedProject;
-		} else return project;
+export function serverAssignUsersToTask(project_id, story_id, task_id, users){
+	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}/assigned_to/`, {
+		users,
+		replace: true
+	}).then((response) => {
+		return response.data;
 	});
-
-
-	//write updated project object to server
-	writeDocument('projects', updatedProject);
-
-	serverLog('DB Updated', updatedTask);
-
-	return emulateServerReturn(updatedTask, updatedTask === undefined);
+}
+export function serverAssignBlockingTasks(project_id, story_id, task_id, blocking){
+	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}/blocked_by/`, {
+		blocking,
+		replace: true
+	}).then((response) => {
+		return response.data;
+	});
 }
 
-export function serverPutTaskState(project_id, story_id, task_id, toType){
-	let projects = readDocument('projects');
-	let updatedTask, updatedProject;
+export function serverUpdateTask(project_id, story_id, task_id, status, description){
+	let updates = {};
+	if(status) updates.status = status;
+	if(description) updates.description = description;
 
-	projects.map((project) => {
-		if(project._id === project_id){
-			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-				if(story._id === story_id){
-					return Object.assign({}, story, { tasks: story.tasks.map((task) => {
-						if(task._id === task_id){
-							let historyItem = { from_status: task.status, to_status: toType, modified_time: Date.now(), modified_user: getCurrentUser()};
-
-							updatedTask = Object.assign({}, task, {
-								status: toType,
-								history: [
-									...task.history,
-									historyItem
-								]
-							});
-
-							return updatedTask;
-						} else return task;
-					})});
-				} else return story;
-			})});
-			return updatedProject;
-		} else return project;
+	return sendXHRPromise('PUT', `/api/project/${project_id}{/story/${story_id}/task/${task_id}`,
+		updates
+	).then((response) => {
+		return response.data;
 	});
-
-
-	//write updated project object to server
-	writeDocument('projects', updatedProject);
-
-	serverLog('DB Updated', updatedTask);
-
-	return emulateServerReturn(updatedTask, updatedTask === undefined);
-}
-
-export function serverPutStory(project_id, newStory){
-	let projects = readDocument('projects');
-	let updatedProject, updatedStory;
-	projects.map((project) => {
-		if(project._id == project_id){
-			updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-				if(story._id === newStory._id){
-					updatedStory = Object.assign({}, newStory);
-					return updatedStory;
-				}
-				else return story;
-			})});
-			return updatedProject;
-		}
-		else return project;
-	});
-	//write updated project object to server
-	writeDocument('projects', updatedProject);
-	serverLog('DB Updated', updatedStory);
-	return emulateServerReturn(updatedStory, updatedStory === undefined);
-}
-
-export function serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,
-stories,commits,timeFrame,membersOnProj,gCommits,color){
-	// read in all projects, access last project in the array, get it's ID and increment that value
-  var projects = readDocument('projects');
-	var prevId = projects[projects.length - 1]._id;
-
-	let project = {
-		'_id': prevId + 1,
-		'title': title,
-		'description': description,
-		'users': users,
-		'status': 'planning',
-		'current_sprint': null,
-		'avatar': '',
-		'sprints': [],
-		'stories': [],
-		'commits':[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
-    'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj': membersOnProj,
-		'gCommits':[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
-		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
-	};
-	writeDocument('projects', project);
-
-	return emulateServerReturn(project, false);
-
 }
 
 export function serverPostSprint(project, name, duration, time, sprint){
 	if(typeof sprint === 'undefined' || sprint === null){ //TODO this means we have a new sprint
 		return sendXHRPromise('POST', '/api/project/'+project+'/sprint/', {
-			'name': name,
-			'scrum_time': time,
-			'duration': duration
+			'name': name.toString(),
+			'scrum_time': time.toString(),
+			'duration': parseInt(duration, 10)
 		}).then((response) => {
 			return response;
 		});
 	}
 	else{ //this means that we have an edited sprint
 		return sendXHRPromise('PUT', '/api/project/'+project+'/sprint/'+sprint, {
-			'name': name,
-			'scrum_time': time,
-			'duration': duration
+			'name': name.toString(),
+			'scrum_time': time.toString(),
+			'duration': parseInt(duration, 10)
 		}).then((response) => {
 			return response;
 		});
 	}
 }
 
-export function serverMoveStory(projectId, storyId, sprintId){
-	return sendXHRPromise("PUT", "/api/project/" + projectId  + "/story/" + storyId, {
-		sprintId: sprintId
+export function serverStartSprint(project_id, sprint_id){
+	return sendXHRPromise('PUT', `/api/project/${project_id}/sprint/${sprint_id}/start`)
+	.then((response) => {
+		return response;
+	},
+	(error) => {
+		console.error(error);
+	});
+}
+
+// TODO, RENAME SERVER PUT STORY SPRINT ID
+export function serverPutStory(projectId, storyId, title, description){
+	return sendXHRPromise('PUT', `/api/project/${projectId}/story/${storyId}`, {
+		title, description
 	}).then((response) => {
+		let story = response.stories.find((story) => story._id === storyId);
+		return story;
+	});
+}
+export function serverMoveStory(projectId, storyId, sprintId){
+	return sendXHRPromise('PUT', '/api/project/' + projectId  + '/story/' + storyId + '/sprint_id/' + sprintId,
+	{}).then((response) => {
 		return response;
 	});
 }
-export function serverRemoveStory(project, story){
-	var projects = readDocument('projects');
-	var project_i, story_i;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].stories.length; j++){
-				if(projects[i].stories[j]._id === story){
-					story_i = j;
-					break;
-				}
-			}
-			break;
-		}
-	}
-	if(projects[project_i].stories[story_i].sprint_id !== null){
-		projects[project_i].stories[story_i].sprint_id = null;
-	}
-	else{
-		projects[project_i].stories.splice(story_i, 1);
-	}
-	writeDocument('projects', projects[project_i]);
-	serverLog('DB Updated', projects[project_i]);
-	return emulateServerReturn(projects[project_i], false);
+export function serverRemoveStory(project_id, story_id){
+	return sendXHRPromise('DELETE', '/api/project/'+project_id+'/story/'+story_id, undefined).then((response) => {
+		return response;
+	});
 }
 export function serverRemoveSprint(project, sprint){
 	return sendXHRPromise('DELETE', '/api/project/'+project+'/sprint/'+sprint, undefined).then((response) => {
@@ -242,14 +173,24 @@ export function serverRemoveSprint(project, sprint){
 }
 
 // todo make this post new story
-export function serverMakeNewStory(projectId, title, description, tasks, storyId){
-	return sendXHRPromise('POST', '/api/project/'+projectId+'/story/', {
-		title,
-		description,
-		tasks
-	}).then((response) => {
-		return response;
-	});
+export function serverMakeNewStory(project_id, title, description, tasks, story_id){
+	if (typeof story_id === 'undefined') { // if there is no story defined, this post a new story
+		return sendXHRPromise('POST', '/api/project/' + project_id + '/story/', {
+			title,
+			description,
+			tasks
+		}).then((response) => {
+			return response;
+		});
+	} else {
+		return sendXHRPromise('PUT', '/api/project/' + project_id  + '/story/' + story_id, {
+			title,
+			description,
+			tasks
+		}).then((response) => {
+			return response;
+		});
+	}
 }
 
 /*
@@ -282,7 +223,7 @@ var token = 'eyJfaWQiOjB9'; // <-- Put your base64'd JSON token here
  * and other needed properties.
  */
 export function sendXHR(verb, resource, body, cb) {
-	var xhr = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
   xhr.open(verb, resource);
   xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 
@@ -303,7 +244,9 @@ export function sendXHR(verb, resource, body, cb) {
       // The server may have included some response text with details concerning
       // the error.
       var responseText = xhr.responseText;
-      console.log('Could not ' + verb + " " + resource + ": Received " + statusCode + " " + statusText + ": " + responseText);
+      var error = 'Could not ' + verb + " " + resource + ": Received " + statusCode + " " + statusText + ": " + responseText;
+      console.log(error);
+      ErrorBanner(error);
     }
   });
 
@@ -312,12 +255,16 @@ export function sendXHR(verb, resource, body, cb) {
 
   // Network failure: Could not connect to server.
   xhr.addEventListener('error', function() {
-    console.log('Could not ' + verb + " " + resource + ": Could not connect to the server.");
+  	var error = "Could not " + verb + " " + resource + ": Could not connect to the server.";
+	ErrorBanner(error); // This is in the global namespace.
+    console.log(error);
   });
 
   // Network failure: request took too long to complete.
   xhr.addEventListener('timeout', function() {
-    console.log('Could not ' + verb + " " + resource + ": Request timed out.");
+    var error = 'Could not ' + verb + " " + resource + ": Request timed out.";
+    ErrorBanner(error);
+    console.log(error);
   });
 
   switch (typeof(body)) {
@@ -364,7 +311,10 @@ export function sendXHRPromise(verb, resource, body) {
   	    // The server may have included some response text with details concerning
   	    // the error.
   	    var responseText = xhr.responseText;
-  	    console.log('Could not ' + verb + " " + resource + ": Received " + statusCode + " " + statusText + ": " + responseText);
+  	    let error = `Could not ${verb} ${resource}: Received ${statusCode} ${statusText}: ${responseText}`;
+  	    ErrorBanner(error);
+  	    reject(error);
+
   	  }
   	});
 
@@ -373,12 +323,18 @@ export function sendXHRPromise(verb, resource, body) {
 
   	// Network failure: Could not connect to server.
   	xhr.addEventListener('error', function() {
-  	  console.log('Could not ' + verb + " " + resource + ": Could not connect to the server.");
+  		let error = `Could not ${verb} ${resource}: Could not connect to the server.`;
+		ErrorBanner(error); // This is in the global namespace.
+		console.log(error);
+		reject(error);
   	});
 
   	// Network failure: request took too long to complete.
   	xhr.addEventListener('timeout', function() {
-  	  console.log('Could not ' + verb + " " + resource + ": Request timed out.");
+  		let error = `Could not ${verb} ${resource}: Request timed out.`;
+  		ErrorBanner(error);
+		console.log(error);
+		reject(error);
   	});
 
   	switch (typeof(body)) {

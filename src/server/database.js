@@ -89,7 +89,9 @@ function deleteDocument(collectionName, id) {
   if (!collection[id]) {
     throw new Error(`Collection ${collectionName} lacks an item with id ${id}!`);
   }
-  delete collection[id];
+
+    delete collection[id];
+
   updated = true;
 }
 module.exports.deleteDocument = deleteDocument;
@@ -101,6 +103,18 @@ function getCollection(collectionName) {
   return JSONClone(data[collectionName]);
 }
 module.exports.getCollection = getCollection;
+
+function overwriteCollection(collectionName, changedDocument) {
+  // Store a copy of the object into the database. Models a database's behavior.
+	var collectionObj = data[collectionName];
+	if (!collectionObj) {
+		throw new Error(`Object collection ${collectionName} does not exist in the database!`);
+	}
+  data[collectionName] = JSONClone(changedDocument);
+  // Update our 'database'.
+  updated = true;
+}
+module.exports.overwriteCollection = overwriteCollection;
 
 
  /**
