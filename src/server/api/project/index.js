@@ -48,7 +48,7 @@ router.get('/:id', function(req,res){
 //add new project
 router.post('/', validate({ body: NewProjSchema }), function(req,res){
   	var fromUser = getUserIdFromToken(req.get('Authorization'));
-		console.log('From user: '+fromUser);
+		//console.log('From user: '+fromUser);
 		if(typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
 			res.status(400);
 			return res.send({error: StandardError({
@@ -58,7 +58,7 @@ router.post('/', validate({ body: NewProjSchema }), function(req,res){
 		}
 
 			var projects = readDocument('projects');
-			console.log(req.body.users);
+			//console.log(req.body.users);
 			var project = newProjCreation(req.body.title, req.body.description, req.body.users,req.body.membersOnProj);
 			res.status(201);
 			//res.set('Location', '/project' + projects[projects.length-1]._id);
@@ -67,7 +67,7 @@ router.post('/', validate({ body: NewProjSchema }), function(req,res){
 
 //update project
 router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
-	console.log(req.body.title.length);
+	//console.log(req.body.title.length);
 	if((req.body.title.length === 0 ) &&  (req.body.users.length === 0)){
 		res.status(400);
 		return res.send({error: StandardError({
@@ -85,10 +85,8 @@ router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
 router.delete('/:project_id', function(req, res){
 
 		var project = projectRemoval(parseInt(req.params.project_id, 10));
-		console.log('ok');
 		//res.set('Location', '/project/');
 		res.send(project); //returns removed project_id
-		console.log('call me doge');
 
 });
 
@@ -349,7 +347,7 @@ router.put('/:projectid/sprint/:sprintid/start', function(req,res){
 router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req, res){
 	//going to have to eventually add user tokens...
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
-		console.log('yooyoyoyo');
+
 		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
 		res.status(201);
 		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);
@@ -400,7 +398,7 @@ router.put('/:project_id/story/:story_id/task/:task_id', function(req,res){
 });
 
 router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(req,res){
-	console.log(req.body);
+	//console.log(req.body);
 	let user = getUserIdFromToken(req.get('Authorization'));
 	if(checkAuthFromProject(user, req.params.project_id)){
 		if(Array.isArray(req.body.users)){

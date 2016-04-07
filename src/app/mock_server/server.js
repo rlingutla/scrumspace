@@ -1,26 +1,37 @@
-import { readDocument, writeDocument, addDocument, initLocalStorage } from './database.js';
 import moment from 'moment';
 import _ from 'underscore';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+function JSONClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
 
 /**
- * Emulates how a REST call is *asynchronous* -- it calls your function back
- * some time in the future with data.
+ * Reset database button.
  */
+export class ResetDatabase extends React.Component {
+  render() {
+    return (
+      <button style={{width: 50+'px', height: 50+'px', overflow: 'hidden', fontSize: 12+'px', padding: 0}} className="btn btn-default" type="button" onClick={() => {
+        //resetDatabase(); //THIS NEEDS TO BE REMOVED!
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/resetdb');
+        xhr.addEventListener('load', function() {
+          window.alert("Database reset! Refreshing the page now...");
+          window.location.href = '/';
+          // document.location.reload(false);
+        });
+        xhr.send();
+      }}>Reset Mock DB</button>
+    );
+  }
+}
+
 
 //server will later read user object from req
 function getCurrentUser(){
 	return 0;
-}
-
-function emulateServerReturn(data, error) {
-	return new Promise((resolve, reject) => {
-		if (error) reject(error);
-        else setTimeout((e) => resolve(data), 4);
-    });
-}
-
-export function initDatabase(){
-	initLocalStorage();
 }
 
 function serverLog(...msg){
@@ -193,30 +204,6 @@ export function serverMakeNewStory(project_id, title, description, tasks, story_
 			return response;
 		});
 	}
-}
-
-/*
-** str: search string
-** collection: target collection to search in
-** key (optional): key to search on
-** limit (optional): number of results
-*/
-export function search(str, collection, key = '_id', limit=15){
-	let searchCollection = readDocument(collection);
-	//if it's an object, map the values to an array
-	if (_.isObject(searchCollection)) searchCollection = _.values(searchCollection);
-	else if(!_.isArray(searchCollection)) return new Error('Supplied collection is invalid');
-	//strip some stuff from search
-	const escapeRegExp = (str_unesc) => str_unesc.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '');
-	let filtered = [];
-	//precalculate the regex once (faster)
-	let searchExpr = new RegExp(escapeRegExp(str).split('').join('\\w*').replace(/\W/, ''), 'i');
-	//loop through collection, find matching elements
-	searchCollection.forEach((obj) => {
-		if (escapeRegExp(obj[key]).match(searchExpr)) filtered.push(obj);
-	});
-
-	return emulateServerReturn(filtered.slice(0, limit), false);
 }
 
 var token = 'eyJfaWQiOjB9'; // <-- Put your base64'd JSON token here
