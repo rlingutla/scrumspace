@@ -272,7 +272,14 @@ router.put('/:project_id/story/:story_id/sprint_id/:sprint_id', function (req, r
 router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
 		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time, parseInt(req.params.sprintid, 10));
-		 // Send the update!
+		 if(project === 'SPRINT_NOT_FOUND'){
+			res.status(400);
+ 			return res.send({error: StandardError({
+ 				status: 400,
+ 				title: 'INVALID_ACTION',
+ 				detail: 'Sprint does not exist!'
+ 			})});
+		 }
 		res.send(embedUsers(project));
 	} else{
 		// 401: Unauthorized.
@@ -331,6 +338,14 @@ router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req
 router.delete('/:projectid/sprint/:sprintid', function(req, res){
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
 		var project = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
+		if(project === 'SPRINT_NOT_FOUND'){
+			res.status(400);
+			return res.send({error: StandardError({
+				status: 400,
+				title: 'INVALID_ACTION',
+				detail: 'Sprint does not exist!'
+			})});
+		}
 		res.send(embedUsers(project));
 	} else{
 		// 401: Unauthorized.
