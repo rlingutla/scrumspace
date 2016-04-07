@@ -20,8 +20,9 @@ function sprintMaker(project, name, duration, time, sprint){
 			break;
 		}
 	}
-	if(sprint_i === null || project_i === null)
+	if((sprint_i === null && typeof sprint !== 'undefined')|| project_i === null){
 		return 'SPRINT_NOT_FOUND';
+	}
 	if(typeof sprint === 'undefined'){
 		sprint_i = projects[project_i].sprints.length;
 		start_date = null;
