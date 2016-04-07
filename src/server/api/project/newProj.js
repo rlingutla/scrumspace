@@ -1,8 +1,10 @@
 var database = require('../../database');
+var _ = require('underscore');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 var deleteDocument = database.deleteDocument;
 var overwriteCollection = database.overwriteCollection;
+
 
 
 function newProjCreation(title, description, users,membersOnProj) {
@@ -52,6 +54,11 @@ function projUpdate(project_id, title, users) {
 	}
 	projects[project_i].title = title;
 	projects[project_i].users = users || projects[project_i].users;
+
+/*  var tasks = projects[project_i].tasks;
+  var intersection = _.intersection(tasks,projects[project_i].users );
+	console.log(intersection);*/
+
 
 	writeDocument('projects', projects[project_i]);
 	console.log('DB Updated', projects[project_i]);

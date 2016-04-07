@@ -113,7 +113,7 @@ class Settings extends React.Component {
 											</Col>
 											<Col md={6}>
 												<div className="form-group">
-													<label for="usr">Users</label>
+													<label for="usr">Users (only <b>add</b> new users)</label>
 													{/*<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>*/}
 													<AsyncSelect
 														multi
