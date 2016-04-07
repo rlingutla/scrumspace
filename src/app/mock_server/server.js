@@ -132,6 +132,9 @@ export function serverPostSprint(project, name, duration, time, sprint){
 			'duration': parseInt(duration, 10)
 		}).then((response) => {
 			return response;
+		},
+		(error) => {
+			console.error(error);
 		});
 	}
 }
@@ -169,6 +172,9 @@ export function serverRemoveStory(project_id, story_id){
 export function serverRemoveSprint(project, sprint){
 	return sendXHRPromise('DELETE', '/api/project/'+project+'/sprint/'+sprint, undefined).then((response) => {
 		return response;
+	},
+	(error) => {
+		console.error(error);
 	});
 }
 
