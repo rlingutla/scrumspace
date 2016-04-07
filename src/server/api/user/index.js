@@ -57,17 +57,6 @@ router.put('/:user_id', validate({ body:UserSchema }), function(req, res) {
 // // gets users, and reads it
 var users =  readDocument ('users');
 
-// console.log(users[userId].first_name);
-// console.log(users[userId].last_name);
-// console.log( users[userId].display_name);
-// console.log(users[userId].email);
-// console.log(users[userId].avatar_url);
-// console.log(users[userId].password);
-
- console.log(req.body.old_password);
- console.log(users[userId].password);
-  console.log(req.body.new_password);
-
 //check passwords
 if(typeof req.body.old_password!=='undefined'){
 	if(req.body.old_password === users[userId].password){
@@ -77,8 +66,6 @@ if(typeof req.body.old_password!=='undefined'){
 	else 	res.status(401).end();
 }
 
- console.log(users[userId].password);
-
 if(typeof req.body.first_name!=='undefined') users[userId].first_name = req.body.first_name;
 if(typeof req.body.avatar_url!=='undefined') users[userId].avatar_url = req.body.avatar_url;
 if(typeof req.body.first_name!=='undefined') users[userId].first_name = req.body.first_name;
@@ -86,19 +73,7 @@ if(typeof req.body.last_name!=='undefined') users[userId].last_name = req.body.l
 if(typeof req.body.display_name!=='undefined') users[userId].display_name = req.body.display_name;
 if(typeof req.body.email!=='undefined') users[userId].email= req.body.email;
 
-
-// console.log(users[userId].first_name);
-// console.log(users[userId].last_name);
-// console.log( users[userId].display_name);
-// console.log(users[userId].email);
-// console.log(users[userId].avatar_url);
-// console.log(users[userId].password);
-
-
  res.send(users[userId]);
 
 });
-
-
-
 module.exports = router;
