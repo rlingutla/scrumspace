@@ -52,21 +52,71 @@ router.get('/:id', function(req,res){
 
 router.put('/:user_id', function(req, res) {
 
+// first get all the inputs based on the user id given
+// gets users id from user
+var userId = parseInt(req.params.user_id,10);
+// gets users, and reads it
+var users =  readDocument ('users');
+// get first name
+var firstName = users[userId].first_name;
+// get last name
+var lastName  = users[userId].last_name;
+// get display name
+var displayName = users[userId].display_name;
+// get email
+var email = users[userId].email;
+
+// // prints 0  console.log(userId);
+// // prints all of the user contents console.log(users);
+// console.log(firstName);
+// console.log(lastName);
+// console.log(displayName);
+// console.log(email);
+
+
+// this prints what is in the entire console body console.log(req.body);
+
+console.log(req.body);
+console.log(req.body._first_name);
+// console.log(req.body.first_name);
+// console.log(req.body.last_name);
+// console.log(req.body.email);
+// console.log(req.body.display_name);
+// console.log(req.body.password);
+// console.log(req.body.avatar_url);
+
+
+
+
+// for ( let i = 0; i < users.length; i++){
+// 	console.log(users[i]);
+// }
+
+
+
 	 //needs authorization, please see
 	// request the user 0
-	var userId = parseInt(req.params.user_id,10);
-	var users = getCollection('users');
-	var user_i;
 
-  	for (let i = 0; i < users.length; i++){
-			  if(users[i]._id === userId){
-					user_i = i;
-				}
-		}
+	// console.log(userId);
+	// var users = getCollection('users');
+	// var user_i;
+	//
+	// for(let i = 0; i<users.length; i++){
+	// 	console.log(users[i]);
+	// }
 
-	console.log('userId:'+users[user_i]._id);
-	console.log('user' + users[user_i]);
-	console.log('user first name' + users[user_i].first_name);
+
+  // 	for (let i = 0; i < users.length; i++){
+	// 		  if(users[i]._id === userId){
+	// 				user_i = i;
+  //         console.log(i);
+	// 			}
+	// 	}
+	//
+	//
+	// console.log('userId:'+users[user_i]._id);
+	// console.log('user' + users[user_i]);
+	// console.log('user first name' + users[user_i].first_name);
 	// console.log('user id first  name' + userId.first_name);
 
 
@@ -85,20 +135,20 @@ router.put('/:user_id', function(req, res) {
 	// res.send(user);
 });
 
-router.put('/:settings/users/:user_id/password', function(req, res) {
-	//use authorization
-	let userId = parseInt(getUserIdFromToken(req.get('Authorization')));
-//	userId=0;
-	var user = readDocument('users',userId);
-	// change if
-	if(user.password === req.body.old_password){
-		user.password = req.body.new_password;
-	}
-	//console.log(req.body);
-	//console.log(user);
-	writeDocument('users', user);
-	//console.log(user);
-	res.send(user);
-});
+// router.put('/:settings/users/:user_id/password', function(req, res) {
+// 	//use authorization
+// 	let userId = parseInt(getUserIdFromToken(req.get('Authorization')));
+// //	userId=0;
+// 	var user = readDocument('users',userId);
+// 	// change if
+// 	if(user.password === req.body.old_password){
+// 		user.password = req.body.new_password;
+// 	}
+// 	//console.log(req.body);
+// 	//console.log(user);
+// 	writeDocument('users', user);
+// 	//console.log(user);
+// 	res.send(user);
+// });
 
 module.exports = router;
