@@ -5,10 +5,19 @@ var deleteDocument = database.deleteDocument;
 var overwriteCollection = database.overwriteCollection;
 
 
-function newProjCreation(title, description, users, status) {
+function newProjCreation(title, description, users) {
 	var projects = readDocument('projects');
+	// var userNames = readDocument('users');
+	// var user_i;
+	// var userFNames[users.length];
+	// for (let i = 0; i < users.length; i++) {
+	// 	userNames[i] === users[i].first_name;
+	// }
+	//
+	// this.userIds = [];
+	// usersIds: this.userNames.map((member) => member._id);
 
-	var prevId = projects.length -1 ;
+	var prevId = projects[projects.length-1]._id;
 	let project = {
 		'_id': prevId + 1,
 		'title': title,
@@ -21,7 +30,7 @@ function newProjCreation(title, description, users, status) {
 		'stories': [],
 		'commits': [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)],
 		'timeFrame': ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri'],
-		'membersOnProj': users.map((e) =>{ return e.first_name;}),
+		'membersOnProj':  users.map((e) =>{ return e;}),
 		'gCommits': [10 + Math.floor(Math.random() * 10), 6 + Math.floor(Math.random() * 10), 4 + Math.floor(Math.random() * 10), 8 + Math.floor(Math.random() * 10), 5 + Math.floor(Math.random() * 10), 7 + Math.floor(Math.random() * 10), 7 + Math.floor(Math.random() * 10)],
 		'color': '#' + Math.floor(Math.random() * 16777215).toString(16)
 	};

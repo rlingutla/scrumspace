@@ -200,8 +200,8 @@ var initialData = {
 		],
 		'commits': [3,1,6,4,8],
 		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
-		'gCommits': [12,10,4,6,5,6],
+		'membersOnProj':['Abhay', 'VilkBot'],
+		'gCommits': [12,10],
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 
 	},
@@ -217,8 +217,8 @@ var initialData = {
 		'stories': [],
 		'commits':[4,7,2,8,9],
 		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj':['Dylan', 'Abhay', 'Ryan','DJ Trump','Supriya','Niha'],
-		'gCommits':[18,15,6,9,11,13],
+		'membersOnProj':['VilkBot'],
+		'gCommits':[15],
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 
 	}

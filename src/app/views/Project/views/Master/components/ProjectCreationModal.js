@@ -11,10 +11,8 @@ import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewProject: (title, description,users,status,current_sprint,avatar,sprints,
-    stories,commits,timeFrame,membersOnProj,gCommits,color) => {
-      dispatch(postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,
-      stories,commits,timeFrame,membersOnProj,gCommits,color));
+    createNewProject: (title, description,users) => {
+      dispatch(postAndCreateNewProject(title, description,users));
     }
 
   };
@@ -28,17 +26,7 @@ class ProjectCreationModal extends React.Component{
     this.state = {
       title: '',
       description: '',
-      users: [],
-      status: 'planning',
-      current_sprint: null,
-      avatar: '',
-      sprints: [],
-      stories: [],
-      commits:[Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10),Math.floor(Math.random()*10)],
-      timeFrame:['Mon','Tues', 'Wed', 'Thurs', 'Fri'],
-      membersOnProj:[],
-      gCommits:[10+Math.floor(Math.random()*10),6+Math.floor(Math.random()*10),4+Math.floor(Math.random()*10),8+Math.floor(Math.random()*10),5+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10), 7+Math.floor(Math.random()*10)],
-      color:'#'+Math.floor(Math.random()*16777215).toString(16)
+      users: []
     };
   }
 
@@ -47,9 +35,9 @@ class ProjectCreationModal extends React.Component{
 
 
     this.emptyList = [];
-    this.props.createNewProject(this.state.title, this.state.description, this.state.users,
-      this.state.status, this.state.current_sprint, this.state.avatar, this.state.sprints,
-      this.state.stories, this.state.commits, this.state.timeFrame,this.state.membersOnProj,this.state.gCommits,this.state.color);
+    this.userIds = [];
+    usersIds: this.state.users.map((member) => member._id);
+    this.props.createNewProject(this.state.title, this.state.description, this.userIds);
 
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();

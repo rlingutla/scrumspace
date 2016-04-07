@@ -33,18 +33,17 @@ export function stateTree(userId){
 	});
 }
 
+
 // Project Stuff
 /**
  * Adds a new project to the database.
  */
-export function serverPostNewProject(title, description,users,status,sprints,stories,cb) {
+export function serverPostNewProject(title, description,users,cb) {
+  debugger;
   return sendXHRPromise('POST', '/api/project/',{
     'title':title,
     'description' : description,
-		'users':users,
-		'status': status,
-		'sprints': sprints,
-		'stories': stories
+		'users':users
   }).then((response) => {
     // Return the new status update.
     return response;

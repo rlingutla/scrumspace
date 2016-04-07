@@ -17,24 +17,23 @@ import {
 import { browserHistory } from 'react-router'
 
 // Project
-function postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
-	return serverPostNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color);
+function postNewProject(title, description,users){
+	return serverPostNewProject(title, description,users);
 }
 
 // new project
-export const createNewProject = (title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color) => {
+export const createNewProject = (title, description,users) => {
 	return {
 		type: 'CREATE_NEW_PROJECT',
-		title, description,users,status,current_sprint,avatar,sprints,
-		stories,commits,timeFrame,membersOnProj,gCommits,color
+		title, description,users
 	};
 };
 
-export function postAndCreateNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color){
+export function postAndCreateNewProject(title, description,users){
 	return function(dispatch){
-		return postNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color).then(
+		return postNewProject(title, description,users).then(
 			project => {
-				dispatch(createNewProject(title, description,users,status,current_sprint,avatar,sprints,stories,commits,timeFrame,membersOnProj,gCommits,color));
+				dispatch(createNewProject(title, description,users));
 			},
 			error => console.error('got an error', error)
 		);
