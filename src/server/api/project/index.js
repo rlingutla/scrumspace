@@ -140,7 +140,7 @@ router.put('/:project_id/story/:story_id',function(req, res) {
 			}
 			//write updated project object to server
 			writeDocument('projects', projectToUpdate);
-			res.send(projectToUpdate);
+			res.send(embedUsers(projectToUpdate));
 		} else {
 			res.status(404);
 			res.send();
