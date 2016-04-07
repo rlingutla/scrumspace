@@ -45,10 +45,8 @@ router.get('/:id', function(req,res){
 	});
 });
 
-// why is user id -1?
-// why is returning undefined
-// why is returing 404 when route is /settings/users/user_id
-// client side
+//needs client side
+// user id authorization needed, 
 
 router.put('/:user_id', validate({ body:UserSchema }), function(req, res) {
 // // first get all the inputs based on the user id given
