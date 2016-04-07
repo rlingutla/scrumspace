@@ -47,7 +47,7 @@ router.get('/:id', function(req,res){
 //add new project
 router.post('/', validate({ body: NewProjSchema }), function(req,res){
   	var fromUser = getUserIdFromToken(req.get('Authorization'));
-		//console.log(req.body.users);
+		console.log('From user: '+fromUser);
 	  //	if (checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.userId)){
 		if(typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
 			res.status(400);
