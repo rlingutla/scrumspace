@@ -148,7 +148,10 @@ router.delete('/:project_id/story/:story_id', function(req, res) {
 		// remove this story
 		for (var i = 0; i < projectToUpdate.stories.length; i++) {
 			if (projectToUpdate.stories[i]._id === story_id) {
-				projectToUpdate.stories.splice(i, 1);
+				if(projectToUpdate.stories[i].sprint_id === null)
+					projectToUpdate.stories.splice(i, 1);
+				else
+					projectToUpdate.stories[i].sprint_id = null;
 			}
 		}
 		writeDocument('projects', projectToUpdate);	//write updated project to database
