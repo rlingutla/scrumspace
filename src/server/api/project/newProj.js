@@ -9,15 +9,7 @@ var overwriteCollection = database.overwriteCollection;
 
 function newProjCreation(title, description, users,membersOnProj) {
 	var projects = readDocument('projects');
-	// var userNames = readDocument('users');
-	// var user_i;
-	// var userFNames : [];
-	// for (let i = 0; i < users.length; i++) {
-	// 	userFNames[i] === userNames.first_name;
-	// }
-	//
-	// this.userIds = [];
-	// usersIds: this.userNames.map((member) => member._id);
+
 
 	var prevId = projects[projects.length-1]._id;
 	let project = {

@@ -48,7 +48,6 @@ router.get('/:id', function(req,res){
 router.post('/', validate({ body: NewProjSchema }), function(req,res){
   	var fromUser = getUserIdFromToken(req.get('Authorization'));
 		console.log('From user: '+fromUser);
-	  //	if (checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.userId)){
 		if(typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
 			res.status(400);
 			return res.send({error: StandardError({
@@ -63,11 +62,6 @@ router.post('/', validate({ body: NewProjSchema }), function(req,res){
 			res.status(201);
 			//res.set('Location', '/project' + projects[projects.length-1]._id);
 			res.send(project);
-
-		// else {
-		// 	//401: Unauthorized
-		// 	res.status(401).end();
-		// }
 });
 
 //update project
@@ -94,6 +88,7 @@ router.delete('/:project_id', function(req, res){
 		//res.set('Location', '/project/');
 		res.send(project); //returns removed project_id
 		console.log('call me doge');
+
 });
 
 // update a story

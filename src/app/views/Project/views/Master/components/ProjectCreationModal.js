@@ -26,8 +26,8 @@ class ProjectCreationModal extends React.Component{
     this.state = {
       title: '',
       description: '',
-      users: ['VilkBot'],
-      userIds: [0]
+      users: [],
+      userIds: []
     };
   }
 
