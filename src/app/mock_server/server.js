@@ -244,7 +244,9 @@ export function sendXHR(verb, resource, body, cb) {
       // The server may have included some response text with details concerning
       // the error.
       var responseText = xhr.responseText;
-      console.log('Could not ' + verb + " " + resource + ": Received " + statusCode + " " + statusText + ": " + responseText);
+      var error = 'Could not ' + verb + " " + resource + ": Received " + statusCode + " " + statusText + ": " + responseText;
+      console.log(error);
+      ErrorBanner(error);
     }
   });
 
@@ -253,13 +255,16 @@ export function sendXHR(verb, resource, body, cb) {
 
   // Network failure: Could not connect to server.
   xhr.addEventListener('error', function() {
+  	var error = "Could not " + verb + " " + resource + ": Could not connect to the server.";
 	ErrorBanner(error); // This is in the global namespace.
-    console.log('Could not ' + verb + " " + resource + ": Could not connect to the server.");
+    console.log(error);
   });
 
   // Network failure: request took too long to complete.
   xhr.addEventListener('timeout', function() {
-    console.log('Could not ' + verb + " " + resource + ": Request timed out.");
+    var error = 'Could not ' + verb + " " + resource + ": Request timed out.";
+    ErrorBanner(error);
+    console.log(error);
   });
 
   switch (typeof(body)) {
@@ -307,7 +312,7 @@ export function sendXHRPromise(verb, resource, body) {
   	    // the error.
   	    var responseText = xhr.responseText;
   	    let error = `Could not ${verb} ${resource}: Received ${statusCode} ${statusText}: ${responseText}`;
-
+  	    ErrorBanner(error);
   	    reject(error);
 
   	  }
@@ -327,6 +332,7 @@ export function sendXHRPromise(verb, resource, body) {
   	// Network failure: request took too long to complete.
   	xhr.addEventListener('timeout', function() {
   		let error = `Could not ${verb} ${resource}: Request timed out.`;
+  		ErrorBanner(error);
 		console.log(error);
 		reject(error);
   	});
