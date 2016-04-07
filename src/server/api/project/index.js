@@ -45,14 +45,14 @@ router.get('/:id', function(req,res){
 
 //New Project Routes
 //add new project
-router.post('/', validate({ body: NewProjSchema }), function(req,res){
+router.post('/'), function(req,res){
 	var projects = readDocument('projects');
 	console.log(req.body.users);
 	var project = newProjCreation(req.body.title, req.body.description, req.body.users);
 	res.status(201);
 	res.set('Location', '/project' + projects[projects.length-1]._id);
 	res.send(project);
-});
+};
 
 //update project
 router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
