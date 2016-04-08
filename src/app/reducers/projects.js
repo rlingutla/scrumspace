@@ -8,10 +8,10 @@ const projects = (state = [], action) => {
 			return [...state, action.project];
 		case 'UPDATE_PROJECT':
 			return state.map((project) => {
-				return (project._id === action.project_id) ? Object.assign({}, project):project;
+				return (project._id === action.project._id) ? Object.assign({}, action.project):project;
 			});
 	    case 'REMOVE_PROJECT':
-	    	return state.filter((project) => project._id !== action.project_id);
+	    	return state.filter((project) => project._id !== action.project._id);
 		case 'UPDATE_TASK':
 			return state.map((project) => {
 				if (project._id === action.project_id){
