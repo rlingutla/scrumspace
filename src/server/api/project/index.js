@@ -143,12 +143,6 @@ module.exports = function (io) {
 				//write updated project object to server
 				writeDocument('projects', projectToUpdate);
 
-				io.emit('STATE_UPDATE', {data: {
-					type: 'CHANGE_STORY_STATE',
-					project_id: parseInt(req.params.project_id, 10),
-					story: storyToUpdate
-				}});
-
 				res.send(embedUsers(projectToUpdate));
 			} else {
 				res.status(404);
