@@ -15,7 +15,7 @@ const storyTarget = {
 	hover(props, monitor, component) {},
 	drop(props, monitor, component) {
 	  let item = monitor.getItem();
-	  props.save('move-story', item.data, props.data._id);
+	  props.save('story', item.data);
 	}
 };
 
@@ -49,7 +49,7 @@ class SprintRow extends React.Component {
 					(this.props.data._id === this.props.current_sprint) ? null:
 					<button type="button" className="close" onClick={(e) => this.props.handleRemove('sprint', this.props.data)}>&times;</button>
 					}
-					<h4 style={{display: 'inline-block'}}>{this.props.data.name} ({sprint_state_class})</h4> 
+					<h4 style={{display: 'inline-block'}}>{this.props.data.name} ({sprint_state_class})</h4>
 				</div>
 				<div className="panel-body" style={isOver ? {background: '#E8E8E8',borderWidth: '1px', borderStyle: 'dashed', borderColor: '#A9A9A9', minHeight: '120px'}:{minHeight: '120px'}}>
 					<div className="row">

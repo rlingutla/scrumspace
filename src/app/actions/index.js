@@ -125,13 +125,14 @@ function postNewProjectPlan(signal, data){
 	}
 }
 
-export const projectPlan = (signal, data, sprint) => {
+export const projectPlan = (signal, data, object) => {
 	return{
 		type: signal,
 		project_id: data.project,
 		sprint_id: data.sprint,
 		story_id: data.story,
-		sprint
+		sprint: object,
+		story: object
 	};
 };
 

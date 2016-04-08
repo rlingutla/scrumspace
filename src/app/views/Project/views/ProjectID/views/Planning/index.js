@@ -94,7 +94,7 @@ class PlanView extends Component {
 		}
 	}
 
-	save(signal, data, other) {
+	save(signal, data, modal) {
 		var model;
 		switch (signal) {
 			case 'story':
@@ -112,7 +112,8 @@ class PlanView extends Component {
 				}
 				else
 					this.props.saveThis('NEW_STORY', model);
-				this.changeStoryModal();
+				if(modal)
+					this.changeStoryModal();
 				break;
 			case 'sprint':
 				model = {
@@ -127,7 +128,8 @@ class PlanView extends Component {
 				}
 				else
 					this.props.saveThis('NEW_SPRINT', model);
-				this.changeSprintModal();
+				if(modal)
+					this.changeSprintModal();
 				break;
 			default:
 				console.log('I am Crying');
