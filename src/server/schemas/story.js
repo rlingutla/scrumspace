@@ -17,6 +17,6 @@ export default {
 	      'types': 'array',
 	      'items': task
 	    }
-    }, 
+    },
     'additionalProperties': false
 };

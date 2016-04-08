@@ -101,6 +101,7 @@ module.exports = function (io) {
 			var title = req.body.title;
 			var description = req.body.description;
 			var tasks = req.body.tasks;
+			var sprint_id = parseInt(req.body.sprint_id, 10);
 
 			// database call (this is simulated)
 			let projects = readDocument('projects');
@@ -139,6 +140,9 @@ module.exports = function (io) {
 				}
 				if (description) {
 					storyToUpdate.description = description;
+				}
+				if(sprint_id){
+					storyToUpdate.sprint_id = sprint_id;
 				}
 				//write updated project object to server
 				writeDocument('projects', projectToUpdate);
@@ -261,37 +265,6 @@ module.exports = function (io) {
 		}
 	});
 
-
-	// update story.sprint_id
-	router.put('/:project_id/story/:story_id/sprint_id/:sprint_id', function (req, res) {
-		var projectId = parseInt(req.params.project_id, 10);
-		var sprintId = parseInt(req.params.sprint_id, 10);
-		var projects = readDocument('projects');
-		var project_i, story_i;
-
-		for(let i = 0; i < projects.length; i++){
-			if (projects[i]._id === projectId) {
-				project_i = i;
-				for(let j = 0; j < projects[i].stories.length; j++){
-					if(projects[i].stories[j]._id === parseInt(req.params.story_id, 10)) {
-						story_i = j;
-						break;
-					}
-				}
-			}
-		}
-
-		if (projects[project_i].stories[story_i] !== null) {
-			projects[project_i].stories[story_i].sprint_id = sprintId;
-			writeDocument('projects', projects[project_i]);
-			res.send(projects[project_i].stories[story_i]);
-		} else {
-			res.status(400);
-			res.send({});
-		}
-
-	});
-
 	//Sprint Routes
 	router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
 		if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
@@ -399,7 +372,7 @@ module.exports = function (io) {
 				(task) => {
 					io.emit('STATE_UPDATE', {data: {
 						type: 'UPDATE_TASK',
-						task, 
+						task,
 						project_id: parseInt(req.params.project_id, 10),
 						story_id: parseInt(req.params.story_id, 10)
 					}});
@@ -429,12 +402,12 @@ module.exports = function (io) {
 					(task) => {
 						io.emit('STATE_UPDATE', {data: {
 							type: 'UPDATE_TASK',
-							task, 
+							task,
 							project_id: parseInt(req.params.project_id, 10),
 							story_id: parseInt(req.params.story_id, 10)
 						}});
 						res.send({data: task})
-					},				
+					},
 					(err) => res.sendStatus(404)
 				);
 			}
@@ -540,7 +513,7 @@ module.exports = function (io) {
 					(task) => {
 						io.emit('STATE_UPDATE', {data: {
 							type: 'UPDATE_TASK',
-							task, 
+							task,
 							project_id: parseInt(req.params.project_id, 10),
 							story_id: parseInt(req.params.story_id, 10)
 						}});

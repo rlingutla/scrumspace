@@ -1,28 +1,26 @@
 import {sendXHRPromise, sendXHR} from '../index';
 
-//TODO Refactor into two functions
-export function serverPostSprint(project, name, duration, time, sprint){
-	if(typeof sprint === 'undefined' || sprint === null){
-		return sendXHRPromise('POST', '/api/project/'+project+'/sprint/', {
-			'name': name.toString(),
-			'scrum_time': time.toString(),
-			'duration': parseInt(duration, 10)
-		}).then((response) => {
-			return response;
-		});
-	}
-	else{ //this means that we have an edited sprint
-		return sendXHRPromise('PUT', '/api/project/'+project+'/sprint/'+sprint, {
-			'name': name.toString(),
-			'scrum_time': time.toString(),
-			'duration': parseInt(duration, 10)
-		}).then((response) => {
-			return response;
-		},
-		(error) => {
-			console.error(error);
-		});
-	}
+export function serverUpdateSprint(project, name, duration, time, sprint){
+	return sendXHRPromise('PUT', '/api/project/'+project+'/sprint/'+sprint, {
+		'name': name.toString(),
+		'scrum_time': time.toString(),
+		'duration': parseInt(duration, 10)
+	}).then((response) => {
+		return response;
+	},
+	(error) => {
+		console.error(error);
+	});
+}
+
+export function serverPostSprint(project, name, duration, time){
+	return sendXHRPromise('POST', '/api/project/'+project+'/sprint/', {
+		'name': name.toString(),
+		'scrum_time': time.toString(),
+		'duration': parseInt(duration, 10)
+	}).then((response) => {
+		return response;
+	});
 }
 
 export function serverRemoveSprint(project, sprint){

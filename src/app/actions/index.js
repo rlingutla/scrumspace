@@ -1,7 +1,7 @@
 import {serverPostNewProject, serverUpdateProject, serverRemoveProject} from '../server_calls/project/project';
-import {serverPutStory, serverMoveStory, serverRemoveStory, serverMakeNewStory} from '../server_calls/project/story';
+import {serverPutStory, serverMoveStory, serverRemoveStory, serverMakeNewStory, serverUpdateStory} from '../server_calls/project/story';
 import {serverAssignUsersToTask, serverAssignBlockingTasks, serverUpdateTask} from '../server_calls/project/task';
-import {serverPostSprint, serverRemoveSprint, serverStartSprint} from '../server_calls/project/sprint';
+import {serverPostSprint, serverRemoveSprint, serverStartSprint, serverUpdateSprint} from '../server_calls/project/sprint';
 import { browserHistory } from 'react-router';
 
 // new project
@@ -38,6 +38,7 @@ export function putProjectUpdates(project_id, title, members){
 export const removeProjectAction = (project) => {
 	return { type: 'REMOVE_PROJECT', project };
 };
+
 //helps with removing a project
 export function removeProject(project_id){
 	return function (dispatch){
@@ -110,29 +111,34 @@ function postNewProjectPlan(signal, data){
 		case 'REMOVE_STORY':
 			return serverRemoveStory(data.project, data.story);
 		case 'NEW_STORY':
-			return serverMakeNewStory(data.project, data.title, data.description, data.tasks, data.story);
+			return serverMakeNewStory(data.project, data.title, data.description, data.tasks);
 		case 'REMOVE_SPRINT':
 			return serverRemoveSprint(data.project, data.sprint);
 		case 'NEW_SPRINT':
-			return serverPostSprint(data.project, data.name, data.duration, data.time, data.sprint);
-		case 'MOVE_STORY':
-			return serverMoveStory(data.project, data.story, data.sprint);
+			return serverPostSprint(data.project, data.name, data.duration, data.time);
+		case 'UPDATE_STORY':
+			return serverUpdateStory(data.project, data.title, data.description, data.tasks, data.story, data.sprint_id);
+		case 'UPDATE_SPRINT':
+			return serverUpdateSprint(data.project, data.name, data.duration, data.time, data.sprint);
 		default:
 			console.log('And so here lies Ryan, a sad programmer');
 	}
 }
 
-export const projectPlan = (signal, data, project) => {
+export const projectPlan = (signal, data, sprint) => {
 	return{
 		type: signal,
-		data, project
+		project_id: data.project,
+		sprint_id: data.sprint,
+		story_id: data.story,
+		sprint
 	};
 };
 
 export function postProjectPlan(signal, data){
 	return function(dispatch){
 		return postNewProjectPlan(signal, data).then(
-			project => dispatch(projectPlan(signal, data, project)),
+			sprint => dispatch(projectPlan(signal, data, sprint)),
 			error => console.error('rip', error)
 		);
 	};

@@ -103,12 +103,15 @@ class PlanView extends Component {
 					title: data.title,
 					description: data.description,
 					tasks: data.tasks,
-					time: data.scrum_time
+					time: data.scrum_time,
+					sprint_id: data.sprint_id
 				};
 				if (typeof data._id !== 'undefined') {
 					model.story = data._id;
+					this.props.saveThis('UPDATE_STORY', model);
 				}
-				this.props.saveThis('NEW_STORY', model);
+				else
+					this.props.saveThis('NEW_STORY', model);
 				this.changeStoryModal();
 				break;
 			case 'sprint':
@@ -120,17 +123,11 @@ class PlanView extends Component {
 				};
 				if (typeof data._id !== 'undefined') {
 					model.sprint = data._id;
+					this.props.saveThis('UPDATE_SPRINT', model);
 				}
-				this.props.saveThis('NEW_SPRINT', model);
+				else
+					this.props.saveThis('NEW_SPRINT', model);
 				this.changeSprintModal();
-				break;
-			case 'move-story':
-				model ={
-					project: this.props._id,
-					story: data._id,
-					sprint: other
-				};
-				this.props.saveThis('MOVE_STORY', model);
 				break;
 			default:
 				console.log('I am Crying');
