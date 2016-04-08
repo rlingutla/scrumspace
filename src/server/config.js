@@ -8,7 +8,7 @@ import morgan from 'morgan';
 var app = express();
 var bodyParser = require('body-parser');
 
-module.exports = function (app) {
+module.exports = function (app, io) {
 	// set node port
 	app.set('port', process.env.PORT || 8080);
 
@@ -21,7 +21,7 @@ module.exports = function (app) {
 	// serve static assets off of /static virtual path prefix
 	app.use('/static', express.static(__dirname + '/../../dist'));
 
-	app.use('/api', require('./api'));
+	app.use('/api', require('./api')(io));
 
 	// This is the server entry point for the application.
 	app.get("/*", entry);

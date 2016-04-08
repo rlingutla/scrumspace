@@ -12,6 +12,9 @@ import scrumApp from '../app/reducers';
 
 import { stateTree } from '../app/mock_server/server';
 
+// socket stuff
+import initSocket, {chatMiddleware} from '../app/config/socketMiddleware';
+
 /*
 	This is the 'entry point' into the client side code.
 	We render our application using react-router by passing it in routes
@@ -29,6 +32,8 @@ stateTree(0).then((stateTree) => {
 			)
 		);
 
+		initSocket(store);
+
 		render(
 		  <Provider store={store}>
 		    <Router {...renderProps} store={{}}/>
@@ -37,3 +42,11 @@ stateTree(0).then((stateTree) => {
 		);
 	});
 });
+
+// // //socket stuff
+// window.socket = io();
+
+// socket.on('hello_world', function (data) {
+// 	console.log(data);
+// 	socket.emit('my other event', { my: 'data' });
+// });
