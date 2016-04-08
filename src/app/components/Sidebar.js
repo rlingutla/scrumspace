@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link }  from 'react-router';
-import { ResetDatabase } from '../mock_server/server';
+import { ResetDatabase } from '../server_calls/index';
 import Ionicon from '../shared/components/Ionicon';
 
 export default () => {

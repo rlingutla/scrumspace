@@ -1,20 +1,8 @@
-//TODO: this thing is monolithic :O, need to organize
-import {
-	serverUpdateTask,
-	serverPostNewProject,
-	serverUpdateProject,
-	serverRemoveProject,
-	serverPostSprint,
-	serverPutStory,
-	serverRemoveStory,
-	serverRemoveSprint,
-	serverMoveStory,
-	serverMakeNewStory,
-	serverAssignUsersToTask,
-	serverAssignBlockingTasks,
-	serverStartSprint
-} from '../mock_server/server';
-import { browserHistory } from 'react-router'
+import {serverPostNewProject, serverUpdateProject, serverRemoveProject} from '../server_calls/project/project';
+import {serverPutStory, serverMoveStory, serverRemoveStory, serverMakeNewStory} from '../server_calls/project/story';
+import {serverAssignUsersToTask, serverAssignBlockingTasks, serverUpdateTask} from '../server_calls/project/task';
+import {serverPostSprint, serverRemoveSprint, serverStartSprint} from '../server_calls/project/sprint';
+import { browserHistory } from 'react-router';
 
 // new project
 export const createNewProjectAction = (project) => {
@@ -44,7 +32,7 @@ export function putProjectUpdates(project_id, title, members){
 			error => console.error('Cant update project', error)
 		);
 	};
-};
+}
 
 //remove a project
 export const removeProjectAction = (project) => {
@@ -61,7 +49,7 @@ export function removeProject(project_id){
 			error => console.error('Cant remove project', error)
 		);
 	};
-};
+}
 
 // TASK
 export const updateTaskAction = (project_id, story_id, task) => {
@@ -80,7 +68,7 @@ export function updateTask(project_id, story_id, task_id, status, description){
 			error => console.error('got an error', error)
 		);
 	};
-};
+}
 
 export function assignUsersToTask(project_id, story_id, task_id, users){
 	return function (dispatch){
@@ -89,7 +77,7 @@ export function assignUsersToTask(project_id, story_id, task_id, users){
 			error => console.error('got an error', error)
 		);
 	};
-};
+}
 
 export function assignBlockingTasks(project_id, story_id, task_id, blocking){
 	return function (dispatch){
@@ -98,7 +86,7 @@ export function assignBlockingTasks(project_id, story_id, task_id, blocking){
 			error => console.error('got an error', error)
 		);
 	};
-};
+}
 
 export const updateStoryAction = (project_id, story) => {
 	return {
@@ -115,7 +103,7 @@ export function putStory(project_id, story_id, title, description){
 			error => console.error('got an error', error)
 		);
 	};
-};
+}
 
 function postNewProjectPlan(signal, data){
 	switch (signal) {
@@ -131,8 +119,8 @@ function postNewProjectPlan(signal, data){
 			return serverMoveStory(data.project, data.story, data.sprint);
 		default:
 			console.log('And so here lies Ryan, a sad programmer');
-	};
-};
+	}
+}
 
 export const projectPlan = (signal, data, project) => {
 	return{
@@ -148,7 +136,7 @@ export function postProjectPlan(signal, data){
 			error => console.error('rip', error)
 		);
 	};
-};
+}
 
 export const startSprintAction = (project) => {
 	return { type: 'UPDATE_PROJECT', project };
@@ -163,5 +151,5 @@ export function putStartSprint(project_id, sprint_id){
 			},
 			error => console.error('rip', error)
 		);
-	}
-};
+	};
+}
