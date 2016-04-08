@@ -86,7 +86,7 @@ router.delete('/:project_id', function(req, res){
 
 		var project = projectRemoval(parseInt(req.params.project_id, 10));
 		//res.set('Location', '/project/');
-		res.send(project); //returns removed project_id
+		res.send(project); //returns removed project
 
 });
 
@@ -140,7 +140,7 @@ router.put('/:project_id/story/:story_id',function(req, res) {
 			}
 			//write updated project object to server
 			writeDocument('projects', projectToUpdate);
-			res.send(embedUsers(projectToUpdate));
+			res.send(storyToUpdate);
 		} else {
 			res.status(404);
 			res.send();
@@ -166,17 +166,18 @@ router.delete('/:project_id/story/:story_id', function(req, res) {
 		.find((project) => project._id === project_id);
 
 		// remove this story
+		var removedStory;
 		for (var i = 0; i < projectToUpdate.stories.length; i++) {
 			if (projectToUpdate.stories[i]._id === story_id) {
-				if(projectToUpdate.stories[i].sprint_id === null)
-					projectToUpdate.stories.splice(i, 1);
-				else
-					projectToUpdate.stories[i].sprint_id = null;
+				if(projectToUpdate.stories[i].sprint_id === null){
+					removedStory = projectToUpdate.stories.splice(i, 1);
+					break;
+				}
 			}
 		}
 		writeDocument('projects', projectToUpdate);	//write updated project to database
 
-		res.send(embedUsers(projectToUpdate));
+		res.send(removedStory);
 	} else{
 		// 401: Unauthorized.
     	res.status(401).end();
@@ -251,7 +252,7 @@ router.post('/:project_id/story', validate({ body: StorySchema }), function(req,
 
 		projects[project_i].stories[story_i] = newStory;
 		writeDocument('projects', projects[project_i]);
-		res.send(embedUsers(projects[project_i]));
+		res.send(newStory);
 	} else {
 		// 401: Unauthorized.
     	res.status(401).end();
@@ -281,9 +282,8 @@ router.put('/:project_id/story/:story_id/sprint_id/:sprint_id', function (req, r
 	if (projects[project_i].stories[story_i] !== null) {
 		projects[project_i].stories[story_i].sprint_id = sprintId;
 		writeDocument('projects', projects[project_i]);
-		res.send(embedUsers(projects[project_i]));
+		res.send(projects[project_i].stories[story_i]);
 	} else {
-		// TODO BETTER
 		res.status(400);
 		res.send({});
 	}
@@ -293,9 +293,9 @@ router.put('/:project_id/story/:story_id/sprint_id/:sprint_id', function (req, r
 //Sprint Routes
 router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
-		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time, parseInt(req.params.sprintid, 10));
+		var sprint = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time, parseInt(req.params.sprintid, 10));
 
-		 if(project === 'SPRINT_NOT_FOUND'){
+		 if(sprint === 'SPRINT_NOT_FOUND'){
 			res.status(400);
  			return res.send({error: StandardError({
  				status: 400,
@@ -304,7 +304,7 @@ router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), fun
  			})});
 		 }
 
-		res.send(embedUsers(project));
+		res.send(sprint);
 	} else{
 		// 401: Unauthorized.
 		res.status(401).end();
@@ -348,11 +348,11 @@ router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req
 	//going to have to eventually add user tokens...
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
 
-		var project = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
+		var sprint = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
 		res.status(201);
-		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + project.sprints[project.sprints.length-1]._id);
+		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + sprint._id);
 		// Send the update!
-		res.send(embedUsers(project));
+		res.send(sprint);
 	} else{
 		// 401: Unauthorized.
 		res.status(401).end();
@@ -362,8 +362,8 @@ router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req
 //Delete Sprint
 router.delete('/:projectid/sprint/:sprintid', function(req, res){
 	if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
-		var project = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
-		if(project === 'SPRINT_NOT_FOUND'){
+		var sprint = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
+		if(sprint === 'SPRINT_NOT_FOUND'){
 			res.status(400);
 			return res.send({error: StandardError({
 				status: 400,
@@ -371,7 +371,15 @@ router.delete('/:projectid/sprint/:sprintid', function(req, res){
 				detail: 'Sprint does not exist!'
 			})});
 		}
-		res.send(embedUsers(project));
+		else if(sprint === 'CURRENT_SPRINT_ERROR'){
+			res.status(400);
+			return res.send({error: StandardError({
+				status: 400,
+				title: 'INVALID_ACTION',
+				detail: 'You cannot delete an active sprint!'
+			})});
+		}
+		res.send(sprint);
 	} else{
 		// 401: Unauthorized.
 		res.status(401).end();
@@ -441,10 +449,10 @@ router.delete('/:project_id/story/:story_id/task/:task_id', function(req, res){
 				break;
 			}
 		}
-		project.stories[story_i].tasks.splice(task_i, 1);
+		var returnedTask =project.stories[story_i].tasks.splice(task_i, 1);
 		writeDocument('projects', project);
 		console.log('DB Updated', project);
-		res.send(project);
+		res.send(returnedTask);
 	} else{
 		//401: Unauthorized.
 		res.status(401).end();
@@ -494,36 +502,12 @@ router.post('/:project_id/story/:story_id/task', validate({ body: TaskSchema }),
 		project.stories[story_i].tasks[task_i] = newTask;
 		writeDocument('projects', project.stories[story_i].tasks[task_i]);
 		// Send the update!
-		res.send(embedUsers(project));
+		res.send(newTask);
 	} else{
 		// 401: Unauthorized.
 		res.status(401).end();
 	}
 });
-
-
-// router.delete('/:project_id/story/:story_id/task/:task_id/assigned_to', function(req,res){
-// 	let user = getUserIdFromToken(req.get('Authorization'));
-// 	if(checkAuthFromProject(user, req.params.project_id)){
-// 		if(Array.isArray(req.body.users)){
-// 			Task.assignUsers({
-// 				project_id: parseInt(req.params.project_id, 10),
-// 				story_id: parseInt(req.params.story_id, 10),
-// 				task_id: parseInt(req.params.task_id, 10),
-// 				users: req.body.users,
-// 				replace: req.body.replace
-// 			}, true).then(
-// 				(task) => res.send({data: task}),
-// 	       		(err) => res.sendStatus(404)
-// 	       	);
-// 		}
-// 		else res.sendStatus(400);
-
-// 	} else{
-// 		// 401: Unauthorized.
-//     	res.sendStatus(401);
-// 	}
-// });
 
 router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req,res){
 	let user = getUserIdFromToken(req.get('Authorization'));
@@ -547,27 +531,5 @@ router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req
 		res.sendStatus(401);
 	}
 });
-
-// router.delete('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req,res){
-// 	let user = getUserIdFromToken(req.get('Authorization'));
-// 	if(checkAuthFromProject(user, req.params.project_id)){
-// 		if(Array.isArray(req.body.blocking)){
-// 			Task.assignBlocking({
-// 				project_id: parseInt(req.params.project_id, 10),
-// 				story_id: parseInt(req.params.story_id, 10),
-// 				task_id: parseInt(req.params.task_id, 10),
-// 				blocking_tasks: req.body.blocking,
-// 				replace: req.body.replace
-// 			}, true).then(
-// 				(task) => res.send({data: task}),
-// 	       		(err) => res.sendStatus(404)
-// 	       	);
-// 		}
-// 		else res.sendStatus(400);
-// 	} else{
-// 		// 401: Unauthorized.
-//     	res.sendStatus(401);
-// 	}
-// });
 
 module.exports = router;

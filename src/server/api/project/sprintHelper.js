@@ -38,7 +38,7 @@ function sprintMaker(project, name, duration, time, sprint){
 	projects[project_i].sprints[sprint_i] = newSprint;
 	writeDocument('projects', projects[project_i]);
 	console.log('DB Updated', projects[project_i]);
-	return projects[project_i];
+	return newSprint;
 }
 module.exports.sprintMaker = sprintMaker;
 
@@ -49,6 +49,8 @@ function removeSprint(project, sprint){
 	for(let i = 0; i < projects.length; i++){
 		if (projects[i]._id === project) {
 			project_i = i;
+			if(projects[i].current_sprint === sprint)
+				return 'CURRENT_SPRINT_ERROR';
 			for(let j = 0; j < projects[i].sprints.length; j++){
 				if(projects[i].sprints[j]._id === sprint){
 					sprint_i = j;
@@ -66,9 +68,9 @@ function removeSprint(project, sprint){
 			projects[project_i].stories[i].sprint_id = null;
 	}
 	////////////////////////////////////////////////////
-	projects[project_i].sprints.splice(sprint_i, 1);
+	var removedSprint = projects[project_i].sprints.splice(sprint_i, 1);
 	writeDocument('projects', projects[project_i]);
 	console.log('DB Updated', projects[project_i]);
-	return projects[project_i];
+	return removedSprint;
 }
 module.exports.removeSprint = removeSprint;
