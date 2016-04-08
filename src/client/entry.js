@@ -10,7 +10,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import scrumApp from '../app/reducers';
 
-import { stateTree } from '../app/mock_server/server';
+import { stateTree } from '../app/server_calls/index';
 
 /*
 	This is the 'entry point' into the client side code.

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { search } from '../../../../../mock_server/server';
 
 
 import ProjectItem from './ProjectItem';

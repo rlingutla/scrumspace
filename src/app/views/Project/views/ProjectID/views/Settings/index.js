@@ -5,7 +5,7 @@ import { putProjectUpdates, removeProject } from '../../../../../../actions/';
 import Wrapper from 'app/shared/components/Wrapper';
 import Container from '../../containers';
 import { connect } from 'react-redux';
-import { sendXHRPromise } from '../../../../../../mock_server/server';
+import { sendXHRPromise } from '../../../../../../server_calls/index';
 import { Async as AsyncSelect } from 'react-select';
 
 class Settings extends React.Component {

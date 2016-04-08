@@ -1,4 +1,4 @@
-import { serverPutSettings } from '../../../mock_server/server';
+import { serverPutSettings } from '../../../server_calls/users/users';
 
 export const changeSettingsState = (newSettings) => {
 	return {

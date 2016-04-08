@@ -1,20 +1,8 @@
-//TODO: this thing is monolithic :O, need to organize
-import {
-	serverUpdateTask,
-	serverPostNewProject,
-	serverUpdateProject,
-	serverRemoveProject,
-	serverPostSprint,
-	serverPutStory,
-	serverRemoveStory,
-	serverRemoveSprint,
-	serverMoveStory,
-	serverMakeNewStory,
-	serverAssignUsersToTask,
-	serverAssignBlockingTasks,
-	serverStartSprint
-} from '../mock_server/server';
-import { browserHistory } from 'react-router'
+import {serverPostNewProject, serverUpdateProject, serverRemoveProject} from '../server_calls/project/project';
+import {serverPutStory, serverMoveStory, serverRemoveStory, serverMakeNewStory} from '../server_calls/project/story';
+import {serverAssignUsersToTask, serverAssignBlockingTasks, serverUpdateTask} from '../server_calls/project/task';
+import {serverPostSprint, serverRemoveSprint, serverStartSprint} from '../server_calls/project/sprint';
+import { browserHistory } from 'react-router';
 
 // Project
 function postNewProject(title, description,users,membersOnProj){
@@ -57,8 +45,8 @@ export function putProjectUpdates(project_id, title, members){
 				dispatch(updateProjectAction(project._id, project.title, project.users));
 			},
 			error => console.error('Cant update project', error)
-		)
-	}
+		);
+	};
 }
 
 //remove a project
@@ -77,8 +65,8 @@ export function removeProject(project_id){
 				browserHistory.push('/project/');
 			},
 			error => console.error('Cant remove project', error)
-		)
-	}
+		);
+	};
 }
 
 // TASK
@@ -98,8 +86,8 @@ export function updateTask(project_id, story_id, task_id, status, description){
 				dispatch(updateTaskAction(project_id, story_id, task));
 			},
 			error => console.error('got an error', error)
-		)
-	}
+		);
+	};
 }
 
 export function assignUsersToTask(project_id, story_id, task_id, users){
@@ -109,8 +97,8 @@ export function assignUsersToTask(project_id, story_id, task_id, users){
 				dispatch(updateTaskAction(project_id, story_id, task));
 			},
 			error => console.error('got an error', error)
-		)
-	}
+		);
+	};
 }
 
 export function assignBlockingTasks(project_id, story_id, task_id, blocking){
@@ -120,8 +108,8 @@ export function assignBlockingTasks(project_id, story_id, task_id, blocking){
 				dispatch(updateTaskAction(project_id, story_id, task));
 			},
 			error => console.error('got an error', error)
-		)
-	}
+		);
+	};
 }
 
 export const changeStoryState = (project_id, story) => {
@@ -129,8 +117,8 @@ export const changeStoryState = (project_id, story) => {
 		type: 'CHANGE_STORY_STATE',
 		project_id,
 		story
-	}
-}
+	};
+};
 
 export function putStory(project_id, story_id, title, description){
 	return function(dispatch){
@@ -140,7 +128,7 @@ export function putStory(project_id, story_id, title, description){
 			},
 			error => console.error('got an error', error)
 		);
-	}
+	};
 }
 
 function postNewProjectPlan(signal, data){
@@ -189,9 +177,9 @@ export function putStartSprint(project_id, sprint_id){
 		return serverStartSprint(project_id, sprint_id).then(
 			project => {
 				dispatch(startSprintAction(project));
-				browserHistory.push(`/project/${project_id}/scrumboard`)
+				browserHistory.push(`/project/${project_id}/scrumboard`);
 			},
 			error => console.error('rip', error)
 		);
-	}
+	};
 }
