@@ -1,5 +1,5 @@
 import {serverPostNewProject, serverUpdateProject, serverRemoveProject} from '../server_calls/project/project';
-import {serverPutStory, serverMoveStory, serverRemoveStory, serverMakeNewStory, serverUpdateStory} from '../server_calls/project/story';
+import {serverPutStory, serverRemoveStory, serverMakeNewStory, serverUpdateStory} from '../server_calls/project/story';
 import {serverAssignUsersToTask, serverAssignBlockingTasks, serverUpdateTask} from '../server_calls/project/task';
 import {serverPostSprint, serverRemoveSprint, serverStartSprint, serverUpdateSprint} from '../server_calls/project/sprint';
 import { browserHistory } from 'react-router';
@@ -113,15 +113,15 @@ function postNewProjectPlan(signal, data){
 		case 'NEW_STORY':
 			return serverMakeNewStory(data.project, data.title, data.description, data.tasks);
 		case 'REMOVE_SPRINT':
-			return serverRemoveSprint(data.project, data.sprint);
+			return serverRemoveSprint(data.project, data.sprint_id);
 		case 'NEW_SPRINT':
 			return serverPostSprint(data.project, data.name, data.duration, data.time);
 		case 'UPDATE_STORY':
-			return serverUpdateStory(data.project, data.title, data.description, data.tasks, data.story, data.sprint_id);
+			return serverUpdateStory(data.project, data.title, data.description, data.tasks, data.story_id, data.sprint_id);
 		case 'UPDATE_SPRINT':
-			return serverUpdateSprint(data.project, data.name, data.duration, data.time, data.sprint);
+			return serverUpdateSprint(data.project, data.name, data.duration, data.time, data.sprint_id);
 		default:
-			console.log('And so here lies Ryan, a sad programmer');
+			console.log('No Signal', signal);
 	}
 }
 
@@ -129,8 +129,8 @@ export const projectPlan = (signal, data, object) => {
 	return{
 		type: signal,
 		project_id: data.project,
-		sprint_id: data.sprint,
-		story_id: data.story,
+		sprint_id: data.sprint_id,
+		story_id: data.story_id,
 		sprint: object,
 		story: object
 	};

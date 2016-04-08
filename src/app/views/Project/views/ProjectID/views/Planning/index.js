@@ -53,14 +53,14 @@ class PlanView extends Component {
 			case 'sprint':
 				model ={
 					project: this.props._id,
-					sprint: item._id
+					sprint_id: item._id
 				};
 				this.props.saveThis('REMOVE_SPRINT', model);
 				break;
 			case 'story':
 				model ={
 					project: this.props._id,
-					story: item._id
+					story_id: item._id
 				};
 				this.props.saveThis('REMOVE_STORY', model);
 				break;
@@ -94,7 +94,8 @@ class PlanView extends Component {
 		}
 	}
 
-	save(signal, data, modal) {
+	save(signal, data, target) {
+
 		var model;
 		switch (signal) {
 			case 'story':
@@ -103,16 +104,15 @@ class PlanView extends Component {
 					title: data.title,
 					description: data.description,
 					tasks: data.tasks,
-					time: data.scrum_time,
-					sprint_id: data.sprint_id
+					sprint_id: (typeof target === 'undefined') ? data.sprint_id : target
 				};
 				if (typeof data._id !== 'undefined') {
-					model.story = data._id;
+					model.story_id = data._id;
 					this.props.saveThis('UPDATE_STORY', model);
 				}
 				else
 					this.props.saveThis('NEW_STORY', model);
-				if(modal)
+				if(typeof target === 'undefined')
 					this.changeStoryModal();
 				break;
 			case 'sprint':
@@ -123,12 +123,12 @@ class PlanView extends Component {
 					time: data.scrum_time
 				};
 				if (typeof data._id !== 'undefined') {
-					model.sprint = data._id;
+					model.sprint_id = data._id;
 					this.props.saveThis('UPDATE_SPRINT', model);
 				}
 				else
 					this.props.saveThis('NEW_SPRINT', model);
-				if(modal)
+				if(typeof target === 'undefined')
 					this.changeSprintModal();
 				break;
 			default:

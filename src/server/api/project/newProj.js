@@ -71,6 +71,6 @@ function projRemoval(project_id) {
 	var removed = projects.splice(project_i,1);
 	overwriteCollection('projects', projects);
 	console.log('DB Updated', readDocument('projects'));
-	return removed;
+	return removed[0];
 }
 module.exports.projRemoval = projRemoval;

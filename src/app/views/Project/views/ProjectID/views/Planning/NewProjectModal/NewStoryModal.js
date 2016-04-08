@@ -51,7 +51,7 @@ export default class NewStoryModal extends React.Component {
 						<button type="button" className="btn btn-default pull-left no-side-margin" onClick={(e) => this.props.handleTask('add')}>
 							<span className="glyphicon glyphicon-list"></span> Add New Task
 						</button>
-						<button type="button" className="btn btn-default" data-dismiss="modal" onClick={(e) => this.props.save('story', this.props.data, "modal")}>Done</button>
+						<button type="button" className="btn btn-default" data-dismiss="modal" onClick={(e) => this.props.save('story', this.props.data)}>Done</button>
 					</Modal.Footer>
 				</Modal>
 			</div>

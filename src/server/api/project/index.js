@@ -141,7 +141,7 @@ module.exports = function (io) {
 				if (description) {
 					storyToUpdate.description = description;
 				}
-				if(sprint_id){
+				if(typeof sprint_id !== 'undefined'){
 					storyToUpdate.sprint_id = sprint_id;
 				}
 				//write updated project object to server
@@ -183,7 +183,7 @@ module.exports = function (io) {
 			}
 			writeDocument('projects', projectToUpdate);	//write updated project to database
 
-			res.send(removedStory);
+			res.send(removedStory[0]);
 		} else{
 			// 401: Unauthorized.
 	    	res.status(401).end();

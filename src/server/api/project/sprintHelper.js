@@ -71,6 +71,6 @@ function removeSprint(project, sprint){
 	var removedSprint = projects[project_i].sprints.splice(sprint_i, 1);
 	writeDocument('projects', projects[project_i]);
 	console.log('DB Updated', projects[project_i]);
-	return removedSprint;
+	return removedSprint[0];
 }
 module.exports.removeSprint = removeSprint;
