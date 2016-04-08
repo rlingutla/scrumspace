@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
-import * as socketActions from '../actions/sockets';
+// import * as socketActions from '../actions/sockets';
+import socketAction from '../actions/sockets';
  
 export default function (store) {
   let socket = io();
@@ -8,7 +9,11 @@ export default function (store) {
   	console.log("SOCKET: Welcome to ScrumSpace\n", data);
   });
 
-  socket.on('TASK_UPDATED', data => {
-  	store.dispatch(socketActions.taskReceived(data.data));
+  socket.on('disconnect', error => {
+  	ErrorBanner(`Socket Disconnected:\n${error}`);
+  });
+
+  socket.on('STATE_UPDATE', data => {
+  	store.dispatch(socketAction(data.data));
   });
 }

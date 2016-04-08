@@ -42,11 +42,3 @@ stateTree(0).then((stateTree) => {
 		);
 	});
 });
-
-// // //socket stuff
-// window.socket = io();
-
-// socket.on('hello_world', function (data) {
-// 	console.log(data);
-// 	socket.emit('my other event', { my: 'data' });
-// });

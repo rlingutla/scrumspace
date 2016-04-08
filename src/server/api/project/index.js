@@ -142,6 +142,13 @@ module.exports = function (io) {
 				}
 				//write updated project object to server
 				writeDocument('projects', projectToUpdate);
+
+				io.emit('STATE_UPDATE', {data: {
+					type: 'CHANGE_STORY_STATE',
+					project_id: parseInt(req.params.project_id, 10),
+					story: storyToUpdate
+				}});
+
 				res.send(embedUsers(projectToUpdate));
 			} else {
 				res.status(404);
@@ -389,11 +396,13 @@ module.exports = function (io) {
 				description: req.body.description, status: req.body.status, user: user
 			}).then(
 				(task) => {
-					io.emit('TASK_UPDATED', {data: {
+					io.emit('STATE_UPDATE', {data: {
+						type: 'UPDATE_TASK',
 						task, 
 						project_id: parseInt(req.params.project_id, 10),
 						story_id: parseInt(req.params.story_id, 10)
 					}});
+
 					res.send({data: task})
 				},
 	       		(err) => res.sendStatus(404)
@@ -417,7 +426,15 @@ module.exports = function (io) {
 					users: req.body.users,
 					replace: req.body.replace
 				}).then(
-					(task) => res.send({data: task}),
+					(task) => {
+						io.emit('STATE_UPDATE', {data: {
+							type: 'UPDATE_TASK',
+							task, 
+							project_id: parseInt(req.params.project_id, 10),
+							story_id: parseInt(req.params.story_id, 10)
+						}});
+						res.send({data: task})
+					},
 					(err) => res.sendStatus(404)
 				);
 			}
@@ -544,7 +561,15 @@ module.exports = function (io) {
 					blocking_tasks: req.body.blocking,
 					replace: req.body.replace
 				}).then(
-					(task) => res.send({data: task}),
+					(task) => {
+						io.emit('STATE_UPDATE', {data: {
+							type: 'UPDATE_TASK',
+							task, 
+							project_id: parseInt(req.params.project_id, 10),
+							story_id: parseInt(req.params.story_id, 10)
+						}});
+						res.send({data: task})
+					},
 
 		       		(err) => res.sendStatus(404)
 		       	);
