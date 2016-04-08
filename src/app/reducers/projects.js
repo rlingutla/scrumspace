@@ -48,16 +48,9 @@ const projects = (state = [], action) => {
 		case 'REMOVE_SPRINT':
 			return state.map((project) => {
 				if(project._id === action.project_id){
-					return Object.assign({}, project, {
-						sprints: project.sprints.filter((sprint) => sprint._id !== action.sprint._id),
-						stories: project.stories.map((story) => {
-							if(story.sprint_id === action.sprint_id)
-								story.sprint_id = null;
-							return story;
-						})});
+					return Object.assign({}, action.project);
 				} else return project;
 			});
-
 		case 'NEW_SPRINT':
 			return state.map((project) => {
 				if(project._id === action.project_id){

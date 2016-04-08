@@ -109,7 +109,7 @@ export function putStory(project_id, story_id, title, description){
 function postNewProjectPlan(signal, data){
 	switch (signal) {
 		case 'REMOVE_STORY':
-			return serverRemoveStory(data.project, data.story);
+			return serverRemoveStory(data.project, data.story_id);
 		case 'NEW_STORY':
 			return serverMakeNewStory(data.project, data.title, data.description, data.tasks);
 		case 'REMOVE_SPRINT':
@@ -132,7 +132,8 @@ export const projectPlan = (signal, data, object) => {
 		sprint_id: data.sprint_id,
 		story_id: data.story_id,
 		sprint: object,
-		story: object
+		story: object,
+		project: object
 	};
 };
 

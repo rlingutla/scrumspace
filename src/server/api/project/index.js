@@ -170,19 +170,18 @@ module.exports = function (io) {
 
 			var projectToUpdate = projects
 			.find((project) => project._id === project_id);
-
 			// remove this story
 			var removedStory;
 			for (var i = 0; i < projectToUpdate.stories.length; i++) {
 				if (projectToUpdate.stories[i]._id === story_id) {
-					if(projectToUpdate.stories[i].sprint_id === null){
+					//if(projectToUpdate.stories[i].sprint_id === null){
 						removedStory = projectToUpdate.stories.splice(i, 1);
 						break;
-					}
+					//}
 				}
 			}
 			writeDocument('projects', projectToUpdate);	//write updated project to database
-
+			console.log(removedStory[0]);
 			res.send(removedStory[0]);
 		} else{
 			// 401: Unauthorized.
@@ -337,8 +336,8 @@ module.exports = function (io) {
 	//Delete Sprint
 	router.delete('/:projectid/sprint/:sprintid', function(req, res){
 		if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
-			var sprint = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
-			if(sprint === 'SPRINT_NOT_FOUND'){
+			var project = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
+			if(project === 'SPRINT_NOT_FOUND'){
 				res.status(400);
 				return res.send({error: StandardError({
 					status: 400,
@@ -346,7 +345,7 @@ module.exports = function (io) {
 					detail: 'Sprint does not exist!'
 				})});
 			}
-			else if(sprint === 'CURRENT_SPRINT_ERROR'){
+			else if(project === 'CURRENT_SPRINT_ERROR'){
 				res.status(400);
 				return res.send({error: StandardError({
 					status: 400,
@@ -354,7 +353,7 @@ module.exports = function (io) {
 					detail: 'You cannot delete an active sprint!'
 				})});
 			}
-			res.send(sprint);
+			res.send(embedUsers(project));
 		} else{
 			// 401: Unauthorized.
 			res.status(401).end();
