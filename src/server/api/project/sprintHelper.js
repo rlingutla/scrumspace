@@ -6,13 +6,14 @@ function sprintMaker(project, name, duration, time, sprint){
 	//sprint is not passed through if it is a new sprint hence the type is undefined
 	var projects = readDocument('projects');
 	//The following is to get the value of the project and sprint to be added or edited.
-	var project_i = null, sprint_i = null, start_date;
+	var project_i = null, sprint_i = null, start_date, sprint_id;
 	for(let i = 0; i < projects.length; i++){
 		if (projects[i]._id === project) {
 			project_i = i;
 			for(let j = 0; j < projects[i].sprints.length && typeof sprint !== 'undefined'; j++){
 				if(projects[i].sprints[j]._id === sprint){
 					sprint_i = j;
+					sprint_id = projects[i].sprints[j]._id;
 					start_date = projects[i].sprints[j].start_date;
 					break;
 				}
@@ -25,11 +26,13 @@ function sprintMaker(project, name, duration, time, sprint){
 	}
 	if(typeof sprint === 'undefined'){
 		sprint_i = projects[project_i].sprints.length;
+		//the below line will be a lot less ugly with UUIDs
+		sprint_id = (projects[project_i].sprints.length > 0)? projects[project_i].sprints[sprint_i -1]._id + 1 : 0;
 		start_date = null;
 	}
 	////////////////////////////////////////////////////
 	let newSprint ={
-		'_id': sprint_i,
+		'_id': sprint_id,
 		'name': name,
 		'start_date': start_date,
 		'duration': duration,

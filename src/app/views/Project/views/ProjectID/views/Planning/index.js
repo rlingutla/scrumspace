@@ -58,11 +58,15 @@ class PlanView extends Component {
 				this.props.saveThis('REMOVE_SPRINT', model);
 				break;
 			case 'story':
-				model ={
-					project: this.props._id,
-					story_id: item._id
-				};
-				this.props.saveThis('REMOVE_STORY', model);
+				if(item.sprint_id === null){
+					model ={
+						project: this.props._id,
+						story_id: item._id
+					};
+					this.props.saveThis('REMOVE_STORY', model);
+				}
+				else
+					this.save('story' , item, null);
 				break;
 			default:
 				console('Tom Brady is the best ever.');
