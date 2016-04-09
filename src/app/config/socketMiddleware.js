@@ -16,4 +16,8 @@ export default function (store) {
   socket.on('STATE_UPDATE', data => {
   	store.dispatch(socketAction(data.data));
   });
+
+  socket.on('DATABASE_RESET', () => {
+    location.reload();
+  });
 }

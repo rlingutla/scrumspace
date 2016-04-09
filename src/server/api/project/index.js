@@ -69,6 +69,10 @@ module.exports = function (io) {
 				var project = newProjCreation(req.body.title, req.body.description, req.body.users,req.body.membersOnProj);
 				res.status(201);
 				//res.set('Location', '/project' + projects[projects.length-1]._id);
+				io.emit('STATE_UPDATE', {data: {
+					type: 'NEW_PROJECT',
+					project
+				}});
 				res.send(project);
 	});
 
@@ -84,17 +88,25 @@ module.exports = function (io) {
 		}
 		var project = projUpdate(parseInt(req.params.projectid, 10), req.body.title, req.body.users);
 		 // Send the update!
-		res.send(embedUsers(project));
+		var embeddedProject = embedUsers(project);
+		io.emit('STATE_UPDATE', {data: {
+			type: 'UPDATE_PROJECT',
+			project: embeddedProject
+		}});
+		res.send(embeddedProject);
+
 	});
 
 
 	//remove a project
 	router.delete('/:project_id', function(req, res){
-
-			var project = projectRemoval(parseInt(req.params.project_id, 10));
-			//res.set('Location', '/project/');
-			res.send(project); //returns removed project
-
+		var project = projectRemoval(parseInt(req.params.project_id, 10));
+		//res.set('Location', '/project/');
+		io.emit('STATE_UPDATE', {data: {
+			type: 'REMOVE_PROJECT',
+			project
+		}});
+		res.send(project); //returns removed project
 	});
 
 	// update a story
@@ -151,6 +163,12 @@ module.exports = function (io) {
 				}
 				//write updated project object to server
 				writeDocument('projects', projectToUpdate);
+
+				io.emit('STATE_UPDATE', {data: {
+					type: 'UPDATE_STORY',
+					project_id: projectToUpdate._id,
+					story: storyToUpdate
+				}});
 				res.send(storyToUpdate);
 			} else {
 				res.status(404);
@@ -185,6 +203,12 @@ module.exports = function (io) {
 			}
 			var removedStory = projects[project_i].stories.splice(story_i, 1);
 			writeDocument('projects', projects[project_i]);
+
+			io.emit('STATE_UPDATE', {data: {
+				type: 'REMOVE_STORY',
+				project_id: parseInt(req.params.project_id, 10),
+				story: removedStory
+			}});
 			res.send(removedStory[0]);
 		} else{
 			// 401: Unauthorized.
@@ -247,6 +271,11 @@ module.exports = function (io) {
 
 			projects[project_i].stories[story_i] = newStory;
 			writeDocument('projects', projects[project_i]);
+			io.emit('STATE_UPDATE', {data: {
+				type: 'NEW_STORY',
+				project_id: parseInt(req.params.project_id, 10),
+				story: newStory
+			}});
 			res.send(newStory);
 		} else {
 			// 401: Unauthorized.
@@ -268,6 +297,12 @@ module.exports = function (io) {
 	 			})});
 			 }
 
+			io.emit('STATE_UPDATE', {data: {
+				type: 'UPDATE_SPRINT',
+				project_id: parseInt(req.params.projectid, 10),
+				sprint_id: parseInt(req.params.sprintid, 10),
+				sprint
+			}});
 			res.send(sprint);
 		} else{
 			// 401: Unauthorized.
@@ -301,7 +336,13 @@ module.exports = function (io) {
 			project.sprints[sprint._id].start_date = Date.now();
 
 			writeDocument('projects', project);
-			return res.send(embedUsers(project));
+			var embeddedProject = embedUsers(project);
+
+			io.emit('STATE_UPDATE', {data: {
+				type: 'UPDATE_PROJECT',
+				project: embeddedProject
+			}});
+			return res.send(embeddedProject);
 		} else{
 			// 401: Unauthorized.
 			res.status(401).end();
@@ -316,6 +357,11 @@ module.exports = function (io) {
 			res.status(201);
 			res.set('Location', '/project/' + req.params.projectid + '/sprint/' + sprint._id);
 			// Send the update!
+			io.emit('STATE_UPDATE', {data: {
+				type: 'NEW_SPRINT',
+				sprint,
+				project_id: parseInt(req.params.project_id, 10)
+			}});
 			res.send(sprint);
 		} else{
 			// 401: Unauthorized.
@@ -343,7 +389,14 @@ module.exports = function (io) {
 					detail: 'You cannot delete an active sprint!'
 				})});
 			}
-			res.send(embedUsers(project));
+
+			var embeddedProject = embedUsers(project);
+			io.emit('STATE_UPDATE', {data: {
+				type: 'REMOVE_SPRINT',
+				project: embeddedProject,
+				project_id: parseInt(req.params.project_id, 10)
+			}});
+			res.send(embeddedProject);
 		} else{
 			// 401: Unauthorized.
 			res.status(401).end();

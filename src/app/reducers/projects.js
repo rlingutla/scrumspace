@@ -34,9 +34,9 @@ const projects = (state = [], action) => {
 			return state.map((project) => {
 				if(project._id === action.project_id){
 					return Object.assign({}, project, { stories: project.stories.map((story) => {
-							return (story._id === action.story_id) ? action.story:story;
+							return (story._id === action.story._id) ? action.story:story;
 						})
-					});
+					});d
 				} else return project;
 			});
 		case 'REMOVE_STORY':

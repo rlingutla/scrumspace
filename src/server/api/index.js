@@ -21,6 +21,7 @@ module.exports = function (io) {
 	  // This is a debug route, so don't do any validation.
 	  database.resetDatabase();
 	  // res.send() sends an empty response with status code 200
+	  io.emit('DATABASE_RESET', {});
 	  res.send();
 	});
 
