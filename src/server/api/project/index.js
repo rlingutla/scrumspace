@@ -118,8 +118,6 @@ module.exports = function (io) {
 			var title = req.body.title;
 			var description = req.body.description;
 			var tasks = req.body.tasks;
-			var sprint_id = parseInt(req.body.sprint_id, 10);
-
 			// database call (this is simulated)
 			let projects = readDocument('projects');
 
@@ -158,12 +156,11 @@ module.exports = function (io) {
 				if (description) {
 					storyToUpdate.description = description;
 				}
-				if(typeof sprint_id !== 'undefined'){
-					storyToUpdate.sprint_id = sprint_id;
+				if(typeof req.body.sprint_id !== 'undefined'){
+					storyToUpdate.sprint_id = parseInt(req.body.sprint_id, 10);
 				}
 				//write updated project object to server
 				writeDocument('projects', projectToUpdate);
-
 				io.emit('STATE_UPDATE', {data: {
 					type: 'UPDATE_STORY',
 					project_id: projectToUpdate._id,
