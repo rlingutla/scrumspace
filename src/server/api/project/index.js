@@ -1,4 +1,5 @@
 'use-strict';
+//These imports are insane... we need to break this up
 // Schemas
 var validate = require('express-jsonschema').validate;
 
@@ -32,6 +33,10 @@ var checkAuthFromProject = authentication.checkAuthFromProject;
 //Utils
 var embedUsers = require('../shared/embedUsers');
 var StandardError = require('../shared/StandardError');
+var util = require('./util');
+var getProjectIndex = util.getProjectIndex;
+var getSprintIndex = util.getSprintIndex;
+var getStoryIndex = util.getStoryIndex;
 //Router
 var express = require('express'),
 router = express.Router();
@@ -161,27 +166,25 @@ module.exports = function (io) {
 	router.delete('/:project_id/story/:story_id', function(req, res) {
 		// get variables
 		if (checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.project_id)) {
-
-			var project_id = parseInt(req.params.project_id, 10);
-			var story_id = parseInt(req.params.story_id, 10);
-
-			// database call (this is simulated)
-			let projects = readDocument('projects');
-
-			var projectToUpdate = projects
-			.find((project) => project._id === project_id);
-			// remove this story
-			var removedStory;
-			for (var i = 0; i < projectToUpdate.stories.length; i++) {
-				if (projectToUpdate.stories[i]._id === story_id) {
-					//if(projectToUpdate.stories[i].sprint_id === null){
-						removedStory = projectToUpdate.stories.splice(i, 1);
-						break;
-					//}
-				}
+			var projects = readDocument('projects');
+			var project_i = getProjectIndex(parseInt(req.params.project_id, 10));
+			if(project_i === 'PROJECT_NOT_FOUND'){
+				res.status(400);
+				return res.send({error: StandardError({
+					status: 400,
+					title: 'Project does not exist!'
+				})});
 			}
-			writeDocument('projects', projectToUpdate);	//write updated project to database
-			console.log(removedStory[0]);
+			var story_i = getStoryIndex(project_i, parseInt(req.params.story_id, 10));
+			if(story_i === 'STORY_NOT_FOUND'){
+				res.status(400);
+				return res.send({error: StandardError({
+					status: 400,
+					title: 'Story does not Exist!'
+				})});
+			}
+			var removedStory = projects[project_i].stories.splice(story_i, 1);
+			writeDocument('projects', projects[project_i]);
 			res.send(removedStory[0]);
 		} else{
 			// 401: Unauthorized.
@@ -190,7 +193,6 @@ module.exports = function (io) {
 	});
 
 	// Post a new story
-
 	router.post('/:project_id/story', validate({ body: StorySchema }), function(req, res) {
 		if (checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.project_id)) {
 			var project_id = parseInt(req.params.project_id, 10);
@@ -200,27 +202,17 @@ module.exports = function (io) {
 			var storyId = (req.body.storyId === 'null') ? null : req.body.storyId; // todo: noooo!
 
 			var projects = readDocument('projects');
-
-			var project_i, story_i, sprint_id;
-			for (let i = 0; i < projects.length; i++){
-				if (projects[i]._id === project_id) {
-					project_i = i;
-					for (let j = 0; j < projects[i].stories.length && typeof story !== 'undefined'; j++){
-						if (projects[i].stories[j]._id === storyId){
-							story_i = j;
-							sprint_id = projects[i].stories[j].sprint_id;
-							break;
-						}
-					}
-					break;
-				}
+			var project_i = getProjectIndex(parseInt(req.params.project_id, 10));
+			if(project_i === 'PROJECT_NOT_FOUND'){
+				res.status(400);
+				return res.send({error: StandardError({
+					status: 400,
+					title: 'Project does not exist!'
+				})});
 			}
-
-			if (typeof story === 'undefined'){
-				story_i = projects[project_i].stories.length;
-				sprint_id = null;
-			}
-
+			var story_i = projects[project_i].stories.length;
+			var story_id = (story_i > 0) ? projects[project_i].stories[story_i -1]._id + 1 : 0;
+			var sprint_id = null;
 			//remove any empty tasks
 			tasks = tasks.filter((e) => {
 				if (e.description === '')
@@ -228,8 +220,6 @@ module.exports = function (io) {
 				else
 					return true;
 			});
-
-
 			var newTasks = [];
 			for (let i = 0; i < tasks.length; i++) {
 				newTasks[i] = {
@@ -248,7 +238,7 @@ module.exports = function (io) {
 				};
 			}
 			let newStory = {
-				'_id': parseInt(story_i, 10),
+				'_id': story_id,
 				'title': title,
 				'description': description,
 				'sprint_id': sprint_id,

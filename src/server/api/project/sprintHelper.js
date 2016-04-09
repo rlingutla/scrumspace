@@ -1,30 +1,25 @@
 var database = require('../../database');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
+var util = require('./util');
+var getProjectIndex = util.getProjectIndex;
+var getSprintIndex = util.getSprintIndex;
 
 function sprintMaker(project, name, duration, time, sprint){
 	//sprint is not passed through if it is a new sprint hence the type is undefined
 	var projects = readDocument('projects');
 	//The following is to get the value of the project and sprint to be added or edited.
-	var project_i = null, sprint_i = null, start_date, sprint_id;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			for(let j = 0; j < projects[i].sprints.length && typeof sprint !== 'undefined'; j++){
-				if(projects[i].sprints[j]._id === sprint){
-					sprint_i = j;
-					sprint_id = projects[i].sprints[j]._id;
-					start_date = projects[i].sprints[j].start_date;
-					break;
-				}
-			}
-			break;
-		}
+	var project_i = getProjectIndex(project);
+	var sprint_id, start_date;
+	var sprint_i = (typeof sprint !== 'undefined') ? getSprintIndex(project_i, sprint): null;
+	if(sprint_i !== 'SPRINT_NOT_FOUND' && sprint_i !== null){ //sprint_i is a number
+		sprint_id = projects[project_i].sprints[sprint_i]._id;
+		start_date = projects[project_i].sprints[sprint_i].start_date;
 	}
-	if((sprint_i === null && typeof sprint !== 'undefined')|| project_i === null){
+	else if(sprint_i === 'SPRINT_NOT_FOUND'){
 		return 'SPRINT_NOT_FOUND';
 	}
-	if(typeof sprint === 'undefined'){
+	else{ //sprint is undefined
 		sprint_i = projects[project_i].sprints.length;
 		//the below line will be a lot less ugly with UUIDs
 		sprint_id = (projects[project_i].sprints.length > 0)? projects[project_i].sprints[sprint_i -1]._id + 1 : 0;
@@ -48,22 +43,12 @@ module.exports.sprintMaker = sprintMaker;
 function removeSprint(project, sprint){
 	var projects = readDocument('projects');
 	//The following is to get the value of the project and sprint to be added or edited.
-	var project_i = null, sprint_i = null;
-	for(let i = 0; i < projects.length; i++){
-		if (projects[i]._id === project) {
-			project_i = i;
-			if(projects[i].current_sprint === sprint)
-				return 'CURRENT_SPRINT_ERROR';
-			for(let j = 0; j < projects[i].sprints.length; j++){
-				if(projects[i].sprints[j]._id === sprint){
-					sprint_i = j;
-					break;
-				}
-			}
-			break;
-		}
-	}
-	if(sprint_i === null || project_i === null)
+	var project_i = getProjectIndex(project);
+	//possible errors
+	if(projects[project_i].current_sprint === sprint)
+		return 'CURRENT_SPRINT_ERROR';
+	var sprint_i = getSprintIndex(project_i, sprint);
+	if(sprint_i === 'SPRINT_NOT_FOUND')
 		return 'SPRINT_NOT_FOUND';
 	//set stories of to null to move them to the backlog
 	for(let i in projects[project_i].stories){

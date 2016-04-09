@@ -1,16 +1,12 @@
 var database = require('../../database');
-var _ = require('underscore');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
-var deleteDocument = database.deleteDocument;
 var overwriteCollection = database.overwriteCollection;
-
-
+var util = require('./util');
+var getProjectIndex = util.getProjectIndex;
 
 function newProjCreation(title, description, users,membersOnProj) {
 	var projects = readDocument('projects');
-
-
 	var prevId = projects[projects.length-1]._id;
 	let project = {
 		'_id': prevId + 1,
@@ -36,21 +32,11 @@ module.exports.newProjCreation = newProjCreation;
 
 function projUpdate(project_id, title, users) {
 	var projects = readDocument('projects');
-	var project_i;
-	console.log(project_id, title, users);
-	for (let i = 0; i < projects.length; i++) {
-		if (projects[i]._id === project_id) {
-			project_i = i;
-			break;
-		}
-	}
+	var project_i = getProjectIndex(project_id);
+	if(project_i === 'PROJECT_NOT_FOUND')
+		return 'PROJECT_NOT_FOUND';
 	projects[project_i].title = title;
 	projects[project_i].users = users || projects[project_i].users;
-
-/*  var tasks = projects[project_i].tasks;
-  var intersection = _.intersection(tasks,projects[project_i].users );
-	console.log(intersection);*/
-
 
 	writeDocument('projects', projects[project_i]);
 	console.log('DB Updated', projects[project_i]);
@@ -60,14 +46,9 @@ module.exports.projUpdate = projUpdate;
 
 function projRemoval(project_id) {
 	var projects = readDocument('projects');
-	var project_i;
-	for (let i = 0; i < projects.length; i++) {
-		if (projects[i]._id === project_id) {
-			project_i = i;
-			break;
-		}
-	}
-
+	var project_i = getProjectIndex(project_id);
+	if(project_i === 'PROJECT_NOT_FOUND')
+		return 'PROJECT_NOT_FOUND';
 	var removed = projects.splice(project_i,1);
 	overwriteCollection('projects', projects);
 	console.log('DB Updated', readDocument('projects'));
