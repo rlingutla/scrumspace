@@ -166,7 +166,6 @@ module.exports = function (io) {
 					project_id: projectToUpdate._id,
 					story: storyToUpdate
 				}});
-				console.log('sending back', storyToUpdate);
 				res.send(storyToUpdate);
 			} else {
 				res.status(404);

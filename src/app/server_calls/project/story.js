@@ -17,7 +17,6 @@ export function serverRemoveStory(project_id, story_id){
 }
 
 export function serverUpdateStory(project_id, title, description, tasks, story_id , sprint_id){
-	console.log(sprint_id);
 	return sendXHRPromise('PUT', '/api/project/' + project_id  + '/story/' + story_id, {
 		title,
 		description,
