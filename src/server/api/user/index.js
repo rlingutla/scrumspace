@@ -1,5 +1,5 @@
 'use-strict';
-var UserSchema = require('../../schemas/user');
+import UserSchema from '../../schemas/user';
 var validate = require('express-jsonschema').validate;
 
 var database = require('../../database');
@@ -12,80 +12,73 @@ var getUserIdFromToken = authentication.getUserIdFromToken;
 var checkAuthFromProject = authentication.checkAuthFromProject;
 
 var express = require('express'),
-    router = express.Router();
+	router = express.Router();
 
 var StandardError = require('../shared/StandardError');
 var search = require('../shared/search');
 
 module.exports = function (io) {
 
-    router.get('/', function(req, res) {
-        res.send('user API handler');
-    });
+	router.get('/search', function(req, res) {
+		var searchResults = search(req.query.searchStr || '', 'users', req.query.key || null);
+		if (searchResults.data) {
+			searchResults.data = searchResults.data.map((user) => {
+				return {
+					'_id': user._id,
+					'first_name': user.first_name,
+					'last_name': user.last_name,
+					'email': user.email,
+					'display_name': user.display_name,
+					'avatar_url': user.avatar_url
+				};
+			});
+		}
+		return res.send(searchResults);
+	});
 
-    router.get('/search', function(req, res) {
-        var searchResults = search(req.query.searchStr || '', 'users', req.query.key || null);
-        if (searchResults.data) {
-            searchResults.data = searchResults.data.map((user) => {
-                return {
-                    '_id': user._id,
-                    'first_name': user.first_name,
-                    'last_name': user.last_name,
-                    'email': user.email,
-                    'display_name': user.display_name,
-                    'avatar_url': user.avatar_url
-                };
-            });
-        }
-        return res.send(searchResults);
-    });
+	router.get('/:id', function(req, res) {
+		let user = readDocument('users', req.params.id);
 
-    router.get('/:id', function(req, res) {
-        let user = readDocument("users", req.params.id);
+		res.send({
+			_id: user._id,
+			first_name: user.first_name,
+			last_name: user.last_name,
+			email: user.email,
+			display_name: user.display_name,
+			avatar_url: user.avatar_url
+		});
+	});
 
-        res.send({
-            _id: user._id,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-            display_name: user.display_name,
-            avatar_url: user.avatar_url
-        });
-    });
+	// needs client side
+	// Supriya's code
 
-    //needs client side
-    // user id authorization needed,
-    //Supriya's code
-    router.put('/:user_id', validate({
-        body: UserSchema
-    }), function(req, res) {
-        // // first get all the inputs based on the user id given
-        // // gets users id from user
-        var userId = parseInt(req.params.user_id, 10);
-        // // gets users, and reads it
-        var users = readDocument('users');
+	// TODO ONLY GRAB THE USER FROM THE TOKEN!!
+	router.put('/', validate({ body: UserSchema }), function(req, res) {
+		// first get all the inputs based on the user id given
+		// gets users id from user
+		var userId = parseInt(req.params.user_id, 10);
+		// // gets users, and reads it
+		var users = readDocument('users');
 
-        //check passwords
-        if (typeof req.body.old_password !== 'undefined') {
-            if (req.body.old_password === users[userId].password) {
-                users[userId].password = req.body.new_password;
-            }
-            //  Unauthorized
-            else res.status(401).end();
-        }
+		//check passwords
+		if (typeof req.body.old_password !== 'undefined') {
+			if (req.body.old_password === users[userId].password) {
+				users[userId].password = req.body.new_password;
+			}
+			//  Unauthorized
+			else res.status(401).end();
+		}
 
-        if (typeof req.body.first_name !== 'undefined') users[userId].first_name = req.body.first_name;
-        if (typeof req.body.avatar_url !== 'undefined') users[userId].avatar_url = req.body.avatar_url;
-        if (typeof req.body.first_name !== 'undefined') users[userId].first_name = req.body.first_name;
-        if (typeof req.body.last_name !== 'undefined') users[userId].last_name = req.body.last_name;
-        if (typeof req.body.display_name !== 'undefined') users[userId].display_name = req.body.display_name;
-        if (typeof req.body.email !== 'undefined') users[userId].email = req.body.email;
+		if (typeof req.body.first_name !== 'undefined') users[userId].first_name = req.body.first_name;
+		if (typeof req.body.avatar_url !== 'undefined') users[userId].avatar_url = req.body.avatar_url;
+		if (typeof req.body.first_name !== 'undefined') users[userId].first_name = req.body.first_name;
+		if (typeof req.body.last_name !== 'undefined') users[userId].last_name = req.body.last_name;
+		if (typeof req.body.display_name !== 'undefined') users[userId].display_name = req.body.display_name;
+		if (typeof req.body.email !== 'undefined') users[userId].email = req.body.email;
 
-    		//console.log(users[userId]);
-        //writeDocument('users', users[userId]);
-        res.send(users[userId]);
+		//writeDocument('users', users[userId]);
+		res.send(users[userId]);
+	});
 
-    });
-
-    return router;
-}
+	return router;
+};

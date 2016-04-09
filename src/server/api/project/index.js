@@ -5,7 +5,7 @@ var validate = require('express-jsonschema').validate;
 
 import SprintSchema from '../../schemas/sprint';
 import TaskSchema from '../../schemas/task';
-import NewProjSchema from '../../schemas/project';
+import ProjectSchema from '../../schemas/project';
 import StorySchema from '../../schemas/story';
 
 // Models
@@ -51,9 +51,9 @@ module.exports = function (io) {
 		res.send({'_id': req.params.id});
 	});
 
-	//New Project Routes
-	//add new project
-	router.post('/', validate({ body: NewProjSchema }), function(req,res){
+	// Project routes
+	// add new project
+	router.post('/', validate({ body: ProjectSchema }), function(req,res){
 	  	var fromUser = getUserIdFromToken(req.get('Authorization'));
 			//console.log('From user: '+fromUser);
 			if(typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
@@ -77,7 +77,7 @@ module.exports = function (io) {
 	});
 
 	//update project
-	router.put('/:projectid', validate({ body: NewProjSchema }), function(req, res){
+	router.put('/:project_id', validate({ body: ProjectSchema }), function(req, res){
 		//console.log(req.body.title.length);
 		if((req.body.title.length === 0 ) &&  (req.body.users.length === 0)){
 			res.status(400);
@@ -86,7 +86,7 @@ module.exports = function (io) {
 				title: 'BAD_INFO'
 			})});
 		}
-		var project = projUpdate(parseInt(req.params.projectid, 10), req.body.title, req.body.users);
+		var project = projUpdate(parseInt(req.params.project_id, 10), req.body.title, req.body.users);
 		 // Send the update!
 		var embeddedProject = embedUsers(project);
 		io.emit('STATE_UPDATE', {data: {
@@ -176,7 +176,7 @@ module.exports = function (io) {
 			}
 		} else {
 			// 401: Unauthorized.
-	    	res.status(401).end();
+			res.status(401).end();
 		}
 	});
 
@@ -313,7 +313,7 @@ module.exports = function (io) {
 	router.put('/:projectid/sprint/:sprintid/start', function(req,res){
 		if(checkAuthFromProject(getUserIdFromToken(req.get('Authorization')), req.params.projectid)){
 			let project = readDocument('projects').find((project) => project._id === parseInt(req.params.projectid, 10));
-			let sprint = (project) ? project.sprints.find((sprint) => sprint._id === parseInt(req.params.sprintid, 10)):undefined;
+			let sprint = (project) ? project.sprints.find((sprint) => sprint._id === parseInt(req.params.sprintid, 10)): undefined;
 
 			if(typeof project === 'undefined' || typeof sprint === 'undefined'){
 				res.status(400);
@@ -418,7 +418,7 @@ module.exports = function (io) {
 						project_id: parseInt(req.params.project_id, 10),
 						story_id: parseInt(req.params.story_id, 10)
 					}});
-					res.send({data: task})
+					res.send({data: task});
 				},
 	       		(err) => res.sendStatus(404)
 	       	);
@@ -448,7 +448,7 @@ module.exports = function (io) {
 							project_id: parseInt(req.params.project_id, 10),
 							story_id: parseInt(req.params.story_id, 10)
 						}});
-						res.send({data: task})
+						res.send({data: task});
 					},
 					(err) => res.sendStatus(404)
 				);
@@ -559,7 +559,7 @@ module.exports = function (io) {
 							project_id: parseInt(req.params.project_id, 10),
 							story_id: parseInt(req.params.story_id, 10)
 						}});
-						res.send({data: task})
+						res.send({data: task});
 					},
 		       		(err) => res.sendStatus(404)
 		       	);
@@ -572,4 +572,4 @@ module.exports = function (io) {
 	});
 
 	return router;
-}
+};
