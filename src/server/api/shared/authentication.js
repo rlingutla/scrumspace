@@ -44,8 +44,9 @@ function isUserMemberOfProject(user_id, project_id){
 }
 
 function isUserValid(user_id) {
+	if (user_id < 0) return false;	
 	// check if user is in our database
-	var foundUser = readDocument('users', user_id);
+	var foundUser = readDocument('users', user_id); // todo, this will be a database call.(removing line above too)
 	return foundUser._id === user_id;
 }
 
@@ -56,7 +57,7 @@ export default (req, res, next) => {
 	if (requestUrl.indexOf('/init') === 0 || requestUrl.indexOf('/user') === 0 || requestUrl === '/project/' ) {
 		if (!isUserValid(user_id)) {
 			console.log(`Unauthorized user (${user_id}) request denied`);
-			res.status(401).end();
+			return res.status(401).end();
 		}
 		console.log(`Authorized user (${user_id}) request granted`);
 		return next();
