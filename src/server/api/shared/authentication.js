@@ -75,6 +75,6 @@ export default (req, res, next) => {
 	if (requestUrl.indexOf('/resetdb') === 0) {
 		next();
 	} 
-
-	res.status(404).end();
+	console.log(requestUrl);
+	//res.status(404).end();
 };

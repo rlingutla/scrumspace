@@ -23,7 +23,7 @@ export function serverUpdateTask(project_id, story_id, task_id, status, descript
 	if(status) updates.status = status;
 	if(description) updates.description = description;
 
-	return sendXHRPromise('PUT', `/api/project/${project_id}{/story/${story_id}/task/${task_id}`,
+	return sendXHRPromise('PUT', `/api/project/${project_id}/story/${story_id}/task/${task_id}`,
 		updates
 	).then((response) => {
 		return response.data;
