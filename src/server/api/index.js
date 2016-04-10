@@ -4,7 +4,7 @@ var database = require('../database');
 var express = require('express'),
 	router = express.Router();
 
-import checkAuthentication from './shared/authentication';
+import authenticate from './shared/authentication';
 
 module.exports = function (io) {
 	router.get('/', function (req, res) {
@@ -12,7 +12,7 @@ module.exports = function (io) {
 	});
 
 	// authenticate all routes
-	router.use(checkAuthentication);
+	router.use(authenticate);
 
 	// data routes
 	router.use('/project/', require('./project')(io));

@@ -59,22 +59,24 @@ export default (req, res, next) => {
 			res.status(401).end();
 		}
 		console.log(`Authorized user (${user_id}) request granted`);
-		next();
+		return next();
 	} 
 
+	//  looks like: /project/project_id/....
 	if (requestUrl.indexOf('/project/') === 0) {
-		var project_id = parseInt(requestUrl.split('/')[2], 10); //  looks like: /project/project_id/....
+		var project_id = parseInt(requestUrl.split('/')[2], 10);
 		if (!isUserMemberOfProject(user_id, project_id)) {
 			console.log(`Unauthorized user (${user_id}) tried to access project ${project_id}`);
 			res.status(401).end();
 		} 
 		console.log(`Authorized user (${user_id}) accessed project ${project_id}`);
-		next();	
+		return next();	
 	}
 
 	if (requestUrl.indexOf('/resetdb') === 0) {
-		next();
+		return next();
 	} 
-	console.log(requestUrl);
-	//res.status(404).end();
+
+	console.log(`Route ${requestUrl} currently is not set for authentication`);
+	res.status(404).end();
 };
