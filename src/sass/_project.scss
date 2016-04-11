@@ -396,22 +396,22 @@
 	.panel {
 		@include sprintPlanning();
 
-		&.planning {
+		&.PLANNING {
 			& > .panel-heading {
 				@include sprintPlanning();
 			}
 		}
-		&.active {
+		&.SPRINT {
 			& > .panel-heading {
 				@include sprintSprinting();
 			}
 		}
-		&.review {
+		&.REVIEW {
 			& > .panel-heading {
 				@include sprintReview();
 			}
 		}
-		&.planning, &.sprinting, &.review {
+		&.PLANNING, &.SPRINT, &.REVIEW {
 			& > .panel-heading {
 				border-top: none;
 				border-left: none;
