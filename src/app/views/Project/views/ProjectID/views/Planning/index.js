@@ -208,7 +208,7 @@ class PlanView extends Component {
 							<SprintRow key={i} data={e} updateState={this.updateState.bind(this)} save={this.save.bind(this)}
 								handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
 								stories={this.props.stories.filter((value) => value.sprint_id === e._id)} current_sprint={this.props.current_sprint}
-								startSprint={this.props.startSprint} project_id={this.props._id}
+								startSprint={this.props.startSprint} project_id={this.props._id} project={this.props}
 							/>
 						);
 					})

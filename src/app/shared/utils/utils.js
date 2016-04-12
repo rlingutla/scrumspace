@@ -38,9 +38,13 @@ export function verboseServerTime(serverTime) {
 export function daysDifference(startDate, endDate){
 	var start = moment(startDate), end = moment(endDate);
 	var days = moment.duration(end.diff(start)).asDays();
+
+	var isAfter = start.isAfter(end);
+	debugger;
+
 	return {
 		days: Math.round(days),
-		past: start > end //does this make sense...?
+		past: start.isAfter(end)
 	};
 }
 

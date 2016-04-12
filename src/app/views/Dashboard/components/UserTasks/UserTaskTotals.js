@@ -12,7 +12,7 @@ const taskType = (status) => {
 export default (props) => {
 	return (
 		<div>
-			{props.types.map((type, i) => <UserTaskTotalsItem key={i} status={type} total={props.tasks.filter(taskType(type)).length} />)}
+			{props.types.map((type, i) => <UserTaskTotalsItem borderRadiusKey={i} key={i} status={type} total={props.tasks.filter(taskType(type)).length} />)}
 		</div>
 	);
 };
