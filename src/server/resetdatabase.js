@@ -11,7 +11,7 @@ var initialData = {
 	loading: false,
 	users: {
 		0: {
-			'_id': 0,
+      "_id": new ObjectID("000000000000000000000000"),
 			'first_name': 'John',
 			'last_name': 'Vilk',
 			'email': 'jvilk@umass.edu',
@@ -20,7 +20,7 @@ var initialData = {
 			'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
 		},
 		1: {
-			'_id': 1,
+			'_id': new ObjectID("000000000000000000000001"),
 			'first_name': 'Abhay',
 			'last_name': 'Vatsa',
 			'email': 'someemail',
@@ -29,7 +29,7 @@ var initialData = {
 			'avatar_url': 'http://www.abhayvatsa.com/img/abhay.png'
 		},
 		2: {
-			'_id': 2,
+			'_id': new ObjectID("000000000000000000000002"),
 			'first_name': 'Dylan',
 			'last_name': 'Fischler',
 			'email': 'someemail',
@@ -38,7 +38,7 @@ var initialData = {
 			'avatar_url': 'http://www.dylanfischler.com/includes/me_bw.jpg'
 		},
 		3: {
-			'_id': 3,
+			'_id': new ObjectID("000000000000000000000003"),
 			'first_name': 'Niha',
 			'last_name': 'Venkatathri',
 			'email': 'someemail',
@@ -47,7 +47,7 @@ var initialData = {
 			'avatar_url': 'http://umasscswomen.weebly.com/uploads/3/8/0/8/38087803/3410479.jpg?153'
 		},
 		4: {
-			'_id': 4,
+			'_id': new ObjectID("000000000000000000000004"),
 			'first_name': 'Ryan',
 			'last_name': 'Jerue',
 			'email': 'someemail',
@@ -56,7 +56,7 @@ var initialData = {
 			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa7AAAAJGQ2NjlmY2MzLTgzYjctNGRhYy05ZmY2LTkxOGE3Mzg2NWU2MA.jpg'
 		},
 		5: {
-			'_id': 5,
+			'_id': new ObjectID("000000000000000000000005"),
 			'first_name': 'Supriya',
 			'last_name': 'Kankure',
 			'email': 'someemail',
@@ -65,7 +65,7 @@ var initialData = {
 			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa1AAAAJDRjMTU3ZTA2LTFkMTEtNDM1MS04YjQ0LWI0YzRlOTExODQ3NA.jpg'
 		},
 		6: {
-			'_id': 6,
+			'_id': new ObjectID("000000000000000000000006"),
 			'first_name': 'Rachana',
 			'last_name': 'Lingutla',
 			'email': 'someemail',
@@ -76,7 +76,7 @@ var initialData = {
 	},
 	projects: [
 	{
-		'_id': 0,
+		'_id': new ObjectID("000000000000000000000000"),
 		'title': 'Drumpf',
 		'description': 'Make America Great Again',
 		'users': [0, 1],
@@ -85,14 +85,14 @@ var initialData = {
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
 		'sprints': [
 			{
-				'_id': 0,
+				'_id': new ObjectID("000000000000000000000000"),
 				'name': 'V1 Release',
 				'start_date':null,
 				'duration': 14,
 				'scrum_time': '09:00'
 			},
 			{
-				'_id': 1,
+				'_id': new ObjectID("000000000000000000000001"),
 				'name': 'V2 Release',
 				'duration': 7,
 				'start_date': null,
@@ -101,13 +101,13 @@ var initialData = {
 		],
 		'stories': [
 			{
-				'_id': 0,
+				'_id': new ObjectID("000000000000000000000000"),
 				'title': 'Buy Hats',
 				'description': 'Design Hats \nOrder Hats\nSell Hats',
 				'sprint_id': 0,
 				'tasks': [
 					{
-						'_id': 0,
+						'_id': new ObjectID("000000000000000000000000"),
 						'status': 'UNASSIGNED',
 						'blocked_by': [],
 						'assigned_to': [0,1],
@@ -121,7 +121,7 @@ var initialData = {
 						'attachments': null
 					},
 					{
-						'_id': 1,
+						'_id': new ObjectID("000000000000000000000001"),
 						'status': 'UNASSIGNED',
 						'blocked_by': [],
 						'assigned_to': [],
@@ -135,7 +135,7 @@ var initialData = {
 						'attachments': null
 					},
 					{
-						'_id': 2,
+						'_id': new ObjectID("000000000000000000000002"),
 						'status': 'UNASSIGNED',
 						'blocked_by': [],
 						'assigned_to': [0],
@@ -154,7 +154,7 @@ var initialData = {
 						'attachments': null
 					},
 					{
-						'_id': 3,
+						'_id': new ObjectID("000000000000000000000003"),
 						'status': 'UNASSIGNED',
 						'blocked_by': [],
 						'assigned_to': [],
@@ -180,13 +180,13 @@ var initialData = {
 				]
 			},
 			{
-				'_id': 1,
+				'_id': new ObjectID("000000000000000000000001"),
 				'title': 'Win',
 				'description': 'Win Win Win\nNo matter what',
 				'sprint_id': 0,
 				'tasks': [
 					{
-						'_id': 0,
+						'_id': new ObjectID("000000000000000000000000"),
 						'status': 'UNASSIGNED',
 						'blocked_by': [],
 						'assigned_to': [0],
@@ -210,7 +210,7 @@ var initialData = {
 
 	},
 	{
-		'_id': 1,
+		'_id': new ObjectID("000000000000000000000001"),
 		'title': 'Feel the Bern',
 		'description': 'Fight the Power',
 		'users': [0],
