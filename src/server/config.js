@@ -19,15 +19,14 @@ module.exports = function (app, io) {
 
 	app.use(bodyParser.text());
 	app.use(bodyParser.json());
+	app.set('theSecretOfScrum', 'howMuchWoodCouldAWoodchuckChuckIfAWoodchuckCouldChuckWood'); //probably ENV this or something
 
 	// serve static assets off of /static virtual path prefix
 	app.use('/static', express.static(__dirname + '/../../dist'));
 
 	app.use('/api', require('./api')(io));
 
-	app.get('/login', function(req, res){
-		res.sendFile(__dirname + '/views/login.html');
-	});
+	app.use('/login', require('./login')(app.get('theSecretOfScrum')));
 
 	// This is the server entry point for the application.
 	app.get("/*", entry);
