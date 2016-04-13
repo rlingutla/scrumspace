@@ -7,7 +7,7 @@ var initialData = {
 	loading: false,
 	users: {
 		0: {
-			'_id': new ObjectID("000000000000000000000000"),
+      "_id": new ObjectID("000000000000000000000000"),
 			'first_name': 'John',
 			'last_name': 'Vilk',
 			'email': 'jvilk@umass.edu',
