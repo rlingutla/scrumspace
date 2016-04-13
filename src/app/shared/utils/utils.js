@@ -40,7 +40,6 @@ export function daysDifference(startDate, endDate){
 	var days = moment.duration(end.diff(start)).asDays();
 
 	var isAfter = start.isAfter(end);
-	debugger;
 
 	return {
 		days: Math.round(days),

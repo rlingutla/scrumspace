@@ -37,7 +37,7 @@ export default (props) => {
 
 	var types = ['UNASSIGNED', 'DOING', 'BLOCKED', 'DONE'];
 	
-	const histories = props.data
+	const histories = props.tasks
 	.map((task) => task.history)
 	.reduce((a, b) => a.concat(b))
 	.sort((a, b) => a.modified_time > b.modified_time);
@@ -71,7 +71,7 @@ export default (props) => {
 
 	return (
 		<div className="col-md-6 col-lg-6">
-			<Panel title="Project Activity Time Series">
+			<Panel title="Activity Time Series">
 				<Line data={lineData} options={lineOptions} />
 			</Panel>
 		</div>

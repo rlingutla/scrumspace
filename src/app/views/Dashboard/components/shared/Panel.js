@@ -5,17 +5,18 @@ export default (props) => {
 	return (
 		<BasePanel>
 			{/* The below styles make the panel a fixed size + scrollable.*/}
-			<div className="panel-body">
-				<div style={{height: '20%'}}>
-					<div style={{textAlign: 'center', borderRadius: '3px 3px 0 0', height: '72px', textAlign: 'center'}}>
-						<h4>{props.title}</h4>
-					</div>
-				</div>
-				<div style={{height: '80%', width: '100%', overflowY: 'auto'}}>
+			<div style={{borderBottom: '1px solid #E0E0E0', paddingRight: '25px', paddingLeft: '25px', paddingTop: '8px', paddingBottom: '8px'}}>
+				<h4>{props.title}</h4>
+			</div>
+			<div style={{height: '80%', width: '100%', overflowY: 'auto'}}>
+				<div style={{paddingRight: '25px', paddingLeft: '25px', paddingTop: '15px', paddingBottom: '15px'}}>
 					{props.children}
 				</div>
 			</div>
 		</BasePanel>
 	);
 };
+
+
+
 

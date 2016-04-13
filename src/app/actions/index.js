@@ -90,7 +90,6 @@ export function assignBlockingTasks(project_id, story_id, task_id, blocking){
 }
 
 export const updateStoryAction = (project_id, story) => {
-	debugger;
 	return {
 		type: 'UPDATE_STORY',
 		project_id,

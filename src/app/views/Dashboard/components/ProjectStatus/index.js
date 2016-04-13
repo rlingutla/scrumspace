@@ -51,8 +51,8 @@ const getTaskDistribution = (tasks) => {
 export default (props) => {
 	return (
 		<div className="col-md-6 col-lg-6">
-			<Panel title="Project Task Distribution">
-				<Doughnut data={getTaskDistribution(props.tasks)} options={doughnutOptions}/>
+			<Panel title="Project Status">
+				<p> something cool goes here</p>
 			</Panel>
 		</div>
 	);
