@@ -14,6 +14,7 @@ module.exports = function (io) {
 	// authenticate all routes
 	router.use(authentication);
 
+
 	// data routes
 	router.use('/project/', require('./project')(io));
 	router.use('/user/', require('./user')(io));

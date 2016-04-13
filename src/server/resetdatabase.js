@@ -3,6 +3,10 @@ var ObjectID = require('mongodb').ObjectID;
 // Put your startup's name here (only letters and numbers -- no spaces, apostrophes, or special characters!)
 var databaseName = "scrumspace";
 // Put the initial mock objects here.
+const xDaysAgoInUnixTime = (x) => {
+	return Date.now() - 1000* 60 * 60 * 24 * x;
+};
+
 var initialData = {
 	loading: false,
 	users: {
@@ -224,6 +228,7 @@ var initialData = {
 	}
 	]
 };
+
 
 /**
  * Resets a collection.
