@@ -1,6 +1,5 @@
 'use-strict';
 var database = require('../database');
-var ResetDatabase = require('../resetdatabase');
 var MongoDB = require('mongodb');
 var MongoClient = MongoDB.MongoClient;
 var ObjectID = MongoDB.ObjectID;
@@ -15,7 +14,7 @@ var express = require('express'),
 
 import authentication from './shared/authentication';
 
-module.exports = function (io) {
+module.exports = function (io, db) {
 	router.get('/', function (req, res) {
 	    res.send('Welcome to the ScrumSpace API V1');
 	});

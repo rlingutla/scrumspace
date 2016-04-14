@@ -298,5 +298,5 @@ if(require.main === module) {
   });
 } else {
   // require()'d.  Export the function.
-  module.exports.resetDatabase = resetDatabase;
+  module.exports = resetDatabase;
 }

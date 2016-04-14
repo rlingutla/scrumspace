@@ -4,8 +4,7 @@ server = require('http').createServer(app);
 //var database = require('./database');
 var io = require('socket.io')(server);
 require('babel-core/register');
-// configure express app
-require('./config')(app, io);
+
 //connect to mongo if necessary
 var mongo_express = require('mongo-express/lib/middleware');
 //Import the default Mongo Express configuration
@@ -22,9 +21,12 @@ io.on('connection', function (socket) {
 });
 
 
-//MongoClient.connect(url, function(err, db) {
-// listen on designated port
-server.listen(app.get('port'), () => {
-	console.log('Listening on port ' + app.get('port'));
+MongoClient.connect(url, function(err, db) {
+	// configure express app
+	require('./config')(app, io, db);
+
+	// listen on designated port
+	server.listen(app.get('port'), () => {
+		console.log('Listening on port ' + app.get('port'));
+	});
 });
-//});
