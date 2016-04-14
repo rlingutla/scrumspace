@@ -11,7 +11,7 @@ var initialData = {
 
 	users: {
 		0: {
-      "_id": new ObjectID("000000000000000000000000"),
+      		"_id": new ObjectID("000000000000000000000000"),
 			'first_name': 'John',
 			'last_name': 'Vilk',
 			'email': 'jvilk@umass.edu',
@@ -226,8 +226,7 @@ var initialData = {
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 
 	}
-],
-	loading: false
+]
 };
 
 
