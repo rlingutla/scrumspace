@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+var token = '';
+
 export function stateTree(userId){
+  //client ready to render
+  token = localStorage.scrumToken || '';
 	return sendXHRPromise('get', '/api/init/', { _id: 0}).then((response) => {
 		return response;
 	});
 }
 
-var token = 'eyJfaWQiOjB9'; // <-- Put your base64'd JSON token here
+// var token = 'eyJfaWQiOjB9'; // <-- Put your base64'd JSON token here
+// var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOjAsImV4cCI6MTQ2MDY1MzgyMTk3OX0.SSw4FitS_uyx2NRrJnKwx3VlsEXKgEeSzb2EaR4OVcY';
+// var token = localStorage.scrumToken || "";
 /**
  * Properly configure+send an XMLHttpRequest with error handling, authorization token,
  * and other needed properties.

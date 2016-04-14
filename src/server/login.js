@@ -2,8 +2,11 @@
 
 var express = require('express'),
 	router = express.Router(),
-	jwt = require('jwt-simple'),
-	moment = require('moment')
+	expJWT = require('express-jwt'),
+	jwt = require('jsonwebtoken'),
+	moment = require('moment');
+
+import { getUser } from './api/shared/authentication';
 
 module.exports = function (secret) {
 	router.get('/', function(req, res){
@@ -11,17 +14,26 @@ module.exports = function (secret) {
 	});
 
 	router.post('/', function(req, res){
-		if(req.body.username && req.body.password){
-			if(req.body.username === 'cookie' && req.body.password === 'monster'){
+		var body = JSON.parse(req.body);
+		if(body.email && body.password){
+			var user = getUser(body.email, body.password);
+			console.log("user from POST", user);
+
+			if(user !== null){
 				var expiration = moment().add('days', 1).valueOf();
-				var token = jwt.encode({ iss: req.body.username, exp: expiration },  secret);	
+				// var token = jwt.encode({ iss: user._id, exp: expiration },  secret);	
+
+				var token = jwt.sign({ _id: user._id, exp: expiration }, secret, { expiresIn: expiration });
+				res.cookie('scrumToken', token);
+
 				//send the token back
 				res.json({
 					token : token,
 					expires : expiration,
-					user : {username: req.body.username}
+					user : { email: user.email }
 				});
 			} else res.sendStatus(401);
+
 		} else res.sendStatus(401); 
 	});
 

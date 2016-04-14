@@ -15,7 +15,7 @@ io.on('connection', function (socket) {
 require('babel-core/register');
 
 // configure express app
-require('./config')(app, io);
+require('./config').config(app, io);
 
 // listen on designated port
 server.listen(app.get('port'), () => {

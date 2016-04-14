@@ -11,8 +11,8 @@ module.exports = function (io) {
 	    res.send('Welcome to the ScrumSpace API V1');
 	});
 
-	// authenticate all routes
-	router.use(authenticate);
+	// // authenticate all routes
+	// router.use(authenticate);
 
 	// data routes
 	router.use('/project/', require('./project')(io));
