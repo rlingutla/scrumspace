@@ -9,13 +9,18 @@ var app = express();
 var bodyParser = require('body-parser');
 var jwt = require('express-jwt');
 
+//connect to mongo if necessary
+var mongo_express = require('mongo-express/lib/middleware');
+// Import the default Mongo Express configuration
+var mongo_express_config = require('mongo-express/config.default.js');
+
 import { loginAuth } from './api/shared/authentication';
 
 module.exports = {};
 
 module.exports.secret = 'howMuchWoodCouldAWoodchuckChuckIfAWoodchuckCouldChuckWood'; //env this
 
-module.exports.config = function (app, io) {
+module.exports.config = function (app, io, db) {
 	// set node port
 	app.set('port', process.env.PORT || 8080);
 
@@ -33,6 +38,8 @@ module.exports.config = function (app, io) {
 	app.use('/api', [loginAuth, require('./api')(io)]);
 
 	app.use('/login', require('./login')(module.exports.secret));
+
+	app.use('/mongo_express', mongo_express(mongo_express_config));
 
 	// app.use(jwt({ secret: new Buffer(module.exports.secret, 'base64')}).unless({path: ['/login', '/static']}));
 
