@@ -79,7 +79,7 @@ var initialData = {
 		'_id': new ObjectID("000000000000000000000000"),
 		'title': 'Drumpf',
 		'description': 'Make America Great Again',
-		'users': [new ObjectID("00000000000000000000000"), new ObjectID("000000000000000000000001")],
+		'users': [new ObjectID("000000000000000000000000"), new ObjectID("000000000000000000000001")],
 		'status': 'sprint',
 		'current_sprint': null,
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',

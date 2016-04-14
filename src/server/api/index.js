@@ -1,6 +1,14 @@
 'use-strict';
 var database = require('../database');
 var ResetDatabase = require('../resetdatabase');
+var MongoDB = require('mongodb');
+var MongoClient = MongoDB.MongoClient;
+var ObjectID = MongoDB.ObjectID;
+var url = 'mongodb://localhost:27017/scrumspace';
+var ResetDatabase = require('../resetdatabase');
+// var mongo_express = require('mongo-express/lib/middleware');
+// //Import the default Mongo Express configuration
+// var mongo_express_config = require('mongo-express/config.default.js');
 
 var express = require('express'),
 	router = express.Router();
@@ -15,31 +23,32 @@ module.exports = function (io) {
 	// authenticate all routes
 	router.use(authentication);
 
-
+MongoClient.connect(url, function(err, db){
 	// data routes
 	router.use('/project/', require('./project')(io));
 	router.use('/user/', require('./user')(io));
 	router.use('/init/', require('./init')(io));
 
 	// Reset database.
-	router.post('/resetdb', function(req, res) {
-		console.log('Resetting database...');
-		// This is a debug route, so don't do any validation.
-		database.resetDatabase();
-		// res.send() sends an empty response with status code 200
-		io.emit('DATABASE_RESET', {});
-		res.send();
-	});
+	// router.post('/resetdb', function(req, res) {
+	// 	console.log('Resetting database...');
+	// 	// This is a debug route, so don't do any validation.
+	// 	ResetDatabase();
+	// 	// res.send() sends an empty response with status code 200
+	// 	io.emit('DATABASE_RESET', {});
+	// 	res.send();
+	// });
 
 	// Reset the database.
-// router.post('/resetdb', function(req, res) {
-//   console.log("Resetting database...");
-//   ResetDatabase(db, function() {
-// 		io.emit('DATABASE_RESET', {});
-//     res.send();
-//   });
-// });
+router.post('/resetdb', function(req, res) {
+  console.log("Resetting database...");
+  ResetDatabase(db, function() {
+		io.emit('DATABASE_RESET', {});
+    res.send();
+  });
+});
 
 
 	return router;
+});
 };
