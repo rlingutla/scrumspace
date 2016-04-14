@@ -23,7 +23,7 @@ module.exports = function (io) {
 	// authenticate all routes
 	router.use(authentication);
 
-MongoClient.connect(url, function(err, db){
+//MongoClient.connect(url, function(err, db){
 	// data routes
 	router.use('/project/', require('./project')(io));
 	router.use('/user/', require('./user')(io));
@@ -50,5 +50,5 @@ router.post('/resetdb', function(req, res) {
 
 
 	return router;
-});
+//});
 };
