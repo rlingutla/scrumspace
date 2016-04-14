@@ -79,7 +79,7 @@ var initialData = {
 		'_id': new ObjectID("000000000000000000000000"),
 		'title': 'Drumpf',
 		'description': 'Make America Great Again',
-		'users': [0, 1],
+		'users': [new ObjectID("00000000000000000000000"), new ObjectID("000000000000000000000001")],
 		'status': 'sprint',
 		'current_sprint': null,
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
@@ -104,19 +104,19 @@ var initialData = {
 				'_id': new ObjectID("000000000000000000000000"),
 				'title': 'Buy Hats',
 				'description': 'Design Hats \nOrder Hats\nSell Hats',
-				'sprint_id': 0,
+				'sprint_id': new ObjectID("000000000000000000000000"),
 				'tasks': [
 					{
 						'_id': new ObjectID("000000000000000000000000"),
 						'status': 'UNASSIGNED',
 						'blocked_by': [],
-						'assigned_to': [0,1],
+						'assigned_to': [new ObjectID("000000000000000000000000"),new ObjectID("000000000000000000000001")],
 						'description': 'Find a Designer',
 						'history': [{
 							from_status: null,
 							to_status: 'UNASSIGNED',
 							modified_time: xDaysAgoInUnixTime(2),
-							modified_user : 0
+							modified_user : new ObjectID("000000000000000000000000")
 						}],
 						'attachments': null
 					},
@@ -130,7 +130,7 @@ var initialData = {
 							from_status: null,
 							to_status: 'UNASSIGNED',
 							modified_time: xDaysAgoInUnixTime(4),
-							modified_user : 0
+							modified_user : new ObjectID("000000000000000000000000")
 						}],
 						'attachments': null
 					},
@@ -138,18 +138,18 @@ var initialData = {
 						'_id': new ObjectID("000000000000000000000002"),
 						'status': 'UNASSIGNED',
 						'blocked_by': [],
-						'assigned_to': [0],
+						'assigned_to': [new ObjectID("000000000000000000000000")],
 						'description': 'Make Donald Drumpf again',
 						'history': [{
 							from_status: 'UNASSIGNED',
 							to_status: 'BLOCKED',
 							modified_time: xDaysAgoInUnixTime(2),
-							modified_user : 0
+							modified_user : new ObjectID("000000000000000000000000")
 						},{
 							from_status: null,
 							to_status: 'UNASSIGNED',
 							modified_time: xDaysAgoInUnixTime(1),
-							modified_user : 0
+							modified_user : new ObjectID("000000000000000000000000")
 						}],
 						'attachments': null
 					},
@@ -163,17 +163,17 @@ var initialData = {
 							from_status: 'DOING',
 							to_status: 'DONE',
 							modified_time: xDaysAgoInUnixTime(1),
-							modified_user : 0
+							modified_user : new ObjectID("000000000000000000000000")
 						},{
 							from_status: 'UNASSIGNED',
 							to_status: 'DOING',
 							modified_time: xDaysAgoInUnixTime(3),
-							modified_user : 0
+							modified_user : new ObjectID("000000000000000000000000")
 						},{
 							from_status: null,
 							to_status: 'UNASSIGNED',
 							modified_time: xDaysAgoInUnixTime(5),
-							modified_user : 0
+							modified_user : new ObjectID("000000000000000000000000")
 						}],
 						'attachments': null
 					}
@@ -183,19 +183,19 @@ var initialData = {
 				'_id': new ObjectID("000000000000000000000001"),
 				'title': 'Win',
 				'description': 'Win Win Win\nNo matter what',
-				'sprint_id': 0,
+				'sprint_id': new ObjectID("000000000000000000000000"),
 				'tasks': [
 					{
 						'_id': new ObjectID("000000000000000000000000"),
 						'status': 'UNASSIGNED',
 						'blocked_by': [],
-						'assigned_to': [0],
+						'assigned_to': [new ObjectID("000000000000000000000000")],
 						'description': 'Beat hilldawg',
 						'history': [{
 							from_status: null,
 							to_status: 'UNASSIGNED',
 							modified_time: xDaysAgoInUnixTime(3),
-							modified_user : 0
+							modified_user : new ObjectID("000000000000000000000000")
 						}],
 						'attachments': null
 					}
@@ -213,7 +213,7 @@ var initialData = {
 		'_id': new ObjectID("000000000000000000000001"),
 		'title': 'Feel the Bern',
 		'description': 'Fight the Power',
-		'users': [0],
+		'users': [new ObjectID("000000000000000000000000")],
 		'status': 'planning',
 		'current_sprint': null,
 		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
