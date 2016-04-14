@@ -1,5 +1,6 @@
 'use-strict';
 var database = require('../database');
+var ResetDatabase = require('../resetdatabase');
 
 var express = require('express'),
 	router = express.Router();
@@ -29,6 +30,16 @@ module.exports = function (io) {
 		io.emit('DATABASE_RESET', {});
 		res.send();
 	});
+
+	// Reset the database.
+// router.post('/resetdb', function(req, res) {
+//   console.log("Resetting database...");
+//   ResetDatabase(db, function() {
+// 		io.emit('DATABASE_RESET', {});
+//     res.send();
+//   });
+// });
+
 
 	return router;
 };

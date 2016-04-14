@@ -1,14 +1,14 @@
 var ObjectID = require('mongodb').ObjectID;
 
 // Put your startup's name here (only letters and numbers -- no spaces, apostrophes, or special characters!)
-var databaseName = "scrumspace";
+var databaseName = 'scrumspace';
 // Put the initial mock objects here.
 const xDaysAgoInUnixTime = (x) => {
 	return Date.now() - 1000* 60 * 60 * 24 * x;
 };
 
 var initialData = {
-	loading: false,
+
 	users: {
 		0: {
       "_id": new ObjectID("000000000000000000000000"),
@@ -226,7 +226,8 @@ var initialData = {
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 
 	}
-	]
+],
+	loading: false
 };
 
 
@@ -242,6 +243,7 @@ function resetCollection(db, name, cb) {
       return collection[key];
     });
     // Insert objects into the object collection.
+
     db.collection(name).insertMany(objects, cb);
   });
 }
@@ -255,12 +257,13 @@ function resetDatabase(db, cb) {
   // "for" loop over asynchronous operations.
   var collections = Object.keys(initialData);
   var i = 0;
+  console.log('collections' + collections);
 
   // Processes the next collection in the collections array.
   // If we have finished processing all of the collections,
   // it triggers the callback.
   function processNextCollection() {
-    if (i < collections.length) {
+    if (i < collections.length-1) {
       var collection = collections[i];
       i++;
       // Use myself as a callback.
@@ -295,5 +298,5 @@ if(require.main === module) {
   });
 } else {
   // require()'d.  Export the function.
-  module.exports = resetDatabase;
+  module.exports.resetDatabase = resetDatabase;
 }
