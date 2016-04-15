@@ -108,9 +108,9 @@ export function sendXHRPromise(verb, resource, body) {
   	    // the error.
   	    var responseText = xhr.responseText;
   	    let error = `Could not ${verb} ${resource}: Received ${statusCode} ${statusText}: ${responseText}`;
-  	    ErrorBanner(error);
+  	    
   	    reject(error);
-
+        ErrorBanner(error);
   	  }
   	});
 

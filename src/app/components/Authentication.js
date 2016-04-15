@@ -23,10 +23,12 @@ export class Login extends React.Component {
 
 
 	postLogin(){
-		console.log('hello');
 		sendXHRPromise('POST', '/login', { email: this.state.email, password: this.state.password }).then((response) => {
 			localStorage.scrumToken = response.token;
 			this.props.renderScrumspace();
+		}, 
+		(error) => {
+			this.setState({error: 'invalid credentials'});
 		});
 	}
 
@@ -44,12 +46,15 @@ export class Login extends React.Component {
 								<form id="login-form">
 									<div className="input-element left-glyph">
 										<i className="ion ion-ios-person-outline"></i>
-										<input value={this.state.email} onChange={(e) => this.handleChange(e)}  name="email" type="text" className="form-control" placeholder="email" autofocus />
+										<input className={'form-control ' + ((this.state.error) ? 'error':null)} value={this.state.email} onChange={(e) => this.handleChange(e)}  name="email" type="text" placeholder="email" autofocus />
 									</div>
 									<div className="input-element left-glyph">
 										<i className="ion ion-ios-locked-outline"></i>
-										<input value={this.state.password} onChange={(e) => this.handleChange(e)} onKeyDown={(e) => this.keyHandler(e)} name="password" type="password" className="form-control" placeholder="password" />
+										<input className={'form-control ' + ((this.state.error) ? 'error':null)} value={this.state.password} onChange={(e) => this.handleChange(e)} onKeyDown={(e) => this.keyHandler(e)} name="password" type="password" placeholder="password" />
 									</div>
+									{/*<div className={'login-result ' + ((this.state.error) ? 'visible':null)}>
+										<h4>{this.state.error}</h4>
+									</div>*/}
 									{/*<button type="button" onClick={(e) => this.postLogin()}>Login</button>*/}
 								</form>
 							</div>
