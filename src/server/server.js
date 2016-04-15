@@ -20,7 +20,6 @@ io.on('connection', function (socket) {
 	socket.emit('welcome', { hello: 'world' });
 });
 
-
 MongoClient.connect(url, function(err, db) {
 	if (err) {
 		console.log('Could not connect to database!');

@@ -8,33 +8,48 @@ var express = require('express'),
 
 var StandardError = require('../shared/StandardError');
 var search = require('../shared/search');
-var embedUsers = require('../shared/embedUsers');
+import { embedUsers, packageProjects } from '../shared/projectUtils';
 
-module.exports = function (io) {
+import { getUserById, getUserIdFromToken } from '../shared/authentication';
 
-	router.get('/', function (req, res) {
-		var userId = 0;
-		var users = readDocument('users');
+module.exports = function (io, db) {
 
-		var projects = readDocument('projects');
-		var populatedProjects = projects.map((project) => {
-			return embedUsers(project);
-		}); 
+	router.get('/:user_id', function (req, res) {
+		// extract user ID from auth token
+		getUserIdFromToken(req.get('Authorization'), (user_id) => {
+			// get user object from param ID
+			getUserById(req.params.user_id, db).then(
+				(user) => {
+					//check if auth user === user in param
+					if(req.params.user_id === user_id){
+						packageProjects(user_id, db).then(
+							(packagedProjects) => {
+								var stateTree = {
+									user: {
+											'_id': user._id,
+											'first_name': user.first_name,
+											'last_name': user.last_name,
+											'email': user.email,
+											'display_name': user.display_name,
+											'avatar_url': user.avatar_url
+									},
+									projects: packagedProjects
+								};
 
-		var user = users[userId];
-		var stateTree = {
-			user: {
-					'_id': user._id,
-					'first_name': user.first_name,
-					'last_name': user.last_name,
-					'email': user.email,
-					'display_name': user.display_name,
-					'avatar_url': user.avatar_url
-			},
-			projects: populatedProjects
-		};
-		res.send(stateTree);
+								res.send(stateTree);
+							},
+							(error) => res.status(500).send(error)
+						);
+					} else res.sendStatus(401);
+				},
+				(err) => {
+					console.log('err', err);
+					if(err) res.sendStatus(500); //database error
+					else res.sendStatus(400); //user not found
+				}
+			);
+		});
 	});
 
 	return router;
-}
+};

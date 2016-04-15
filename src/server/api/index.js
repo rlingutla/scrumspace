@@ -19,14 +19,14 @@ module.exports = function (io, db) {
 	    res.send('Welcome to the ScrumSpace API V1');
 	});
 
-	// authenticate all routes
-	router.use(authentication);
+	// // authenticate all routes
+	// router.use(authenticate);
 
 //MongoClient.connect(url, function(err, db){
 	// data routes
-	router.use('/project/', require('./project')(io));
-	router.use('/user/', require('./user')(io));
-	router.use('/init/', require('./init')(io));
+	router.use('/project/', require('./project')(io, db));
+	router.use('/user/', require('./user')(io, db));
+	router.use('/init/', require('./init')(io, db));
 
 	// Reset database.
 	// router.post('/resetdb', function(req, res) {

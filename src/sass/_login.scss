@@ -1,3 +1,23 @@
+@keyframes fadeLogin {
+    from {
+    	transform: scale(0.95, 0.95);
+    	opacity: 0;
+    }
+    to {
+    	transform: scale(1, 1);
+    	opacity:1;
+    }
+}
+@keyframes fadePreview {
+    from {
+       	opacity: 0;
+       }
+       to {
+       	opacity:1;
+       }
+}
+
+
 #login {
 	width:100%;
 	height:100%;
@@ -29,6 +49,10 @@
 
 				&:focus {
 					border-bottom-color: #000;
+				}
+
+				&.error {
+					border-color: $red-color;
 				}
 			}
 
@@ -74,14 +98,37 @@
 			height:100vh;
 		}
 	}
+	.login, .preview {
+		
+		animation-timing-function: $bezier;
+	}
 	.login {
 		background: #fff;
+		animation-name: fadeLogin;
+		animation-duration: 0.2s;
 	}
 	.preview {
 		background: $blue-color;
+		animation-name: fadePreview;
+		animation-duration: 1s;
+	}
+
+	.login-result {
+		opacity:0;
+		padding: 10px;
+		background: $red-color;
+		display: inline-block;
+		width: 80%;
+		color: #fff;
+		@include transition();
+
+		&.visible {
+			opacity:1;
+		}
 	}
 }
 
 .vertical-content {
 	@include vertical-align();
 }
+

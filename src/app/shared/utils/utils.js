@@ -1,5 +1,11 @@
 import moment from 'moment';
 
+export function getUser(){
+	let token = localStorage.scrumToken.split('.');
+	//decode base64 payload
+	return JSON.parse(atob(token[1]))._id;
+}
+
 //Projects
 /*
 ** props is a project object

@@ -32,9 +32,9 @@ var initialData = {
 			'_id': new ObjectID("000000000000000000000002"),
 			'first_name': 'Dylan',
 			'last_name': 'Fischler',
-			'email': 'someemail',
+			'email': 'dylanfischler@gmail.com',
 			'display_name': 'Dylan Fischler',
-			'password': 'd4866854120e8bb207d6f8e11fce8b99',
+			'password': 'password',
 			'avatar_url': 'http://www.dylanfischler.com/includes/me_bw.jpg'
 		},
 		3: {
@@ -74,134 +74,106 @@ var initialData = {
 			'avatar_url': 'https://avatars.slack-edge.com/2016-02-07/20575719908_a1012b8fe4efe81099c3_72.png'
 		}
 	},
+	'sprints': [
+		{
+			'_id': new ObjectID("000000000000000000000000"),
+			'name': 'V1 Release',
+			'start_date':null,
+			'duration': 14,
+			'scrum_time': '09:00',
+			'project_id': new ObjectID("000000000000000000000000")
+		},
+		{
+			'_id': new ObjectID("000000000000000000000001"),
+			'name': 'V2 Release',
+			'duration': 7,
+			'start_date': null,
+			'scrum_time': '09:00',
+			'project_id': new ObjectID("000000000000000000000000")
+		}
+	],
+	'tasks': [
+		{
+			'_id': new ObjectID("000000000000000000000000"),
+			'project_id': new ObjectID("000000000000000000000000"),
+			'story_id': new ObjectID("000000000000000000000000"),
+			'status': 'UNASSIGNED',
+			'blocked_by': [],
+			'assigned_to': [new ObjectID("000000000000000000000000"),new ObjectID("000000000000000000000001")],
+			'description': 'Find a Designer',
+			'history': [],
+			'attachments': null
+		},
+		{
+			'_id': new ObjectID("000000000000000000000001"),
+			'project_id': new ObjectID("000000000000000000000000"),
+			'story_id': new ObjectID("000000000000000000000000"),
+			'status': 'UNASSIGNED',
+			'blocked_by': [],
+			'assigned_to': [],
+			'description': 'Make Mexico pay for it',
+			'history': [],
+			'attachments': null
+		},
+		{
+			'_id': new ObjectID("000000000000000000000002"),
+			'project_id': new ObjectID("000000000000000000000000"),
+			'story_id': new ObjectID("000000000000000000000000"),
+			'status': 'UNASSIGNED',
+			'blocked_by': [],
+			'assigned_to': [new ObjectID("000000000000000000000000")],
+			'description': 'Make Donald Drumpf again',
+			'history': [],
+			'attachments': null
+		},
+		{
+			'_id': new ObjectID("000000000000000000000003"),
+			'project_id': new ObjectID("000000000000000000000000"),
+			'story_id': new ObjectID("000000000000000000000000"),
+			'status': 'UNASSIGNED',
+			'blocked_by': [],
+			'assigned_to': [],
+			'description': 'Replace Donald\'s Toupee',
+			'history': [],
+			'attachments': null
+		},
+		{
+			'_id': new ObjectID("000000000000000000000000"),
+			'project_id': new ObjectID("000000000000000000000000"),
+			'story_id': new ObjectID("000000000000000000000001"),
+			'status': 'UNASSIGNED',
+			'blocked_by': [],
+			'assigned_to': [new ObjectID("000000000000000000000000")],
+			'description': 'Beat hilldawg',
+			'history': [],
+			'attachments': null
+		}
+	],
+	'stories': [
+		{
+			'_id': new ObjectID("000000000000000000000000"),
+			'title': 'Buy Hats',
+			'description': 'Design Hats \nOrder Hats\nSell Hats',
+			'sprint_id': new ObjectID("000000000000000000000000"),
+			'project_id': new ObjectID("000000000000000000000000")
+		},
+		{
+			'_id': new ObjectID("000000000000000000000001"),
+			'title': 'Win',
+			'description': 'Win Win Win\nNo matter what',
+			'sprint_id': new ObjectID("000000000000000000000000"),
+			'project_id': new ObjectID("000000000000000000000000")
+		}
+	],
 	projects: [
 	{
 		'_id': new ObjectID("000000000000000000000000"),
 		'title': 'Drumpf',
 		'description': 'Make America Great Again',
-		'users': [new ObjectID("000000000000000000000000"), new ObjectID("000000000000000000000001")],
+		'users': [new ObjectID("000000000000000000000000"), new ObjectID("000000000000000000000001"), new ObjectID("000000000000000000000002")],
 		'status': 'sprint',
 		'current_sprint': null,
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
-		'sprints': [
-			{
-				'_id': new ObjectID("000000000000000000000000"),
-				'name': 'V1 Release',
-				'start_date':null,
-				'duration': 14,
-				'scrum_time': '09:00'
-			},
-			{
-				'_id': new ObjectID("000000000000000000000001"),
-				'name': 'V2 Release',
-				'duration': 7,
-				'start_date': null,
-				'scrum_time': '09:00'
-			}
-		],
-		'stories': [
-			{
-				'_id': new ObjectID("000000000000000000000000"),
-				'title': 'Buy Hats',
-				'description': 'Design Hats \nOrder Hats\nSell Hats',
-				'sprint_id': new ObjectID("000000000000000000000000"),
-				'tasks': [
-					{
-						'_id': new ObjectID("000000000000000000000000"),
-						'status': 'UNASSIGNED',
-						'blocked_by': [],
-						'assigned_to': [new ObjectID("000000000000000000000000"),new ObjectID("000000000000000000000001")],
-						'description': 'Find a Designer',
-						'history': [{
-							from_status: null,
-							to_status: 'UNASSIGNED',
-							modified_time: xDaysAgoInUnixTime(2),
-							modified_user : new ObjectID("000000000000000000000000")
-						}],
-						'attachments': null
-					},
-					{
-						'_id': new ObjectID("000000000000000000000001"),
-						'status': 'UNASSIGNED',
-						'blocked_by': [],
-						'assigned_to': [],
-						'description': 'Make Mexico pay for it',
-						'history': [{
-							from_status: null,
-							to_status: 'UNASSIGNED',
-							modified_time: xDaysAgoInUnixTime(4),
-							modified_user : new ObjectID("000000000000000000000000")
-						}],
-						'attachments': null
-					},
-					{
-						'_id': new ObjectID("000000000000000000000002"),
-						'status': 'UNASSIGNED',
-						'blocked_by': [],
-						'assigned_to': [new ObjectID("000000000000000000000000")],
-						'description': 'Make Donald Drumpf again',
-						'history': [{
-							from_status: 'UNASSIGNED',
-							to_status: 'BLOCKED',
-							modified_time: xDaysAgoInUnixTime(2),
-							modified_user : new ObjectID("000000000000000000000000")
-						},{
-							from_status: null,
-							to_status: 'UNASSIGNED',
-							modified_time: xDaysAgoInUnixTime(1),
-							modified_user : new ObjectID("000000000000000000000000")
-						}],
-						'attachments': null
-					},
-					{
-						'_id': new ObjectID("000000000000000000000003"),
-						'status': 'UNASSIGNED',
-						'blocked_by': [],
-						'assigned_to': [],
-						'description': 'Replace Donald\'s Toupee',
-						'history': [{
-							from_status: 'DOING',
-							to_status: 'DONE',
-							modified_time: xDaysAgoInUnixTime(1),
-							modified_user : new ObjectID("000000000000000000000000")
-						},{
-							from_status: 'UNASSIGNED',
-							to_status: 'DOING',
-							modified_time: xDaysAgoInUnixTime(3),
-							modified_user : new ObjectID("000000000000000000000000")
-						},{
-							from_status: null,
-							to_status: 'UNASSIGNED',
-							modified_time: xDaysAgoInUnixTime(5),
-							modified_user : new ObjectID("000000000000000000000000")
-						}],
-						'attachments': null
-					}
-				]
-			},
-			{
-				'_id': new ObjectID("000000000000000000000001"),
-				'title': 'Win',
-				'description': 'Win Win Win\nNo matter what',
-				'sprint_id': new ObjectID("000000000000000000000000"),
-				'tasks': [
-					{
-						'_id': new ObjectID("000000000000000000000000"),
-						'status': 'UNASSIGNED',
-						'blocked_by': [],
-						'assigned_to': [new ObjectID("000000000000000000000000")],
-						'description': 'Beat hilldawg',
-						'history': [{
-							from_status: null,
-							to_status: 'UNASSIGNED',
-							modified_time: xDaysAgoInUnixTime(3),
-							modified_user : new ObjectID("000000000000000000000000")
-						}],
-						'attachments': null
-					}
-				]
-			}
-		],
 		'commits': [3,1,6,4,8],
 		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
 		'membersOnProj':['Abhay', 'VilkBot'],
@@ -217,14 +189,11 @@ var initialData = {
 		'status': 'planning',
 		'current_sprint': null,
 		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
-		'sprints': [],
-		'stories': [],
 		'commits':[4,7,2,8,9],
 		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
 		'membersOnProj':['VilkBot'],
 		'gCommits':[15],
 		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
-
 	}
 ]
 };
