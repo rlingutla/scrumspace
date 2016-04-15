@@ -7,7 +7,7 @@ export function stateTree(userId){
   //client ready to render
   token = localStorage.scrumToken;
   
-	return sendXHRPromise('get', '/api/init/', { _id: 0}).then((response) => {
+	return sendXHRPromise('get', '/api/init/', { _id: userId}).then((response) => {
 		return response;
 	});
 }

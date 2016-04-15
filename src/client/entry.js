@@ -12,6 +12,7 @@ import scrumApp from '../app/reducers';
 import { Login } from '../app/components/Authentication';
 
 import { stateTree } from '../app/server_calls/index';
+import { getUser } from '../app/shared/utils/utils';
 
 // socket stuff
 import initSocket, {chatMiddleware} from '../app/config/socketMiddleware';
@@ -28,7 +29,7 @@ const renderLogin = () => {
 };
 
 const renderClient = () => {
-	stateTree(0).then((stateTree) => {
+	stateTree(getUser()).then((stateTree) => {
 		match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
 			let store = createStore(
 				scrumApp,
@@ -51,6 +52,8 @@ const renderClient = () => {
 };
 
 // get auth token
-if(localStorage.scrumToken) renderClient();
+if(localStorage.scrumToken){
+	renderClient();
+}
 // not authenticated
 else renderLogin();
