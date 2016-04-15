@@ -39,6 +39,7 @@ module.exports.config = function (app, io, db) {
 
 	app.use('/login', require('./login')(module.exports.secret));
 
+	// TAKE THIS OUT IN PRODUCTION
 	app.use('/mongo_express', mongo_express(mongo_express_config));
 
 	// app.use(jwt({ secret: new Buffer(module.exports.secret, 'base64')}).unless({path: ['/login', '/static']}));

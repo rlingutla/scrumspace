@@ -2,6 +2,7 @@ import React from 'react';
 import { Link }  from 'react-router';
 import { ResetDatabase } from '../server_calls/index';
 import Ionicon from '../shared/components/Ionicon';
+import { logout } from './Authentication';
 
 export default () => {
 	return (
@@ -19,6 +20,9 @@ export default () => {
 					</li>
 					<li>
 						<Link activeClassName="selected" to="/statistics"><Ionicon icon="ion-stats-bars"/></Link>
+					</li>
+					<li>
+						<a name="Logout" onClick={(e) => logout()}><Ionicon icon="ion-android-cancel"/></a>
 					</li>
 					<li>
 						<ResetDatabase />

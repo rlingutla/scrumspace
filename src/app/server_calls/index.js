@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var token = '';
+var token = "";
 
 export function stateTree(userId){
   //client ready to render
-  token = localStorage.scrumToken || '';
+  token = localStorage.scrumToken;
+  
 	return sendXHRPromise('get', '/api/init/', { _id: 0}).then((response) => {
 		return response;
 	});

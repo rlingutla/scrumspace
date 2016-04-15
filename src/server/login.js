@@ -14,17 +14,17 @@ module.exports = function (secret) {
 	});
 
 	router.post('/', function(req, res){
-		var body = JSON.parse(req.body);
+		var body = req.body;
+		// console.log("body", body);
 		if(body.email && body.password){
 			var user = getUser(body.email, body.password);
-			console.log("user from POST", user);
+			// console.log("user from POST", user);
 
 			if(user !== null){
 				var expiration = moment().add('days', 1).valueOf();
 				// var token = jwt.encode({ iss: user._id, exp: expiration },  secret);	
 
 				var token = jwt.sign({ _id: user._id, exp: expiration }, secret, { expiresIn: expiration });
-				res.cookie('scrumToken', token);
 
 				//send the token back
 				res.json({

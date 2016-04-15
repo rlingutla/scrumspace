@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import scrumApp from '../app/reducers';
+import { Login } from '../app/components/Authentication';
 
 import { stateTree } from '../app/server_calls/index';
 
@@ -22,23 +23,34 @@ import initSocket, {chatMiddleware} from '../app/config/socketMiddleware';
 
 var mountNode = document.getElementById('app');
 
-stateTree(0).then((stateTree) => {
-	match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
-		let store = createStore(
-			scrumApp,
-			stateTree,
-			applyMiddleware(
-				thunkMiddleware
-			)
-		);
+const renderLogin = () => {
+	render(<Login renderScrumspace={renderClient}/>, mountNode);
+};
 
-		initSocket(store);
+const renderClient = () => {
+	stateTree(0).then((stateTree) => {
+		match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
+			let store = createStore(
+				scrumApp,
+				stateTree,
+				applyMiddleware(
+					thunkMiddleware
+				)
+			);
 
-		render(
-		  <Provider store={store}>
-		    <Router {...renderProps} store={{}}/>
-		  </Provider>,
-		  mountNode
-		);
+			initSocket(store);
+
+			render(
+			  <Provider store={store}>
+			    <Router {...renderProps} store={{}}/>
+			  </Provider>,
+			  mountNode
+			);
+		});
 	});
-});
+};
+
+// get auth token
+if(localStorage.scrumToken) renderClient();
+// not authenticated
+else renderLogin();

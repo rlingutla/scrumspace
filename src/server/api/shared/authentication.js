@@ -2,7 +2,8 @@
 	This function will authenticate all routes in the application
 */
 import _ from 'underscore';
-import jwt from 'jwt-simple';
+//import jwt from 'jwt-simple';
+var jwt = require('jsonwebtoken');
 
 var secret = require('../../config').secret;
 
@@ -14,28 +15,11 @@ var readDocument = database.readDocument;
 	Get the user ID from a token. Returns -1 (an invalid ID) if it fails.
 */
 
-export function getUserIdFromToken(authorizationLine) {
-	try {
-		console.log("authLine", authorizationLine.slice(7));
-		var decodedToken = jwt.decode(authorizationLine.slice(7), secret);
-		console.log("token", decodedToken);
-
-		if (decodedToken.exp <= Date.now()) return -1; // access token has expired
-
-		/*
-		var token = authorizationLine.slice(7); // Cut off "Bearer " from the header value.
-		// Convert the base64 string to a UTF-8 string.
-		var regularString = new Buffer(token, 'base64').toString('utf8'); //buffer is a node thing
-		// Convert the UTF-8 string into a JavaScript object.
-		var tokenObj = JSON.parse(regularString);
-		var id = tokenObj['_id']; //because we use _id instead of just id
-		*/
-		
-		return (typeof decodedToken.iss === 'number') ? decodedToken.iss : -1;
-	} catch (e) {
-		console.log("error", e);
-		return -1; // Return an invalid ID.
-	}
+export function getUserIdFromToken(authorizationLine, cb) {
+	jwt.verify(authorizationLine.slice(7), "howMuchWoodCouldAWoodchuckChuckIfAWoodchuckCouldChuckWood", (err, decodedToken) => {
+		if(err) return cb(-1);
+		else return cb(decodedToken._id);
+	});
 }
 
 function isUserMemberOfProject(user_id, project_id){
@@ -63,8 +47,6 @@ export function getUser(email, password){
 		if(users[userIndex].email === email) user = users[userIndex];
 	}
 
-	console.log("found user", user);
-
 	return (user.password === password) ? user:null;
 }
 
@@ -76,21 +58,18 @@ function isUserValid(user_id) {
 }
 
 export const loginAuth = (req, res, next) => {
-	console.log("header", req.headers);
-	var user_id = getUserIdFromToken(req.get('Authorization'));
-	console.log("in loginAUth", user_id);
-	var requestUrl = req._parsedUrl.path;
+	getUserIdFromToken(req.get('Authorization'), (user_id) => {
+		var requestUrl = req._parsedUrl.path;
 
-	console.log("userid", user_id);
+		if(!isUserValid(user_id)){
+			console.log(`Unauthorized user (${user_id}) request denied`);
+			return res.redirect('/login');
+			// return res.status(401).end();
+		}
 
-	if(!isUserValid(user_id)){
-		console.log(`Unauthorized user (${user_id}) request denied`);
-		return res.redirect('/login');
-		// return res.status(401).end();
-	}
-
-	// valid user, continue
-	else return next();
+		// valid user, continue
+		else return next();
+	});
 };
 
 /*
