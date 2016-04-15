@@ -43,7 +43,7 @@ var express = require('express'),
 router = express.Router();
 
 
-module.exports = function (io) {
+module.exports = function (io, db) {
 	router.get('/', function (req, res) {
 		res.send('project API handler');
 	});

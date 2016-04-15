@@ -17,7 +17,7 @@ var express = require('express'),
 var StandardError = require('../shared/StandardError');
 var search = require('../shared/search');
 
-module.exports = function (io) {
+module.exports = function (io, db) {
 
 	router.get('/search', function(req, res) {
 		var searchResults = search(req.query.searchStr || '', 'users', req.query.key || null);

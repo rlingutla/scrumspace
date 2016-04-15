@@ -32,9 +32,9 @@ var initialData = {
 			'_id': new ObjectID("000000000000000000000002"),
 			'first_name': 'Dylan',
 			'last_name': 'Fischler',
-			'email': 'someemail',
+			'email': 'dylanfischler@gmail.com',
 			'display_name': 'Dylan Fischler',
-			'password': 'd4866854120e8bb207d6f8e11fce8b99',
+			'password': 'password',
 			'avatar_url': 'http://www.dylanfischler.com/includes/me_bw.jpg'
 		},
 		3: {

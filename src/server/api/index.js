@@ -24,9 +24,9 @@ module.exports = function (io, db) {
 
 //MongoClient.connect(url, function(err, db){
 	// data routes
-	router.use('/project/', require('./project')(io));
-	router.use('/user/', require('./user')(io));
-	router.use('/init/', require('./init')(io));
+	router.use('/project/', require('./project')(io, db));
+	router.use('/user/', require('./user')(io, db));
+	router.use('/init/', require('./init')(io, db));
 
 	// Reset database.
 	// router.post('/resetdb', function(req, res) {

@@ -35,9 +35,9 @@ module.exports.config = function (app, io, db) {
 	// serve static assets off of /static virtual path prefix
 	app.use('/static', express.static(__dirname + '/../../dist'));
 
-	app.use('/api', [loginAuth, require('./api')(io)]);
+	app.use('/api', [loginAuth(db), require('./api')(io, db)]);
 
-	app.use('/login', require('./login')(module.exports.secret));
+	app.use('/login', require('./login')(this.secret, db));
 
 	// TAKE THIS OUT IN PRODUCTION
 	app.use('/mongo_express', mongo_express(mongo_express_config));
