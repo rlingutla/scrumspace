@@ -32,7 +32,7 @@ var projUpdate = newProjHelper.projUpdate;
 var projectRemoval = newProjHelper.projRemoval;
 
 // Utils
-var embedUsers = require('../shared/embedUsers');
+import { embedUsers } from '../shared/projectUtils';
 var StandardError = require('../shared/StandardError');
 var util = require('./util');
 var getProjectIndex = util.getProjectIndex;

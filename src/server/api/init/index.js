@@ -8,7 +8,7 @@ var express = require('express'),
 
 var StandardError = require('../shared/StandardError');
 var search = require('../shared/search');
-var embedUsers = require('../shared/embedUsers');
+import { embedUsers, packageProjects } from '../shared/projectUtils';
 
 import { getUserById, getUserIdFromToken } from '../shared/authentication';
 
@@ -22,6 +22,8 @@ module.exports = function (io, db) {
 				(user) => {
 					//check if auth user === user in param
 					if(req.params.user_id === user_id){
+						// packageProjects(user_id, db);
+
 						var projects = readDocument('projects');
 						var populatedProjects = projects.map((project) => {
 							return embedUsers(project);
