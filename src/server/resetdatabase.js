@@ -11,7 +11,7 @@ var initialData = {
 
 	users: {
 		0: {
-      		'_id': new ObjectID('000000000000000000000000'),
+      '_id': new ObjectID('000000000000000000000000'),
 			'first_name': 'John',
 			'last_name': 'Vilk',
 			'email': 'jvilk@umass.edu',
@@ -150,7 +150,6 @@ var initialData = {
 			'title': 'Buy Hats',
 			'description': 'Design Hats \nOrder Hats\nSell Hats',
 			'sprint_id': new ObjectID('000000000000000000000000'),
-			'project_id': new ObjectID('000000000000000000000000'),
 			'tasks': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001'), new ObjectID('000000000000000000000002'), new ObjectID('000000000000000000000003')]
 		},
 		{
@@ -158,7 +157,6 @@ var initialData = {
 			'title': 'Win',
 			'description': 'Win Win Win\nNo matter what',
 			'sprint_id': new ObjectID('000000000000000000000000'),
-			'project_id': new ObjectID('000000000000000000000000'),
 			'tasks': [new ObjectID('000000000000000000000004')]
 		}
 	],
@@ -170,6 +168,7 @@ var initialData = {
 		'users': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001'), new ObjectID('000000000000000000000002')],
 		'status': 'sprint',
 		'current_sprint': null,
+		'stories': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001')],
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
 		'commits': [3,1,6,4,8],
 		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
@@ -185,6 +184,7 @@ var initialData = {
 		'users': [new ObjectID('000000000000000000000000')],
 		'status': 'planning',
 		'current_sprint': null,
+		'stories': [],
 		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
 		'commits':[4,7,2,8,9],
 		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
