@@ -11,7 +11,7 @@ var initialData = {
 
 	users: {
 		0: {
-      		"_id": new ObjectID("000000000000000000000000"),
+      		'_id': new ObjectID('000000000000000000000000'),
 			'first_name': 'John',
 			'last_name': 'Vilk',
 			'email': 'jvilk@umass.edu',
@@ -20,7 +20,7 @@ var initialData = {
 			'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
 		},
 		1: {
-			'_id': new ObjectID("000000000000000000000001"),
+			'_id': new ObjectID('000000000000000000000001'),
 			'first_name': 'Abhay',
 			'last_name': 'Vatsa',
 			'email': 'someemail',
@@ -29,7 +29,7 @@ var initialData = {
 			'avatar_url': 'http://www.abhayvatsa.com/img/abhay.png'
 		},
 		2: {
-			'_id': new ObjectID("000000000000000000000002"),
+			'_id': new ObjectID('000000000000000000000002'),
 			'first_name': 'Dylan',
 			'last_name': 'Fischler',
 			'email': 'dylanfischler@gmail.com',
@@ -38,7 +38,7 @@ var initialData = {
 			'avatar_url': 'http://www.dylanfischler.com/includes/me_bw.jpg'
 		},
 		3: {
-			'_id': new ObjectID("000000000000000000000003"),
+			'_id': new ObjectID('000000000000000000000003'),
 			'first_name': 'Niha',
 			'last_name': 'Venkatathri',
 			'email': 'someemail',
@@ -47,7 +47,7 @@ var initialData = {
 			'avatar_url': 'http://umasscswomen.weebly.com/uploads/3/8/0/8/38087803/3410479.jpg?153'
 		},
 		4: {
-			'_id': new ObjectID("000000000000000000000004"),
+			'_id': new ObjectID('000000000000000000000004'),
 			'first_name': 'Ryan',
 			'last_name': 'Jerue',
 			'email': 'someemail',
@@ -56,7 +56,7 @@ var initialData = {
 			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa7AAAAJGQ2NjlmY2MzLTgzYjctNGRhYy05ZmY2LTkxOGE3Mzg2NWU2MA.jpg'
 		},
 		5: {
-			'_id': new ObjectID("000000000000000000000005"),
+			'_id': new ObjectID('000000000000000000000005'),
 			'first_name': 'Supriya',
 			'last_name': 'Kankure',
 			'email': 'someemail',
@@ -65,7 +65,7 @@ var initialData = {
 			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa1AAAAJDRjMTU3ZTA2LTFkMTEtNDM1MS04YjQ0LWI0YzRlOTExODQ3NA.jpg'
 		},
 		6: {
-			'_id': new ObjectID("000000000000000000000006"),
+			'_id': new ObjectID('000000000000000000000006'),
 			'first_name': 'Rachana',
 			'last_name': 'Lingutla',
 			'email': 'someemail',
@@ -76,38 +76,36 @@ var initialData = {
 	},
 	'sprints': [
 		{
-			'_id': new ObjectID("000000000000000000000000"),
+			'_id': new ObjectID('000000000000000000000000'),
 			'name': 'V1 Release',
 			'start_date':null,
 			'duration': 14,
 			'scrum_time': '09:00',
-			'project_id': new ObjectID("000000000000000000000000")
+			'project_id': new ObjectID('000000000000000000000000')
 		},
 		{
-			'_id': new ObjectID("000000000000000000000001"),
+			'_id': new ObjectID('000000000000000000000001'),
 			'name': 'V2 Release',
 			'duration': 7,
 			'start_date': null,
 			'scrum_time': '09:00',
-			'project_id': new ObjectID("000000000000000000000000")
+			'project_id': new ObjectID('000000000000000000000000')
 		}
 	],
 	'tasks': [
 		{
-			'_id': new ObjectID("000000000000000000000000"),
-			'project_id': new ObjectID("000000000000000000000000"),
-			'story_id': new ObjectID("000000000000000000000000"),
+			'_id': new ObjectID('000000000000000000000000'),
+			'project_id': new ObjectID('000000000000000000000000'),
 			'status': 'UNASSIGNED',
 			'blocked_by': [],
-			'assigned_to': [new ObjectID("000000000000000000000000"),new ObjectID("000000000000000000000001")],
+			'assigned_to': [new ObjectID('000000000000000000000000'),new ObjectID('000000000000000000000001')],
 			'description': 'Find a Designer',
 			'history': [],
 			'attachments': null
 		},
 		{
-			'_id': new ObjectID("000000000000000000000001"),
-			'project_id': new ObjectID("000000000000000000000000"),
-			'story_id': new ObjectID("000000000000000000000000"),
+			'_id': new ObjectID('000000000000000000000001'),
+			'project_id': new ObjectID('000000000000000000000000'),
 			'status': 'UNASSIGNED',
 			'blocked_by': [],
 			'assigned_to': [],
@@ -116,20 +114,18 @@ var initialData = {
 			'attachments': null
 		},
 		{
-			'_id': new ObjectID("000000000000000000000002"),
-			'project_id': new ObjectID("000000000000000000000000"),
-			'story_id': new ObjectID("000000000000000000000000"),
+			'_id': new ObjectID('000000000000000000000002'),
+			'project_id': new ObjectID('000000000000000000000000'),
 			'status': 'UNASSIGNED',
 			'blocked_by': [],
-			'assigned_to': [new ObjectID("000000000000000000000000")],
+			'assigned_to': [new ObjectID('000000000000000000000000')],
 			'description': 'Make Donald Drumpf again',
 			'history': [],
 			'attachments': null
 		},
 		{
-			'_id': new ObjectID("000000000000000000000003"),
-			'project_id': new ObjectID("000000000000000000000000"),
-			'story_id': new ObjectID("000000000000000000000000"),
+			'_id': new ObjectID('000000000000000000000003'),
+			'project_id': new ObjectID('000000000000000000000000'),
 			'status': 'UNASSIGNED',
 			'blocked_by': [],
 			'assigned_to': [],
@@ -138,12 +134,11 @@ var initialData = {
 			'attachments': null
 		},
 		{
-			'_id': new ObjectID("000000000000000000000000"),
-			'project_id': new ObjectID("000000000000000000000000"),
-			'story_id': new ObjectID("000000000000000000000001"),
+			'_id': new ObjectID('000000000000000000000004'),
+			'project_id': new ObjectID('000000000000000000000000'),
 			'status': 'UNASSIGNED',
 			'blocked_by': [],
-			'assigned_to': [new ObjectID("000000000000000000000000")],
+			'assigned_to': [new ObjectID('000000000000000000000000')],
 			'description': 'Beat hilldawg',
 			'history': [],
 			'attachments': null
@@ -151,26 +146,28 @@ var initialData = {
 	],
 	'stories': [
 		{
-			'_id': new ObjectID("000000000000000000000000"),
+			'_id': new ObjectID('000000000000000000000000'),
 			'title': 'Buy Hats',
 			'description': 'Design Hats \nOrder Hats\nSell Hats',
-			'sprint_id': new ObjectID("000000000000000000000000"),
-			'project_id': new ObjectID("000000000000000000000000")
+			'sprint_id': new ObjectID('000000000000000000000000'),
+			'project_id': new ObjectID('000000000000000000000000'),
+			'tasks': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001'), new ObjectID('000000000000000000000002'), new ObjectID('000000000000000000000003')]
 		},
 		{
-			'_id': new ObjectID("000000000000000000000001"),
+			'_id': new ObjectID('000000000000000000000001'),
 			'title': 'Win',
 			'description': 'Win Win Win\nNo matter what',
-			'sprint_id': new ObjectID("000000000000000000000000"),
-			'project_id': new ObjectID("000000000000000000000000")
+			'sprint_id': new ObjectID('000000000000000000000000'),
+			'project_id': new ObjectID('000000000000000000000000'),
+			'tasks': [new ObjectID('000000000000000000000004')]
 		}
 	],
-	projects: [
+	'projects': [
 	{
-		'_id': new ObjectID("000000000000000000000000"),
+		'_id': new ObjectID('000000000000000000000000'),
 		'title': 'Drumpf',
 		'description': 'Make America Great Again',
-		'users': [new ObjectID("000000000000000000000000"), new ObjectID("000000000000000000000001"), new ObjectID("000000000000000000000002")],
+		'users': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001'), new ObjectID('000000000000000000000002')],
 		'status': 'sprint',
 		'current_sprint': null,
 		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
@@ -182,10 +179,10 @@ var initialData = {
 
 	},
 	{
-		'_id': new ObjectID("000000000000000000000001"),
+		'_id': new ObjectID('000000000000000000000001'),
 		'title': 'Feel the Bern',
 		'description': 'Fight the Power',
-		'users': [new ObjectID("000000000000000000000000")],
+		'users': [new ObjectID('000000000000000000000000')],
 		'status': 'planning',
 		'current_sprint': null,
 		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
@@ -222,7 +219,7 @@ function resetCollection(db, name, cb) {
  */
 function resetDatabase(db, cb) {
   // The code below is a bit complex, but it basically emulates a
-  // "for" loop over asynchronous operations.
+  // 'for' loop over asynchronous operations.
   var collections = Object.keys(initialData);
   var i = 0;
   console.log('collections' + collections);
@@ -254,11 +251,11 @@ if(require.main === module) {
   var url = 'mongodb://localhost:27017/' + databaseName;
   MongoClient.connect(url, function(err, db) {
     if (err) {
-      throw new Error("Could not connect to database: " + err);
+      throw new Error('Could not connect to database: ' + err);
     } else {
-      console.log("Resetting database...");
+      console.log('Resetting database...');
       resetDatabase(db, function() {
-        console.log("Database reset!");
+        console.log('Database reset!');
         // Close the database connection so NodeJS closes.
         db.close();
       });
