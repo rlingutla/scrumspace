@@ -11,7 +11,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	var projects = stateProps.projects || []; // todo get rid of this:
 
 	let project = projects.find((proj) => {
-		return proj._id === parseInt(ownProps.params.id, 10);
+		return proj._id === ownProps.params.id;
 	});
 
 	let populatedProject = populateProjectEntities(project);

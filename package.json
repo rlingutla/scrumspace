@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "gulp client_dev",
     "build": "gulp build",
-    "start": "nodemon src/server/server.js",
+    "start": "node src/server/server.js",
     "serve": "npm run build && npm start"
   },
   "devDependencies": {

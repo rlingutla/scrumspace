@@ -75,7 +75,7 @@ gulp.task('watch', function() {
 
     nodemon({
       script: 'src/server/server.js',
-      watch: 'src',
+      watch: 'src/server',
       stdout: false
     }).on('readable', function() {
       this.stdout.on('data', function(chunk) {

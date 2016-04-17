@@ -153,7 +153,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	var projects = stateProps.projects || [];
 	var project;
 	project = projects.find((proj) => {
-		return proj._id === parseInt(ownProps.params.id, 10);
+		return proj._id === ownProps.params.id;
 	});
 	return Object.assign({...project}, {...ownProps}, {...dispatchProps});
 }
