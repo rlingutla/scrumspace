@@ -80,22 +80,22 @@ var initialData = {
 			'name': 'V1 Release',
 			'start_date':null,
 			'duration': 14,
-			'scrum_time': '09:00',
-			'project_id': new ObjectID('000000000000000000000000')
+			'scrum_time': '09:00'
+			// 'project_id': new ObjectID('000000000000000000000000')
 		},
 		{
 			'_id': new ObjectID('000000000000000000000001'),
 			'name': 'V2 Release',
 			'duration': 7,
 			'start_date': null,
-			'scrum_time': '09:00',
-			'project_id': new ObjectID('000000000000000000000000')
+			'scrum_time': '09:00'
+			// 'project_id': new ObjectID('000000000000000000000000')
 		}
 	],
 	'tasks': [
 		{
 			'_id': new ObjectID('000000000000000000000000'),
-			'project_id': new ObjectID('000000000000000000000000'),
+			// 'project_id': new ObjectID('000000000000000000000000'),
 			'status': 'UNASSIGNED',
 			'blocked_by': [],
 			'assigned_to': [new ObjectID('000000000000000000000000'),new ObjectID('000000000000000000000001')],
@@ -105,7 +105,7 @@ var initialData = {
 		},
 		{
 			'_id': new ObjectID('000000000000000000000001'),
-			'project_id': new ObjectID('000000000000000000000000'),
+			// 'project_id': new ObjectID('000000000000000000000000'),
 			'status': 'UNASSIGNED',
 			'blocked_by': [],
 			'assigned_to': [],
@@ -115,7 +115,7 @@ var initialData = {
 		},
 		{
 			'_id': new ObjectID('000000000000000000000002'),
-			'project_id': new ObjectID('000000000000000000000000'),
+			// 'project_id': new ObjectID('000000000000000000000000'),
 			'status': 'UNASSIGNED',
 			'blocked_by': [],
 			'assigned_to': [new ObjectID('000000000000000000000000')],
@@ -125,7 +125,7 @@ var initialData = {
 		},
 		{
 			'_id': new ObjectID('000000000000000000000003'),
-			'project_id': new ObjectID('000000000000000000000000'),
+			// 'project_id': new ObjectID('000000000000000000000000'),
 			'status': 'UNASSIGNED',
 			'blocked_by': [],
 			'assigned_to': [],
@@ -135,7 +135,7 @@ var initialData = {
 		},
 		{
 			'_id': new ObjectID('000000000000000000000004'),
-			'project_id': new ObjectID('000000000000000000000000'),
+			// 'project_id': new ObjectID('000000000000000000000000'),
 			'status': 'UNASSIGNED',
 			'blocked_by': [],
 			'assigned_to': [new ObjectID('000000000000000000000000')],
@@ -161,38 +161,40 @@ var initialData = {
 		}
 	],
 	'projects': [
-	{
-		'_id': new ObjectID('000000000000000000000000'),
-		'title': 'Drumpf',
-		'description': 'Make America Great Again',
-		'users': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001'), new ObjectID('000000000000000000000002')],
-		'status': 'sprint',
-		'current_sprint': null,
-		'stories': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001')],
-		'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
-		'commits': [3,1,6,4,8],
-		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj':['Abhay', 'VilkBot'],
-		'gCommits': [12,10],
-		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
+		{
+			'_id': new ObjectID('000000000000000000000000'),
+			'title': 'Drumpf',
+			'description': 'Make America Great Again',
+			'users': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001'), new ObjectID('000000000000000000000002')],
+			'status': 'sprint',
+			'current_sprint': null,
+			'sprints': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001')],
+			'stories': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001')],
+			'avatar': 'http://static1.businessinsider.com/image/55ca4540371d22462c8bcb17/donald-trump-is-still-soaring-in-iowa--but-there-are-now-some-clear-warning-signs.jpg',
+			'commits': [3,1,6,4,8],
+			'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
+			'membersOnProj':['Abhay', 'VilkBot'],
+			'gCommits': [12,10],
+			'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 
-	},
-	{
-		'_id': new ObjectID('000000000000000000000001'),
-		'title': 'Feel the Bern',
-		'description': 'Fight the Power',
-		'users': [new ObjectID('000000000000000000000000')],
-		'status': 'planning',
-		'current_sprint': null,
-		'stories': [],
-		'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
-		'commits':[4,7,2,8,9],
-		'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-		'membersOnProj':['VilkBot'],
-		'gCommits':[15],
-		'color':'#'+Math.floor(Math.random()*16777215).toString(16)
-	}
-]
+		},
+		{
+			'_id': new ObjectID('000000000000000000000001'),
+			'title': 'Feel the Bern',
+			'description': 'Fight the Power',
+			'users': [new ObjectID('000000000000000000000000')],
+			'status': 'planning',
+			'current_sprint': null,
+			'sprints': [],
+			'stories': [],
+			'avatar': 'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2015/07/150706_POL_Sanders.jpg.CROP.promo-xlarge2.jpg',
+			'commits':[4,7,2,8,9],
+			'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
+			'membersOnProj':['VilkBot'],
+			'gCommits':[15],
+			'color':'#'+Math.floor(Math.random()*16777215).toString(16)
+		}
+	]
 };
 
 
@@ -228,7 +230,7 @@ function resetDatabase(db, cb) {
   // If we have finished processing all of the collections,
   // it triggers the callback.
   function processNextCollection() {
-    if (i < collections.length-1) {
+    if (i < collections.length) {
       var collection = collections[i];
       i++;
       // Use myself as a callback.
