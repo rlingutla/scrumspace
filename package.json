@@ -5,9 +5,9 @@
   "author": "John Vilk <jvilk@cs.umass.edu>",
   "license": "MIT",
   "scripts": {
-    "dev": "gulp dev",
+    "dev": "gulp client_dev",
     "build": "gulp build",
-    "start": "node src/server/server.js",
+    "start": "nodemon src/server/server.js",
     "serve": "npm run build && npm start"
   },
   "devDependencies": {
