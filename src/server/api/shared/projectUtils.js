@@ -61,7 +61,7 @@ export const packageProjects = (user_id, db) => {
 		db.collection('users').find({}).toArray((err, users) => {
 			if(err) reject(err);
 			else {
-				db.collection('projects').find({}).toArray((err, projects) => {
+				db.collection('projects').find({ users: { $in: [new ObjectID(user_id)] } }).toArray((err, projects) => {
 					if(err) reject(err);
 					else {
 						//grab all sub-entity IDs to pull from DB
