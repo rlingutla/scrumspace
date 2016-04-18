@@ -29,7 +29,7 @@ var projUpdate = newProjHelper.projUpdate;
 var projectRemoval = newProjHelper.projRemoval;
 
 // Utils
-import { embedUsers, packageProjects } from '../shared/projectUtils';
+import { embedUsers, packageProjects, projectFromID } from '../shared/projectUtils';
 var StandardError = require('../shared/StandardError');
 var util = require('./util');
 var getProjectIndex = util.getProjectIndex;
@@ -290,37 +290,44 @@ module.exports = function (io, db) {
 	});
 
 	router.put('/:projectid/sprint/:sprintid/start', function(req,res){
-		let project = readDocument('projects').find((project) => project._id === parseInt(req.params.projectid, 10));
-		let sprint = (project) ? project.sprints.find((sprint) => sprint._id === parseInt(req.params.sprintid, 10)): undefined;
-
-		if(typeof project === 'undefined' || typeof sprint === 'undefined'){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'OBJECT_NOT_FOUND'
-			})});
-		}
-
-		if(project.current_sprint !== null){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'INVALID_ACTION',
-				detail: 'Project is already in a sprint'
-			})});
-		}
-		//start the sprint
-		project.current_sprint = parseInt(req.params.sprintid, 10);
-		project.sprints[sprint._id].start_date = Date.now();
-
-		writeDocument('projects', project);
-		var embeddedProject = embedUsers(project);
-
+		let sprintid = new ObjectID(req.params.sprintid);
+		let projectid = new ObjectID(req.params.projectid);
+		db.collection('projects').updateOne(
+			{
+				'_id': projectid,
+				'current_sprint': null
+			},
+			{ $set: {'current_sprint': sprintid}},
+			function(err, result){
+				if(err){
+					//TODO Handle error
+				} // TODO Check number of modified things
+				else{
+					db.collection('sprint').updateOne(
+						{
+							'_id': sprintid
+						},
+						{
+							$set: {'start_date': Date.now()}
+						},
+						function(err, result){
+							if(err){
+								//TODO Handle Error
+							}
+						}
+					);
+				}
+			}
+		);
+		let updatedProject = projectFromID(new ObjectID(getUserIdFromToken(req.get('Authorization')), projectid, db)).then(
+			(project) => project,
+			(error) => res.send(error) //TODO FIX
+		);
 		io.emit('STATE_UPDATE', {data: {
 			type: 'UPDATE_PROJECT',
-			project: embeddedProject
+			project: updatedProject
 		}});
-		return res.send(embeddedProject);
+		return res.send(updatedProject);
 	});
 
 	router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req, res){
@@ -389,12 +396,10 @@ module.exports = function (io, db) {
 				}
 			}
 		);
-		let updatedProject = packageProjects( new ObjectID(getUserIdFromToken(req.get('Authorization')), db)).find((project)=> {
-			if(project._id === projectid)
-				return true;
-			else
-				return false;
-		});
+		let updatedProject = projectFromID(new ObjectID(getUserIdFromToken(req.get('Authorization')), projectid, db)).then(
+			(project) => project,
+			(error) => res.send(error) //TODO FIX
+		);
 		io.emit('STATE_UPDATE', {data: {
 			type: 'REMOVE_SPRINT',
 			project: updatedProject,
