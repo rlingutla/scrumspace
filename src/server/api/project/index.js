@@ -19,11 +19,8 @@ var writeDocument = database.writeDocument;
 var deleteDocument = database.deleteDocument;
 var addDocument = database.addDocument;
 var getCollection = database.getCollection;
-
-// Sprint Helper function
-var sprintHelper = require('./sprintHelper');
-var sprintMaker = sprintHelper.sprintMaker;
-var removeSprint = sprintHelper.removeSprint;
+var MongoDB = require('mongodb');
+var ObjectID = MongoDB.ObjectID;
 
 // Project Helper functions
 var newProjHelper = require('./newProj');
@@ -267,24 +264,29 @@ module.exports = function (io, db) {
 
 	//Sprint Routes
 	router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
-		var sprint = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time, parseInt(req.params.sprintid, 10));
-
-		 if (sprint === 'SPRINT_NOT_FOUND'){
-			res.status(400);
- 			return res.send({error: StandardError({
- 				status: 400,
- 				title: 'INVALID_ACTION',
- 				detail: 'Sprint does not exist!'
- 			})});
-		 }
-
-		io.emit('STATE_UPDATE', {data: {
-			type: 'UPDATE_SPRINT',
-			project_id: parseInt(req.params.projectid, 10),
-			sprint_id: parseInt(req.params.sprintid, 10),
-			sprint
-		}});
-		res.send(sprint);
+		var sprintid = new ObjectID(req.params.sprintid);
+		db.collections('sprints').updateOne(
+			{'_id': sprintid},
+			{ $set: {
+				'name': req.body.name,
+				'start_date': req.body.start_date,
+				'duration': req.body.duration,
+				'scrum_time': req.body.scrum_time
+			}},
+			function(err, result){
+				if(err){
+					//TODO handle error
+				}
+			}
+		);
+		//TODO fix socket io here
+		res.send({
+			'_id': sprintid,
+			'name': req.body.name,
+			'start_date': req.body.start_date,
+			'duration': req.body.duration,
+			'scrum_time': req.body.scrum_time
+		});
 	});
 
 	router.put('/:projectid/sprint/:sprintid/start', function(req,res){
@@ -322,7 +324,29 @@ module.exports = function (io, db) {
 	});
 
 	router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req, res){
-		var sprint = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
+		//models a new sprint
+		var sprint = {
+			'name': req.body.name,
+			'start_date': null,
+			'duration': req.body.duration,
+			'scrum_time': req.body.scrum_time
+		};
+		db.collection('sprints').insertOne( sprint, function(err, result){
+			if(err){
+				//TODO HANDLE ERROR
+			}
+			sprint._id = result.insertedId;
+			//now need to add to project
+			db.collection('projects').updateOne(
+				{ '_id': new ObjectID(req.params.projectId) },
+				{ $push: { sprints: result.insertedId} },
+				function(err, result){
+					if(err){
+						//TODO HANDLE ERROR
+					}
+				}
+			);
+		});
 		res.status(201);
 		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + sprint._id);
 		// Send the update!
@@ -478,7 +502,7 @@ module.exports = function (io, db) {
 	});
 
 	router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req,res){
-	
+
 		if (Array.isArray(req.body.blocking)) {
 			Task.assignBlocking({
 				project_id: parseInt(req.params.project_id, 10),
