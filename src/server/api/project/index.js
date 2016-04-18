@@ -289,6 +289,47 @@ module.exports = function (io, db) {
 		});
 	});
 
+	//End a sprint
+	router.put('/:projectid/sprint/:sprintid/end', function(req,res){
+		let sprintid = new ObjectID(req.params.sprintid);
+		let projectid = new ObjectID(req.params.projectid);
+		db.collection('projects').updateOne(
+			{
+				'_id': projectid
+			},
+			{ $set: {'current_sprint': null}},
+			function(err, result){
+				if(err){
+					//TODO Handle error
+				} // TODO Check number of modified things
+				else{
+					db.collection('sprint').updateOne(
+						{
+							'_id': sprintid
+						},
+						{
+							$set: {'end_date': Date.now()}
+						},
+						function(err, result){
+							if(err){
+								//TODO Handle Error
+							}
+						}
+					);
+				}
+			}
+		);
+		let updatedProject = projectFromID(new ObjectID(getUserIdFromToken(req.get('Authorization')), projectid, db)).then(
+			(project) => project,
+			(error) => res.send(error) //TODO FIX
+		);
+		io.emit('STATE_UPDATE', {data: {
+			type: 'UPDATE_PROJECT',
+			project: updatedProject
+		}});
+		return res.send(updatedProject);
+	});
+
 	router.put('/:projectid/sprint/:sprintid/start', function(req,res){
 		let sprintid = new ObjectID(req.params.sprintid);
 		let projectid = new ObjectID(req.params.projectid);
