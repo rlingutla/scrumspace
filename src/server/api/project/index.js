@@ -291,6 +291,7 @@ module.exports = function (io, db) {
 				'scrum_time': req.body.scrum_time
 			}
 		}});
+		res.send();
 	});
 
 	//End a sprint
@@ -408,6 +409,7 @@ module.exports = function (io, db) {
 			sprint,
 			project_id: req.params.projectid
 		}});
+		res.send();
 	});
 
 	//Delete Sprint
@@ -418,7 +420,7 @@ module.exports = function (io, db) {
 			{
 				'_id': projectid,
 				'current_sprint': {
-					'$not': sprintid
+					'$ne': sprintid
 				}
 			},
 			{
@@ -427,8 +429,10 @@ module.exports = function (io, db) {
 			function(err, result){
 				if(err){
 					//TODO Handle Error
+					console.log(err);
 				} //TODO check number of modified things
 				else{ // else intentional, I don't want this to run if no id was pulled
+					console.log('no error');
 					db.collection('sprints').remove(
 						{'_id': sprintid},
 						{justOne: true},
@@ -441,15 +445,20 @@ module.exports = function (io, db) {
 				}
 			}
 		);
-		let updatedProject = projectFromID(new ObjectID(getUserIdFromToken(req.get('Authorization')), projectid, db)).then(
-			(project) => project,
+		console.log('userid', req.user_id);
+		let updatedProject = projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
+			(project) => {console.log('tebow', project);
+				return project;
+			},
 			(error) => res.send(error) //TODO FIX
 		);
+		console.log('this is utpal', updatedProject);
 		io.emit('STATE_UPDATE', {data: {
 			type: 'REMOVE_SPRINT',
 			project: updatedProject,
 			project_id: req.params.projectid
 		}});
+		res.send();
 	});
 
 	// Task Routes

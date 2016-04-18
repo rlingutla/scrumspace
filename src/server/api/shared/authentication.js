@@ -26,7 +26,7 @@ export function getUserIdFromToken(authorizationLine, cb) {
 			else return cb(decodedToken._id);
 		});
 	} else return cb(-1);
-	
+
 }
 
 function isUserMemberOfProject(user_id, project_id, db){
@@ -37,8 +37,8 @@ function isUserMemberOfProject(user_id, project_id, db){
 			else {
 				//if no project
 				if(project === null) return reject(false);
-		
-				// look for user in project.users 
+
+				// look for user in project.users
 				let isMember = project.users.find((user) => user.toString() === user_id);
 				(isMember) ? resolve(true):reject(false);
 			}
@@ -98,7 +98,7 @@ export const loginAuth = (db) => {
 					//pass user_id to next middleware
 					req.user_id = user_id;
 					return next();
-				}, 
+				},
 				(invalid) => {
 					console.log(`Unauthorized user (${user_id}) request denied`);
 					return res.status(401).end();
