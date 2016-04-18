@@ -29,7 +29,7 @@ var projUpdate = newProjHelper.projUpdate;
 var projectRemoval = newProjHelper.projRemoval;
 
 // Utils
-import { embedUsers } from '../shared/projectUtils';
+import { embedUsers, packageProjects } from '../shared/projectUtils';
 var StandardError = require('../shared/StandardError');
 var util = require('./util');
 var getProjectIndex = util.getProjectIndex;
@@ -264,7 +264,7 @@ module.exports = function (io, db) {
 
 	//Sprint Routes
 	router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
-		var sprintid = new ObjectID(req.params.sprintid);
+		let sprintid = new ObjectID(req.params.sprintid);
 		db.collections('sprints').updateOne(
 			{'_id': sprintid},
 			{ $set: {
@@ -325,7 +325,7 @@ module.exports = function (io, db) {
 
 	router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req, res){
 		//models a new sprint
-		var sprint = {
+		let sprint = {
 			'name': req.body.name,
 			'start_date': null,
 			'duration': req.body.duration,
@@ -335,7 +335,7 @@ module.exports = function (io, db) {
 			if(err){
 				//TODO HANDLE ERROR
 			}
-			sprint._id = result.insertedId;
+			sprint._id = result.insertedId.toString();
 			//now need to add to project
 			db.collection('projects').updateOne(
 				{ '_id': new ObjectID(req.params.projectId) },
@@ -353,38 +353,54 @@ module.exports = function (io, db) {
 		io.emit('STATE_UPDATE', {data: {
 			type: 'NEW_SPRINT',
 			sprint,
-			project_id: parseInt(req.params.project_id, 10)
+			project_id: req.params.projectid
 		}});
 		res.send(sprint);
 	});
 
 	//Delete Sprint
 	router.delete('/:projectid/sprint/:sprintid', function(req, res){
-		var project = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
-		if(project === 'SPRINT_NOT_FOUND'){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'INVALID_ACTION',
-				detail: 'Sprint does not exist!'
-			})});
-		}
-		else if(project === 'CURRENT_SPRINT_ERROR'){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'INVALID_ACTION',
-				detail: 'You cannot delete an active sprint!'
-			})});
-		}
-
-		var embeddedProject = embedUsers(project);
+		let sprintid = new ObjectID(req.params.sprintid);
+		let projectid = new ObjectID(req.params.projectid);
+		db.collection('projects').updateOne(
+			{
+				'_id': projectid,
+				'current_sprint': {
+					'$not': sprintid
+				}
+			},
+			{
+				$pull: { sprints: sprintid }
+			},
+			function(err, result){
+				if(err){
+					//TODO Handle Error
+				} //TODO check number of modified things
+				else{ // else intentional, I don't want this to run if no id was pulled
+					db.collection('sprints').remove(
+						{'_id': sprintid},
+						{justOne: true},
+						function(err, result){
+							if(err){
+								//TODO HANDLE ERROR
+							}
+						}
+					);
+				}
+			}
+		);
+		let updatedProject = packageProjects( new ObjectID(getUserIdFromToken(req.get('Authorization')), db)).find((project)=> {
+			if(project._id === projectid)
+				return true;
+			else
+				return false;
+		});
 		io.emit('STATE_UPDATE', {data: {
 			type: 'REMOVE_SPRINT',
-			project: embeddedProject,
-			project_id: parseInt(req.params.project_id, 10)
+			project: updatedProject,
+			project_id: req.params.project_id
 		}});
-		res.send(embeddedProject);
+		res.send(updatedProject);
 	});
 
 	// Task Routes
