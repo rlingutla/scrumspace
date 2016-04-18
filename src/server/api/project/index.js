@@ -265,7 +265,7 @@ module.exports = function (io, db) {
 	//Sprint Routes
 	router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
 		let sprintid = new ObjectID(req.params.sprintid);
-		db.collections('sprints').updateOne(
+		db.collection('sprints').updateOne(
 			{'_id': sprintid},
 			{ $set: {
 				'name': req.body.name,
@@ -279,14 +279,18 @@ module.exports = function (io, db) {
 				}
 			}
 		);
-		//TODO fix socket io here
-		res.send({
-			'_id': sprintid,
-			'name': req.body.name,
-			'start_date': req.body.start_date,
-			'duration': req.body.duration,
-			'scrum_time': req.body.scrum_time
-		});
+		io.emit('STATE_UPDATE', {data: {
+			type: 'UPDATE_SPRINT',
+			project_id: req.params.projectid,
+			sprint_id: req.params.sprintid,
+			sprint: {
+				'_id': sprintid,
+				'name': req.body.name,
+				'start_date': req.body.start_date,
+				'duration': req.body.duration,
+				'scrum_time': req.body.scrum_time
+			}
+		}});
 	});
 
 	//End a sprint
@@ -327,7 +331,6 @@ module.exports = function (io, db) {
 			type: 'UPDATE_PROJECT',
 			project: updatedProject
 		}});
-		return res.send(updatedProject);
 	});
 
 	router.put('/:projectid/sprint/:sprintid/start', function(req,res){
@@ -386,12 +389,14 @@ module.exports = function (io, db) {
 			sprint._id = result.insertedId.toString();
 			//now need to add to project
 			db.collection('projects').updateOne(
-				{ '_id': new ObjectID(req.params.projectId) },
+				{ '_id': new ObjectID(req.params.projectid) },
 				{ $push: { sprints: result.insertedId} },
 				function(err, result){
 					if(err){
 						//TODO HANDLE ERROR
+						console.log('error', err);
 					}
+					console.log('no error');
 				}
 			);
 		});
@@ -403,7 +408,6 @@ module.exports = function (io, db) {
 			sprint,
 			project_id: req.params.projectid
 		}});
-		res.send(sprint);
 	});
 
 	//Delete Sprint
@@ -444,9 +448,8 @@ module.exports = function (io, db) {
 		io.emit('STATE_UPDATE', {data: {
 			type: 'REMOVE_SPRINT',
 			project: updatedProject,
-			project_id: req.params.project_id
+			project_id: req.params.projectid
 		}});
-		res.send(updatedProject);
 	});
 
 	// Task Routes
