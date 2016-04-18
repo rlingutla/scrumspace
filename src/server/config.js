@@ -14,7 +14,7 @@ var mongo_express = require('mongo-express/lib/middleware');
 // Import the default Mongo Express configuration
 var mongo_express_config = require('mongo-express/config.default.js');
 
-import { loginAuth } from './api/shared/authentication';
+import projectAuth, { loginAuth } from './api/shared/authentication';
 
 module.exports = {};
 
@@ -35,14 +35,12 @@ module.exports.config = function (app, io, db) {
 	// serve static assets off of /static virtual path prefix
 	app.use('/static', express.static(__dirname + '/../../dist'));
 
-	app.use('/api', [loginAuth(db), require('./api')(io, db)]);
+	app.use('/api', [loginAuth(db), projectAuth(db), require('./api')(io, db)]);
 
 	app.use('/login', require('./login')(this.secret, db));
 
 	// TAKE THIS OUT IN PRODUCTION
 	app.use('/mongo_express', mongo_express(mongo_express_config));
-
-	// app.use(jwt({ secret: new Buffer(module.exports.secret, 'base64')}).unless({path: ['/login', '/static']}));
 
 	// This is the server entry point for the application.
 	app.get("/*", entry);

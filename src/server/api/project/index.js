@@ -475,107 +475,32 @@ module.exports = function (io, db) {
 	router.put('/:project_id/story/:story_id/task/:task_id/assigned_to', function(req,res) {
 		if (Array.isArray(req.body.users)) {
 			Task.assignUsers({
-				project_id: parseInt(req.params.project_id, 10),
-				story_id: parseInt(req.params.story_id, 10),
-				task_id: parseInt(req.params.task_id, 10),
-				users: req.body.users,
-				replace: req.body.replace
-			}).then(
+				task_id: req.params.task_id,
+				users: req.body.users
+			}, db).then(
 				(task) => {
 					io.emit('STATE_UPDATE', {data: {
 						type: 'UPDATE_TASK',
 						task,
-						project_id: parseInt(req.params.project_id, 10),
-						story_id: parseInt(req.params.story_id, 10)
+						project_id: req.params.project_id,
+						story_id: req.params.story_id
 					}});
 					res.send({data: task});
 				},
-				(err) => res.sendStatus(404)
+				(err) => res.status(err.status).send(err)
 			);
 		} else {
 			res.sendStatus(400);
 		}
 	});
 
-	//Delete Task
-	router.delete('/:project_id/story/:story_id/task/:task_id', function(req, res){
-		var projectId = (parseInt(req.params.project_id, 10));
-		var storyId = (parseInt(req.params.story_id, 10));
-		var taskId = (parseInt(req.params.task_id, 10));
-		var project = readDocument('projects', projectId);
-		var project_i, story_i, task_i;
-		for (let j = 0; j < project.stories.length; j++) {
-			if (project.stories[j]._id === storyId){
-				story_i = j;
-				for (let k = 0; k < project.stories[j].tasks.length; k++) {
-					if (project.stories[j].tasks[k]._id === taskId) {
-						task_i = k;
-						break;
-					}
-				}
-				break;
-			}
-		}
-		var returnedTask =project.stories[story_i].tasks.splice(task_i, 1);
-		writeDocument('projects', project);
-		res.send(returnedTask);
-	});
-
-	//Post Task
-	router.post('/:project_id/story/:story_id/task', validate({ body: TaskSchema }), function(req, res){
-		var projectId = (parseInt(req.params.project_id, 10));
-		var storyId = (parseInt(req.params.story_id, 10));
-		var taskId = (req.body.task_id === 'null') ? null : req.body.task_id;
-		var project = readDocument('projects', projectId);
-		var project_i, story_i, task_i;
-		for (let j = 0; j < project.stories.length; j++) {
-			if (project.stories[j]._id === storyId) {
-				story_i = j;
-				for(let k = 0; k < project.stories[j].tasks.length && typeof task !== 'undefined'; k++){
-					if(project.stories[j].tasks[k]._id === taskId){
-						task_i = k;
-						break;
-					}
-				}
-				break;
-			}
-		}
-
-		if (typeof task === 'undefined'){
-			task_i = project.stories[story_i].tasks.length;
-		}
-
-		let newTask = {
-			'_id': parseInt(task_i, 10),
-			'status': req.body.status,
-			'assigned_to': [],
-			'blocked_by': [],
-			'description': req.body.description,
-			'history': [{
-				from_status: null,
-				to_status: req.body.status,
-				modified_time: Date.now(),
-				modified_user : 0
-			}],
-			'attachments': null
-		};
-
-		project.stories[story_i].tasks[task_i] = newTask;
-		writeDocument('projects', project.stories[story_i].tasks[task_i]);
-		// Send the update!
-		res.send(newTask);
-	});
-
 	router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req,res){
 
 		if (Array.isArray(req.body.blocking)) {
 			Task.assignBlocking({
-				project_id: parseInt(req.params.project_id, 10),
-				story_id: parseInt(req.params.story_id, 10),
-				task_id: parseInt(req.params.task_id, 10),
-				blocking_tasks: req.body.blocking,
-				replace: req.body.replace
-			}).then(
+				task_id: req.params.task_id,
+				blocking_tasks: req.body.blocking
+			}, db).then(
 				(task) => {
 					io.emit('STATE_UPDATE', {data: {
 						type: 'UPDATE_TASK',
@@ -585,7 +510,7 @@ module.exports = function (io, db) {
 					}});
 					res.send({data: task});
 				},
-				(err) => res.sendStatus(404)
+				(err) => res.status(err.status).send(err)
 			);
 		} else {
 			res.sendStatus(400);

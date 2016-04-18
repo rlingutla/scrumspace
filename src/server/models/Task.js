@@ -4,6 +4,7 @@ var database = require('../database');
 var readDocument = database.readDocument;
 var writeDocument = database.writeDocument;
 var StandardError = require('../api/shared/StandardError');
+var ObjectID = require('mongodb').ObjectID;
 
 var _ = require('underscore');
 
@@ -70,79 +71,57 @@ module.exports.update = function(args){
 		//resolve promise
 		return resolve(updatedTask);
 	});
-}
+};
 
-module.exports.assignUsers = function(args){
-	let project = readDocument('projects', args.project_id);
-	let updatedTask, updatedProject;
-
+module.exports.assignUsers = function(args, db){
 	return new Promise((resolve, reject) => {
-		updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-			if(story._id === args.story_id){
-				return Object.assign({}, story, { tasks: story.tasks.map((task) => {
-					if(task._id === args.task_id){
-						updatedTask = Object.assign({}, task, {
-							history: [
-								...task.history //TODO do history stuff
-							],
-							assigned_to: (args.replace === true) ? args.users:_.union(task.assigned_to, args.users)
-						});
-						return updatedTask;
-					} else return task;
-				})});
-			} else return story;
-		})});
-
-		if(typeof updatedTask === undefined) {
-			return reject(StandardError({
-				status: 404,
-				title: 'OBJECT_NOT_FOUND'
-			}));
-		}
-
-		//write updated project object to server
-		writeDocument('projects', updatedProject);
-		//resolve promise
-		return resolve(updatedTask);
-	});
-}
-
-
-module.exports.assignBlocking = function(args){
-	let project = readDocument('projects', args.project_id);
-	let updatedTask, updatedProject;
-
-	return new Promise((resolve, reject) => {
-		updatedProject = Object.assign({}, project, { stories: project.stories.map((story) => {
-			if(story._id === args.story_id){
-				return Object.assign({}, story, { tasks: story.tasks.map((task) => {
-					if(task._id === args.task_id){
-						updatedTask = Object.assign({}, task, {
-							history: [
-								...task.history //TODO do history stuff
-							],
-							blocked_by: (args.replace === true) ? args.blocking_tasks:_.union(task.blocked_by, args.blocking_tasks)
-						});
-						return updatedTask;
-					} else return task;
-				})});
+		db.collection('users').find({ '_id': { $in: args.users.map((id) => new ObjectID(id)) }}).toArray((err, users) => {
+			if(err) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
+			else {
+				//all users found
+				if(users.length === args.users.length){
+					db.collection('tasks').findOneAndUpdate(
+						{_id: new ObjectID(args.task_id)}, 
+						{ $set: { 'assigned_to' : args.users} },
+						{ returnNewDocument : true },
+						(err, res) => {
+							if(err) reject(err);
+							else {
+								if(res === null) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
+								else return resolve(Object.assign({}, res.value, { assigned_to: args.users })); // returnNewDocument not working...?
+							}
+						}
+					);
+				}
+				else return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
 			}
-			else return story;
-		})});
-
-		console.log("updatedProject", updatedProject);
-
-		if(typeof updatedTask === undefined) {
-			return reject(StandardError({
-				status: 404,
-				title: 'OBJECT_NOT_FOUND'
-			}));
-		}
-
-		//write updated project object to server
-		writeDocument('projects', updatedProject);
-		
-		//resolve promise
-		return resolve(updatedTask);
+		});
 	});
-}
+};
+
+
+module.exports.assignBlocking = function(args, db){
+	return new Promise((resolve, reject) => {
+		db.collection('users').find({ '_id': { $in: args.blocking_tasks.map((id) => new ObjectID(id)) }}).toArray((err, users) => {
+			if(err) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
+			else {
+				//all users found
+				if(users.length === args.blocking_tasks.length){
+					db.collection('tasks').findOneAndUpdate(
+						{_id: new ObjectID(args.task_id)}, 
+						{ $set: { 'blocked_by' : args.blocking_tasks} },
+						{ returnNewDocument : true },
+						(err, res) => {
+							if(err) reject(err);
+							else {
+								if(res === null) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
+								else return resolve(Object.assign({}, res.value, { blocked_by: args.blocking_tasks })); // returnNewDocument not working...?
+							}
+						}
+					);
+				}
+				else return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
+			}
+		});
+	});
+};
