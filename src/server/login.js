@@ -6,6 +6,8 @@ var express = require('express'),
 	jwt = require('jsonwebtoken'),
 	moment = require('moment');
 
+var StandardError = require('./api/shared/StandardError');
+
 import { getUserByCreds } from './api/shared/authentication';
 
 module.exports = function (secret, db) {
@@ -32,6 +34,10 @@ module.exports = function (secret, db) {
 			},
 			(err) => res.sendStatus(401));
 		}
+		else res.status(400).send(StandardError({
+			status: 400,
+			title: 'INVALID_ARGUMENTS'
+		}));
 	});
 
 	return router;

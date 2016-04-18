@@ -50,9 +50,9 @@ var initialData = {
 			'_id': new ObjectID('000000000000000000000004'),
 			'first_name': 'Ryan',
 			'last_name': 'Jerue',
-			'email': 'someemail',
+			'email': 'ryan@ryan.com',
 			'display_name': 'Ryan Jerue',
-			'password': 'd4866854120e8bb207d6f8e11fce8b99',
+			'password': 'ryan',
 			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa7AAAAJGQ2NjlmY2MzLTgzYjctNGRhYy05ZmY2LTkxOGE3Mzg2NWU2MA.jpg'
 		},
 		5: {

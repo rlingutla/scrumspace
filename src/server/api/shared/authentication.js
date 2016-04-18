@@ -20,6 +20,7 @@ var ObjectID = require('mongodb').ObjectID;
 
 export function getUserIdFromToken(authorizationLine, cb) {
 	if(authorizationLine){
+		// TODO: grab secret from file
 		jwt.verify(authorizationLine.slice(7), "howMuchWoodCouldAWoodchuckChuckIfAWoodchuckCouldChuckWood", (err, decodedToken) => {
 			if(err) return cb(-1);
 			else return cb(decodedToken._id);
@@ -28,21 +29,21 @@ export function getUserIdFromToken(authorizationLine, cb) {
 	
 }
 
-function isUserMemberOfProject(user_id, project_id){
-	// allow string parameters
-	user_id = parseInt(user_id, 10);
-	project_id = parseInt(project_id, 10);
-
-	var project = readDocument('projects').find((e) => {
-		return e._id === project_id;
+function isUserMemberOfProject(user_id, project_id, db){
+	return new Promise((resolve, reject) => {
+		// get the project from URL param
+		db.collection('projects').findOne({ '_id': new ObjectID(project_id) }, (err, project) => {
+			if(err) return reject(false);
+			else {
+				//if no project
+				if(project === null) return reject(false);
+		
+				// look for user in project.users 
+				let isMember = project.users.find((user) => user.toString() === user_id);
+				(isMember) ? resolve(true):reject(false);
+			}
+		});
 	});
-
-	if (typeof project !== 'undefined') {
-		return _.contains(project.users, user_id);
-	} else {
-		console.log('Project not found');
-		return false;
-	}
 }
 
 export function getUserById(id, db){
@@ -94,6 +95,8 @@ export const loginAuth = (db) => {
 
 			isUserValid(user_id, db).then(
 				(valid) => {
+					//pass user_id to next middleware
+					req.user_id = user_id;
 					return next();
 				}, 
 				(invalid) => {
@@ -106,43 +109,18 @@ export const loginAuth = (db) => {
 };
 
 
-/*
-export default (req, res, next) => {
-	var user_id = getUserIdFromToken(req.get('Authorization'));
-	var requestUrl = req._parsedUrl.path;
+export default (db) => {
+	return (req, res, next) => {
+		let requestUrl = req._parsedUrl.path;
+		let project_id = requestUrl.split('/')[3];
 
-	if(!isUserValid(user_id)){
-		console.log(`Unauthorized user (${user_id}) request denied`);
-		// return res.redirect('/login');
-		return res.status(401).end();
-	}
-
-
-	if (requestUrl.indexOf('/init') === 0 || requestUrl.indexOf('/user') === 0 || requestUrl === '/project/' ) {
-		if (!isUserValid(user_id)) {
-			console.log(`Unauthorized user (${user_id}) request denied`);
-			// return res.redirect('/login');
-			return res.status(401).end();
-		}
-		console.log(`Authorized user (${user_id}) request granted`);
-		return next();
-	} 
-
-	//  looks like: /project/project_id/....
-	if (requestUrl.indexOf('/project/') === 0) {
-		var project_id = parseInt(requestUrl.split('/')[2], 10);
-		if (!isUserMemberOfProject(user_id, project_id)) {
-			console.log(`Unauthorized user (${user_id}) tried to access project ${project_id}`);
-			res.status(401).end();
-		} 
-		console.log(`Authorized user (${user_id}) accessed project ${project_id}`);
-		return next();	
-	}
-
-	if (requestUrl.indexOf('/resetdb') === 0) {
-		return next();
-	} 
-
-	console.log(`Route ${requestUrl} currently is not set for authentication`);
-	res.status(404).end();
-};*/
+		// if a project route
+		if(project_id){
+			// check if user from token is member of the specfd project
+			isUserMemberOfProject(req.user_id, project_id, db).then(
+				(isMember) => next(),
+				(notMember) => res.sendStatus(401)
+			);
+		} else next();
+	};
+};
