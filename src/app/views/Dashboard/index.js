@@ -2,6 +2,7 @@ import React from 'react';
 import taskSelector from 'app/shared/constants/taskSelector';
 import TopNav from 'app/shared/components/TopNav';
 import Wrapper from 'app/shared/components/Wrapper';
+import { Link } from 'react-router';
 
 import {
 	ProjectWidget,
@@ -14,14 +15,39 @@ import {
 
 import Container from './containers';
 
-
 const Dashboard = (props) => {
+	var projectsInSprint = props.projects.filter((project)=>{return project.current_sprint;});
+	var numProjectsInSprint = projectsInSprint.length;
+
+	if (numProjectsInSprint === 0) {
+		return (
+			<div id="content">
+				<TopNav view="Dashboard"/>
+				<div className="container-fluid">
+					<div className="row" style={{marginTop: '15px'}}>
+						<div className="col-md-12 col-lg-12">
+							<div className="panel panel-default">
+								<div className="panel-body">
+									<h3>
+										{'You currently have no projects in SPRINT status. '}
+										<Link activeClassName="selected" to={'/project/'}>
+											Go plan a project!
+										</Link>
+									</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 	return (
 		<div id="content">
 			<TopNav view="Dashboard"/>
 			<div className="container-fluid">
 				{ 
-					props.projects.map((project, i) => { 
+					projectsInSprint.map((project, i) => { 
 						let tasks = taskSelector(new Array(project), () => true, () => true);
 						return (
 							<ProjectWidget key={i} project={project}> 
