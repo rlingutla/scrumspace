@@ -114,7 +114,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 			story_id: ownProps.story_id,
 			_id: ownProps.task_id
 		},
-		{ users: stateProps.projects[ownProps.project_id].users },
+		{ users: stateProps.projects.find((proj) => ownProps.project_id === proj._id).users },
 		dispatchProps);
 }
 
