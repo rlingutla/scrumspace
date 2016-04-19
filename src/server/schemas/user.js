@@ -23,7 +23,6 @@ export default {
   },
   'additionalProperties': false,
   'required': [
-    '_id',
     'first_name',
     'last_name',
     'email',
