@@ -54,7 +54,7 @@ export function getUserById(id, db){
 			else reject(null);
 		},
 		(err) => {
-			logger(`Database Error: ${err}`);
+			console.log(`Database Error: ${err}`);
 			reject(false);
 		});
 	});
@@ -68,7 +68,7 @@ export function getUserByCreds(email, password, db){
 			else reject(null);
 		},
 		(err) => {
-			logger("Database Error:", err);
+			console.log("Database Error:", err);
 			reject(null);
 		});
 	});
@@ -83,7 +83,7 @@ function isUserValid(user_id, db) {
 			else reject(false);
 		},
 		(err) => {
-			logger("Database Error:", err);
+			console.log("Database Error:", err);
 			reject(false);
 		});
 	});
@@ -101,7 +101,7 @@ export const loginAuth = (db) => {
 					return next();
 				},
 				(invalid) => {
-					logger(`Unauthorized user (${user_id}) request denied`);
+					console.log(`Unauthorized user (${user_id}) request denied`);
 					return res.status(401).end();
 				}
 			);

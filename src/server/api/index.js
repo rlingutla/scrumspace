@@ -40,7 +40,7 @@ module.exports = function (io, db) {
 
 	// Reset the database.
 router.post('/resetdb', function(req, res) {
-  logger("Resetting database...");
+  console.log("Resetting database...");
   ResetDatabase(db, function() {
 		io.emit('DATABASE_RESET', {});
     res.send();

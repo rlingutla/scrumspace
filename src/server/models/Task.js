@@ -46,7 +46,7 @@ module.exports.update = function(args, db){
 
 				db.collection('tasks').findOneAndUpdate({_id: new ObjectID(args.task_id)}, { $set: updObject }, { returnOriginal : false },
 					(err, res) => {
-						logger("updated?", err, res);
+						console.log("updated?", err, res);
 						if(err || res.value === null) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
 						else return resolve(res.value);
 					}

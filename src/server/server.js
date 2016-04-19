@@ -22,17 +22,17 @@ io.on('connection', function (socket) {
 
 MongoClient.connect(url, function(err, db) {
 	if (err) {
-		logger('Could not connect to database!');
-		logger('Error: ' + err.message);
-		logger('Server process did not launch');
+		console.log('Could not connect to database!');
+		console.log('Error: ' + err.message);
+		console.log('Server process did not launch');
 	} else {
-		logger('Server successfully connected to database!');
+		console.log('Server successfully connected to database!');
 		// configure express app
 		require('./config').config(app, io, db);
 
 		// listen on designated port
 		server.listen(app.get('port'), () => {
-			logger('Listening on port ' + app.get('port'));
+			console.log('Listening on port ' + app.get('port'));
 		});
 	}
 });

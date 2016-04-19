@@ -43,7 +43,7 @@ module.exports = function (io, db) {
 					} else res.sendStatus(401);
 				},
 				(err) => {
-					logger('err', err);
+					console.log('err', err);
 					if(err) res.sendStatus(500); //database error
 					else res.sendStatus(400); //user not found
 				}

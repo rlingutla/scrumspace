@@ -24,7 +24,6 @@ const initialStore = createStore(
 // Note that req.url here should be the full URL path from
 // the original request, including the query string.
 export default (req, res) => {
-	logger("stuff");
 	// Note that req.url here should be the full URL path from
 	// the original request, including the query string.
 	match({ routes , location: req.url }, (error, redirectLocation, renderProps) => {

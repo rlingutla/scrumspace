@@ -52,7 +52,7 @@ module.exports = function (io, db) {
 	// Project routes
 	// add new project
 	router.post('/', validate({ body: ProjectSchema }), function(req,res){
-			//logger('From user: '+fromUser);
+			//console.log('From user: '+fromUser);
 		if (typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
 			res.status(400);
 			return res.send({
@@ -64,7 +64,7 @@ module.exports = function (io, db) {
 		}
 
 		var projects = readDocument('projects');
-		//logger(req.body.users);
+		//console.log(req.body.users);
 		var project = newProjCreation(req.body.title, req.body.description, req.body.users,req.body.membersOnProj);
 		res.status(201);
 		//res.set('Location', '/project' + projects[projects.length-1]._id);
@@ -77,7 +77,7 @@ module.exports = function (io, db) {
 
 	//update project
 	router.put('/:project_id', validate({ body: ProjectSchema }), function(req, res){
-		//logger(req.body.title.length);
+		//console.log(req.body.title.length);
 		if ((req.body.title.length === 0 ) &&  (req.body.users.length === 0)) {
 			res.status(400);
 			return res.send({error: StandardError({
@@ -398,9 +398,9 @@ module.exports = function (io, db) {
 				function(err, result){
 					if(err){
 						//TODO HANDLE ERROR
-						logger('error', err);
+						console.log('error', err);
 					}
-					logger('no error');
+					console.log('no error');
 				}
 			);
 		});
@@ -433,10 +433,10 @@ module.exports = function (io, db) {
 			function(err, result){
 				if(err){
 					//TODO Handle Error
-					logger(err);
+					console.log(err);
 				} //TODO check number of modified things
 				else{ // else intentional, I don't want this to run if no id was pulled
-					logger('no error');
+					console.log('no error');
 					db.collection('sprints').remove(
 						{'_id': sprintid},
 						{justOne: true},
@@ -459,7 +459,7 @@ module.exports = function (io, db) {
 									}
 									projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
 										(updatedProject) => {
-											logger(updatedProject.stories);
+											console.log(updatedProject.stories);
 											io.emit('STATE_UPDATE', {data: {
 												type: 'REMOVE_SPRINT',
 												project: updatedProject,
