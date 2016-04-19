@@ -284,7 +284,6 @@ module.exports = function (io, db) {
 						})
 					});
 				}
-				console.log('should be new', result.value);
 				io.emit('STATE_UPDATE', {data: {
 					type: 'UPDATE_SPRINT',
 					project_id: req.params.projectid,
