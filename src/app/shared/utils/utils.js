@@ -57,7 +57,7 @@ export function populateProjectEntities(project){
 	//TODO see if we can do this more efficiently
 	let users = {}, tasks = {};
 
-	project.users.forEach((user) => users[user._id] = user)
+	project.users.forEach((user) => users[user._id] = user);
 
 	//build references
 	project.stories.forEach((story) => {
@@ -71,6 +71,7 @@ export function populateProjectEntities(project){
 		return Object.assign({}, story, { tasks: story.tasks.map((task) => {
 			let assigned = task.assigned_to.map((userID) => users[userID]);
 			let blocked = task.blocked_by.map((taskID) => tasks[taskID]);
+
 			return Object.assign({}, task, {
 				assigned_to: assigned,
 				blocked_by: blocked

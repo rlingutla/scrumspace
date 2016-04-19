@@ -17,7 +17,7 @@ export function putAndChangeSettings(data, propertiesToUpdate) {
 			task => {
 				dispatch(changeSettingsState(data, propertiesToUpdate));
 			},
-			error => console.error('got an error', error)
+			error => logger('got an error', error)
 		);
 	};
 }

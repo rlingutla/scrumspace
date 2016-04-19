@@ -224,7 +224,7 @@ function resetDatabase(db, cb) {
   // 'for' loop over asynchronous operations.
   var collections = Object.keys(initialData);
   var i = 0;
-  console.log('collections' + collections);
+  logger('collections' + collections);
 
   // Processes the next collection in the collections array.
   // If we have finished processing all of the collections,
@@ -255,9 +255,9 @@ if(require.main === module) {
     if (err) {
       throw new Error('Could not connect to database: ' + err);
     } else {
-      console.log('Resetting database...');
+      logger('Resetting database...');
       resetDatabase(db, function() {
-        console.log('Database reset!');
+        logger('Database reset!');
         // Close the database connection so NodeJS closes.
         db.close();
       });

@@ -45,7 +45,7 @@ const pack = (data, refs) => {
 			};
 			return obj;
 		});
-		
+
 		project.sprints = refs.sprintIDs.project[project._id].map((id) => sprints[id]);
 		project.stories = refs.storyIDs.project[project._id].map((id) => {
 			let story = stories[id];
@@ -106,6 +106,19 @@ export const packageProjects = (user_id, db) => {
 					}
 				});
 			}
-		});	
+		});
+	});
+};
+
+export const projectFromID = (user_id, project_id, db) => {
+	return new Promise((resolve, reject) => {
+		packageProjects( user_id, db).then(
+			(packagedProjects) => {
+				resolve(packagedProjects.find( (project) => {
+					return project._id.toString() === project_id.toString();
+				}));
+			},
+			(error) => reject(error)
+		);
 	});
 };

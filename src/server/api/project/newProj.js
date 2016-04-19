@@ -26,7 +26,7 @@ function newProjCreation(title, description, users,membersOnProj) {
 		'gCommits': [10 + Math.floor(Math.random() * 10), 6 + Math.floor(Math.random() * 10), 4 + Math.floor(Math.random() * 10), 8 + Math.floor(Math.random() * 10), 5 + Math.floor(Math.random() * 10), 7 + Math.floor(Math.random() * 10), 7 + Math.floor(Math.random() * 10)],
 		'color': '#' + Math.floor(Math.random() * 16777215).toString(16)
 	};
-	console.log('DB Updated', project);
+	logger('DB Updated', project);
 	writeDocument('projects', project);
 	return project;
 }
@@ -41,7 +41,7 @@ function projUpdate(project_id, title, users) {
 	projects[project_i].users = users || projects[project_i].users;
 
 	writeDocument('projects', projects[project_i]);
-	console.log('DB Updated', projects[project_i]);
+	logger('DB Updated', projects[project_i]);
 	return projects[project_i];
 }
 module.exports.projUpdate = projUpdate;
@@ -53,7 +53,7 @@ function projRemoval(project_id) {
 		return 'PROJECT_NOT_FOUND';
 	var removed = projects.splice(project_i,1);
 	overwriteCollection('projects', projects);
-	console.log('DB Updated', readDocument('projects'));
+	logger('DB Updated', readDocument('projects'));
 	return removed[0];
 }
 module.exports.projRemoval = projRemoval;

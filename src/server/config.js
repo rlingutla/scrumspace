@@ -35,7 +35,7 @@ module.exports.config = function (app, io, db) {
 	// serve static assets off of /static virtual path prefix
 	app.use('/static', express.static(__dirname + '/../../dist'));
 
-	app.use('/api', [loginAuth(db), projectAuth(db), require('./api')(io, db)]);
+	app.use('/api', [loginAuth(db), require('./api')(io, db)]);
 
 	app.use('/login', require('./login')(this.secret, db));
 

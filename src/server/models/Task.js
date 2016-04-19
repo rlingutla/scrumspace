@@ -44,11 +44,11 @@ module.exports.update = function(args, db){
 				//if moving from blocked, remove blocking tasks
 				if(task.status === 'BLOCKED' && args.status !== 'BLOCKED') updObject.blocked_by = [];
 
-				db.collection('tasks').updateOne({_id: new ObjectID(args.task_id)}, { $set: updObject },
-					(err) => {
-						console.log("updated?", err);
-						if(err) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
-						else return resolve(Object.assign({}, task, updObject));
+				db.collection('tasks').findOneAndUpdate({_id: new ObjectID(args.task_id)}, { $set: updObject }, { returnOriginal : false },
+					(err, res) => {
+						logger("updated?", err, res);
+						if(err || res.value === null) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
+						else return resolve(res.value);
 					}
 				);
 			}
@@ -66,12 +66,13 @@ module.exports.assignUsers = function(args, db){
 					db.collection('tasks').findOneAndUpdate(
 						{_id: new ObjectID(args.task_id)}, 
 						{ $set: { 'assigned_to' : args.users} },
-						{ returnNewDocument : true },
+						{ returnOriginal : false },
 						(err, res) => {
 							if(err) reject(err);
 							else {
 								if(res === null) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
-								else return resolve(Object.assign({}, res.value, { assigned_to: args.users })); // returnNewDocument not working...?
+								// else return resolve(Object.assign({}, res.value, { assigned_to: args.users }));
+								else return resolve(res.value);
 							}
 						}
 					);
@@ -93,12 +94,13 @@ module.exports.assignBlocking = function(args, db){
 					db.collection('tasks').findOneAndUpdate(
 						{_id: new ObjectID(args.task_id)}, 
 						{ $set: { 'blocked_by' : args.blocking_tasks} },
-						{ returnNewDocument : true },
+						{ returnOriginal : false },
 						(err, res) => {
 							if(err) reject(err);
 							else {
 								if(res === null) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
-								else return resolve(Object.assign({}, res.value, { blocked_by: args.blocking_tasks })); // returnNewDocument not working...?
+								// else return resolve(Object.assign({}, res.value, { blocked_by: args.blocking_tasks })); // returnNewDocument not working...?
+								else return resolve(res.value);
 							}
 						}
 					);

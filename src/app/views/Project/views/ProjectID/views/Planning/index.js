@@ -69,7 +69,7 @@ class PlanView extends Component {
 					this.save('story' , item, null);
 				break;
 			default:
-				console('Tom Brady is the best ever.');
+				logger('Tom Brady is the best ever.');
 		}
 	}
 
@@ -79,14 +79,14 @@ class PlanView extends Component {
 				return this.props.sprints[i];
 			}
 		}
-		console.log('houston we have a problem');
+		logger('houston we have a problem');
 	}
 	getStoryByID(id){
 		for (var i in this.props.stories){
 			if (this.props.stories[i]._id === id)
 				return this.props.stories[i];
 		}
-		console.log('Mayday Mayday!');
+		logger('Mayday Mayday!');
 	}
 
 	handleEdit(value, item){ //these will have an ID...
@@ -136,7 +136,7 @@ class PlanView extends Component {
 					this.changeSprintModal();
 				break;
 			default:
-				console.log('I am Crying');
+				logger('I am Crying');
 		}
 		//redux!
 	}

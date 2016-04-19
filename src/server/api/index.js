@@ -12,7 +12,7 @@ var ResetDatabase = require('../resetdatabase');
 var express = require('express'),
 	router = express.Router();
 
-import authentication from './shared/authentication';
+import projectAuth from './shared/authentication';
 
 module.exports = function (io, db) {
 	router.get('/', function (req, res) {
@@ -24,7 +24,7 @@ module.exports = function (io, db) {
 
 //MongoClient.connect(url, function(err, db){
 	// data routes
-	router.use('/project/', require('./project')(io, db));
+	router.use('/project/', [projectAuth(db), require('./project')(io, db)]);
 	router.use('/user/', require('./user')(io, db));
 	router.use('/init/', require('./init')(io, db));
 
@@ -40,7 +40,7 @@ module.exports = function (io, db) {
 
 	// Reset the database.
 router.post('/resetdb', function(req, res) {
-  console.log("Resetting database...");
+  logger("Resetting database...");
   ResetDatabase(db, function() {
 		io.emit('DATABASE_RESET', {});
     res.send();

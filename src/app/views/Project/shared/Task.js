@@ -74,7 +74,7 @@ class Task extends React.Component {
 				<div className="task" onClick={(e) => this.changeModal(e)} style={{borderTopColor: TaskTypes[this.props.status].color}}>
 				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
 				    <div className="header" style={{borderColor: TaskTypes[this.props.status].color}}>
-				    	<div style={{flexGrow:1}}><a>{this.props._id}</a></div>
+				    	<div style={{flexGrow:1}}><a>{/*this.props._id*/}</a></div>
 				    	<div>
 				    		{(this.props.assigned_to.length > 0) ?
 				    			this.props.assigned_to.map((user, i) => {
@@ -105,17 +105,39 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	let theTask = ownProps.story.tasks[ownProps.task_id];
-	let users = stateProps.projects[ownProps.project_id].users;
+	let users = {}, tasks = {};
+	let project = stateProps.projects.find((project) => ownProps.project_id === project._id);
 
-	return Object.assign(theTask,
+	// build user ref dict
+	project.users.forEach((user) => users[user._id] = user);
+
+	
+	// build task ref dict
+	// project.stories.reduce((prev, curr) => prev.tasks.concat(curr.tasks)).forEach((task) => tasks[task._id] = task);
+	
+	let theTask = ownProps.story.tasks.find((task) => ownProps.task_id === task._id);
+	// let users = stateProps.projects.find((project) => ownProps.project_id === project._id).users;
+
+	// let theTask = project.stories.find((story) => ownProps.story_id === story._id)
+	// 	.tasks.find((task) => ownProps.task_id === task._id);
+
+
+	// let mappedProps = {
+	// 	assigned_to: theTask.assigned_to.map((userID) => users[userID]),
+	// 	blocked_by: theTask.blocked_by.map((taskID) => tasks[taskID])
+	// };
+
+
+	return Object.assign(
+		theTask,
 		{
 			project_id: ownProps.project_id,
 			story_id: ownProps.story_id,
-			_id: ownProps.task_id,
+			_id: ownProps.task_id
 		},
-		{ users: stateProps.projects[ownProps.project_id].users },
-		dispatchProps);
+		{ users: project.users },
+		dispatchProps
+	);
 }
 
 //maps any actions this component dispatches to component props
