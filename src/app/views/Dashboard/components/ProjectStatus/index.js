@@ -1,58 +1,38 @@
 import React from 'react';
-import { Doughnut } from 'react-chartjs';
-import { doughnutOptions } from '../../constants/chartOptions';
-import taskTypes from 'app/shared/constants/taskTypes';
 import Panel from '../shared/Panel';
 
-const capitalize = (s) => {
-	return s[0] + s.slice(1).toLowerCase();
-};
-
-const getChartObject = (label, number, color, highlight) => {
-	return {
-		label: label,
-		value: number,
-		color: color,
-		highlight: color
-	};
-};
-
-const isUnique = (e, i, arr) => {
-	return arr.indexOf(e) === i;
-};
-
-const getTaskDistribution = (tasks) => {
-	let statuses = tasks.map((task) => task.status).filter(isUnique);
-	
-	let countObj = {};
-
-	tasks.forEach((task) => {
-		countObj[task.status] = (countObj[task.status]) ? countObj[task.status] + 1 : 1;
-	});
-
-	// make my object into an array // TODO, is this necessary?
-	let statusArr = [];
-	for (var prop in countObj) {
-		statusArr.push({
-			value: countObj[prop],
-			type : prop
-		});
-	}
-	return statusArr.map((status) => {
-		return getChartObject(capitalize(status.type), 
-			status.value, 
-			taskTypes[status.type].color, 
-			taskTypes[status.type].color
-		);
-	});
-};
-
+function countTasksOfType(tasks, status) {
+	return tasks.reduce((prev, curr) => {
+	  return (curr.status === status) ? prev + 1: prev;
+	}, 0);
+}
 
 export default (props) => {
 	return (
 		<div className="col-md-6 col-lg-6">
 			<Panel title="Project Status">
-				<p> something cool goes here</p>
+				<div className="">
+					<div className="row">
+						<div style={{textAlign: 'center'}} className='col-lg-6 col-md-6'>
+							<h1>{props.daysLeft}</h1>
+							<h2> days left</h2>
+						</div>
+						<div style={{textAlign: 'center'}} className='col-lg-6 col-md-6'>
+							<h1>{countTasksOfType(props.tasks, 'BLOCKED')}</h1>
+							<h2> blocked tasks</h2>
+						</div>	
+					</div>
+					<div style={{textAlign: 'center'}} className='row'>
+						<div className="col-lg-6 col-md-6">
+							<h1>{countTasksOfType(props.tasks, 'UNASSIGNED')}</h1>
+							<h2> unassigned tasks</h2>
+						</div>
+						<div style={{textAlign: 'center'}} className="col-lg-6 col-md-6">
+							<h1>{countTasksOfType(props.tasks, 'DOING')}</h1>
+							<h2>doing tasks</h2>
+						</div>					
+					</div>
+				</div>
 			</Panel>
 		</div>
 	);
