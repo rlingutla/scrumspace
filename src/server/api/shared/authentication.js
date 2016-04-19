@@ -13,6 +13,7 @@ var database = require('../../database');
 var readDocument = database.readDocument;
 
 var ObjectID = require('mongodb').ObjectID;
+// var objIDValidate = require('mongodb').BSONPure.ObjectID;
 
 /*
 	Get the user ID from a token. Returns -1 (an invalid ID) if it fails.
@@ -26,7 +27,7 @@ export function getUserIdFromToken(authorizationLine, cb) {
 			else return cb(decodedToken._id);
 		});
 	} else return cb(-1);
-	
+
 }
 
 function isUserMemberOfProject(user_id, project_id, db){
@@ -37,8 +38,8 @@ function isUserMemberOfProject(user_id, project_id, db){
 			else {
 				//if no project
 				if(project === null) return reject(false);
-		
-				// look for user in project.users 
+
+				// look for user in project.users
 				let isMember = project.users.find((user) => user.toString() === user_id);
 				(isMember) ? resolve(true):reject(false);
 			}
@@ -98,7 +99,7 @@ export const loginAuth = (db) => {
 					//pass user_id to next middleware
 					req.user_id = user_id;
 					return next();
-				}, 
+				},
 				(invalid) => {
 					console.log(`Unauthorized user (${user_id}) request denied`);
 					return res.status(401).end();
@@ -111,11 +112,11 @@ export const loginAuth = (db) => {
 
 export default (db) => {
 	return (req, res, next) => {
+		
 		let requestUrl = req._parsedUrl.path;
-		let project_id = requestUrl.split('/')[3];
-
+		let project_id = requestUrl.split('/')[2];
 		// if a project route
-		if(project_id){
+		if(ObjectID.isValid(project_id)){
 			// check if user from token is member of the specfd project
 			isUserMemberOfProject(req.user_id, project_id, db).then(
 				(isMember) => next(),

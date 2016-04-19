@@ -19,11 +19,8 @@ var writeDocument = database.writeDocument;
 var deleteDocument = database.deleteDocument;
 var addDocument = database.addDocument;
 var getCollection = database.getCollection;
-
-// Sprint Helper function
-var sprintHelper = require('./sprintHelper');
-var sprintMaker = sprintHelper.sprintMaker;
-var removeSprint = sprintHelper.removeSprint;
+var MongoDB = require('mongodb');
+var ObjectID = MongoDB.ObjectID;
 
 // Project Helper functions
 var newProjHelper = require('./newProj');
@@ -32,7 +29,7 @@ var projUpdate = newProjHelper.projUpdate;
 var projectRemoval = newProjHelper.projRemoval;
 
 // Utils
-import { embedUsers } from '../shared/projectUtils';
+import { embedUsers, packageProjects, projectFromID } from '../shared/projectUtils';
 var StandardError = require('../shared/StandardError');
 var util = require('./util');
 var getProjectIndex = util.getProjectIndex;
@@ -267,100 +264,285 @@ module.exports = function (io, db) {
 
 	//Sprint Routes
 	router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
-		var sprint = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time, parseInt(req.params.sprintid, 10));
+		let sprintid = new ObjectID(req.params.sprintid);
+		db.collection('sprints').findOneAndUpdate(
+			{'_id': sprintid},
+			{ $set: {
+				'name': req.body.name,
+				'duration': req.body.duration,
+				'scrum_time': req.body.scrum_time
+			}},
+			{
+				'returnOriginal': false
+			},
+			function(err, result){
+				if(err){
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
+				io.emit('STATE_UPDATE', {data: {
+					type: 'UPDATE_SPRINT',
+					project_id: req.params.projectid,
+					sprint_id: req.params.sprintid,
+					sprint: result.value
+				}});
+				res.send();
+			}
+		);
+	});
 
-		 if (sprint === 'SPRINT_NOT_FOUND'){
-			res.status(400);
- 			return res.send({error: StandardError({
- 				status: 400,
- 				title: 'INVALID_ACTION',
- 				detail: 'Sprint does not exist!'
- 			})});
-		 }
-
-		io.emit('STATE_UPDATE', {data: {
-			type: 'UPDATE_SPRINT',
-			project_id: parseInt(req.params.projectid, 10),
-			sprint_id: parseInt(req.params.sprintid, 10),
-			sprint
-		}});
-		res.send(sprint);
+	//End a sprint
+	router.put('/:projectid/sprint/:sprintid/end', function(req,res){
+		let sprintid = new ObjectID(req.params.sprintid);
+		let projectid = new ObjectID(req.params.projectid);
+		db.collection('projects').updateOne(
+			{
+				'_id': projectid
+			},
+			{ $set: {'current_sprint': null}},
+			function(err, result){
+				if(err){
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
+				else if (result.modifiedCount === 0) {
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
+				else{
+					db.collection('sprints').updateOne(
+						{
+							'_id': sprintid
+						},
+						{
+							$set: {'end_date': Date.now()}
+						},
+						function(err, result){
+							if(err){
+								res.status(400).send( {
+									error: StandardError({
+										status: 400,
+										title: 'BAD_INFO'
+									})
+								});
+							}
+							projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
+								(updatedProject) => {
+									io.emit('STATE_UPDATE', {data: {
+										type: 'UPDATE_PROJECT',
+										project: updatedProject
+									}});
+									res.send();
+								},
+								(error) => res.sendStatus(500)
+							);
+						}
+					);
+				}
+			}
+		);
 	});
 
 	router.put('/:projectid/sprint/:sprintid/start', function(req,res){
-		let project = readDocument('projects').find((project) => project._id === parseInt(req.params.projectid, 10));
-		let sprint = (project) ? project.sprints.find((sprint) => sprint._id === parseInt(req.params.sprintid, 10)): undefined;
-
-		if(typeof project === 'undefined' || typeof sprint === 'undefined'){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'OBJECT_NOT_FOUND'
-			})});
-		}
-
-		if(project.current_sprint !== null){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'INVALID_ACTION',
-				detail: 'Project is already in a sprint'
-			})});
-		}
-		//start the sprint
-		project.current_sprint = parseInt(req.params.sprintid, 10);
-		project.sprints[sprint._id].start_date = Date.now();
-
-		writeDocument('projects', project);
-		var embeddedProject = embedUsers(project);
-
-		io.emit('STATE_UPDATE', {data: {
-			type: 'UPDATE_PROJECT',
-			project: embeddedProject
-		}});
-		return res.send(embeddedProject);
+		let sprintid = new ObjectID(req.params.sprintid);
+		let projectid = new ObjectID(req.params.projectid);
+		db.collection('projects').updateOne(
+			{
+				'_id': projectid,
+				'current_sprint': null
+			},
+			{ $set: {'current_sprint': sprintid}},
+			function(err, result){
+				if(err){
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
+				else if (result.modifiedCount === 0) {
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
+				else{
+					db.collection('sprints').updateOne(
+						{
+							'_id': sprintid
+						},
+						{
+							'$set': {'start_date': Date.now()}
+						},
+						function(err, result){
+							if(err){
+								res.status(400).send( {
+									error: StandardError({
+										status: 400,
+										title: 'BAD_INFO'
+									})
+								});
+							}
+							projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
+								(updatedProject) => {
+									io.emit('STATE_UPDATE', {data: {
+										type: 'UPDATE_PROJECT',
+										project: updatedProject
+									}});
+									res.send();
+								},
+								(error) => res.sendStatus(500)
+							);
+						}
+					);
+				}
+			}
+		);
 	});
 
 	router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req, res){
-		var sprint = sprintMaker(parseInt(req.params.projectid, 10), req.body.name, parseInt(req.body.duration, 10), req.body.scrum_time);
+		//models a new sprint
+		let sprint = {
+			'name': req.body.name,
+			'start_date': null,
+			'duration': req.body.duration,
+			'scrum_time': req.body.scrum_time
+		};
+		db.collection('sprints').insertOne( sprint, function(err, result){
+			if(err){
+				res.status(400).send( {
+					error: StandardError({
+						status: 400,
+						title: 'BAD_INFO'
+					})
+				});
+			}
+			sprint._id = result.insertedId.toString();
+			//now need to add to project
+			db.collection('projects').updateOne(
+				{ '_id': new ObjectID(req.params.projectid) },
+				{ $push: { sprints: result.insertedId} },
+				function(err, result){
+					if(err){
+						res.status(400).send( {
+							error: StandardError({
+								status: 400,
+								title: 'BAD_INFO'
+							})
+						});
+					}
+				}
+			);
+		});
 		res.status(201);
 		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + sprint._id);
 		// Send the update!
+
 		io.emit('STATE_UPDATE', {data: {
 			type: 'NEW_SPRINT',
 			sprint,
-			project_id: parseInt(req.params.project_id, 10)
+			project_id: req.params.projectid
 		}});
-		res.send(sprint);
+		res.send();
 	});
 
 	//Delete Sprint
 	router.delete('/:projectid/sprint/:sprintid', function(req, res){
-		var project = removeSprint(parseInt(req.params.projectid, 10), parseInt(req.params.sprintid, 10));
-		if(project === 'SPRINT_NOT_FOUND'){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'INVALID_ACTION',
-				detail: 'Sprint does not exist!'
-			})});
-		}
-		else if(project === 'CURRENT_SPRINT_ERROR'){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'INVALID_ACTION',
-				detail: 'You cannot delete an active sprint!'
-			})});
-		}
-
-		var embeddedProject = embedUsers(project);
-		io.emit('STATE_UPDATE', {data: {
-			type: 'REMOVE_SPRINT',
-			project: embeddedProject,
-			project_id: parseInt(req.params.project_id, 10)
-		}});
-		res.send(embeddedProject);
+		let sprintid = new ObjectID(req.params.sprintid);
+		let projectid = new ObjectID(req.params.projectid);
+		db.collection('projects').updateOne(
+			{
+				'_id': projectid,
+				'current_sprint': {
+					'$ne': sprintid
+				}
+			},
+			{
+				$pull: { sprints: sprintid }
+			},
+			function(err, result){
+				if(err){
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
+				else if (result.modifiedCount === 0) {
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
+				else{ // else intentional, I don't want this to run if no id was pulled
+					console.log('no error');
+					db.collection('sprints').remove(
+						{'_id': sprintid},
+						{justOne: true},
+						function(err, result2){
+							if(err){
+								res.status(400).send( {
+									error: StandardError({
+										status: 400,
+										title: 'BAD_INFO'
+									})
+								});
+							}
+							//Now need to move stories out out out
+							db.collection('stories').update(
+								{'sprint_id': sprintid},
+								{ $set: {
+									'sprint_id': null
+								}},
+								{
+									'multi': true
+								},
+								function(err){
+									if(err){
+										res.status(400).send( {
+											error: StandardError({
+												status: 400,
+												title: 'BAD_INFO'
+											})
+										});
+									}
+									projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
+										(updatedProject) => {
+											console.log(updatedProject.stories);
+											io.emit('STATE_UPDATE', {data: {
+												type: 'REMOVE_SPRINT',
+												project: updatedProject,
+												project_id: req.params.projectid
+											}});
+											res.send();
+										},
+										(error) => res.sendStatus(500)
+									);
+								}
+							);
+						}
+					);
+				}
+			}
+		);
 	});
 
 	// Task Routes
@@ -406,7 +588,7 @@ module.exports = function (io, db) {
 	});
 
 	router.put('/:project_id/story/:story_id/task/:task_id/blocked_by', function(req,res){
-	
+
 		if (Array.isArray(req.body.blocking)) {
 			Task.assignBlocking({
 				task_id: req.params.task_id,
