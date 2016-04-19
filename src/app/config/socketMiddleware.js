@@ -6,7 +6,7 @@ export default function (store) {
   let socket = io();
 
   socket.on('welcome', data => {
-  	console.log("SOCKET: Welcome to ScrumSpace\n", data);
+  	logger("SOCKET: Welcome to ScrumSpace\n", data);
   });
 
   socket.on('disconnect', error => {

@@ -9,7 +9,7 @@ export function serverUpdateSprint(project, name, duration, time, sprint){
 		return response;
 	},
 	(error) => {
-		console.error(error);
+		logger(error);
 	});
 }
 
@@ -28,7 +28,7 @@ export function serverRemoveSprint(project, sprint){
 		return response;
 	},
 	(error) => {
-		console.error(error);
+		logger(error);
 	});
 }
 
@@ -38,6 +38,6 @@ export function serverStartSprint(project_id, sprint_id){
 		return response;
 	},
 	(error) => {
-		console.error(error);
+		logger(error);
 	});
 }
