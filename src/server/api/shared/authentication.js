@@ -13,6 +13,7 @@ var database = require('../../database');
 var readDocument = database.readDocument;
 
 var ObjectID = require('mongodb').ObjectID;
+// var objIDValidate = require('mongodb').BSONPure.ObjectID;
 
 /*
 	Get the user ID from a token. Returns -1 (an invalid ID) if it fails.
@@ -111,11 +112,11 @@ export const loginAuth = (db) => {
 
 export default (db) => {
 	return (req, res, next) => {
+		
 		let requestUrl = req._parsedUrl.path;
-		let project_id = requestUrl.split('/')[3];
-
+		let project_id = requestUrl.split('/')[2];
 		// if a project route
-		if(project_id){
+		if(ObjectID.isValid(project_id)){
 			// check if user from token is member of the specfd project
 			isUserMemberOfProject(req.user_id, project_id, db).then(
 				(isMember) => next(),
