@@ -308,7 +308,7 @@ module.exports = function (io, db) {
 					//TODO Handle error
 				} // TODO Check number of modified things
 				else{
-					db.collection('sprint').updateOne(
+					db.collection('sprints').updateOne(
 						{
 							'_id': sprintid
 						},
@@ -319,19 +319,21 @@ module.exports = function (io, db) {
 							if(err){
 								//TODO Handle Error
 							}
+							projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
+								(updatedProject) => {
+									io.emit('STATE_UPDATE', {data: {
+										type: 'UPDATE_PROJECT',
+										project: updatedProject
+									}});
+									res.send();
+								},
+								(error) => res.sendStatus(500)
+							);
 						}
 					);
 				}
 			}
 		);
-		let updatedProject = projectFromID(new ObjectID(getUserIdFromToken(req.get('Authorization')), projectid, db)).then(
-			(project) => project,
-			(error) => res.send(error) //TODO FIX
-		);
-		io.emit('STATE_UPDATE', {data: {
-			type: 'UPDATE_PROJECT',
-			project: updatedProject
-		}});
 	});
 
 	router.put('/:projectid/sprint/:sprintid/start', function(req,res){
@@ -348,31 +350,32 @@ module.exports = function (io, db) {
 					//TODO Handle error
 				} // TODO Check number of modified things
 				else{
-					db.collection('sprint').updateOne(
+					db.collection('sprints').updateOne(
 						{
 							'_id': sprintid
 						},
 						{
-							$set: {'start_date': Date.now()}
+							'$set': {'start_date': Date.now()}
 						},
 						function(err, result){
 							if(err){
 								//TODO Handle Error
 							}
+							projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
+								(updatedProject) => {
+									io.emit('STATE_UPDATE', {data: {
+										type: 'UPDATE_PROJECT',
+										project: updatedProject
+									}});
+									res.send();
+								},
+								(error) => res.sendStatus(500)
+							);
 						}
 					);
 				}
 			}
 		);
-		let updatedProject = projectFromID(new ObjectID(getUserIdFromToken(req.get('Authorization')), projectid, db)).then(
-			(project) => project,
-			(error) => res.send(error) //TODO FIX
-		);
-		io.emit('STATE_UPDATE', {data: {
-			type: 'UPDATE_PROJECT',
-			project: updatedProject
-		}});
-		return res.send(updatedProject);
 	});
 
 	router.post('/:projectid/sprint', validate({ body: SprintSchema }), function(req, res){
@@ -404,6 +407,7 @@ module.exports = function (io, db) {
 		res.status(201);
 		res.set('Location', '/project/' + req.params.projectid + '/sprint/' + sprint._id);
 		// Send the update!
+
 		io.emit('STATE_UPDATE', {data: {
 			type: 'NEW_SPRINT',
 			sprint,
@@ -436,29 +440,42 @@ module.exports = function (io, db) {
 					db.collection('sprints').remove(
 						{'_id': sprintid},
 						{justOne: true},
-						function(err, result){
+						function(err, result2){
 							if(err){
 								//TODO HANDLE ERROR
 							}
+							//Now need to move stories out out out
+							db.collection('stories').update(
+								{'sprint_id': sprintid},
+								{ $set: {
+									'sprint_id': null
+								}},
+								{
+									'multi': true
+								},
+								function(err){
+									if(err){
+										//TODO Handle error
+									}
+									projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
+										(updatedProject) => {
+											console.log(updatedProject.stories);
+											io.emit('STATE_UPDATE', {data: {
+												type: 'REMOVE_SPRINT',
+												project: updatedProject,
+												project_id: req.params.projectid
+											}});
+											res.send();
+										},
+										(error) => res.sendStatus(500)
+									);
+								}
+							);
 						}
 					);
 				}
 			}
 		);
-		console.log('userid', req.user_id);
-		let updatedProject = projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
-			(project) => {console.log('tebow', project);
-				return project;
-			},
-			(error) => res.send(error) //TODO FIX
-		);
-		console.log('this is utpal', updatedProject);
-		io.emit('STATE_UPDATE', {data: {
-			type: 'REMOVE_SPRINT',
-			project: updatedProject,
-			project_id: req.params.projectid
-		}});
-		res.send();
 	});
 
 	// Task Routes

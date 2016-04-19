@@ -112,15 +112,13 @@ export const packageProjects = (user_id, db) => {
 
 export const projectFromID = (user_id, project_id, db) => {
 	return new Promise((resolve, reject) => {
-		let project = packageProjects( user_id, db).then(
+		packageProjects( user_id, db).then(
 			(packagedProjects) => {
-				packagedProjects.find( (project) => {
-					console.log('AHAHAHA', project);
-					return project._id.toString() === project_id.toString();} );
+				resolve(packagedProjects.find( (project) => {
+					return project._id.toString() === project_id.toString();
+				}));
 			},
 			(error) => reject(error)
 		);
-		console.log('LOOK AT ME', project);
-		resolve(project);
 	});
 };

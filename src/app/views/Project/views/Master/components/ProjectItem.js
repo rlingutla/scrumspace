@@ -78,7 +78,7 @@ const processGraphData = (project) => {
 //get scrum time from a project object
 function getScrumTime(props){
 	if (props.current_sprint !== null){
-		return props.sprints[props.current_sprint].scrum_time;
+		return props.sprints.find((project) => props.current_sprint === project._id).scrum_time;
 	}
 	else return '';
 }

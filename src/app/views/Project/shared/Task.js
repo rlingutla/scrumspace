@@ -105,14 +105,14 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	let theTask = ownProps.story.tasks[ownProps.task_id];
-	let users = stateProps.projects[ownProps.project_id].users;
+	let theTask = ownProps.story.tasks.find((task) => ownProps.task_id === task._id);
+	let users = stateProps.projects.find((project) => ownProps.project_id === project._id).users;
 
 	return Object.assign(theTask,
 		{
 			project_id: ownProps.project_id,
 			story_id: ownProps.story_id,
-			_id: ownProps.task_id,
+			_id: ownProps.task_id
 		},
 		{ users: stateProps.projects[ownProps.project_id].users },
 		dispatchProps);
