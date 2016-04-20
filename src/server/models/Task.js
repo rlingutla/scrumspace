@@ -21,32 +21,31 @@ module.exports.update = function(args, db){
 		db.collection('tasks').findOne({_id: new ObjectID(args.task_id)}, (err, task) => {
 			if(err || task === null) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
 			else {
-				let updObject = {};
-				if(args.description) updObject['description'] = args.description;
+				let updObject = { $set: {}};
+				if(args.description) updObject.$set.description = args.description;
 				if(args.status){
 					//check if status is valid
 					if(this.taskEnum[args.status]) {
-						updObject['status'] = args.status;
+						updObject.$set.status = args.status;
 						//update history if status changed
 						if(task.status !== args.status){
-							updObject.history = [
-								...task.history,
-								{ 
+							updObject.$push = { history: { 
 									from_status: task.status, 
 									to_status: args.status, 
 									modified_time: Date.now(), 
 									modified_user: args.user
 								}
-							];
+							};
 						}
 					}
 				}
 				//if moving from blocked, remove blocking tasks
-				if(task.status === 'BLOCKED' && args.status !== 'BLOCKED') updObject.blocked_by = [];
+				if(task.status === 'BLOCKED' && args.status !== 'BLOCKED') updObject.$set.blocked_by = [];
 
-				db.collection('tasks').findOneAndUpdate({_id: new ObjectID(args.task_id)}, { $set: updObject }, { returnOriginal : false },
+				db.collection('tasks').findOneAndUpdate({_id: new ObjectID(args.task_id)}, updObject, { returnOriginal : false },
 					(err, res) => {
-						if(err || res.value === null) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
+						if(err) return reject(StandardError({ status: 500, title: 'IDK' }));
+						else if(res.value === null) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
 						else return resolve(res.value);
 					}
 				);
