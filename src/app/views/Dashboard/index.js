@@ -19,7 +19,6 @@ import Container from './containers';
 function getDaysLeft(timeStamp) {
 	var eventdate = moment(timeStamp);
 	var todaysdate = moment();
-	debugger;
 	return eventdate.diff(todaysdate, 'days');
 }
 

@@ -107,32 +107,37 @@ module.exports = function (io, db) {
 	});
 
 	// update a story
-	router.put('/:project_id/story/:story_id',function(req, res) {
+	router.put('/:project_id/story/:story_id', function(req, res) {
 		// get variables
 		var story_id = new ObjectID(req.params.story_id);
 		var project_id = new ObjectID(req.params.project_id);
-		var newStory = {};
-		debugger;
-		// check out new data was sent
-		if (req.body.description) {
-			newStory.description = req.body.description;
+
+		var story = {};
+
+		if (req.body.sprint_id !== undefined) {
+			// is null, or needs an object id
+			story.sprint_id = (req.body.sprint_id) ? new ObjectID(req.body.sprint_id) : null;
 		}
 
-		if (req.body.title) {
-			newStory.title = req.body.title;
+		if (req.body.description !== undefined) {
+			story.description = req.body.description;
 		}
 
+		if (req.body.title !== undefined) {
+			story.title = req.body.title;
+		}
 
+		// todo handle task puts!???
+		var pid = req.params.project_id; // TODO: AV: investigate this
+		var sid = req.params.story_id;
+		// send request to update story
 		db.collection('stories').findOneAndUpdate(
-			{'_id': story_id},
-			{ $set: {
-				'name': req.body.name,
-				'duration': req.body.duration,
-				'scrum_time': req.body.scrum_time
-			}},
-
+			  {'_id': story_id}
+			, { $set: story }
+			,{ 'returnOriginal': false }
+			,
 			function(err, result){
-				if(err){
+				if (err){
 					res.status(400).send( {
 						error: StandardError({
 							status: 400,
@@ -140,149 +145,137 @@ module.exports = function (io, db) {
 						})
 					});
 				}
-				console.log('should be new', result.value);
 				io.emit('STATE_UPDATE', {data: {
-					type: 'UPDATE_SPRINT',
-					project_id: req.params.projectid,
-					sprint_id: req.params.sprintid,
-					sprint: result.value
+					type: 'UPDATE_STORY',
+					project_id: pid,
+					story: result.value
 				}});
 				res.send();
 			}
 		);
-
-
-		if (storyToUpdate) {
-
-			if (tasks) {
-				storyToUpdate.tasks = tasks.map((task, i) =>  {
-					// TODO: model
-					return Object.assign({
-						'status': 'UNASSIGNED',
-						'assigned_to': [],
-						'blocked_by': [],
-						'description': task.description,
-						'history': [{
-							from_status: null,
-							to_status: 'UNASSIGNED',
-							modified_time: Date.now(),
-							modified_user : 0
-						}],
-						'attachments': null
-					}, storyToUpdate.tasks[i], task);
-				});
-			}
-
-			if(typeof req.body.sprint_id !== 'undefined'){
-				storyToUpdate.sprint_id = parseInt(req.body.sprint_id, 10);
-			}
-			//write updated project object to server
-			writeDocument('projects', projectToUpdate);
-			io.emit('STATE_UPDATE', {data: {
-				type: 'UPDATE_STORY',
-				project_id: projectToUpdate._id,
-				story: storyToUpdate
-			}});
-			res.send(storyToUpdate);
-		} else {
-			res.status(404);
-			res.send();
-		}
 	});
 
 	// delete a story
 	router.delete('/:project_id/story/:story_id', function(req, res) {
-		// db.stories.remove({ "_id" : ObjectId("000000000000000000000002")})
-
 		// get variables
-		var projects = readDocument('projects');
-		var project_i = getProjectIndex(parseInt(req.params.project_id, 10));
-		if(project_i === 'PROJECT_NOT_FOUND'){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'Project does not exist!'
-			})});
-		}
-		var story_i = getStoryIndex(project_i, parseInt(req.params.story_id, 10));
-		if(story_i === 'STORY_NOT_FOUND'){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'Story does not Exist!'
-			})});
-		}
-		var removedStory = projects[project_i].stories.splice(story_i, 1);
-		writeDocument('projects', projects[project_i]);
+		var story_id = new ObjectID(req.params.story_id);
+		var project_id = new ObjectID(req.params.project_id);
 
-		io.emit('STATE_UPDATE', {data: {
-			type: 'REMOVE_STORY',
-			project_id: parseInt(req.params.project_id, 10),
-			story: removedStory
-		}});
-		res.send(removedStory[0]);
+		db.collection('stories').remove(
+			{ '_id': story_id },
+			{
+				justOne: true
+			},
+			function (err, result) {
+				if (err) {
+					res.status(400);
+					return res.send({error: StandardError({
+						status: 400,
+						title: 'Could not delete story!'
+					})});							
+				}
+				
+				db.collection('projects').findOneAndUpdate(
+					{ 
+						_id: project_id 
+					},
+					{
+						$pull: { stories: story_id}
+					},
+					function (err, result) {
+						if (err) {
+							res.status(400);
+							return res.send({error: StandardError({
+								status: 400,
+								title: 'Could not delete story!'
+							})});							
+						}
+						io.emit('STATE_UPDATE', {data: {
+							type: 'REMOVE_STORY',
+							project_id: project_id,
+							story: { 
+								_id: story_id
+							}
+						}});
+					}
+				);
+			}
+		);
+		return res.send();
 	});
 
 	// Post a new story
 	router.post('/:project_id/story', validate({ body: StorySchema }), function(req, res) {
-		var project_id = parseInt(req.params.project_id, 10);
-		var title = req.body.title;
-		var description = req.body.description;
-		var tasks = req.body.tasks;
-		var storyId = (req.body.storyId === 'null') ? null : req.body.storyId; // todo: noooo!
+		// get variables
+		var project_id = new ObjectID(req.params.project_id);
+		var pid = req.params.project_id;
 
-		var projects = readDocument('projects');
-		var project_i = getProjectIndex(parseInt(req.params.project_id, 10));
-		if(project_i === 'PROJECT_NOT_FOUND'){
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'Project does not exist!'
-			})});
-		}
-		var story_i = projects[project_i].stories.length;
-		var story_id = (story_i > 0) ? projects[project_i].stories[story_i -1]._id + 1 : 0;
-		var sprint_id = null;
-		//remove any empty tasks
-		tasks = tasks.filter((e) => {
-			if (e.description === '')
-				return false;
-			else
-				return true;
-		});
-		var newTasks = [];
-		for (let i = 0; i < tasks.length; i++) {
-			newTasks[i] = {
-				'_id': i,
+		var tasks = req.body.tasks.map(function(task) {
+			return {
 				'status': 'UNASSIGNED',
-				'assigned_to': [],
 				'blocked_by': [],
-				'description': tasks[i].description,
-				'history': [{
-					from_status: null,
-					to_status: 'UNASSIGNED',
-					modified_time: Date.now(),
-					modified_user : 0
-				}],
+				'assigned_to': [],
+				'description': task.description,
+				'history': [],
 				'attachments': null
 			};
-		}
-		let newStory = {
-			'_id': story_id,
-			'title': title,
-			'description': description,
-			'sprint_id': sprint_id,
-			'tasks': newTasks
-		};
+		});
 
-		projects[project_i].stories[story_i] = newStory;
-		writeDocument('projects', projects[project_i]);
-		io.emit('STATE_UPDATE', {data: {
-			type: 'NEW_STORY',
-			project_id: parseInt(req.params.project_id, 10),
-			story: newStory
-		}});
-		res.send(newStory);
+		db.collection('tasks').insert(
+			tasks
+			, function(err, result) {
+				if (err) {
+					res.status(400).send();
+					return;
+				} 
+				var taskIds = result.insertedIds;
+				var newStory = {
+					title: req.body.title,
+					description: req.body.description,
+					tasks: taskIds,
+					sprint_id: null
+				};
+				db.collection('stories').insert(
+					newStory,
+					function(err, result) {
+						if (err) {
+							console.log(err);
+						} 
+						var story_id = result.insertedIds[0];
+
+						db.collection('projects').findOneAndUpdate(
+							  { _id: project_id }
+							, { $push: { stories: story_id } }
+							, { returnOriginal: false }
+							, function(err, result) {
+								if (err) {
+									res.status(400).end();
+								}
+								// add _ids to tasks
+								for (var i = 0; i < tasks.length; i++) {
+									newStory.tasks[i] = Object.assign({}, tasks[i], {
+										_id: tasks[i]._id.toString()
+									});
+								}
+
+								newStory._id = story_id; // TODO, this is not elegant!, what's the idiom?
+								io.emit('STATE_UPDATE', {
+									data: {
+										type: 'NEW_STORY',
+										project_id: pid,
+										story: newStory
+									}
+								});
+								return res.status(200).send();
+						});
+					}
+				);
+
+
+
+		});
+
+		
 	});
 
 	//Sprint Routes
@@ -340,6 +333,7 @@ module.exports = function (io, db) {
 						},
 						function(err, result){
 							if(err){
+								console.log(err);
 								//TODO Handle Error
 							}
 							projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(

@@ -24,7 +24,6 @@ export default class Login extends React.Component {
 		console.log('hello');
 		sendXHRPromise('POST', '/login', { email: this.state.email, password: this.state.password }).then((response) => {
 			window.sessionStorage.accessToken = response.token;
-			debugger;
 			this.props.renderScrumspace();
 		});
 	}
