@@ -12,13 +12,6 @@ import { getUserIdFromToken } from '../shared/authentication';
 // Models
 var Task = require('../../models/Task');
 
-// Database Functions
-var database = require('../../database');
-var readDocument = database.readDocument;
-var writeDocument = database.writeDocument;
-var deleteDocument = database.deleteDocument;
-var addDocument = database.addDocument;
-var getCollection = database.getCollection;
 var MongoDB = require('mongodb');
 var ObjectID = MongoDB.ObjectID;
 
@@ -31,10 +24,7 @@ var projectRemoval = newProjHelper.projRemoval;
 // Utils
 import { embedUsers, packageProjects, projectFromID } from '../shared/projectUtils';
 var StandardError = require('../shared/StandardError');
-var util = require('./util');
-var getProjectIndex = util.getProjectIndex;
-var getSprintIndex = util.getSprintIndex;
-var getStoryIndex = util.getStoryIndex;
+
 //Router
 var express = require('express'),
 router = express.Router();
@@ -52,7 +42,7 @@ module.exports = function (io, db) {
 	// Project routes
 	// add new project
 	router.post('/', validate({ body: ProjectSchema }), function(req,res){
-			//console.log('From user: '+fromUser);
+		/*
 		if (typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
 			res.status(400);
 			return res.send({
@@ -73,6 +63,7 @@ module.exports = function (io, db) {
 			project
 		}});
 		res.send(project);
+		*/
 	});
 
 	//update project

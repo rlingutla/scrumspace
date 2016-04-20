@@ -1,9 +1,8 @@
-var database = require('../../database');
-var readDocument = database.readDocument;
 
 var ObjectID = require('mongodb').ObjectID;
 
 export const embedUsers = (project) => {
+	/*
 	var userId = 0;
 	var users = readDocument('users');
 	return Object.assign({}, project, {
@@ -21,6 +20,7 @@ export const embedUsers = (project) => {
 			return obj;
 		})
 	});
+	*/
 };
 
 const pack = (data, refs) => {

@@ -1,7 +1,5 @@
-var initialData = require('./data');
 
-
-var data;
+var data = {};
 // If 'true', the in-memory object representing the database has changed,
 // and we should flush it to disk.
 var updated = false;
@@ -9,11 +7,6 @@ var updated = false;
 var fs = require('fs'),
   path = require('path');
 
-try {
-  data = require('./database.json');
-} catch(e) {
-  data = JSONClone(initialData);
-}
 
 /**
  * A dumb cloning routing. Serializes a JSON object as a string, then
@@ -126,11 +119,3 @@ module.exports.overwriteCollection = overwriteCollection;
  }
  module.exports.resetDatabase = resetDatabase;
 
- // Periodically updates the database on the hard drive
-// when changed.
-setInterval(function() {
-  if (updated) {
-    fs.writeFileSync(path.join(__dirname, 'database.json'), JSON.stringify(data), { encoding: 'utf8' });
-    updated = false;
-  }
-}, 200);

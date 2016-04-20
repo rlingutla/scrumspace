@@ -2,15 +2,10 @@
 	This function will authenticate all routes in the application
 */
 import _ from 'underscore';
-//import jwt from 'jwt-simple';
+// import jwt from 'jwt-simple';
 var jwt = require('jsonwebtoken');
 
 var secret = require('../../config').secret;
-
-// Database functions
-//deprecated
-var database = require('../../database');
-var readDocument = database.readDocument;
 
 var ObjectID = require('mongodb').ObjectID;
 // var objIDValidate = require('mongodb').BSONPure.ObjectID;

@@ -1,8 +1,4 @@
 'use-strict';
-//Database Functions
-var database = require('../../database');
-var readDocument = database.readDocument;
-
 var express = require('express'),
 	router = express.Router();
 

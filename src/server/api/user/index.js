@@ -2,11 +2,6 @@
 import UserSchema from '../../schemas/user';
 var validate = require('express-jsonschema').validate;
 
-var database = require('../../database');
-var readDocument = database.readDocument;
-var writeDocument = database.writeDocument;
-var getCollection = database.writeDocument;
-
 var authentication = require('../shared/authentication');
 var getUserIdFromToken = authentication.getUserIdFromToken;
 var checkAuthFromProject = authentication.checkAuthFromProject;

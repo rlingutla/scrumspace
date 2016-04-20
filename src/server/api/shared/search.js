@@ -1,7 +1,6 @@
 'use strict';
 
 var StandardError = require('./StandardError');
-var readDocument = require('../../database').readDocument;
 var _ = require('underscore');
 
 /*
