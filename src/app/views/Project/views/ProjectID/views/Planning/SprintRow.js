@@ -16,7 +16,7 @@ const storyTarget = {
 	hover(props, monitor, component) {},
 	drop(props, monitor, component) {
 	  let item = monitor.getItem();
-		console.log(props.data);
+		logger(props.data);
 	  props.save('story', item.data, props.data._id);
 	}
 };

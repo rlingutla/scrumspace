@@ -17,6 +17,11 @@ import { getUser } from '../app/shared/utils/utils';
 // socket stuff
 import initSocket, {chatMiddleware} from '../app/config/socketMiddleware';
 
+const ENV = 'DEVELOPMENT';
+
+// some logging stuff
+window.logger = (...args) => { if(ENV === 'DEVELOPMENT') console.log(...args);};
+
 /*
 	This is the 'entry point' into the client side code.
 	We render our application using react-router by passing it in routes

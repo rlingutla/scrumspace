@@ -37,33 +37,34 @@ module.exports = function (io, db) {
 
 	// needs client side
 	// Supriya's code
-
-	// TODO ONLY GRAB THE USER FROM THE TOKEN!!
 	router.put('/', validate({ body: UserSchema }), function(req, res) {
-		// first get all the inputs based on the user id given
-		// gets users id from user
-		var userId = parseInt(req.params.user_id, 10);
-		// // gets users, and reads it
-		var users = readDocument('users');
+		let updObj = {};
+		if (typeof req.body.first_name !== 'undefined') updObj.first_name = req.body.first_name;
+		if (typeof req.body.avatar_url !== 'undefined') updObj.avatar_url = req.body.avatar_url;
+		if (typeof req.body.first_name !== 'undefined') updObj.first_name = req.body.first_name;
+		if (typeof req.body.last_name !== 'undefined') updObj.last_name = req.body.last_name;
+		if (typeof req.body.display_name !== 'undefined') updObj.display_name = req.body.display_name;
+		if (typeof req.body.email !== 'undefined') updObj.email = req.body.email;
 
-		//check passwords
-		if (typeof req.body.old_password !== 'undefined') {
-			if (req.body.old_password === users[userId].password) {
-				users[userId].password = req.body.new_password;
+		db.collection('users').findOne({'_id': new ObjectID(req.user_id)}, (err, user) => {
+			if(err) return res.status(500).send(err);
+			else {
+				// we can assume user exists, it's already passed through auth
+				if(req.body.old_password){
+					if(req.body.old_password !== user.password) return res.status(400).send({error: 'Incorrect Old Password'});
+					updObj.password = req.body.new_password;
+				}
+
+				db.collection('users').updateOne({'_id': new ObjectID(req.user_id)}, { $set: updObj }, (err) => {
+					if (err) return res.status(500).send(err);
+					else {
+						let retUser = Object.assign({}, user, updObj);
+						delete retUser.password;
+						return res.send({ data: retUser });
+					}
+				});
 			}
-			//  Unauthorized
-			else res.status(401).end();
-		}
-
-		if (typeof req.body.first_name !== 'undefined') users[userId].first_name = req.body.first_name;
-		if (typeof req.body.avatar_url !== 'undefined') users[userId].avatar_url = req.body.avatar_url;
-		if (typeof req.body.first_name !== 'undefined') users[userId].first_name = req.body.first_name;
-		if (typeof req.body.last_name !== 'undefined') users[userId].last_name = req.body.last_name;
-		if (typeof req.body.display_name !== 'undefined') users[userId].display_name = req.body.display_name;
-		if (typeof req.body.email !== 'undefined') users[userId].email = req.body.email;
-
-		//writeDocument('users', users[userId]);
-		res.send(users[userId]);
+		});
 	});
 
 	return router;

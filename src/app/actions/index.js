@@ -15,7 +15,7 @@ export function postAndCreateNewProject(title, description,users,membersOnProj){
 			project => {
 				dispatch(createNewProjectAction(project));
 			},
-			error => console.error('got an error', error)
+			error => logger('got an error', error)
 		);
 	};
 }
@@ -29,7 +29,7 @@ export function putProjectUpdates(project_id, title, members){
 	return function (dispatch){
 		return serverUpdateProject(project_id, title, members).then(
 			project => dispatch(updateProjectAction(project)),
-			error => console.error('Cant update project', error)
+			error => logger('Cant update project', error)
 		);
 	};
 }
@@ -47,7 +47,7 @@ export function removeProject(project_id){
 				dispatch(removeProjectAction(project));
 				browserHistory.push('/project/');
 			},
-			error => console.error('Cant remove project', error)
+			error => logger('Cant remove project', error)
 		);
 	};
 }
@@ -65,8 +65,9 @@ export const updateTaskAction = (project_id, story_id, task) => {
 export function updateTask(project_id, story_id, task_id, status, description){
 	return function (dispatch){
 		return serverUpdateTask(project_id, story_id, task_id, status, description).then(
-			task => dispatch(updateTaskAction(project_id, story_id, task)),
-			error => console.error('got an error', error)
+			// task => dispatch(updateTaskAction(project_id, story_id, task)),
+			task => logger('TASK UPDATED', task),
+			error => logger('got an error', error)
 		);
 	};
 }
@@ -74,8 +75,9 @@ export function updateTask(project_id, story_id, task_id, status, description){
 export function assignUsersToTask(project_id, story_id, task_id, users){
 	return function (dispatch){
 		return serverAssignUsersToTask(project_id, story_id, task_id, users).then(
-			task => dispatch(updateTaskAction(project_id, story_id, task)),
-			error => console.error('got an error', error)
+			// task => dispatch(updateTaskAction(project_id, story_id, task)),
+			task => logger('success'),
+			error => logger('got an error', error)
 		);
 	};
 }
@@ -84,7 +86,7 @@ export function assignBlockingTasks(project_id, story_id, task_id, blocking){
 	return function (dispatch){
 		return serverAssignBlockingTasks(project_id, story_id, task_id, blocking).then(
 			task => dispatch(updateTaskAction(project_id, story_id, task)),
-			error => console.error('got an error', error)
+			error => logger('got an error', error)
 		);
 	};
 }
@@ -101,7 +103,7 @@ export function putStory(project_id, story_id, title, description){
 	return function(dispatch){
 		return serverPutStory(project_id, story_id, title, description).then(
 			story => dispatch(updateStoryAction(project_id, story)),
-			error => console.error('got an error', error)
+			error => logger('got an error', error)
 		);
 	};
 }
@@ -121,7 +123,7 @@ function postNewProjectPlan(signal, data){
 		case 'UPDATE_SPRINT':
 			return serverUpdateSprint(data.project, data.name, data.duration, data.time, data.sprint_id);
 		default:
-			console.log('No Signal', signal);
+			logger('No Signal', signal);
 	}
 }
 
@@ -141,7 +143,7 @@ export function postProjectPlan(signal, data){
 	return function(dispatch){
 		return postNewProjectPlan(signal, data).then(
 			sprint => dispatch(projectPlan(signal, data, sprint)),
-			error => console.error('rip', error)
+			error => logger('rip', error)
 		);
 	};
 }
@@ -157,7 +159,7 @@ export function putStartSprint(project_id, sprint_id){
 				dispatch(startSprintAction(project));
 				browserHistory.push(`/project/${project_id}/scrumboard`);
 			},
-			error => console.error('rip', error)
+			error => logger('rip', error)
 		);
 	};
 }

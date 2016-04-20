@@ -497,17 +497,18 @@ module.exports = function (io, db) {
 
 	// Task Routes
 	router.put('/:project_id/story/:story_id/task/:task_id', function(req,res){
-		let user = getUserIdFromToken(req.get('Authorization'));
 		Task.update({
-			project_id: parseInt(req.params.project_id, 10), story_id: parseInt(req.params.story_id, 10), task_id: parseInt(req.params.task_id, 10),
-			description: req.body.description, status: req.body.status, user: user
-		}).then(
+			task_id: req.params.task_id,
+			description: req.body.description, 
+			status: req.body.status, 
+			user: req.user_id
+		}, db).then(
 			(task) => {
 				io.emit('STATE_UPDATE', {data: {
 					type: 'UPDATE_TASK',
 					task,
-					project_id: parseInt(req.params.project_id, 10),
-					story_id: parseInt(req.params.story_id, 10)
+					project_id: req.params.project_id,
+					story_id: req.params.story_id
 				}});
 				res.send({data: task});
 			},

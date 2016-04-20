@@ -42,7 +42,7 @@ export function sendXHR(verb, resource, body, cb) {
       // the error.
       var responseText = xhr.responseText;
       var error = 'Could not ' + verb + " " + resource + ": Received " + statusCode + " " + statusText + ": " + responseText;
-      console.log(error);
+      logger(error);
       ErrorBanner(error);
     }
   });
@@ -54,14 +54,14 @@ export function sendXHR(verb, resource, body, cb) {
   xhr.addEventListener('error', function() {
   	var error = "Could not " + verb + " " + resource + ": Could not connect to the server.";
 	ErrorBanner(error); // This is in the global namespace.
-    console.log(error);
+    logger(error);
   });
 
   // Network failure: request took too long to complete.
   xhr.addEventListener('timeout', function() {
     var error = 'Could not ' + verb + " " + resource + ": Request timed out.";
     ErrorBanner(error);
-    console.log(error);
+    logger(error);
   });
 
   switch (typeof(body)) {
@@ -121,7 +121,7 @@ export function sendXHRPromise(verb, resource, body) {
   	xhr.addEventListener('error', function() {
   		let error = `Could not ${verb} ${resource}: Could not connect to the server.`;
 		ErrorBanner(error); // This is in the global namespace.
-		console.log(error);
+		logger(error);
 		reject(error);
   	});
 
@@ -129,7 +129,7 @@ export function sendXHRPromise(verb, resource, body) {
   	xhr.addEventListener('timeout', function() {
   		let error = `Could not ${verb} ${resource}: Request timed out.`;
   		ErrorBanner(error);
-		console.log(error);
+		logger(error);
 		reject(error);
   	});
 
@@ -167,15 +167,12 @@ export class ResetDatabase extends React.Component {
   render() {
     return (
       <button style={{width: 50+'px', height: 50+'px', overflow: 'hidden', fontSize: 12+'px', padding: 0}} className="btn btn-default" type="button" onClick={() => {
-        //resetDatabase(); //THIS NEEDS TO BE REMOVED!
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api/resetdb');
-        xhr.addEventListener('load', function() {
+        sendXHRPromise('POST', '/api/resetdb').then((response) => {
           window.alert("Database reset! Refreshing the page now...");
           window.location.href = '/';
-          // document.location.reload(false);
         });
-        xhr.send();
+
+
       }}>Reset Mock DB</button>
     );
   }
@@ -186,5 +183,5 @@ function getCurrentUser(){
 }
 
 function serverLog(...msg){
-	console.log('SERVER MESSAGE:', ...msg);
+	logger('SERVER MESSAGE:', ...msg);
 }
