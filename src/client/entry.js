@@ -35,6 +35,7 @@ const renderLogin = () => {
 
 const renderClient = () => {
 	stateTree(getUser()).then((stateTree) => {
+		console.log(stateTree);
 		match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
 			let store = createStore(
 				scrumApp,

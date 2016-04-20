@@ -153,7 +153,12 @@ const mapStateToProps = (state) => {
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	let stories = stateProps.projects.find((proj) => proj._id === ownProps.project_id).stories;
-	let tasks = stories.reduce((prev, curr) => prev.tasks.concat(curr.tasks));
+	let tasks = stories.reduce((prev, curr) => { 
+		if (prev.constructor === Object) {
+			return prev.tasks.concat(curr.tasks);
+		}
+		return prev.concat(curr.tasks);
+	 });
 
 	return Object.assign({}, ownProps, {tasks}, dispatchProps);
 }
