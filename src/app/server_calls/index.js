@@ -166,14 +166,14 @@ function JSONClone(obj) {
 export class ResetDatabase extends React.Component {
   render() {
     return (
-      <button style={{width: 50+'px', height: 50+'px', overflow: 'hidden', fontSize: 12+'px', padding: 0}} className="btn btn-default" type="button" onClick={() => {
+      <button style={{borderRadius: '5px', width: 50+'px', height: 50+'px', overflow: 'hidden', fontSize: 12+'px', padding: 0}} className="btn btn-default" type="button" onClick={() => {
         sendXHRPromise('POST', '/api/resetdb').then((response) => {
           window.alert("Database reset! Refreshing the page now...");
           window.location.href = '/';
         });
 
 
-      }}>Reset Mock DB</button>
+      }}>Reset DB</button>
     );
   }
 }

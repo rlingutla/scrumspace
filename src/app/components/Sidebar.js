@@ -9,22 +9,22 @@ export default () => {
 		<div id="sidebar">
 			<div id="project-selector">
 				<ul>
-					<li>
+					<li title="Dashboard">
 						<Link activeClassName="selected" to="/dashboard"><Ionicon icon="ion-ios-pie" /></Link>
 					</li>
-					<li>
+					<li title="Project">
 						<Link activeClassName="selected" to="/project/"><Ionicon icon="ion-easel"/></Link>
 					</li>
-					<li>
+					<li title="Settings">
 						<Link activeClassName="selected" to="/settings"><Ionicon icon="ion-ios-gear"/></Link>
 					</li>
-					<li>
+					<li title="Statistics">
 						<Link activeClassName="selected" to="/statistics"><Ionicon icon="ion-stats-bars"/></Link>
 					</li>
-					<li>
-						<a name="Logout" onClick={(e) => logout()}><Ionicon icon="ion-android-cancel"/></a>
+					<li title="Logout">
+						<a title="Logout" onClick={(e) => logout()}><Ionicon icon="ion-android-cancel"/></a>
 					</li>
-					<li>
+					<li title="Reset DB">
 						<ResetDatabase />
 					</li>
 				</ul>
