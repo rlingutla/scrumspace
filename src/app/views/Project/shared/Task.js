@@ -57,6 +57,10 @@ class Task extends React.Component {
 		return {};
 	}
 
+	VID(task_id){
+		return `S${this.props.taskIndex[task_id].story}-T${this.props.taskIndex[task_id].task}`;
+	}
+
 	render() {
 		const {connectDragSource, id, onMove, isDragging, ...props} = this.props;
 
@@ -74,7 +78,7 @@ class Task extends React.Component {
 				<div className="task" onClick={(e) => this.changeModal(e)} style={{borderTopColor: TaskTypes[this.props.status].color}}>
 				    <TaskDetailModal {...this.props} changeModal={(e) => this.changeModal(e)} isModalOpen={this.state.isModalOpen} />
 				    <div className="header" style={{borderColor: TaskTypes[this.props.status].color}}>
-				    	<div style={{flexGrow:1}}><a>{/*this.props._id*/}</a></div>
+				    	<div style={{flexGrow:1}}><a>{this.VID(this.props._id)}</a></div>
 				    	<div>
 				    		{(this.props.assigned_to.length > 0) ?
 				    			this.props.assigned_to.map((user, i) => {
@@ -87,7 +91,10 @@ class Task extends React.Component {
 				    	<p>{this.props.description}</p>
 				    </div>
 				    <div className="task-info">
-				    	{(this.props.blocked_by.length > 0) ? <BlockedTasks blocked_by={this.props.blocked_by} />:null}
+				    	{(this.props.blocked_by.length > 0) ? 
+				    		<BlockedTasks blocked_by={this.props.blocked_by.map((task) => Object.assign({}, task, { VID: this.VID(task._id) }))} />
+				    		:null
+				    	}
 				    </div>
 
 				    <div className="footer"></div>
@@ -105,31 +112,22 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	let users = {}, tasks = {};
+	let users = {}, taskIndex = {};
 	let project = stateProps.projects.find((project) => ownProps.project_id === project._id);
 
 	// build user ref dict
 	project.users.forEach((user) => users[user._id] = user);
 
-	
-	// build task ref dict
 	// project.stories.reduce((prev, curr) => prev.tasks.concat(curr.tasks)).forEach((task) => tasks[task._id] = task);
-	
+	project.stories.forEach((story, i) => {
+		story.tasks.forEach((task, j) => taskIndex[task._id] = { story: i, task: j });
+	});
+
 	let theTask = ownProps.story.tasks.find((task) => ownProps.task_id === task._id);
-	// let users = stateProps.projects.find((project) => ownProps.project_id === project._id).users;
-
-	// let theTask = project.stories.find((story) => ownProps.story_id === story._id)
-	// 	.tasks.find((task) => ownProps.task_id === task._id);
-
-
-	// let mappedProps = {
-	// 	assigned_to: theTask.assigned_to.map((userID) => users[userID]),
-	// 	blocked_by: theTask.blocked_by.map((taskID) => tasks[taskID])
-	// };
-
 
 	return Object.assign(
-		theTask,
+		theTask, 
+		{ taskIndex },
 		{
 			project_id: ownProps.project_id,
 			story_id: ownProps.story_id,

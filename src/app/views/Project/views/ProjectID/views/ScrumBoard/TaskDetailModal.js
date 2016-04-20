@@ -152,15 +152,20 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	let stories = stateProps.projects.find((proj) => proj._id === ownProps.project_id).stories;
-	let tasks = stories.reduce((prev, curr) => { 
+	let storyIndex = {}, taskIndex = {};
+	let project = stateProps.projects.find((proj) => proj._id === ownProps.project_id);
+	project.stories.forEach((story, i) => {
+		storyIndex[story._id] = i;
+		story.tasks.forEach((task, j) => taskIndex[task._id] = j);
+	});
+	let tasks = project.stories.reduce((prev, curr) => { 
 		if (prev.constructor === Object) {
 			return prev.tasks.concat(curr.tasks);
 		}
 		return prev.concat(curr.tasks);
 	 });
 
-	return Object.assign({}, ownProps, {tasks}, dispatchProps);
+	return Object.assign({}, {storyIndex}, {taskIndex}, ownProps, {tasks}, dispatchProps);
 }
 
 //maps any actions this component dispatches to component props

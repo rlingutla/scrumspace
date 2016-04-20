@@ -60,12 +60,8 @@ export function populateProjectEntities(project){
 	project.users.forEach((user) => users[user._id] = user);
 
 	//build references
-	project.stories.forEach((story) => {
-		tasks[story._id] = {};
-		story.tasks.forEach((task) => {
-			tasks[task._id] = task;
-		});
-	});
+	project.stories.forEach((story) => story.tasks.forEach((task) => tasks[task._id] = task));
+
 
 	let stories = project.stories.map((story) => {
 		return Object.assign({}, story, { tasks: story.tasks.map((task) => {

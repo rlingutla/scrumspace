@@ -85,11 +85,11 @@ module.exports.assignUsers = function(args, db){
 
 module.exports.assignBlocking = function(args, db){
 	return new Promise((resolve, reject) => {
-		db.collection('users').find({ '_id': { $in: args.blocking_tasks.map((id) => new ObjectID(id)) }}).toArray((err, users) => {
+		db.collection('tasks').find({ '_id': { $in: args.blocking_tasks.map((id) => new ObjectID(id)) }}).toArray((err, tasks) => {
 			if(err) return reject(StandardError({ status: 404, title: 'OBJECT_NOT_FOUND' }));
 			else {
-				//all users found
-				if(users.length === args.blocking_tasks.length){
+				//all tasks found
+				if(tasks.length === args.blocking_tasks.length){
 					db.collection('tasks').findOneAndUpdate(
 						{_id: new ObjectID(args.task_id)}, 
 						{ $set: { 'blocked_by' : args.blocking_tasks} },
