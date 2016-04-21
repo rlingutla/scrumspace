@@ -4,7 +4,7 @@ import ProjectItem from './ProjectItem';
 import { postAndCreateNewProject } from '../../../../../actions/';
 import { ToggleDisplay } from 'react-toggle-display';
 import MultiSelect from 'app/shared/components/MultiSelect';
-import { sendXHRPromise } from '../../../../../mock_server/server';
+import { sendXHRPromise } from '../../../../../server_calls/index';
 import { Async as AsyncSelect } from 'react-select';
 
 import { connect } from 'react-redux';

@@ -63,10 +63,15 @@ function mapDispatchToProps(){
   return {};
 };
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	let tasks = stateProps
-	.projects.find((proj) => proj._id === ownProps.project_id)
-	.stories.find((story) => story._id === ownProps.story_id)
-	.tasks;
+	let tasks = stateProps.projects.find((proj) => proj._id === ownProps.project_id).stories.reduce((prev, curr) => { 
+		if (prev.constructor === Object) return prev.tasks.concat(curr.tasks);
+		else return prev.concat(curr.tasks);
+	 });
+
+	// let tasks = stateProps
+	// .projects.find((proj) => proj._id === ownProps.project_id)
+	// .stories.find((story) => story._id === ownProps.story_id)
+	// .tasks;
 
 	return Object.assign({}, ownProps, { tasks });
 }

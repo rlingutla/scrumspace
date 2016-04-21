@@ -17,7 +17,17 @@ To start up a one time build script, run `npm run build`.
 
 For a live rebuilding dev server, run `npm run dev`. 
 
-To build the client **and** start up the server, run `npm run serve`
+To build the client **and** start up the server, run `npm run serve` 
+
+##### Get MongoDB up and running
+Above the root folder ('startup-product-frontend-scrumspace') of the project, create a new folder called scrumspace-data. 
+
+To get MongoDb running, simply run `mongod --dbpath scrumspace-data`. 
+
+Then run `node startup-product-frontend-scrumspace/src/server/resetdatabse.js` in order to populate the database with intitial data
+
+If you then go to `http://localhost:8080/mongo_express/db/scrumspace/`, you should see the initial data in the database. 
+
 
 ## Development Workflow
 _Note that this is an evolving workflow, it's just the beginning..._

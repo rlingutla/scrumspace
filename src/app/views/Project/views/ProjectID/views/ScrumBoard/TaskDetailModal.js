@@ -108,7 +108,7 @@ class TaskDetailModal extends React.Component{
 						<TaskStatus status={this.props.status} />
 						<br/>
 						<Row className="left-right-align">
-							<Col xs={8}>
+							<Col xs={12}>
 								{(this.props.status === 'BLOCKED') ? (
 									<div>
 										<h5>Blocked By:</h5>
@@ -133,10 +133,10 @@ class TaskDetailModal extends React.Component{
 									initialState={this.state.assigned_to}/>
 							</Col>
 							<Col xs={4} style={{textAlign:'right'}}>
-								<ButtonGroup vertical>
+								{/*<ButtonGroup vertical>
 									<Button >Take Task</Button>
 									<Button bsStyle="danger">Delete Task</Button>
-								</ButtonGroup>
+								</ButtonGroup>*/}
 							</Col>
 						</Row>
 					</Modal.Body>
@@ -152,28 +152,20 @@ const mapStateToProps = (state) => {
 };
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-	let tasks = stateProps
-	.projects.find((proj) => proj._id === ownProps.project_id)
-	.stories.find((story) => story._id === ownProps.story_id)
-	.tasks;
+	let storyIndex = {}, taskIndex = {};
+	let project = stateProps.projects.find((proj) => proj._id === ownProps.project_id);
+	project.stories.forEach((story, i) => {
+		storyIndex[story._id] = i;
+		story.tasks.forEach((task, j) => taskIndex[task._id] = j);
+	});
+	let tasks = project.stories.reduce((prev, curr) => { 
+		if (prev.constructor === Object) {
+			return prev.tasks.concat(curr.tasks);
+		}
+		return prev.concat(curr.tasks);
+	 });
 
-	// let theTask = stateProps
-	// .projects.find((proj) => proj._id === ownProps.project_id)
-	// .stories.find((story) => story._id === ownProps.story_id)
-	// .tasks.find((task) => task._id === ownProps._id);
-
-	let theTask = ownProps.task;
-
-	// return Object.assign(
-	// 	{ isModalOpen: ownProps.isModalOpen, changeModal: ownProps.changeModal, updateTask: ownProps.updateTask },
-	// 	{ task: theTask },
-	// 	{ tasks },
-	// 	dispatchProps
-	// );
-	return Object.assign(
-		ownProps,
-		dispatchProps
-	);
+	return Object.assign({}, {storyIndex}, {taskIndex}, ownProps, {tasks}, dispatchProps);
 }
 
 //maps any actions this component dispatches to component props

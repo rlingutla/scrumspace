@@ -12,7 +12,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	var projects = stateProps.projects || [];
 
 	let project = projects.find((proj) => {
-		return proj._id === parseInt(ownProps.params.id,10);
+		return proj._id === ownProps.params.id;
 	});
 
 	// If project doesn't exist (TODO, make a modal to let people's know)

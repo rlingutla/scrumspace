@@ -9,8 +9,18 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import scrumApp from '../app/reducers';
+import { Login } from '../app/components/Authentication';
 
-import { stateTree } from '../app/mock_server/server';
+import { stateTree } from '../app/server_calls/index';
+import { getUser } from '../app/shared/utils/utils';
+
+// socket stuff
+import initSocket, {chatMiddleware} from '../app/config/socketMiddleware';
+
+const ENV = 'DEVELOPMENT';
+
+// some logging stuff
+window.logger = (...args) => { if(ENV === 'DEVELOPMENT') console.log(...args);};
 
 /*
 	This is the 'entry point' into the client side code.
@@ -19,21 +29,37 @@ import { stateTree } from '../app/mock_server/server';
 
 var mountNode = document.getElementById('app');
 
-stateTree(0).then((stateTree) => {
-	match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
-		let store = createStore(
-			scrumApp,
-			stateTree,
-			applyMiddleware(
-				thunkMiddleware
-			)
-		);
+const renderLogin = () => {
+	render(<Login renderScrumspace={renderClient}/>, mountNode);
+};
 
-		render(
-		  <Provider store={store}>
-		    <Router {...renderProps} store={{}}/>
-		  </Provider>,
-		  mountNode
-		);
+const renderClient = () => {
+	stateTree(getUser()).then((stateTree) => {
+		console.log(stateTree);
+		match({ history: browserHistory, routes }, (error, redirectLocation, renderProps) => {
+			let store = createStore(
+				scrumApp,
+				stateTree,
+				applyMiddleware(
+					thunkMiddleware
+				)
+			);
+
+			initSocket(store);
+
+			render(
+			  <Provider store={store}>
+			    <Router {...renderProps} store={{}}/>
+			  </Provider>,
+			  mountNode
+			);
+		});
 	});
-});
+};
+
+// get auth token
+if(localStorage.scrumToken){
+	renderClient();
+}
+// not authenticated
+else renderLogin();

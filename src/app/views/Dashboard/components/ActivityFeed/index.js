@@ -24,7 +24,7 @@ export default (props) => {
 	var data = activities(props.tasks);
 	return (
 		<div className="col-md-6 col-lg-6">
-			<Panel title='Activity Feed'>
+			<Panel title="Activity">
 				{
 					data.map((history, i) => <ActivityFeedItem activity={history} key={i}></ActivityFeedItem>)
 				}

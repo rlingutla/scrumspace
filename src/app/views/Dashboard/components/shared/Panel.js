@@ -1,19 +1,22 @@
 import React from 'react';
+import BasePanel from './BasePanel';
 
 export default (props) => {
 	return (
-		<div className="panel panel-default">
-			<div style={{height: '380px', overflow: 'hidden'}}>
-				{/* The below styles make the panel a fixed size + scrollable.*/}
-				<div style={{height: '100%', width: '100%', overflow: 'auto'}}>
-					<div className="panel-body">
-						<div style={{textAlign: 'center'}}>
-							<h4>{props.title}</h4>
-							{props.children}
-						</div>
-					</div>
+		<BasePanel>
+			{/* The below styles make the panel a fixed size + scrollable.*/}
+			<div style={{borderBottom: '1px solid #E0E0E0', paddingRight: '25px', paddingLeft: '25px', paddingTop: '8px', paddingBottom: '8px'}}>
+				<h4>{props.title}</h4>
+			</div>
+			<div style={{height: '80%', width: '100%', overflowY: 'auto'}}>
+				<div style={{paddingRight: '25px', paddingLeft: '25px', paddingTop: '15px', paddingBottom: '15px'}}>
+					{props.children}
 				</div>
 			</div>
-		</div>
+		</BasePanel>
 	);
 };
+
+
+
+

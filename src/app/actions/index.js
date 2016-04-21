@@ -1,84 +1,55 @@
-//TODO: this thing is monolithic :O, need to organize
-import {
-	serverUpdateTask,
-	serverPostNewProject,
-	serverUpdateProject,
-	serverRemoveProject,
-	serverPostSprint,
-	serverPutStory,
-	serverRemoveStory,
-	serverRemoveSprint,
-	serverMoveStory,
-	serverMakeNewStory,
-	serverAssignUsersToTask,
-	serverAssignBlockingTasks,
-	serverStartSprint
-} from '../mock_server/server';
-import { browserHistory } from 'react-router'
-
-// Project
-function postNewProject(title, description,users,membersOnProj){
-	return serverPostNewProject(title, description,users,membersOnProj);
-}
+import {serverPostNewProject, serverUpdateProject, serverRemoveProject} from '../server_calls/project/project';
+import {serverPutStory, serverRemoveStory, serverMakeNewStory, serverUpdateStory} from '../server_calls/project/story';
+import {serverAssignUsersToTask, serverAssignBlockingTasks, serverUpdateTask} from '../server_calls/project/task';
+import {serverPostSprint, serverRemoveSprint, serverStartSprint, serverUpdateSprint} from '../server_calls/project/sprint';
+import { browserHistory } from 'react-router';
 
 // new project
-export const createNewProject = (title, description,users, membersOnProj) => {
-	return {
-		type: 'CREATE_NEW_PROJECT',
-		title, description,users,membersOnProj
-	};
+export const createNewProjectAction = (project) => {
+	return { type: 'NEW_PROJECT', project };
 };
 
 export function postAndCreateNewProject(title, description,users,membersOnProj){
 	return function(dispatch){
-		return postNewProject(title, description,users,membersOnProj).then(
+		return serverPostNewProject(title, description,users,membersOnProj).then(
 			project => {
-				dispatch(createNewProject(title, description,users,membersOnProj));
+				dispatch(createNewProjectAction(project));
 			},
-			error => console.error('got an error', error)
+			error => logger('got an error', error)
 		);
 	};
 }
 
-export const updateProjectAction = (project_id, title,members) => {
-	return {
-		type: 'UPDATE_PROJECT',
-		project_id,
-		title,
-		members
-	};
+export const updateProjectAction = (project) => {
+	return { type: 'UPDATE_PROJECT', project };
 };
 //update fields in the project
 export function putProjectUpdates(project_id, title, members){
 
 	return function (dispatch){
 		return serverUpdateProject(project_id, title, members).then(
-			project => {
-				dispatch(updateProjectAction(project._id, project.title, project.users));
-			},
-			error => console.error('Cant update project', error)
-		)
-	}
+			project => dispatch(updateProjectAction(project)),
+			error => logger('Cant update project', error)
+		);
+	};
 }
 
 //remove a project
-export const removeProjectAction = (project_id) => {
-	return {
-		type: 'REMOVE_PROJECT',
-		project_id
-	};
+export const removeProjectAction = (project) => {
+	return { type: 'REMOVE_PROJECT', project };
 };
+
 //helps with removing a project
 export function removeProject(project_id){
 	return function (dispatch){
 		return serverRemoveProject(project_id).then(
 			project => {
-				dispatch(removeProjectAction(project_id));
+				dispatch(removeProjectAction(project));
 				browserHistory.push('/project/');
 			},
-			error => console.error('Cant remove project', error)
-		)
-	}
+			error => logger('Cant remove project', error)
+		);
+	};
 }
 
 // TASK
@@ -94,94 +65,91 @@ export const updateTaskAction = (project_id, story_id, task) => {
 export function updateTask(project_id, story_id, task_id, status, description){
 	return function (dispatch){
 		return serverUpdateTask(project_id, story_id, task_id, status, description).then(
-			task => {
-				dispatch(updateTaskAction(project_id, story_id, task));
-			},
-			error => console.error('got an error', error)
-		)
-	}
+			// task => dispatch(updateTaskAction(project_id, story_id, task)),
+			task => logger('TASK UPDATED', task),
+			error => logger('got an error', error)
+		);
+	};
 }
 
 export function assignUsersToTask(project_id, story_id, task_id, users){
 	return function (dispatch){
 		return serverAssignUsersToTask(project_id, story_id, task_id, users).then(
-			task => {
-				dispatch(updateTaskAction(project_id, story_id, task));
-			},
-			error => console.error('got an error', error)
-		)
-	}
+			// task => dispatch(updateTaskAction(project_id, story_id, task)),
+			task => logger('success'),
+			error => logger('got an error', error)
+		);
+	};
 }
 
 export function assignBlockingTasks(project_id, story_id, task_id, blocking){
 	return function (dispatch){
 		return serverAssignBlockingTasks(project_id, story_id, task_id, blocking).then(
-			task => {
-				dispatch(updateTaskAction(project_id, story_id, task));
-			},
-			error => console.error('got an error', error)
-		)
-	}
+			task => dispatch(updateTaskAction(project_id, story_id, task)),
+			error => logger('got an error', error)
+		);
+	};
 }
 
-export const changeStoryState = (project_id, story) => {
+export const updateStoryAction = (project_id, story) => {
 	return {
-		type: 'CHANGE_STORY_STATE',
+		type: 'UPDATE_STORY',
 		project_id,
 		story
-	}
-}
+	};
+};
 
 export function putStory(project_id, story_id, title, description){
 	return function(dispatch){
 		return serverPutStory(project_id, story_id, title, description).then(
-			updStory => {
-				dispatch(changeStoryState(project_id, updStory));
-			},
-			error => console.error('got an error', error)
+			story => dispatch(updateStoryAction(project_id, story)),
+			error => logger('got an error', error)
 		);
-	}
+	};
 }
 
 function postNewProjectPlan(signal, data){
 	switch (signal) {
 		case 'REMOVE_STORY':
-			return serverRemoveStory(data.project, data.story);
+			return serverRemoveStory(data.project, data.story_id);
 		case 'NEW_STORY':
-			return serverMakeNewStory(data.project, data.title, data.description, data.tasks, data.story);
+			return serverMakeNewStory(data.project, data.title, data.description, data.tasks);
 		case 'REMOVE_SPRINT':
-			return serverRemoveSprint(data.project, data.sprint);
+			return serverRemoveSprint(data.project, data.sprint_id);
 		case 'NEW_SPRINT':
-			return serverPostSprint(data.project, data.name, data.duration, data.time, data.sprint);
-		case 'MOVE_STORY':
-			return serverMoveStory(data.project, data.story, data.sprint);
+			return serverPostSprint(data.project, data.name, data.duration, data.time);
+		case 'UPDATE_STORY':
+			return serverUpdateStory(data.project, data.title, data.description, data.tasks, data.story_id, data.sprint_id);
+		case 'UPDATE_SPRINT':
+			return serverUpdateSprint(data.project, data.name, data.duration, data.time, data.sprint_id);
 		default:
-			console.log('And so here lies Ryan, a sad programmer');
+			logger('No Signal', signal);
 	}
 }
 
-export const projectPlan = (signal, data, project) => {
+export const projectPlan = (signal, data, object) => {
 	return{
 		type: signal,
-		data, project
+		project_id: data.project,
+		sprint_id: data.sprint_id,
+		story_id: data.story_id,
+		sprint: object,
+		story: object,
+		project: object
 	};
 };
 
 export function postProjectPlan(signal, data){
 	return function(dispatch){
 		return postNewProjectPlan(signal, data).then(
-			project =>{
-				dispatch(projectPlan(signal, data, project));
-			},
-			error => console.error('rip', error)
+			sprint => dispatch(projectPlan(signal, data, sprint)),
+			error => logger('rip', error)
 		);
 	};
 }
 
 export const startSprintAction = (project) => {
-	return {
-		type: 'START_SPRINT', project
-	};
+	return { type: 'UPDATE_PROJECT', project };
 };
 
 export function putStartSprint(project_id, sprint_id){
@@ -189,9 +157,9 @@ export function putStartSprint(project_id, sprint_id){
 		return serverStartSprint(project_id, sprint_id).then(
 			project => {
 				dispatch(startSprintAction(project));
-				browserHistory.push(`/project/${project_id}/scrumboard`)
+				browserHistory.push(`/project/${project_id}/scrumboard`);
 			},
-			error => console.error('rip', error)
+			error => logger('rip', error)
 		);
-	}
+	};
 }

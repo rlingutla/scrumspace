@@ -16,6 +16,7 @@ export default function Layout(appRenderedToString) {
 				<div id="app">'
 					+ appRenderedToString +
 				'</div>\
+				<script src="/socket.io/socket.io.js"></script>\
 				<script src="/static/js/bundle.js"></script>\
 			</body>\
 		</html>';

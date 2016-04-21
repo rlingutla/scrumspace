@@ -63,8 +63,8 @@ gulp.task('js', function(){
 
 // copy static files
 gulp.task('copy_static', function(){
-  return gulp.src(['src/index.html'])
-    .pipe(gulp.dest('dist'));
+  return gulp.src(['src/assets/**/*'])
+    .pipe(gulp.dest('dist/assets'));
 });
 
 gulp.task('watch', function() {
@@ -75,7 +75,7 @@ gulp.task('watch', function() {
 
     nodemon({
       script: 'src/server/server.js',
-      watch: 'src',
+      watch: 'src/server',
       stdout: false
     }).on('readable', function() {
       this.stdout.on('data', function(chunk) {

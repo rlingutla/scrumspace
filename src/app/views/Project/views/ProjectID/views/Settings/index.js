@@ -5,7 +5,7 @@ import { putProjectUpdates, removeProject } from '../../../../../../actions/';
 import Wrapper from 'app/shared/components/Wrapper';
 import Container from '../../containers';
 import { connect } from 'react-redux';
-import { sendXHRPromise } from '../../../../../../mock_server/server';
+import { sendXHRPromise } from '../../../../../../server_calls/index';
 import { Async as AsyncSelect } from 'react-select';
 
 class Settings extends React.Component {
@@ -153,7 +153,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 	var projects = stateProps.projects || [];
 	var project;
 	project = projects.find((proj) => {
-		return proj._id === parseInt(ownProps.params.id, 10);
+		return proj._id === ownProps.params.id;
 	});
 	return Object.assign({...project}, {...ownProps}, {...dispatchProps});
 }

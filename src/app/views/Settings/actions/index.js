@@ -1,4 +1,4 @@
-import { serverPutSettings } from '../../../mock_server/server';
+import { serverPutSettings } from '../../../server_calls/users/users';
 
 export const changeSettingsState = (newSettings) => {
 	return {
@@ -17,7 +17,7 @@ export function putAndChangeSettings(data, propertiesToUpdate) {
 			task => {
 				dispatch(changeSettingsState(data, propertiesToUpdate));
 			},
-			error => console.error('got an error', error)
+			error => logger('got an error', error)
 		);
 	};
 }

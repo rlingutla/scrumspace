@@ -1,6 +1,7 @@
 import React from 'react';
 import Story from './Story';
 import { ButtonGroup, Button } from 'react-bootstrap';
+import { getProjectStatus, sprintStatus } from 'Project/shared/ProjectStatus';
 //DnD
 import ItemTypes from 'app/shared/constants/itemTypes';
 
@@ -15,7 +16,8 @@ const storyTarget = {
 	hover(props, monitor, component) {},
 	drop(props, monitor, component) {
 	  let item = monitor.getItem();
-	  props.save('move-story', item.data, props.data._id);
+		logger(props.data);
+	  props.save('story', item.data, props.data._id);
 	}
 };
 
@@ -40,16 +42,17 @@ class SprintRow extends React.Component {
 
 	render() {
 		const { isOver, canDrop, connectDropTarget } = this.props;
-		let sprint_state_class = (this.props.data._id === this.props.current_sprint) ? 'active':'planning';
+		// let sprint_state_class = (this.props.data._id === this.props.current_sprint) ? 'active':'planning';
+		let sprint_state_class = sprintStatus(this.props.data).status;
 
 		return connectDropTarget(
-			<div className={`panel panel-primary ${sprint_state_class}`}>
+			<div className={`panel panel-primary ${sprint_state_class.title}`}>
 				<div className="panel-heading">
 					{
 					(this.props.data._id === this.props.current_sprint) ? null:
 					<button type="button" className="close" onClick={(e) => this.props.handleRemove('sprint', this.props.data)}>&times;</button>
 					}
-					<h4 style={{display: 'inline-block'}}>{this.props.data.name} ({sprint_state_class})</h4> 
+					<h4 style={{display: 'inline-block'}}>{this.props.data.name} ({sprint_state_class.display})</h4>
 				</div>
 				<div className="panel-body" style={isOver ? {background: '#E8E8E8',borderWidth: '1px', borderStyle: 'dashed', borderColor: '#A9A9A9', minHeight: '120px'}:{minHeight: '120px'}}>
 					<div className="row">

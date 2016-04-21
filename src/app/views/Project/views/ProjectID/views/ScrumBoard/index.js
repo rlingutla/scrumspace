@@ -16,7 +16,7 @@ const BoardView = (props) => {
 
 	let status = getProjectStatus(props);
 
-	if (status.status === ProjectStatuses.PLANNING) {
+	if (status.status.title === ProjectStatuses.PLANNING.title) {
 		return (
 			<div className="content">
 				<div className="project-info container-fluid">
@@ -28,7 +28,7 @@ const BoardView = (props) => {
 				</div>
 			</div>
 		);
-	} else if (status.status === ProjectStatuses.SPRINT) {
+	} else if (status.status.title === ProjectStatuses.SPRINT.title) {
 		return (
 			<div className="content">
 				<div className="project-info container-fluid">
@@ -37,7 +37,7 @@ const BoardView = (props) => {
 				<ScrumBoard {...props} />
 			</div>
 		);
-	} else if (status.status === ProjectStatuses.REVIEW) { //TODO: return the actual review board
+	} else if (status.status.title === ProjectStatuses.REVIEW.title) { //TODO: return the actual review board
 		return (
 			<div className="content">
 				Project is in review

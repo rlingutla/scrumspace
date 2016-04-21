@@ -53,19 +53,23 @@ class PlanView extends Component {
 			case 'sprint':
 				model ={
 					project: this.props._id,
-					sprint: item._id
+					sprint_id: item._id
 				};
 				this.props.saveThis('REMOVE_SPRINT', model);
 				break;
 			case 'story':
-				model ={
-					project: this.props._id,
-					story: item._id
-				};
-				this.props.saveThis('REMOVE_STORY', model);
+				if(item.sprint_id === null){
+					model ={
+						project: this.props._id,
+						story_id: item._id
+					};
+					this.props.saveThis('REMOVE_STORY', model);
+				}
+				else
+					this.save('story' , item, null);
 				break;
 			default:
-				console('Tom Brady is the best ever.');
+				logger('Tom Brady is the best ever.');
 		}
 	}
 
@@ -75,14 +79,14 @@ class PlanView extends Component {
 				return this.props.sprints[i];
 			}
 		}
-		console.log('houston we have a problem');
+		logger('houston we have a problem');
 	}
 	getStoryByID(id){
 		for (var i in this.props.stories){
 			if (this.props.stories[i]._id === id)
 				return this.props.stories[i];
 		}
-		console.log('Mayday Mayday!');
+		logger('Mayday Mayday!');
 	}
 
 	handleEdit(value, item){ //these will have an ID...
@@ -94,7 +98,8 @@ class PlanView extends Component {
 		}
 	}
 
-	save(signal, data, other) {
+	save(signal, data, target) {
+
 		var model;
 		switch (signal) {
 			case 'story':
@@ -103,13 +108,16 @@ class PlanView extends Component {
 					title: data.title,
 					description: data.description,
 					tasks: data.tasks,
-					time: data.scrum_time
+					sprint_id: (typeof target === 'undefined') ? data.sprint_id : target
 				};
 				if (typeof data._id !== 'undefined') {
-					model.story = data._id;
+					model.story_id = data._id;
+					this.props.saveThis('UPDATE_STORY', model);
 				}
-				this.props.saveThis('NEW_STORY', model);
-				this.changeStoryModal();
+				else
+					this.props.saveThis('NEW_STORY', model);
+				if(typeof target === 'undefined')
+					this.changeStoryModal();
 				break;
 			case 'sprint':
 				model = {
@@ -119,21 +127,16 @@ class PlanView extends Component {
 					time: data.scrum_time
 				};
 				if (typeof data._id !== 'undefined') {
-					model.sprint = data._id;
+					model.sprint_id = data._id;
+					this.props.saveThis('UPDATE_SPRINT', model);
 				}
-				this.props.saveThis('NEW_SPRINT', model);
-				this.changeSprintModal();
-				break;
-			case 'move-story':
-				model ={
-					project: this.props._id,
-					story: data._id,
-					sprint: other
-				};
-				this.props.saveThis('MOVE_STORY', model);
+				else
+					this.props.saveThis('NEW_SPRINT', model);
+				if(typeof target === 'undefined')
+					this.changeSprintModal();
 				break;
 			default:
-				console.log('I am Crying');
+				logger('I am Crying');
 		}
 		//redux!
 	}
@@ -205,7 +208,7 @@ class PlanView extends Component {
 							<SprintRow key={i} data={e} updateState={this.updateState.bind(this)} save={this.save.bind(this)}
 								handleEdit={this.handleEdit.bind(this)} handleRemove={this.handleRemove.bind(this)}
 								stories={this.props.stories.filter((value) => value.sprint_id === e._id)} current_sprint={this.props.current_sprint}
-								startSprint={this.props.startSprint} project_id={this.props._id}
+								startSprint={this.props.startSprint} project_id={this.props._id} project={this.props}
 							/>
 						);
 					})
