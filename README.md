@@ -22,9 +22,9 @@ To build the client **and** start up the server, run `npm run serve`
 ##### Get MongoDB up and running
 Above the root folder ('startup-product-frontend-scrumspace') of the project, create a new folder called scrumspace-data. 
 
-To get MongoDb running, simply run `mongod --dbpath scrumspace-data`. 
+To get MongoDB running, simply run `mongod --dbpath scrumspace-data`. 
 
-Then run `node startup-product-frontend-scrumspace/src/server/resetdatabse.js` in order to populate the database with intitial data
+Then run `node startup-product-frontend-scrumspace/src/server/resetdatabase.js` in order to populate the database with intitial data.
 
 If you then go to `http://localhost:8080/mongo_express/db/scrumspace/`, you should see the initial data in the database. 
 
