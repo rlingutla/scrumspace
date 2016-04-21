@@ -42,59 +42,122 @@ module.exports = function (io, db) {
 	// Project routes
 	// add new project
 	router.post('/', validate({ body: ProjectSchema }), function(req,res){
-		/*
+		console.log(req.body);
+		
+		//check that there is actual data in the 3 main fields
 		if (typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
 			res.status(400);
 			return res.send({
 				error: StandardError({
 					status: 400,
 					title: 'BAD_INFO'
-					})
+				})
 			});
 		}
 
-		var projects = readDocument('projects');
-		//console.log(req.body.users);
-		var project = newProjCreation(req.body.title, req.body.description, req.body.users,req.body.membersOnProj);
-		res.status(201);
-		//res.set('Location', '/project' + projects[projects.length-1]._id);
-		io.emit('STATE_UPDATE', {data: {
-			type: 'NEW_PROJECT',
-			project
-		}});
-		res.send(project);
-		*/
-	});
+		//convert the user Ids into object Ids
+		var userObjectIds = req.body.users.map((user)=>{
+			return ObjectID(user);
+		});
 
-	//update project
-	router.put('/:project_id', validate({ body: ProjectSchema }), function(req, res){
-		//console.log(req.body.title.length);
-		if ((req.body.title.length === 0 ) &&  (req.body.users.length === 0)) {
-			res.status(400);
-			return res.send({error: StandardError({
-				status: 400,
-				title: 'BAD_INFO'
-			})});
-		}
-		var project = projUpdate(parseInt(req.params.project_id, 10), req.body.title, req.body.users);
-		 // Send the update!
-		var embeddedProject = embedUsers(project);
-		io.emit('STATE_UPDATE', {data: {
-			type: 'UPDATE_PROJECT',
-			project: embeddedProject
-		}});
-		res.send(embeddedProject);
-	});
+		//create new project object
+		let project = {
+			'title': req.body.title,
+			'description': req.body.description,
+			'users': userObjectIds,
+			'status': 'sprint',
+			'current_sprint': null,
+			'sprints': [],
+			'stories': [],
+			'avatar': ''
+		};
 
-	//remove a project
-	router.delete('/:project_id', function(req, res){
-		var project = projectRemoval(parseInt(req.params.project_id, 10));
-		//res.set('Location', '/project/');
-		io.emit('STATE_UPDATE', {data: {
-			type: 'REMOVE_PROJECT',
-			project
-		}});
-		res.send(project); //returns removed project
+		//now need the item to add to projects
+		db.collection('projects').insertOne(
+			project,
+			function(err, result){
+				if (err){
+					console.log('error', err);
+					return res.status(400).send();
+				}
+				project._id = result.insertedId.toString();
+				res.set('Location', '/project/');
+				io.emit('STATE_UPDATE', {data: {
+					type: 'NEW_PROJECT',
+					project
+				}});
+				res.status(200).send();
+			});
+
+		});
+
+
+		// update project
+		router.put('/:project_id', validate({ body: ProjectSchema }), function(req, res){
+			console.log('title' + req.title);
+			if ((req.body.title.length === undefined ) &&  (req.body.users.length === undefined)) {
+				res.status(400);
+				return res.send({error: StandardError({
+					status: 400,
+					title: 'BAD_INFO'
+				})});
+			}
+			var userObjectIds = req.body.users.map((user)=> {
+				return ObjectID(user);
+			});
+			var project = {
+				title: req.body.title,
+				users: userObjectIds
+			};
+
+			db.collection('projects').findOneAndUpdate(
+				{'_id': new ObjectID(req.params.project_id)}
+				, { $set: project }
+				, { 'returnOriginal': false }
+				, function(err, result){
+					if (err) {
+						res.status(400).send({
+							error: StandardError({
+								status: 400,
+								title: 'BAD_INFO'
+							})
+						});
+					}
+					db.collection('users').find(
+						{ '_id' : { $in : userObjectIds } }
+					).toArray(function(err, users) {
+						if (err) {
+							return res.sendStatus(400);
+						}
+						project.users = users;
+						io.emit('STATE_UPDATE', {data: {
+							type: 'UPDATE_PROJECT',
+							project: project
+						}});
+						res.sendStatus(200);
+					});
+				}
+			);
+		});
+
+		// remove a project
+		router.delete('/:project_id', function(req, res){
+			var project = new ObjectID(req.params.project_id);
+			// Remove the project Item.
+			db.collection('projects').remove({
+				_id: project
+			},
+			function(err, result){
+				if (err){
+					return res.sendStatus(400);
+				}
+				io.emit('STATE_UPDATE', {data: {
+					type: 'REMOVE_PROJECT',
+					project_id: project
+				}});
+				res.sendStatus(200);
+			}
+		);
 	});
 
 	// update a story
@@ -163,12 +226,12 @@ module.exports = function (io, db) {
 					return res.send({error: StandardError({
 						status: 400,
 						title: 'Could not delete story!'
-					})});							
+					})});
 				}
-				
+
 				db.collection('projects').findOneAndUpdate(
-					{ 
-						_id: project_id 
+					{
+						_id: project_id
 					},
 					{
 						$pull: { stories: story_id}
@@ -179,12 +242,12 @@ module.exports = function (io, db) {
 							return res.send({error: StandardError({
 								status: 400,
 								title: 'Could not delete story!'
-							})});							
+							})});
 						}
 						io.emit('STATE_UPDATE', {data: {
 							type: 'REMOVE_STORY',
 							project_id: project_id,
-							story: { 
+							story: {
 								_id: story_id
 							}
 						}});
@@ -218,7 +281,7 @@ module.exports = function (io, db) {
 				if (err) {
 					res.status(400).send();
 					return;
-				} 
+				}
 				var taskIds = result.insertedIds;
 				var newStory = {
 					title: req.body.title,
@@ -231,7 +294,7 @@ module.exports = function (io, db) {
 					function(err, result) {
 						if (err) {
 							console.log(err);
-						} 
+						}
 						var story_id = result.insertedIds[0];
 
 						db.collection('projects').findOneAndUpdate(
@@ -266,7 +329,7 @@ module.exports = function (io, db) {
 
 		});
 
-		
+
 	});
 
 	//Sprint Routes
@@ -490,8 +553,8 @@ module.exports = function (io, db) {
 	router.put('/:project_id/story/:story_id/task/:task_id', function(req,res){
 		Task.update({
 			task_id: req.params.task_id,
-			description: req.body.description, 
-			status: req.body.status, 
+			description: req.body.description,
+			status: req.body.status,
 			user: req.user_id
 		}, db).then(
 			(task) => {

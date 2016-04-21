@@ -11,7 +11,7 @@ const projects = (state = [], action) => {
 				return (project._id === action.project._id) ? Object.assign({}, action.project):project;
 			});
 	  case 'REMOVE_PROJECT':
-	    return state.filter((project) => project._id !== action.project._id);
+	    return state.filter((project) => project._id !== action.project_id);
 		case 'UPDATE_TASK':
 			let newState = state.map((project) => {
 				if (project._id === action.project_id){
