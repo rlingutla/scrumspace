@@ -8,8 +8,13 @@ import Wrapper from '../../shared/components/Wrapper';
 /* Master for all user projects */
 export default class Statistics extends React.Component{
 	constructor(props){
+    console.log(props.user.stats);
 		super(props);
-		this.state = {};
+		this.state = {
+			...props.user
+		};
+
+
 	}
 
 

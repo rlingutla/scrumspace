@@ -27,7 +27,8 @@ module.exports = function (io, db) {
 											'last_name': user.last_name,
 											'email': user.email,
 											'display_name': user.display_name,
-											'avatar_url': user.avatar_url
+											'avatar_url': user.avatar_url, 
+											'stats':user.stats
 									},
 									projects: packagedProjects
 								};

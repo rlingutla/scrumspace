@@ -26,7 +26,7 @@ export function getCurrentSprint(props){
 export function getCurrentTasks(props){
 	let currentSprint = getCurrentSprint(props), tasks = [];
 	if(!currentSprint) return tasks;
-	
+
 	//extract all tasks from active stories
 	props.stories.forEach((story) => {
 		//a current story
@@ -76,4 +76,4 @@ export function populateProjectEntities(project){
 	});
 
 	return Object.assign({}, project, {stories});
-};
+}

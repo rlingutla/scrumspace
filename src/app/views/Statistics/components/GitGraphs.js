@@ -20,7 +20,7 @@ const GitGraphs = (props) => {
 	        {
 	          strokeColor: props.color,
 	          fillColor: props.color,
-            data: props.commits
+            data: props.ownerStats
 	        }
 	    ]
 	};

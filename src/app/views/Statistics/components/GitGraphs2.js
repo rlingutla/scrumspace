@@ -12,17 +12,17 @@ const lineOptions = {
 };
 
 const GitGraphs2 = (props) => {
-	if (props.membersOnProj.length !== props.gCommits.length){
-	     props.gCommits.splice(props.membersOnProj.length);
-	}
+	// if (props.stats.membersOnProj.length !== props.stats.gCommits.length){
+	//      props.stats.gCommits.splice(props.stats.membersOnProj.length);
+	// }
 
 	const barData = {
-		labels: props.membersOnProj,
+		labels: props.stats.timeFrame,
 		datasets: [
 			{
-				fillColor: props.color,
-				strokeColor: props.color,
-				data: props.gCommits
+				fillColor: props.stats.color,
+				strokeColor: props.stats.color,
+				data: props.stats.allStats
 			}
 		]
 	};

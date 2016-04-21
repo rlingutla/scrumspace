@@ -14,7 +14,19 @@ module.exports =  {
 			'email': 'jvilk@cs.umass.edu',
 			'display_name': 'VilkBot',
 			'password': 'javascript',
-			'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460'
+			'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460',
+			'stats':[
+				{
+					'ownerStats': [3,1,6,4,8,7,9,1,12,6],
+					'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
+					'color': '#'+Math.floor(Math.random()*16777215).toString(16)
+				},
+				{
+					'ownerStats': [4,2,5,6,1,9,7,10,13,1],
+					'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
+					'color': '#'+Math.floor(Math.random()*16777215).toString(16)
+				}
+			]
 		},
 		1: {
 			'_id': new ObjectID('000000000000000000000001'),
@@ -197,12 +209,11 @@ module.exports =  {
 			'sprints': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001')],
 			'stories': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001'),new ObjectID('000000000000000000000002')],
 			'avatar': 'https://www.mountaingoatsoftware.com/uploads/articles/LabelledTaskBoard.jpg',
-			'commits': [3,1,6,4,8],
-			'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-			'membersOnProj':['Abhay', 'VilkBot'],
-			'gCommits': [12,10],
-			'color':'#'+Math.floor(Math.random()*16777215).toString(16)
-
+			'stats':{
+				'allStats':[4,6,2,1,7,5,9,10,3,6],
+				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
+				'color':'#'+Math.floor(Math.random()*16777215).toString(16)
+			}
 		},
 		{
 			'_id': new ObjectID('000000000000000000000001'),
@@ -214,11 +225,12 @@ module.exports =  {
 			'sprints': [],
 			'stories': [],
 			'avatar': 'https://www.wpi.edu/Images/CMS/ComputerScience/cs-student-vilk-lg.jpg',
-			'commits':[4,7,2,8,9],
-			'timeFrame':['Mon','Tues','Wed','Thurs','Fri'],
-			'membersOnProj':['VilkBot'],
-			'gCommits':[15],
-			'color':'#'+Math.floor(Math.random()*16777215).toString(16)
+			'stats':{
+				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
+				'allStats':[3,1,6,4,8,7,9,1,12,6],
+				'color':'#'+Math.floor(Math.random()*16777215).toString(16)
+			}
+
 		}
 	]
 };

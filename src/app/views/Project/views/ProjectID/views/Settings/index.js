@@ -104,13 +104,13 @@ class Settings extends React.Component {
 								<div className="panel-body">
 									<form>
 										<Row>
-											<Col md={6}>
+											<Col md={4}>
 												<div className="form-group">
 													<label for="usr">Project Title</label>
 													<Input type="text" className="form-control" name="title" id="usr" value={this.state.title} placeholder="Enter new project title" onChange={(e) => this.handleChange(e)}/>
 												</div>
 											</Col>
-											<Col md={6}>
+											<Col md={4}>
 												<div className="form-group">
 													<label for="usr">Users (only <b>add</b> new users)</label>
 													{/*<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>*/}
@@ -123,6 +123,12 @@ class Settings extends React.Component {
 													    onChange={(members) => this.setMembers(members)}
 													    value={this.state.users}
 													/>
+												</div>
+											</Col>
+											<Col md={4}>
+												<div className="form-group">
+													<label for="usr">Git Repo</label>
+													<Input type="text" className="form-control" name="title" id="usr" placeholder="Enter github repo associated with the project" onChange={(e) => this.handleChange(e)}/>
 												</div>
 											</Col>
 										</Row>
