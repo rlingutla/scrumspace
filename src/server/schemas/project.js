@@ -13,7 +13,7 @@ export default {
 	    },
 			'users':{
 				'type': 'array',
-				'items': {'type':'integer'}
+				'items': {'type':'string'}
 			}
     },
     'additionalProperties': true
