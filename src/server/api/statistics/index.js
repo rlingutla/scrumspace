@@ -18,8 +18,11 @@ var StandardError = require('../shared/StandardError');
 var search = require('../shared/search');
 var GitHubApi = require('github');
 
-module.exports = function (io, db) {
+var MongoDB = require('mongodb');
+var ObjectID = MongoDB.ObjectID;
 
+module.exports = function (io, db) {
+   console.log()
   router.get('/gitStats', function(req, res) {
     console.log('request = ' + req);
 
@@ -44,10 +47,34 @@ module.exports = function (io, db) {
       // headers: {
       //     "cookie": "blahblah"
       // },
-      user: 'rlingutla',
-      repo: 'ForestTycoon-HampHack-2016-'
+      user: 'rjerue',
+      repo: 'Anagram-Finder'
     }, function(err, response) {
       console.log('hello 1.0');
+      //database functions
+      var ssProjects = function(db, callback) {
+        var cursor =db.collection('projects').find( );
+        cursor.each(function(err, doc) {
+          if (doc !== null) {
+            console.log(doc);
+          } else {
+            callback();
+          }
+        });
+      };
+      ssProjects(db, function() {
+        //db.close();
+      });
+      var allArr = response.all.slice(Math.max(response.all.length - 10, 1));
+      db.collection('projects').update(
+        {},
+        {$set:{'stats.allStats': allArr }},{multi:true}
+      );
+
+
+      ssProjects(db, function() {
+        //db.close();
+      });
       res.send(response);
       console.log(response);
       //return JSON.stringify(res);

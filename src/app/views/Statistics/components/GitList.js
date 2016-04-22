@@ -7,24 +7,26 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 
 
+/*<Row className="show-grid">
+<h1><b><u>My Stats</u></b> </h1>
+	{props.user.stats.map((stat, i) => {
+		return (
+			<Col xs={12} sm={6} md={6} key={i}>
+				{/* pass down project object as props for GitGraphs*///}
+				/*<GitGraphs {...stat}/>
+			</Col>
+		);
+	})}
+</Row>*/
+
+
 const GitList = (props) => {
 
 	return (
 		<div className="content">
 			<div className="project-container">
-				<Row className="show-grid">
-        <h1><b><u>My Stats</u></b> </h1>
-					{props.user.stats.map((stat, i) => {
-						return (
-							<Col xs={12} sm={6} md={6} key={i}>
-								{/* pass down project object as props for GitGraphs*/}
-								<GitGraphs {...stat}/>
-							</Col>
-						);
-					})}
-			    </Row>
           <Row className="show-grid">
-          <h1><b><u>Project Stats</u></b> </h1>
+          <h1><b><u>Total Commits for each project</u></b> </h1>
             {props.projects.map((project, i) => {
               return (
                 <Col xs={12} sm={6} md={6} key={i}>
