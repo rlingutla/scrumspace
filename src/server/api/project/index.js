@@ -15,11 +15,6 @@ var Task = require('../../models/Task');
 var MongoDB = require('mongodb');
 var ObjectID = MongoDB.ObjectID;
 
-// Project Helper functions
-var newProjHelper = require('./newProj');
-var newProjCreation = newProjHelper.newProjCreation;
-var projUpdate = newProjHelper.projUpdate;
-var projectRemoval = newProjHelper.projRemoval;
 
 // Utils
 import { embedUsers, packageProjects, projectFromID } from '../shared/projectUtils';
@@ -33,6 +28,11 @@ router = express.Router();
 module.exports = function (io, db) {
 	router.get('/', function (req, res) {
 		res.send('project API handler');
+	});
+
+	router.get('/gitStats', function (req, res) {
+		console.log('Called gitStats');
+		res.send('git Stats');
 	});
 
 	router.get('/:id', function(req,res){
