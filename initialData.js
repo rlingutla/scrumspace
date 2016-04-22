@@ -197,7 +197,8 @@ module.exports =  {
 			'sprints': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001')],
 			'stories': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001'),new ObjectID('000000000000000000000002')],
 			'avatar': 'https://www.mountaingoatsoftware.com/uploads/articles/LabelledTaskBoard.jpg',
-			'gitRepoURL': '',
+			'githubRepo': 'rjerue',
+			'githubOwner': 'Anagram-Finder',
 			'stats':{
 				'allStats':[4,6,2,1,7,5,9,10,3,6],
 				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
@@ -214,6 +215,8 @@ module.exports =  {
 			'sprints': [],
 			'stories': [],
 			'avatar': 'https://www.wpi.edu/Images/CMS/ComputerScience/cs-student-vilk-lg.jpg',
+			'githubRepo': 'rlingutla',
+      'githubOwner': 'ForestTycoon-HampHack-2016-',
 			'stats':{
 				'allStats':[3,1,6,4,8,7,9,1,12,6],
 				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],

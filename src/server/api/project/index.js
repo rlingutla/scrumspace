@@ -73,7 +73,7 @@ module.exports = function (io, db) {
 			'githubRepo':'',
 			'githubOwner':'',
 			'stats':{
-				'allStats':[3,1,6,4,8,7,9,1,12,6],
+				'allStats':[],
 				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
 				'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 			}

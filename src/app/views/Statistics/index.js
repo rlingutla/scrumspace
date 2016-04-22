@@ -23,8 +23,8 @@ getGitStats(){
 	return sendXHRPromise('GET', '/api/statistics/gitStats',undefined).then((response) => {
 		return response;
 	},(error) => {
-		ErrorBanner('Could not retrieve git data. Please refresh the page and try again');
-	}); 
+		ErrorBanner('Could not retrieve git data. Please check that you have inputed the correct repo and owner name. If you have inputed the right data, you may have exceeded the max number of data calls to the Github servers. Let them cool off and try again in an hour.');
+	});
 }
 
 
