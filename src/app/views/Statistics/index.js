@@ -19,23 +19,18 @@ export default class Statistics extends React.Component{
 	}
 
 //	 return sendXHRPromise('GET', `/api/projects/gitStats?owner=rlingutla&repo=personal-webapge`, undefined).then((response) => {
-	getGitStats(){
-		return sendXHRPromise('GET', '/api/statistics/gitStats',undefined).then((response) => {
-			return this.setState({gitStats: {allCommits: response.all, indivCommits: response.owner}});
-		});
-	}
+getGitStats(){
+	return sendXHRPromise('GET', '/api/statistics/gitStats',undefined).then((response) => {
+		return response;
+	},(error) => {
+		ErrorBanner('Could not retrieve git data. Please refresh the page and try again');
+	}); 
+}
 
 
-// componentDidMount(){
-// 	this.getGitStats();
-// }
-//
-// stats={this.state.gitStats}
 
 
 	render(){
-
-		debugger;
 		return (
 			<div id="content">
 				<TopNav view="Git Statistics"/>
