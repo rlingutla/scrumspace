@@ -71,6 +71,7 @@ module.exports = function (io, db) {
 			'stories': [],
 			'avatar': '',
 			'githubRepo':'',
+			'githubOwner':'',
 			'stats':{
 				'allStats':[3,1,6,4,8,7,9,1,12,6],
 				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
@@ -101,7 +102,8 @@ module.exports = function (io, db) {
 		// update project
 		router.put('/:project_id', validate({ body: ProjectSchema }), function(req, res){
 			console.log('title' + req.title);
-			if ((req.body.title.length === undefined ) &&  (req.body.users.length === undefined)) {
+			if ((req.body.title.length === undefined ) &&  (req.body.users.length === undefined)
+		       &&  (req.body.githubRepo.length === undefined) &&  (req.body.githubOwner.length === undefined)) {
 				res.status(400);
 				return res.send({error: StandardError({
 					status: 400,
@@ -113,7 +115,9 @@ module.exports = function (io, db) {
 			});
 			var project = {
 				title: req.body.title,
-				users: userObjectIds
+				users: userObjectIds,
+				githubRepo: req.body.githubRepo,
+				githubOwner: req.body.githubOwner
 			};
 
 			db.collection('projects').findOneAndUpdate(

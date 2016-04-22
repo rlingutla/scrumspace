@@ -24,10 +24,10 @@ export const updateProjectAction = (project) => {
 	return { type: 'UPDATE_PROJECT', project };
 };
 //update fields in the project
-export function putProjectUpdates(project_id, title, members){
+export function putProjectUpdates(project_id, title, members, githubRepo, githubOwner){
 
 	return function (dispatch){
-		return serverUpdateProject(project_id, title, members).then(
+		return serverUpdateProject(project_id, title, members, githubRepo, githubOwner).then(
 			project => dispatch(updateProjectAction(project)),
 			error => logger('Cant update project', error)
 		);

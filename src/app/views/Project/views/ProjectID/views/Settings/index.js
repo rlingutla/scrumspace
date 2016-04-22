@@ -17,11 +17,24 @@ class Settings extends React.Component {
 			changeModal: false,
 			title: props.title,
 			project_id: props._id,
-			users: props.users
+			users: props.users,
+			githubRepo: '',
+			githubOwner: ''
 		};
 	}
 
 	handleChange(e){
+		e.preventDefault();
+
+		let value = e.target.value;
+		let field = e.target.attributes.name.nodeValue;
+
+		let updObj = {};
+		updObj[field] = value;
+		this.setState(updObj);
+	}
+
+	handleGRChange(e){
 		e.preventDefault();
 
 		let value = e.target.value;
@@ -40,7 +53,7 @@ class Settings extends React.Component {
 	saveChanges(){
 		this.toggleCModal(false);
 		let members = this.state.users.map((user) => user._id);
-		this.props.updateProject(this.state.project_id,this.state.title, members);
+		this.props.updateProject(this.state.project_id,this.state.title, members, this.state.githubRepo, this.state.githubOwner);
 	}
 
 	getUserOptions(input){
@@ -128,8 +141,8 @@ class Settings extends React.Component {
 											<Col md={4}>
 												<div className="form-group">
 													<label for="usr">Git Stats Connection</label>
-													<Input type="text" className="form-control" name="title" id="usr" placeholder="Enter github repo name associated with the project" onChange={(e) => this.handleChange(e)}/>
-													<Input type="text" className="form-control" name="title" id="usr" placeholder="Enter your github username" onChange={(e) => this.handleChange(e)}/>
+															<Input type="text"  name="githubRepo" id="usr" value={this.state.githubRepo} placeholder="Enter github repo name associated with the project" onChange={(e) => this.handleChange(e)}/>
+													<Input type="text"  name="githubOwner" id="usr"  value={this.state.githubOwner} placeholder="Enter github username of repo owner" onChange={(e) => this.handleChange(e)}/>
 											  </div>
 											</Col>
 										</Row>
@@ -167,8 +180,8 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		updateProject: (project_id,title, users) => {
-			dispatch(putProjectUpdates(project_id,title,users));
+		updateProject: (project_id,title, users, githubRepo, githubOwner) => {
+			dispatch(putProjectUpdates(project_id,title,users,githubRepo, githubOwner));
 		},
   	removeProjectAct: (project_id) => {
   		dispatch(removeProject(project_id));
