@@ -8,13 +8,9 @@ import Wrapper from '../../shared/components/Wrapper';
 /* Master for all user projects */
 export default class Statistics extends React.Component{
 	constructor(props){
-    console.log(props.user.stats);
 		super(props);
 		this.state = {
-			...props.user
 		};
-
-
 	}
 
 
@@ -23,7 +19,7 @@ export default class Statistics extends React.Component{
 			<div id="content">
 				<TopNav view="Git Statistics"/>
 				<Wrapper>
-					<GitList />
+					<GitList  />
 				</Wrapper>
 			</div>
 		);

@@ -8,7 +8,7 @@ import _ from 'underscore';
 
 
 const GitList = (props) => {
-	debugger;
+
 	return (
 		<div className="content">
 			<div className="project-container">
@@ -43,7 +43,8 @@ const GitList = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		//convert projects dict to array and map to component's state
-		projects: _.values(state.projects)
+		projects: _.values(state.projects),
+		user: state.user
 	};
 };
 

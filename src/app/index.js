@@ -5,6 +5,7 @@ import Container from './containers/';
 import ErrorBanner from './shared/components/ErrorBanner';
 
 const App = (props) => {
+
 	return (
 		 <div className="app_loading">
 		 	<ErrorBanner />

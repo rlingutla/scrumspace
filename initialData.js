@@ -15,6 +15,7 @@ module.exports =  {
 			'display_name': 'VilkBot',
 			'password': 'javascript',
 			'avatar_url': 'https://avatars0.githubusercontent.com/u/1141042?v=3&s=460',
+			'githubName': '',
 			'stats':[
 				{
 					'ownerStats': [3,1,6,4,8,7,9,1,12,6],
@@ -35,7 +36,14 @@ module.exports =  {
 			'email': 'atvatsa@gmail.com',
 			'display_name': 'vatsaumass',
 			'password': 'password',
-			'avatar_url': 'http://www.abhayvatsa.com/img/abhay.png'
+			'avatar_url': 'http://www.abhayvatsa.com/img/abhay.png',
+			'stats':[
+				{
+					'ownerStats': [4,2,6,5,7,1,7,8,13,1],
+					'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
+					'color': '#'+Math.floor(Math.random()*16777215).toString(16)
+				}
+			]
 		},
 		2: {
 			'_id': new ObjectID('000000000000000000000002'),
@@ -44,7 +52,14 @@ module.exports =  {
 			'email': 'dylanfischler@gmail.com',
 			'display_name': 'Dylan Fischler',
 			'password': 'password',
-			'avatar_url': 'http://www.dylanfischler.com/includes/me_bw.jpg'
+			'avatar_url': 'http://www.dylanfischler.com/includes/me_bw.jpg',
+			'stats':[
+				{
+					'ownerStats': [3,1,6,4,8,7,9,1,12,6],
+					'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
+					'color': '#'+Math.floor(Math.random()*16777215).toString(16)
+				}
+			]
 		},
 		3: {
 			'_id': new ObjectID('000000000000000000000003'),
@@ -53,7 +68,8 @@ module.exports =  {
 			'email': 'someemail',
 			'display_name': 'Niha Venkatathri',
 			'password': 'd4866854120e8bb207d6f8e11fce8b99',
-			'avatar_url': 'http://umasscswomen.weebly.com/uploads/3/8/0/8/38087803/3410479.jpg?153'
+			'avatar_url': 'http://umasscswomen.weebly.com/uploads/3/8/0/8/38087803/3410479.jpg?153',
+			'stats':[]
 		},
 		4: {
 			'_id': new ObjectID('000000000000000000000004'),
@@ -62,7 +78,14 @@ module.exports =  {
 			'email': 'ryan@ryan.com',
 			'display_name': 'Ryan Jerue',
 			'password': 'ryan',
-			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa7AAAAJGQ2NjlmY2MzLTgzYjctNGRhYy05ZmY2LTkxOGE3Mzg2NWU2MA.jpg'
+			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa7AAAAJGQ2NjlmY2MzLTgzYjctNGRhYy05ZmY2LTkxOGE3Mzg2NWU2MA.jpg',
+			'stats':[
+				{
+					'ownerStats': [3,1,6,4,8,7,9,1,12,6],
+					'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
+					'color': '#'+Math.floor(Math.random()*16777215).toString(16)
+				}
+			]
 		},
 		5: {
 			'_id': new ObjectID('000000000000000000000005'),
@@ -71,7 +94,8 @@ module.exports =  {
 			'email': 'someemail',
 			'display_name': 'Supriya Kankure',
 			'password': 'd4866854120e8bb207d6f8e11fce8b99',
-			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa1AAAAJDRjMTU3ZTA2LTFkMTEtNDM1MS04YjQ0LWI0YzRlOTExODQ3NA.jpg'
+			'avatar_url': 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAa1AAAAJDRjMTU3ZTA2LTFkMTEtNDM1MS04YjQ0LWI0YzRlOTExODQ3NA.jpg',
+			'stats':[]
 		},
 		6: {
 			'_id': new ObjectID('000000000000000000000006'),
@@ -80,7 +104,14 @@ module.exports =  {
 			'email': 'someemail',
 			'display_name': 'Rachana Lingutla',
 			'password': 'd4866854120e8bb207d6f8e11fce8b99',
-			'avatar_url': 'https://avatars.slack-edge.com/2016-02-07/20575719908_a1012b8fe4efe81099c3_72.png'
+			'avatar_url': 'https://avatars.slack-edge.com/2016-02-07/20575719908_a1012b8fe4efe81099c3_72.png',
+			'stats':[
+				{
+					'ownerStats': [3,1,6,4,8,7,9,1,12,6],
+					'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
+					'color': '#'+Math.floor(Math.random()*16777215).toString(16)
+				}
+			]
 		}
 	},
 	'sprints': [
@@ -209,6 +240,7 @@ module.exports =  {
 			'sprints': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001')],
 			'stories': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001'),new ObjectID('000000000000000000000002')],
 			'avatar': 'https://www.mountaingoatsoftware.com/uploads/articles/LabelledTaskBoard.jpg',
+			'gitRepoURL': '',
 			'stats':{
 				'allStats':[4,6,2,1,7,5,9,10,3,6],
 				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
@@ -226,8 +258,8 @@ module.exports =  {
 			'stories': [],
 			'avatar': 'https://www.wpi.edu/Images/CMS/ComputerScience/cs-student-vilk-lg.jpg',
 			'stats':{
-				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
 				'allStats':[3,1,6,4,8,7,9,1,12,6],
+				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
 				'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 			}
 

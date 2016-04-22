@@ -127,9 +127,10 @@ class Settings extends React.Component {
 											</Col>
 											<Col md={4}>
 												<div className="form-group">
-													<label for="usr">Git Repo</label>
-													<Input type="text" className="form-control" name="title" id="usr" placeholder="Enter github repo associated with the project" onChange={(e) => this.handleChange(e)}/>
-												</div>
+													<label for="usr">Git Stats Connection</label>
+													<Input type="text" className="form-control" name="title" id="usr" placeholder="Enter github repo name associated with the project" onChange={(e) => this.handleChange(e)}/>
+													<Input type="text" className="form-control" name="title" id="usr" placeholder="Enter your github username" onChange={(e) => this.handleChange(e)}/>
+											  </div>
 											</Col>
 										</Row>
 									</form>

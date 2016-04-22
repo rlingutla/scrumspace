@@ -43,7 +43,7 @@ module.exports = function (io, db) {
 	// add new project
 	router.post('/', validate({ body: ProjectSchema }), function(req,res){
 		console.log(req.body);
-		
+
 		//check that there is actual data in the 3 main fields
 		if (typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
 			res.status(400);
@@ -69,7 +69,13 @@ module.exports = function (io, db) {
 			'current_sprint': null,
 			'sprints': [],
 			'stories': [],
-			'avatar': ''
+			'avatar': '',
+			'githubRepo':'',
+			'stats':{
+				'allStats':[3,1,6,4,8,7,9,1,12,6],
+				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
+				'color':'#'+Math.floor(Math.random()*16777215).toString(16)
+			}
 		};
 
 		//now need the item to add to projects

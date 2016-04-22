@@ -8,8 +8,7 @@ export function serverPostNewProject(title, description,users,membersOnProj,cb) 
   return sendXHRPromise('POST', '/api/project/',{
     'title':title,
     'description' : description,
-		'users':users,
-		'membersOnProj': membersOnProj
+		'users':users
   }).then((response) => {
     // Return the new status update.
     return response;

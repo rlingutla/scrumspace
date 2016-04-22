@@ -9,9 +9,9 @@ export const createNewProjectAction = (project) => {
 	return { type: 'NEW_PROJECT', project };
 };
 
-export function postAndCreateNewProject(title, description,users,membersOnProj){
+export function postAndCreateNewProject(title, description,users){
 	return function(dispatch){
-		return serverPostNewProject(title, description,users,membersOnProj).then(
+		return serverPostNewProject(title, description,users).then(
 			project => {
 				dispatch(createNewProjectAction(project));
 			},
