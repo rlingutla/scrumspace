@@ -11,8 +11,8 @@ import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewProject: (title, description,users,membersOnProj) => {
-      dispatch(postAndCreateNewProject(title, description,users,membersOnProj));
+    createNewProject: (title, description,users) => {
+      dispatch(postAndCreateNewProject(title, description,users));
     }
 
   };
@@ -38,7 +38,7 @@ class ProjectCreationModal extends React.Component{
     this.emptyList = [];
     // this.userIds = [];
     // usersIds: this.state.users.map((member) => member._id);
-    this.props.createNewProject(this.state.title, this.state.description, this.state.userIds,this.state.membersOnProj);
+    this.props.createNewProject(this.state.title, this.state.description, this.state.userIds);
 
     // TODO: set this asynchronously, needs work!
     this.props.changeModal();
@@ -71,7 +71,6 @@ class ProjectCreationModal extends React.Component{
       this.setState({
         // users: members.map((member) => member._id) //TODO: need to push only user ID (full object in for now to support mock server)
         users: members,
-        membersOnProj: members.map((member) => member.first_name),
         userIds: members.map((member) => member._id)
       });
     }

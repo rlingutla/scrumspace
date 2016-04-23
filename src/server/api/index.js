@@ -27,6 +27,7 @@ module.exports = function (io, db) {
 	router.use('/project/', [projectAuth(db), require('./project')(io, db)]);
 	router.use('/user/', require('./user')(io, db));
 	router.use('/init/', require('./init')(io, db));
+	router.use('/statistics/', require('./statistics')(io, db));
 
 	// Reset database.
 	// router.post('/resetdb', function(req, res) {

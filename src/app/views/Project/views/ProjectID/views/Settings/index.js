@@ -17,11 +17,24 @@ class Settings extends React.Component {
 			changeModal: false,
 			title: props.title,
 			project_id: props._id,
-			users: props.users
+			users: props.users,
+			githubRepo: '',
+			githubOwner: ''
 		};
 	}
 
 	handleChange(e){
+		e.preventDefault();
+
+		let value = e.target.value;
+		let field = e.target.attributes.name.nodeValue;
+
+		let updObj = {};
+		updObj[field] = value;
+		this.setState(updObj);
+	}
+
+	handleGRChange(e){
 		e.preventDefault();
 
 		let value = e.target.value;
@@ -40,7 +53,7 @@ class Settings extends React.Component {
 	saveChanges(){
 		this.toggleCModal(false);
 		let members = this.state.users.map((user) => user._id);
-		this.props.updateProject(this.state.project_id,this.state.title, members);
+		this.props.updateProject(this.state.project_id,this.state.title, members, this.state.githubRepo, this.state.githubOwner);
 	}
 
 	getUserOptions(input){
@@ -104,13 +117,13 @@ class Settings extends React.Component {
 								<div className="panel-body">
 									<form>
 										<Row>
-											<Col md={6}>
+											<Col md={4}>
 												<div className="form-group">
 													<label for="usr">Project Title</label>
 													<Input type="text" className="form-control" name="title" id="usr" value={this.state.title} placeholder="Enter new project title" onChange={(e) => this.handleChange(e)}/>
 												</div>
 											</Col>
-											<Col md={6}>
+											<Col md={4}>
 												<div className="form-group">
 													<label for="usr">Users (only <b>add</b> new users)</label>
 													{/*<MultiSelect collection="users" labelKey="display_name" valueKey="_id" updateState={(members) => this.setMembers(members)}/>*/}
@@ -124,6 +137,13 @@ class Settings extends React.Component {
 													    value={this.state.users}
 													/>
 												</div>
+											</Col>
+											<Col md={4}>
+												<div className="form-group">
+													<label for="usr">Git Stats Connection (only use PUBLIC repositories)</label>
+															<Input type="text"  name="githubRepo" id="usr" value={this.state.githubRepo} placeholder="Enter github repo name associated with the project" onChange={(e) => this.handleChange(e)}/>
+													<Input type="text"  name="githubOwner" id="usr"  value={this.state.githubOwner} placeholder="Enter github username of repo owner" onChange={(e) => this.handleChange(e)}/>
+											  </div>
 											</Col>
 										</Row>
 									</form>
@@ -160,8 +180,8 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		updateProject: (project_id,title, users) => {
-			dispatch(putProjectUpdates(project_id,title,users));
+		updateProject: (project_id,title, users, githubRepo, githubOwner) => {
+			dispatch(putProjectUpdates(project_id,title,users,githubRepo, githubOwner));
 		},
   	removeProjectAct: (project_id) => {
   		dispatch(removeProject(project_id));

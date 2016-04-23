@@ -8,8 +8,7 @@ export function serverPostNewProject(title, description,users,membersOnProj,cb) 
   return sendXHRPromise('POST', '/api/project/',{
     'title':title,
     'description' : description,
-		'users':users,
-		'membersOnProj': membersOnProj
+		'users':users
   }).then((response) => {
     // Return the new status update.
     return response;
@@ -18,11 +17,14 @@ export function serverPostNewProject(title, description,users,membersOnProj,cb) 
 	});
 }
 
-export function serverUpdateProject(project_id,title,members){
+export function serverUpdateProject(project_id,title,members, githubRepo, githubOwner){
+  debugger;
 	return sendXHRPromise('PUT', '/api/project/' + project_id, {
 		'project_id': project_id,
 		'title': title,
-		'users': members
+		'users': members,
+    'githubRepo': githubRepo,
+    'githubOwner' : githubOwner
 	}).then((response) => {
 		return response;
 	},(error) => {

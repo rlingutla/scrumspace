@@ -15,11 +15,6 @@ var Task = require('../../models/Task');
 var MongoDB = require('mongodb');
 var ObjectID = MongoDB.ObjectID;
 
-// Project Helper functions
-var newProjHelper = require('./newProj');
-var newProjCreation = newProjHelper.newProjCreation;
-var projUpdate = newProjHelper.projUpdate;
-var projectRemoval = newProjHelper.projRemoval;
 
 // Utils
 import { embedUsers, packageProjects, projectFromID } from '../shared/projectUtils';
@@ -35,6 +30,11 @@ module.exports = function (io, db) {
 		res.send('project API handler');
 	});
 
+	// router.get('/gitStats', function (req, res) {
+	// 	console.log('Called gitStats');
+	// 	res.send('git Stats');
+	// });
+
 	router.get('/:id', function(req,res){
 		res.send({'_id': req.params.id});
 	});
@@ -43,7 +43,7 @@ module.exports = function (io, db) {
 	// add new project
 	router.post('/', validate({ body: ProjectSchema }), function(req,res){
 		console.log(req.body);
-		
+
 		//check that there is actual data in the 3 main fields
 		if (typeof req.body.title === 'undefined' || req.body.description === 'undefined' || req.body.users === 'undefined'){
 			res.status(400);
@@ -69,7 +69,14 @@ module.exports = function (io, db) {
 			'current_sprint': null,
 			'sprints': [],
 			'stories': [],
-			'avatar': ''
+			'avatar': '',
+			'githubRepo':'Anagram-Finder',
+			'githubOwner':'rjerue',
+			'stats':{
+				'allStats':[],
+				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
+				'color':'#'+Math.floor(Math.random()*16777215).toString(16)
+			}
 		};
 
 		//now need the item to add to projects
@@ -95,7 +102,8 @@ module.exports = function (io, db) {
 		// update project
 		router.put('/:project_id', validate({ body: ProjectSchema }), function(req, res){
 			console.log('title' + req.title);
-			if ((req.body.title.length === undefined ) &&  (req.body.users.length === undefined)) {
+			if ((req.body.title.length === undefined ) &&  (req.body.users.length === undefined)
+		       &&  (req.body.githubRepo.length === undefined) &&  (req.body.githubOwner.length === undefined)) {
 				res.status(400);
 				return res.send({error: StandardError({
 					status: 400,
@@ -105,9 +113,12 @@ module.exports = function (io, db) {
 			var userObjectIds = req.body.users.map((user)=> {
 				return ObjectID(user);
 			});
+
 			var project = {
 				title: req.body.title,
-				users: userObjectIds
+				users: userObjectIds,
+				githubRepo: req.body.githubRepo,
+				githubOwner: req.body.githubOwner
 			};
 
 			db.collection('projects').findOneAndUpdate(

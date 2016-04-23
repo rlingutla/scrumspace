@@ -9,9 +9,9 @@ export const createNewProjectAction = (project) => {
 	return { type: 'NEW_PROJECT', project };
 };
 
-export function postAndCreateNewProject(title, description,users,membersOnProj){
+export function postAndCreateNewProject(title, description,users){
 	return function(dispatch){
-		return serverPostNewProject(title, description,users,membersOnProj).then(
+		return serverPostNewProject(title, description,users).then(
 			project => {
 				dispatch(createNewProjectAction(project));
 			},
@@ -24,10 +24,10 @@ export const updateProjectAction = (project) => {
 	return { type: 'UPDATE_PROJECT', project };
 };
 //update fields in the project
-export function putProjectUpdates(project_id, title, members){
+export function putProjectUpdates(project_id, title, members, githubRepo, githubOwner){
 
 	return function (dispatch){
-		return serverUpdateProject(project_id, title, members).then(
+		return serverUpdateProject(project_id, title, members, githubRepo, githubOwner).then(
 			project => dispatch(updateProjectAction(project)),
 			error => logger('Cant update project', error)
 		);

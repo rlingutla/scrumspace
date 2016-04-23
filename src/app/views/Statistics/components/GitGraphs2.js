@@ -12,24 +12,22 @@ const lineOptions = {
 };
 
 const GitGraphs2 = (props) => {
-	if (props.membersOnProj.length !== props.gCommits.length){
-	     props.gCommits.splice(props.membersOnProj.length);
-	}
+
 
 	const barData = {
-		labels: props.membersOnProj,
+		labels: props.stats.timeFrame,
 		datasets: [
 			{
-				fillColor: props.color,
-				strokeColor: props.color,
-				data: props.gCommits
+				fillColor: props.stats.color,
+				strokeColor: props.stats.color,
+				data: props.stats.allStats
 			}
 		]
 	};
 
 	return (
 		<div>
-			<h4 className="project-title">{props.title}</h4>
+			<b><h4 className="project-title">{props.title}</h4></b>
 			<div className="project-item">
 				<div className="chart-container">
 					<Bar data={barData} options={lineOptions} />
