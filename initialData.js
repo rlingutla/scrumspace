@@ -200,7 +200,7 @@ module.exports =  {
 			'githubRepo': 'Anagram-Finder',
 			'githubOwner': 'rjerue',
 			'stats':{
-				'allStats':[4,6,2,1,7,5,9,10,3,6],
+				'allStats':[],
 				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
 				'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 			}
@@ -218,7 +218,7 @@ module.exports =  {
 			'githubRepo': 'ForestTycoon-HampHack-2016-',
       'githubOwner': 'rlingutla',
 			'stats':{
-				'allStats':[3,1,6,4,8,7,9,1,12,6],
+				'allStats':[],
 				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
 				'color':'#'+Math.floor(Math.random()*16777215).toString(16)
 			}

@@ -12,9 +12,7 @@ const lineOptions = {
 };
 
 const GitGraphs2 = (props) => {
-	// if (props.stats.membersOnProj.length !== props.stats.gCommits.length){
-	//      props.stats.gCommits.splice(props.stats.membersOnProj.length);
-	// }
+
 
 	const barData = {
 		labels: props.stats.timeFrame,
