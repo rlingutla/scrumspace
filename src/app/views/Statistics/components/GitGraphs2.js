@@ -27,7 +27,7 @@ const GitGraphs2 = (props) => {
 
 	return (
 		<div>
-			<h4 className="project-title">{props.title}</h4>
+			<b><h4 className="project-title">{props.title}</h4></b>
 			<div className="project-item">
 				<div className="chart-container">
 					<Bar data={barData} options={lineOptions} />

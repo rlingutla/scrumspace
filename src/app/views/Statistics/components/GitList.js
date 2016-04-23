@@ -14,7 +14,8 @@ const GitList = (props) => {
 		<div className="content">
 			<div className="project-container">
           <Row className="show-grid">
-          <h1><b><u>Total Commits for each project</u></b> </h1>
+          <h1><b><u>Total Commits for each Project </u></b> </h1>
+					<h3><b>Data covers last 10 weeks</b> </h3>
             {props.projects.map((project, i) => {
               return (
                 <Col xs={12} sm={6} md={6} key={i}>
