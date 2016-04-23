@@ -140,7 +140,7 @@ class Settings extends React.Component {
 											</Col>
 											<Col md={4}>
 												<div className="form-group">
-													<label for="usr">Git Stats Connection</label>
+													<label for="usr">Git Stats Connection (only use PUBLIC repositories)</label>
 															<Input type="text"  name="githubRepo" id="usr" value={this.state.githubRepo} placeholder="Enter github repo name associated with the project" onChange={(e) => this.handleChange(e)}/>
 													<Input type="text"  name="githubOwner" id="usr"  value={this.state.githubOwner} placeholder="Enter github username of repo owner" onChange={(e) => this.handleChange(e)}/>
 											  </div>
