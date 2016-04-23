@@ -6,7 +6,7 @@ var token = "";
 export function stateTree(userId){
   //client ready to render
   token = localStorage.scrumToken;
-  
+
 	return sendXHRPromise('get', `/api/init/${userId}`).then((response) => {
 		return response;
 	});
@@ -108,14 +108,14 @@ export function sendXHRPromise(verb, resource, body) {
   	    // the error.
   	    var responseText = xhr.responseText;
   	    let error = `Could not ${verb} ${resource}: Received ${statusCode} ${statusText}: ${responseText}`;
-  	    
+
   	    reject(error);
         ErrorBanner(error);
   	  }
   	});
 
   	// Time out the request if it takes longer than 10,000 milliseconds (10 seconds)
-  	xhr.timeout = 10000;
+  	xhr.timeout = 60000;
 
   	// Network failure: Could not connect to server.
   	xhr.addEventListener('error', function() {

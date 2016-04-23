@@ -30,10 +30,10 @@ module.exports = function (io, db) {
 		res.send('project API handler');
 	});
 
-	router.get('/gitStats', function (req, res) {
-		console.log('Called gitStats');
-		res.send('git Stats');
-	});
+	// router.get('/gitStats', function (req, res) {
+	// 	console.log('Called gitStats');
+	// 	res.send('git Stats');
+	// });
 
 	router.get('/:id', function(req,res){
 		res.send({'_id': req.params.id});
@@ -70,8 +70,8 @@ module.exports = function (io, db) {
 			'sprints': [],
 			'stories': [],
 			'avatar': '',
-			'githubRepo':'',
-			'githubOwner':'',
+			'githubRepo':'Anagram-Finder',
+			'githubOwner':'rjerue',
 			'stats':{
 				'allStats':[],
 				'timeFrame':['1','2','3','4','5','6','7','8','9','10'],
@@ -113,6 +113,7 @@ module.exports = function (io, db) {
 			var userObjectIds = req.body.users.map((user)=> {
 				return ObjectID(user);
 			});
+
 			var project = {
 				title: req.body.title,
 				users: userObjectIds,
