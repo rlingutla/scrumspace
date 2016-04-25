@@ -119,7 +119,8 @@ button {
 	display:inline-block;
 	color: darken($border-color, 30%);
 	margin-bottom:8px;
-	border-radius: $border-radius;
+	// border-radius: $border-radius;
+	border-radius: 0;
 }
 
 // Task state coloring

@@ -55,13 +55,15 @@ export default (props) => {
 			}
 			// TODO: maybe use underscore?
 			histories.filter((history) => {
-				var hasMovedFromStatus = (history.from_status === type);
-				var hasMovedToStatus = (history.to_status === type);
-				var isInTimeInterval = (history.modified_time > timeMin && history.modified_time < timeMax);
-				if (isInTimeInterval && hasMovedToStatus) {
-					lineData.datasets[index].data[i] += 1;
-				} else if (isInTimeInterval && hasMovedFromStatus) {
-					lineData.datasets[index].data[i] -= 1;
+				if(history.type === 'MOVED'){
+					var hasMovedFromStatus = (history.payload.from_status === type);
+					var hasMovedToStatus = (history.payload.to_status === type);
+					var isInTimeInterval = (history.modified_time > timeMin && history.modified_time < timeMax);
+					if (isInTimeInterval && hasMovedToStatus) {
+						lineData.datasets[index].data[i] += 1;
+					} else if (isInTimeInterval && hasMovedFromStatus) {
+						lineData.datasets[index].data[i] -= 1;
+					}
 				}
 			});
 		});

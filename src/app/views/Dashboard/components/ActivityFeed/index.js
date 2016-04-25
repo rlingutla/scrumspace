@@ -8,12 +8,13 @@ const activities = (tasks) => {
 
 	tasks.forEach((task) => {
 		task.history.forEach((history) => {
-			history.task = {
-				description: task.description
-			};
-			allActivities.push(history);
-			}
-		);
+			// if(history.type === 'MOVED'){
+				history.task = {
+					description: task.description
+				};
+				allActivities.push(history);
+			// }
+		});
 	});
 
 	return allActivities

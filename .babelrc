@@ -3,7 +3,7 @@
 	"plugins": [["transform-object-assign"],
 		["babel-plugin-module-alias", [
 			{ "src": "./src/app/shared", "expose": "app/shared" },
-			{ "src": "./src/app/views/Project/shared", "expose": "Project/shared" }
+			{ "src": "./src/app/views/Project", "expose": "Project" }
 		]]
 	]
 }
