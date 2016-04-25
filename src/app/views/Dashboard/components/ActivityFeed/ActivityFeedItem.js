@@ -3,8 +3,6 @@ import taskTypes from 'app/shared/constants/taskTypes';
 import moment from 'moment';
 import TaskStatus from 'Project/shared/TaskStatus';
 import Ionicon from 'app/shared/components/Ionicon';
-import Avatar from 'Project/views/ProjectID/components/Avatar';
-
 const style = (borderColor) => {
 	return {
 		margin: '10px, 0px', 
@@ -45,16 +43,30 @@ export default (props) => {
 			</div>
 			<div>
 				<span name="history_type" style={{textDecoration: 'underline', color: '#9F9F9F', marginRight: '15px'}}>{history.type.toLowerCase()}:</span>
-				{(history.type === 'MOVED') ? 
-					<span style={{marginTop: '8px', display: 'inline-block'}}>
-						<TaskStatus status={history.payload.from_status} />
-						<Ionicon style={{margin: '0 10px'}} icon="ion-ios-arrow-right"/>
-						<TaskStatus status={history.payload.to_status} />
-					</span>:null
-				}
-				{(history.type === 'ASSIGNED') ? 
-					<span> testing assigned </span>:null
-				}
+				<span style={{marginTop: '8px', display: 'inline-block'}}>
+					{(history.type === 'MOVED') ? 
+						<span>
+							<TaskStatus status={history.payload.from_status} />
+							<Ionicon style={{margin: '0 10px'}} icon="ion-ios-arrow-right"/>
+							<TaskStatus status={history.payload.to_status} />
+							</span>:null
+					}
+					{(history.type === 'ASSIGNED') ? 
+						history.payload.users.map((user, i) => {
+							user = props.users[user];
+							let avStyle = {backgroundImage: `url(${user.avatar_url})`, border: '1px solid #E6E6E6', marginRight: '5px'};
+							return <span key={i} className="avatar" style={avStyle} />
+						}):null
+					}
+					{(history.type === 'BLOCKING') ? 
+						history.payload.tasks.map((task_id, i) => {
+							let ind = props.taskIndex[task_id];
+							let taskStyle = {padding: '2px 10px', background: 'white', border: '1px solid #E0E0E0', display: 'inline-block', color: '#686868', marginBottom: '8px', marginRight: '10px', borderRadius: 0 };
+
+							return <span style={taskStyle} key={i}>S{ind.story}-T{ind.task}</span>;
+						}):null
+					}
+				</span>
 			</div>
 		</div>
 	);

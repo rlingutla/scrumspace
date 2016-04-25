@@ -66,7 +66,7 @@ const Dashboard = (props) => {
 								<ProjectHeader id={project._id} avatar={project.avatar} title={project.title}/>
 								<div className="row">
 									<ProjectStatus daysLeft={daysLeft} tasks={tasks} />
-									<ActivityFeed tasks={tasks} />
+									<ActivityFeed project_id={project._id} tasks={tasks} />
 								</div>
 								<div className="row">
 									<TaskActivityTimeSeries tasks={tasks} />
