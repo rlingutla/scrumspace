@@ -243,6 +243,12 @@ button {
 			box-shadow: darken($green-color, 20%) 0px 0px 0px 1px inset;
 		}
 	}
+
+	&.compact {
+		.progress-bar-info {
+			box-shadow:none;
+		}
+	}
 }
 
 .badge {
@@ -345,5 +351,21 @@ button {
 			top:0px;
 			pointer-events: all;
 		}
+	}
+}
+
+.mason-grid {
+	-moz-column-count: 6;
+	-moz-column-gap: 0px;
+	-webkit-column-count: 6;
+	-webkit-column-gap: 0px;
+	column-count: 2;
+	column-gap: 0px;
+	width: auto;
+
+	& > div {
+		display: inline-block;
+		margin-bottom: 0px;
+		width: 100%;	
 	}
 }

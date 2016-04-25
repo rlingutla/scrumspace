@@ -55,17 +55,14 @@ const Dashboard = (props) => {
 				{ 
 					projectsInSprint.map((project, i) => { 
 						var currentSprint = project.sprints.find((sprint) => sprint._id === project.current_sprint);
-
-
 						var daysLeft = getDaysLeft(currentSprint.start_date + currentSprint.duration * 24 * 60 * 60 * 1000);
-
-
 						let tasks = taskSelector(new Array(project), () => true, () => true);
+
 						return (
 							<ProjectWidget key={i} project={project}> 
 								<ProjectHeader id={project._id} avatar={project.avatar} title={project.title}/>
 								<div className="row">
-									<ProjectStatus daysLeft={daysLeft} tasks={tasks} />
+									<ProjectStatus project_id={project._id} daysLeft={daysLeft} tasks={tasks} />
 									<ActivityFeed project_id={project._id} tasks={tasks} />
 								</div>
 								<div className="row">

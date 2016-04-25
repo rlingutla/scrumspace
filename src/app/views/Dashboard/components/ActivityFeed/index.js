@@ -27,8 +27,9 @@ const ActivityFeed = (props) => {
 	return (
 		<div className="col-md-6 col-lg-6">
 			<Panel title="Activity">
-				{
-					data.map((history, i) => <ActivityFeedItem {...props} activity={history} key={i}></ActivityFeedItem>)
+				{(data.length > 0) ? 
+					data.map((history, i) => <ActivityFeedItem {...props} activity={history} key={i}></ActivityFeedItem>):
+					<span>No Recent Activity</span>
 				}
 			</Panel>
 		</div>
@@ -45,7 +46,7 @@ const mapStateToProps = (state) => {
 	return Object.assign({}, state, {users});
 };
 
-const mapDispatchToProps = (dispatch) => {};
+const mapDispatchToProps = (dispatch) => {return {}};
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
 	let taskIndex = {};

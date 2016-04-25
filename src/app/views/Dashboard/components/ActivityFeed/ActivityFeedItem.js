@@ -3,6 +3,8 @@ import taskTypes from 'app/shared/constants/taskTypes';
 import moment from 'moment';
 import TaskStatus from 'Project/shared/TaskStatus';
 import Ionicon from 'app/shared/components/Ionicon';
+
+
 const style = (borderColor) => {
 	return {
 		margin: '10px, 0px', 
