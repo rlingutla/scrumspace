@@ -593,7 +593,7 @@ module.exports = function (io, db) {
 			task_id: req.params.task_id,
 			description: req.body.description,
 			status: req.body.status,
-			user: req.user_id
+			action_user: req.user_id,
 		}, db).then(
 			(task) => {
 				io.emit('STATE_UPDATE', {data: {
@@ -612,7 +612,8 @@ module.exports = function (io, db) {
 		if (Array.isArray(req.body.users)) {
 			Task.assignUsers({
 				task_id: req.params.task_id,
-				users: req.body.users
+				users: req.body.users,
+				action_user: req.user_id
 			}, db).then(
 				(task) => {
 					io.emit('STATE_UPDATE', {data: {
@@ -635,7 +636,8 @@ module.exports = function (io, db) {
 		if (Array.isArray(req.body.blocking)) {
 			Task.assignBlocking({
 				task_id: req.params.task_id,
-				blocking_tasks: req.body.blocking
+				blocking_tasks: req.body.blocking,
+				action_user: req.user_id
 			}, db).then(
 				(task) => {
 					io.emit('STATE_UPDATE', {data: {

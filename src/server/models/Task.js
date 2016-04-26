@@ -29,11 +29,14 @@ module.exports.update = function(args, db){
 						updObject.$set.status = args.status;
 						//update history if status changed
 						if(task.status !== args.status){
-							updObject.$push = { history: { 
-									from_status: task.status, 
-									to_status: args.status, 
-									modified_time: Date.now(), 
-									modified_user: args.user
+							updObject.$push = { history: {
+									modified_time: Date.now(),
+									type: 'MOVED',
+									modified_user: args.action_user,
+									payload: {
+										from_status: task.status, 
+										to_status: args.status
+									}
 								}
 							};
 						}
@@ -63,7 +66,19 @@ module.exports.assignUsers = function(args, db){
 				if(users.length === args.users.length){
 					db.collection('tasks').findOneAndUpdate(
 						{_id: new ObjectID(args.task_id)}, 
-						{ $set: { 'assigned_to' : args.users} },
+						{ 
+							$set: { 'assigned_to' : args.users},
+							$push: { 
+								history : {
+									modified_time: Date.now(),
+									type: 'ASSIGNED',
+									modified_user: args.action_user,
+									payload: {
+										users: args.users
+									}
+								}
+							}
+						},
 						{ returnOriginal : false },
 						(err, res) => {
 							if(err) reject(err);
@@ -91,7 +106,19 @@ module.exports.assignBlocking = function(args, db){
 				if(tasks.length === args.blocking_tasks.length){
 					db.collection('tasks').findOneAndUpdate(
 						{_id: new ObjectID(args.task_id)}, 
-						{ $set: { 'blocked_by' : args.blocking_tasks} },
+						{ 
+							$set: { 'blocked_by' : args.blocking_tasks},
+							$push: { 
+								history : {
+									modified_time: Date.now(),
+									type: 'BLOCKING',
+									modified_user: args.action_user,
+									payload: {
+										tasks: args.blocking_tasks
+									}
+								}
+							}
+						},
 						{ returnOriginal : false },
 						(err, res) => {
 							if(err) reject(err);
