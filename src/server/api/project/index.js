@@ -179,20 +179,20 @@ module.exports = function (io, db) {
 
 		var story = {};
 
-		if (req.body.sprint_id !== undefined) {
+		if (typeof req.body.sprint_id !== 'undefined') {
 			// is null, or needs an object id
 			story.sprint_id = (req.body.sprint_id) ? new ObjectID(req.body.sprint_id) : null;
 		}
 
-		if (req.body.description !== undefined) {
+		if (typeof req.body.description !== 'undefined') {
 			story.description = req.body.description;
 		}
 
-		if (req.body.title !== undefined) {
+		if (typeof req.body.title !== 'undefined') {
 			story.title = req.body.title;
 		}
 
-		// todo handle task puts!???
+		// TODO handle task puts!???
 		var pid = req.params.project_id; // TODO: AV: investigate this
 		var sid = req.params.story_id;
 		// send request to update story
@@ -210,12 +210,39 @@ module.exports = function (io, db) {
 						})
 					});
 				}
-				io.emit('STATE_UPDATE', {data: {
-					type: 'UPDATE_STORY',
-					project_id: pid,
-					story: result.value
-				}});
-				res.send();
+				story = result.value;
+				var tasks = result.value.tasks;
+				// grab tasks based on foreign keys
+				db.collection('tasks').find(
+					  {'_id': {$in: tasks} }
+					).toArray(function (err, result_tasks) {
+						if (err) {
+							res.status(400).send( {
+								error: StandardError({
+									status: 400,
+									title: 'BAD_INFO'
+								})
+							});						
+						}
+						story.tasks = result_tasks;
+						for (var i = 0; i < story.tasks.length; i++) {
+							story.tasks[i].blocked_by = story.tasks[i].blocked_by.map((user) => {
+								return user.toString();
+							});
+							story.tasks[i].assigned_to = story.tasks[i].assigned_to.map((user) => {
+								return user.toString();
+							});	
+						}
+						io.emit('STATE_UPDATE', {data: {
+							type: 'UPDATE_STORY',
+							project_id: pid,
+							story: Object.assign({
+								_id: story._id.toString()
+							}, story)
+						}});
+						res.send();
+					}
+				);
 			}
 		);
 	});
