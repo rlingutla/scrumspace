@@ -222,7 +222,7 @@ module.exports = function (io, db) {
 									status: 400,
 									title: 'BAD_INFO'
 								})
-							});						
+							});
 						}
 						story.tasks = result_tasks;
 						for (var i = 0; i < story.tasks.length; i++) {
@@ -231,7 +231,7 @@ module.exports = function (io, db) {
 							});
 							story.tasks[i].assigned_to = story.tasks[i].assigned_to.map((user) => {
 								return user.toString();
-							});	
+							});
 						}
 						io.emit('STATE_UPDATE', {data: {
 							type: 'UPDATE_STORY',
@@ -373,33 +373,35 @@ module.exports = function (io, db) {
 	//Sprint Routes
 	router.put('/:projectid/sprint/:sprintid', validate({ body: SprintSchema }), function(req, res){
 		let sprintid = new ObjectID(req.params.sprintid);
-		db.collection('sprints').updateOne(
+		db.collection('sprints').findOneAndUpdate(
 			{'_id': sprintid},
 			{ $set: {
 				'name': req.body.name,
-				'start_date': req.body.start_date,
 				'duration': req.body.duration,
 				'scrum_time': req.body.scrum_time
 			}},
+			{
+				'returnOriginal': false
+			},
 			function(err, result){
 				if(err){
-					//TODO handle error
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
 				}
+				console.log('should be new', result.value);
+				io.emit('STATE_UPDATE', {data: {
+					type: 'UPDATE_SPRINT',
+					project_id: req.params.projectid,
+					sprint_id: req.params.sprintid,
+					sprint: result.value
+				}});
+				res.send();
 			}
 		);
-		io.emit('STATE_UPDATE', {data: {
-			type: 'UPDATE_SPRINT',
-			project_id: req.params.projectid,
-			sprint_id: req.params.sprintid,
-			sprint: {
-				'_id': sprintid,
-				'name': req.body.name,
-				'start_date': req.body.start_date,
-				'duration': req.body.duration,
-				'scrum_time': req.body.scrum_time
-			}
-		}});
-		res.send();
 	});
 
 	//End a sprint
@@ -413,8 +415,21 @@ module.exports = function (io, db) {
 			{ $set: {'current_sprint': null}},
 			function(err, result){
 				if(err){
-					//TODO Handle error
-				} // TODO Check number of modified things
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
+				else if (result.modifiedCount === 0) {
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
 				else{
 					db.collection('sprints').updateOne(
 						{
@@ -425,8 +440,12 @@ module.exports = function (io, db) {
 						},
 						function(err, result){
 							if(err){
-								console.log(err);
-								//TODO Handle Error
+								res.status(400).send( {
+									error: StandardError({
+										status: 400,
+										title: 'BAD_INFO'
+									})
+								});
 							}
 							projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
 								(updatedProject) => {
@@ -456,8 +475,21 @@ module.exports = function (io, db) {
 			{ $set: {'current_sprint': sprintid}},
 			function(err, result){
 				if(err){
-					//TODO Handle error
-				} // TODO Check number of modified things
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
+				else if (result.modifiedCount === 0) {
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
 				else{
 					db.collection('sprints').updateOne(
 						{
@@ -468,7 +500,12 @@ module.exports = function (io, db) {
 						},
 						function(err, result){
 							if(err){
-								//TODO Handle Error
+								res.status(400).send( {
+									error: StandardError({
+										status: 400,
+										title: 'BAD_INFO'
+									})
+								});
 							}
 							projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
 								(updatedProject) => {
@@ -497,7 +534,12 @@ module.exports = function (io, db) {
 		};
 		db.collection('sprints').insertOne( sprint, function(err, result){
 			if(err){
-				//TODO HANDLE ERROR
+				res.status(400).send( {
+					error: StandardError({
+						status: 400,
+						title: 'BAD_INFO'
+					})
+				});
 			}
 			sprint._id = result.insertedId.toString();
 			//now need to add to project
@@ -506,10 +548,13 @@ module.exports = function (io, db) {
 				{ $push: { sprints: result.insertedId} },
 				function(err, result){
 					if(err){
-						//TODO HANDLE ERROR
-						console.log('error', err);
+						res.status(400).send( {
+							error: StandardError({
+								status: 400,
+								title: 'BAD_INFO'
+							})
+						});
 					}
-					console.log('no error');
 				}
 			);
 		});
@@ -541,9 +586,21 @@ module.exports = function (io, db) {
 			},
 			function(err, result){
 				if(err){
-					//TODO Handle Error
-					console.log(err);
-				} //TODO check number of modified things
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
+				else if (result.modifiedCount === 0) {
+					res.status(400).send( {
+						error: StandardError({
+							status: 400,
+							title: 'BAD_INFO'
+						})
+					});
+				}
 				else{ // else intentional, I don't want this to run if no id was pulled
 					console.log('no error');
 					db.collection('sprints').remove(
@@ -551,7 +608,12 @@ module.exports = function (io, db) {
 						{justOne: true},
 						function(err, result2){
 							if(err){
-								//TODO HANDLE ERROR
+								res.status(400).send( {
+									error: StandardError({
+										status: 400,
+										title: 'BAD_INFO'
+									})
+								});
 							}
 							//Now need to move stories out out out
 							db.collection('stories').update(
@@ -564,7 +626,12 @@ module.exports = function (io, db) {
 								},
 								function(err){
 									if(err){
-										//TODO Handle error
+										res.status(400).send( {
+											error: StandardError({
+												status: 400,
+												title: 'BAD_INFO'
+											})
+										});
 									}
 									projectFromID(new ObjectID(req.user_id), projectid.toString(), db).then(
 										(updatedProject) => {
