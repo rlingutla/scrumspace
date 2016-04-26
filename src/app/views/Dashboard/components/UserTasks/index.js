@@ -38,7 +38,7 @@ export default class UserTasks extends Component {
 							</span>
 						</ul>
 					</div>
-					<div style={{paddingLeft: '25px', paddingRight: '25px', maxHeight: '380px', width: '100%', overflowY: 'auto'}}>
+					<div style={{marginTop: '7px', paddingLeft: '25px', paddingRight: '25px', height: '300px', width: '100%', overflowY: 'auto'}}>
 						{(tasks.length > 0) ?
 							tasks.map((e, i) => {
 								return <Task key={i} id={e._id} status={e.status} description={e.description} />;
