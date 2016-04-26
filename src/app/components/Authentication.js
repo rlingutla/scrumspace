@@ -23,7 +23,7 @@ export class Login extends React.Component {
 
 
 	postLogin(){
-		sendXHRPromise('POST', '/login', { email: this.state.email, password: this.state.password }).then((response) => {
+		sendXHRPromise('POST', '/login', { email: this.state.email, password: this.state.password }, false).then((response) => {
 			localStorage.scrumToken = response.token;
 			this.props.renderScrumspace();
 		}, 
