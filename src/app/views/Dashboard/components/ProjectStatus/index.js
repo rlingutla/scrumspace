@@ -1,5 +1,7 @@
 import React from 'react';
 import Panel from '../shared/Panel';
+import DashboardProgressBar from './DashboardProgressBar';
+import { colors } from 'app/shared/constants/theme';
 
 function countTasksOfType(tasks, status) {
 	return tasks.reduce((prev, curr) => {
@@ -8,28 +10,29 @@ function countTasksOfType(tasks, status) {
 }
 
 export default (props) => {
+	let metricStyle = {
+		fontSize: '50px'
+	};
+
 	return (
 		<div className="col-md-6 col-lg-6">
 			<Panel title="Project Status">
-				<div className="">
+				<DashboardProgressBar project_id={props.project_id} compact={true} />
+				<div style={{paddingTop: '40px'}}>
 					<div className="row">
-						<div style={{textAlign: 'center'}} className='col-lg-6 col-md-6'>
-							<h1>{props.daysLeft}</h1>
-							<h2> days left</h2>
+						<div style={{textAlign: 'left', fontSize: '18px'}} className='col-xs-6'>
+							<span style={Object.assign({...metricStyle}, {color: colors.blue})}>{props.daysLeft}</span> days left
 						</div>
-						<div style={{textAlign: 'center'}} className='col-lg-6 col-md-6'>
-							<h1>{countTasksOfType(props.tasks, 'BLOCKED')}</h1>
-							<h2> blocked tasks</h2>
+						<div style={{textAlign: 'left', fontSize: '18px'}} className='col-xs-6'>
+							<span style={Object.assign({...metricStyle}, {color: colors.red})}>{countTasksOfType(props.tasks, 'BLOCKED')}</span> blocked tasks
 						</div>	
 					</div>
-					<div style={{textAlign: 'center'}} className='row'>
-						<div className="col-lg-6 col-md-6">
-							<h1>{countTasksOfType(props.tasks, 'UNASSIGNED')}</h1>
-							<h2> unassigned tasks</h2>
+					<div style={{textAlign: 'left', fontSize: '18px'}} className='row'>
+						<div className="col-xs-6">
+							<span style={Object.assign({...metricStyle}, {color: colors.darkGray})}>{countTasksOfType(props.tasks, 'UNASSIGNED')}</span> unassigned tasks
 						</div>
-						<div style={{textAlign: 'center'}} className="col-lg-6 col-md-6">
-							<h1>{countTasksOfType(props.tasks, 'DOING')}</h1>
-							<h2>doing tasks</h2>
+						<div style={{textAlign: 'left', fontSize: '18px'}} className="col-xs-6">
+							<span style={Object.assign({...metricStyle}, {color: colors.yellow})}>{countTasksOfType(props.tasks, 'DOING')}</span> doing tasks
 						</div>					
 					</div>
 				</div>

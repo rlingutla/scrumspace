@@ -6,7 +6,7 @@ import { daysDifference, getCurrentSprint } from 'app/shared/utils/utils';
 import _ from 'underscore';
 import moment from 'moment';
 
-class ProjectProgressBar extends React.Component {
+class DashboardProgressBar extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -48,14 +48,8 @@ class ProjectProgressBar extends React.Component {
 		};
 
 		return (
-			<div style={this.props.style}>
-				{(!this.props.compact) ? 
-					<div className="row left-right-align progress-bar-details">
-					    <div className="col-md-6"><span className="detailNum">{this.countType(TaskTypes.DONE).count + '/' + this.countType(TaskTypes.DONE).total}</span> Tasks Complete</div>
-					    <div className="col-md-6"><span className="detailNum">{this.daysLeft()}</span> Days Left of Sprint</div>
-					</div>:null
-				}
-				<ProgressBar className={(this.props.compact) ? 'compact':null}>
+			<div style={Object.assign({...this.props.style}, {marginRight: '-25px', marginLeft: '-25px', fontSize: '18px'})}>
+				<ProgressBar>
 					<ProgressBar bsStyle="success" now={this.countType(TaskTypes.DONE).calc} key={1} />
 					<ProgressBar bsStyle="warning"now={this.countType(TaskTypes.DOING).calc} key={2} /> 
 					<ProgressBar bsStyle="danger" now={this.countType(TaskTypes.BLOCKED).calc}key={3} />
@@ -83,4 +77,4 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps,
 	mapDispatchToProps,
-	mergeProps)(ProjectProgressBar);
+	mergeProps)(DashboardProgressBar);

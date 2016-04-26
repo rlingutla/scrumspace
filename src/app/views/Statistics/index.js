@@ -15,7 +15,8 @@ export default class Statistics extends React.Component{
 				indivCommits: []
 			}
 		};
-		this.getGitStats();
+		// DISABLED FOR PITCH (RANDOMLY CRASHING PAGE)
+		// this.getGitStats();
 	}
 
 //	 return sendXHRPromise('GET', `/api/projects/gitStats?owner=rlingutla&repo=personal-webapge`, undefined).then((response) => {

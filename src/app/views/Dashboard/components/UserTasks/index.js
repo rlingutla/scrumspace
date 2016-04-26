@@ -17,6 +17,10 @@ export default class UserTasks extends Component {
 	}
 
 	render() { 
+		let tasks = this.props.tasks.filter((task) => {
+			return (this.state.showAssignedTasks) ? (task.status !== 'UNASSIGNED') : (task.status === 'UNASSIGNED');
+		});
+
 		return (
 			<div className="col-md-6 col-lg-6">
 				<BasePanel >
@@ -34,14 +38,11 @@ export default class UserTasks extends Component {
 							</span>
 						</ul>
 					</div>
-					<div style={{paddingLeft: '25px', paddingRight: '25px', height: '80%', width: '100%', overflowY: 'auto'}}>
-						{ 
-							this.props.tasks
-							.filter((task) => {
-								return (this.state.showAssignedTasks) ? (task.status !== 'UNASSIGNED') : (task.status === 'UNASSIGNED');
-							}).map((e, i) => {
+					<div style={{marginTop: '7px', paddingLeft: '25px', paddingRight: '25px', height: '300px', width: '100%', overflowY: 'auto'}}>
+						{(tasks.length > 0) ?
+							tasks.map((e, i) => {
 								return <Task key={i} id={e._id} status={e.status} description={e.description} />;
-							}) 
+							}):<div style={{padding:'15px 0'}}>No Tasks</div>
 						}
 					</div>
 				</BasePanel>

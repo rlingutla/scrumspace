@@ -196,7 +196,7 @@ module.exports =  {
 			'current_sprint': new ObjectID('000000000000000000000000'),
 			'sprints': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001')],
 			'stories': [new ObjectID('000000000000000000000000'), new ObjectID('000000000000000000000001'),new ObjectID('000000000000000000000002')],
-			'avatar': 'https://www.mountaingoatsoftware.com/uploads/articles/LabelledTaskBoard.jpg',
+			'avatar': 'http://www.theyoungfolks.com/wp-content/uploads/2014/05/episode-05-05-1024.jpg',
 			'githubRepo': 'Anagram-Finder',
 			'githubOwner': 'rjerue',
 			'stats':{

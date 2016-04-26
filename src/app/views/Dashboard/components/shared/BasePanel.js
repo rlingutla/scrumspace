@@ -1,10 +1,9 @@
 import React from 'react';
 
 export default (props) => {
-
 	return (
-		<div className="panel panel-default">
-			<div style={{height: '380px', overflow: 'hidden'}}>
+		<div className="panel panel-default panel-dashboard" style={{borderRadius: 0}}>
+			<div style={{overflow: 'hidden'}}>
 				{props.children}
 			</div>
 		</div>

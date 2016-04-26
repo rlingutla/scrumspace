@@ -78,19 +78,12 @@ button {
     .header {
     	display: flex;
     }
+
     .avatar {
-    	width: 20px;
-    	height: 20px;
-    	display: inline-block;
-    	background: #F1F1F1;
-    	font-family: 'Glyphicons Halflings';
-    	color: gray;
-    	background-size: cover;
-    	background-position: center;
-    	border-radius: 2px;
     	margin-left: 3px;
     	margin-bottom: 3px;
     }
+    
 
 	.footer {
 		color: $blue-color;
@@ -112,6 +105,17 @@ button {
 		}
 	}
 }
+.avatar {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background: #F1F1F1;
+	font-family: 'Glyphicons Halflings';
+	color: gray;
+	background-size: cover;
+	background-position: center;
+	border-radius: 2px;
+}
 .task-status {
 	padding:2px 10px;
 	background: lighten($border-color, 12%);
@@ -119,7 +123,8 @@ button {
 	display:inline-block;
 	color: darken($border-color, 30%);
 	margin-bottom:8px;
-	border-radius: $border-radius;
+	// border-radius: $border-radius;
+	border-radius: 0;
 }
 
 // Task state coloring
@@ -140,6 +145,15 @@ button {
 	.task {
 		border-color: $green-color;
 	}
+}
+
+.project-avatar {
+	display: inline-block;
+	width:50px;
+	height:50px;
+	background-color: #fff;
+	border-radius: 3px;
+	border: 1px solid #fff;
 }
 
 .user-story {
@@ -227,6 +241,12 @@ button {
 			background-color: $green-color;
 			// border-color: darken($green-color, 20%);
 			box-shadow: darken($green-color, 20%) 0px 0px 0px 1px inset;
+		}
+	}
+
+	&.compact {
+		.progress-bar-info {
+			box-shadow:none;
 		}
 	}
 }
@@ -331,5 +351,21 @@ button {
 			top:0px;
 			pointer-events: all;
 		}
+	}
+}
+
+.mason-grid {
+	-moz-column-count: 6;
+	-moz-column-gap: 0px;
+	-webkit-column-count: 6;
+	-webkit-column-gap: 0px;
+	column-count: 2;
+	column-gap: 0px;
+	width: auto;
+
+	& > div {
+		display: inline-block;
+		margin-bottom: 0px;
+		width: 100%;	
 	}
 }

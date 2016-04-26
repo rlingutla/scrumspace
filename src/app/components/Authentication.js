@@ -6,7 +6,8 @@ export class Login extends React.Component {
 		super(props);
 		this.state = {
 			email: '',
-			password: ''
+			password: '',
+			loading: false
 		};
 	}
 
@@ -23,12 +24,15 @@ export class Login extends React.Component {
 
 
 	postLogin(){
-		sendXHRPromise('POST', '/login', { email: this.state.email, password: this.state.password }).then((response) => {
+		this.setState({loading: true});
+
+		sendXHRPromise('POST', '/login', { email: this.state.email, password: this.state.password }, false).then((response) => {
+			this.setState({loading: false});
 			localStorage.scrumToken = response.token;
 			this.props.renderScrumspace();
 		}, 
 		(error) => {
-			this.setState({error: 'invalid credentials'});
+			this.setState({error: 'invalid credentials', loading: false});
 		});
 	}
 
@@ -43,14 +47,14 @@ export class Login extends React.Component {
 								welcome, <br/>this is <span className="black">scrumspace.</span>
 							</div>
 							<div className="form-container">
-								<form id="login-form">
+								<form id="login-form" style={(this.state.loading === true) ? {pointerEvents:'none', opacity: 0.5}:null}>
 									<div className="input-element left-glyph">
 										<i className="ion ion-ios-person-outline"></i>
-										<input className={'form-control ' + ((this.state.error) ? 'error':null)} value={this.state.email} onChange={(e) => this.handleChange(e)}  name="email" type="text" placeholder="email" autofocus />
+										<input disabled={this.state.loading} className={'form-control ' + ((this.state.error) ? 'error':null)} value={this.state.email} onChange={(e) => this.handleChange(e)}  name="email" type="text" placeholder="email" autofocus />
 									</div>
 									<div className="input-element left-glyph">
 										<i className="ion ion-ios-locked-outline"></i>
-										<input className={'form-control ' + ((this.state.error) ? 'error':null)} value={this.state.password} onChange={(e) => this.handleChange(e)} onKeyDown={(e) => this.keyHandler(e)} name="password" type="password" placeholder="password" />
+										<input disabled={this.state.loading} className={'form-control ' + ((this.state.error) ? 'error':null)} value={this.state.password} onChange={(e) => this.handleChange(e)} onKeyDown={(e) => this.keyHandler(e)} name="password" type="password" placeholder="password" />
 									</div>
 									{/*<div className={'login-result ' + ((this.state.error) ? 'visible':null)}>
 										<h4>{this.state.error}</h4>

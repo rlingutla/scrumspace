@@ -88,11 +88,11 @@ export function sendXHR(verb, resource, body, cb) {
 /*
  * This function makes use of promises instead of callbacks
  */
-export function sendXHRPromise(verb, resource, body) {
+export function sendXHRPromise(verb, resource, body, sendToken) {
   return new Promise((resolve, reject) => {
   	var xhr = new XMLHttpRequest();
   	xhr.open(verb, resource);
-  	xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    if(sendToken !== false) xhr.setRequestHeader('Authorization', 'Bearer ' + token);
 
   	// Response received from server. It could be a failure, though!
   	xhr.addEventListener('load', function() {
