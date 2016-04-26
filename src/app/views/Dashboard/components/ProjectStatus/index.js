@@ -11,27 +11,27 @@ function countTasksOfType(tasks, status) {
 
 export default (props) => {
 	let metricStyle = {
-		fontSize: '36px'
+		fontSize: '50px'
 	};
 
 	return (
 		<div className="col-md-6 col-lg-6">
 			<Panel title="Project Status">
-				<ProjectProgressBar style={{marginRight: '-25px', marginLeft: '-25px'}} project_id={props.project_id} compact={true} />
+				<ProjectProgressBar style={{marginRight: '-25px', marginLeft: '-25px', fontSize: '18px'}} project_id={props.project_id} compact={true} />
 				<div className="">
 					<div className="row">
-						<div style={{textAlign: 'left'}} className='col-xs-6'>
+						<div style={{textAlign: 'left', fontSize: '18px'}} className='col-xs-6'>
 							<span style={Object.assign({...metricStyle}, {color: colors.blue})}>{props.daysLeft}</span> days left
 						</div>
-						<div style={{textAlign: 'left'}} className='col-xs-6'>
+						<div style={{textAlign: 'left', fontSize: '18px'}} className='col-xs-6'>
 							<span style={Object.assign({...metricStyle}, {color: colors.red})}>{countTasksOfType(props.tasks, 'BLOCKED')}</span> blocked tasks
 						</div>	
 					</div>
-					<div style={{textAlign: 'left'}} className='row'>
+					<div style={{textAlign: 'left', fontSize: '18px'}} className='row'>
 						<div className="col-xs-6">
 							<span style={Object.assign({...metricStyle}, {color: colors.darkGray})}>{countTasksOfType(props.tasks, 'UNASSIGNED')}</span> unassigned tasks
 						</div>
-						<div style={{textAlign: 'left'}} className="col-xs-6">
+						<div style={{textAlign: 'left', fontSize: '18px'}} className="col-xs-6">
 							<span style={Object.assign({...metricStyle}, {color: colors.yellow})}>{countTasksOfType(props.tasks, 'DOING')}</span> doing tasks
 						</div>					
 					</div>
