@@ -32,7 +32,7 @@ const BoardView = (props) => {
 		return (
 			<div className="content">
 				<div className="project-info container-fluid">
-					<ProjectProgressBar project_id={props._id} />
+					<ProjectProgressBar project_id={props._id} compact={false}/>
 				</div>
 				<ScrumBoard {...props} />
 			</div>

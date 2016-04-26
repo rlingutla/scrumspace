@@ -1,6 +1,6 @@
 import React from 'react';
 import Panel from '../shared/Panel';
-import ProjectProgressBar from 'Project/views/ProjectID/views/ScrumBoard/ProjectProgressBar';
+import DashboardProgressBar from './DashboardProgressBar';
 import { colors } from 'app/shared/constants/theme';
 
 function countTasksOfType(tasks, status) {
@@ -17,7 +17,7 @@ export default (props) => {
 	return (
 		<div className="col-md-6 col-lg-6">
 			<Panel title="Project Status">
-				<ProjectProgressBar style={{marginRight: '-25px', marginLeft: '-25px', fontSize: '18px'}} project_id={props.project_id} compact={true} />
+				<DashboardProgressBar project_id={props.project_id} compact={true} />
 				<div style={{paddingTop: '40px'}}>
 					<div className="row">
 						<div style={{textAlign: 'left', fontSize: '18px'}} className='col-xs-6'>
